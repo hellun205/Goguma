@@ -1,12 +1,31 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using static System.Console;
 
 namespace Goguma.game.Console
 {
-  class ConsoleFunction
+  static class ConsoleFunction
   {
+    static public void PrintText(CText printCText)
+    {
+
+      for (int i = 0; i > printCText.Texts.Count; i++)
+      {
+        BackgroundColor = printCText.Texts[i].BackgroundColor;
+        ForegroundColor = printCText.Texts[i].ForegroundColor;
+
+        Write(printCText.Texts[i].Text);
+
+        ResetColor();
+      }
+
+    }
+
+    static public void PrintText(string printstring)
+    {
+      BackgroundColor = ConsoleColor.Black;
+      ForegroundColor = ConsoleColor.White;
+      Write(printstring);
+      ResetColor();
+    }
   }
 }
