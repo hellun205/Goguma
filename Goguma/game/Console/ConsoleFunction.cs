@@ -5,10 +5,10 @@ namespace Goguma.game.Console
 {
   static class ConsoleFunction
   {
-    static public void PrintText(CText printCText)
+    static public void PrintText(CTexts printCText)
     {
 
-      for (int i = 0; i > printCText.Texts.Count; i++)
+      for (int i = 0; i < printCText.Texts.Count; i++)
       {
         BackgroundColor = printCText.Texts[i].BackgroundColor;
         ForegroundColor = printCText.Texts[i].ForegroundColor;
@@ -26,6 +26,11 @@ namespace Goguma.game.Console
       ForegroundColor = ConsoleColor.White;
       Write(printstring);
       ResetColor();
+    }
+
+    static public void Pause()
+    {
+      Read();
     }
   }
 }

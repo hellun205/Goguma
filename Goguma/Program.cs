@@ -10,6 +10,7 @@ namespace Goguma
   {
     static void Main(string[] args)
     {
+      Goguma.game.InGame.Go();
     }
   }
 }

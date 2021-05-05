@@ -9,7 +9,7 @@ namespace Goguma.game.Console
     public string Text { get; set; }
 
 
-    public ColorText(ConsoleColor backgroundColor, ConsoleColor foregroundColor, string text)
+    public ColorText(string text, ConsoleColor foregroundColor = ConsoleColor.White, ConsoleColor backgroundColor = ConsoleColor.Black)
     {
       BackgroundColor = backgroundColor;
       ForegroundColor = foregroundColor;

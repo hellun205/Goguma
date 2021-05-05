@@ -47,7 +47,7 @@
   <ItemGroup>
     <Compile Include="game\Console\ColorText.cs" />
     <Compile Include="game\Console\ConsoleFunction.cs" />
-    <Compile Include="game\Console\CText.cs" />
+    <Compile Include="game\Console\CTexts.cs" />
     <Compile Include="game\InGame.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
