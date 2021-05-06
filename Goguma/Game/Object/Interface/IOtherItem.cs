@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Goguma.Game.Player
+namespace Goguma.Game.Object.Interface
 {
-  class Player
+  interface IOtherItem : IItem
   {
-
   }
 }

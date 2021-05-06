@@ -52,9 +52,18 @@
     <Compile Include="Game\Console\SelectSceneItems.cs" />
     <Compile Include="Game\Console\StringFunction.cs" />
     <Compile Include="Game\InGame.cs" />
-    <Compile Include="Game\Player\Interface\IMonster.cs" />
-    <Compile Include="Game\Player\Interface\IPlayer.cs" />
-    <Compile Include="Game\Player\Player.cs" />
+    <Compile Include="Game\Object\Enum\EquipmentType.cs" />
+    <Compile Include="Game\Object\Interface\IEquipmentItem.cs" />
+    <Compile Include="Game\Object\Interface\IMonster.cs" />
+    <Compile Include="Game\Object\Interface\IOtherItem.cs" />
+    <Compile Include="Game\Object\Interface\IPlayer.cs" />
+    <Compile Include="Game\Object\Interface\IConsumeItem.cs" />
+    <Compile Include="Game\Object\Interface\IItem.cs" />
+    <Compile Include="Game\Object\Inventory\Equipment.cs" />
+    <Compile Include="Game\Object\Inventory\InvenInfo.cs" />
+    <Compile Include="Game\Object\Inventory\Inventory.cs" />
+    <Compile Include="Game\Object\Inventory\Item.cs" />
+    <Compile Include="Game\Object\Enum\ItemType.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

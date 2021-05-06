@@ -1,0 +1,46 @@
+﻿using Goguma.Game.Object.Interface;
+
+namespace Goguma.Game.Object.Inventory
+{
+  class Equipment
+  {
+    public IEquipmentItem HeadEquipment { get; set; }
+    public IEquipmentItem ChestplateEquipment { get; set; }
+    public IEquipmentItem LeggingsEquipment { get; set; }
+    public IEquipmentItem BootsEquipment { get; set; }
+    public IEquipmentItem WeaponEquipment { get; set; }
+
+    public int ItemsAtt
+    {
+      get
+      {
+        return 0;
+      }
+    }
+    public int ItemsDef
+    {
+      get
+      {
+        return 0;
+      }
+    }
+    public int ItemsMaxHp
+    {
+      get
+      {
+        return 0;
+      }
+    }
+    public int ItemsMaxEp
+    {
+      get
+      {
+        return 0;
+      }
+    }
+
+
+
+
+  }
+}

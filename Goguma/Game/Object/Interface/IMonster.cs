@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Goguma.Game.Player.Interface
+namespace Goguma.Game.Object.Interface
 {
   interface IMonster
   {
@@ -18,6 +18,7 @@ namespace Goguma.Game.Player.Interface
 
     int GivingGold { get; set; }
     int GivingExp { get; set; }
+    List<IItem> DroppingItems { get; set; }
 
     void AttackPlayer(IPlayer player);
 
