@@ -25,6 +25,14 @@ namespace Goguma.game
       PrintText(SelectScene(questionCText, selectSceneItems).ToString());
 
       Pause();
+
+      CTexts questionCText2 = CTexts.Make("{TEST QUESTION2! Write Any Text!, cyan}");
+
+      PrintText(ReadTextScean(questionCText2));
+
+      Pause();
+
+
     }
 
 

@@ -77,6 +77,24 @@ namespace Goguma.game.Console
       }
     }
 
+    static public string ReadTextScean(CTexts qustionText)
+    {
+      while (true)
+      {
+        PrintText("\n\n Q. ");
+        PrintText(qustionText);
+        PrintText("\n\n");
+
+        PrintText(CTexts.Make("{\n>> , cyan}"));
+
+        string readText = ReadLine();
+
+        PrintText("\n");
+
+        if (readText != "")
+          return readText;
+      }
+    }
 
   }
 }
