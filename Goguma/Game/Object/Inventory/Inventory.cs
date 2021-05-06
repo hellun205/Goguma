@@ -32,7 +32,7 @@ namespace Goguma.Game.Object.Inventory
       questionText = CTexts.Make($"{{인벤토리, cyan}}{{ : }}{{{invenInfo.TypeString}, green}}{{ 를 엽니다. }}{{\n  아이템, cyan}}{{을 선택하시오.}}");
       selectSceneItems = new SelectSceneItems();
 
-      for (int i = 0; i < EquipmentItems.Count; i++)
+      for (int i = 0; i < invenInfo.TypeItem.Count; i++)
       {
         selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make($"{{{invenInfo.TypeItem[i].Name}}}")));
       }
