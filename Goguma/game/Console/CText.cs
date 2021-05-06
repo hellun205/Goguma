@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Goguma.game.Console
+namespace Goguma.Game.Console
 {
   class CText
   {

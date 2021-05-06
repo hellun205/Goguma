@@ -45,13 +45,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="game\Console\CText.cs" />
-    <Compile Include="game\Console\ConsoleFunction.cs" />
-    <Compile Include="game\Console\CTexts.cs" />
-    <Compile Include="game\Console\SelectSceneItem.cs" />
-    <Compile Include="game\Console\SelectSceneItems.cs" />
-    <Compile Include="game\Console\StringFunction.cs" />
-    <Compile Include="game\InGame.cs" />
+    <Compile Include="Game\Console\CText.cs" />
+    <Compile Include="Game\Console\ConsoleFunction.cs" />
+    <Compile Include="Game\Console\CTexts.cs" />
+    <Compile Include="Game\Console\SelectSceneItem.cs" />
+    <Compile Include="Game\Console\SelectSceneItems.cs" />
+    <Compile Include="Game\Console\StringFunction.cs" />
+    <Compile Include="Game\InGame.cs" />
+    <Compile Include="Game\Player\Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

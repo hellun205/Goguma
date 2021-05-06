@@ -1,8 +1,8 @@
 ﻿using System;
-using static Goguma.game.Console.StringFunction;
+using static Goguma.Game.Console.StringFunction;
 using static System.Console;
 
-namespace Goguma.game.Console
+namespace Goguma.Game.Console
 {
   static class ConsoleFunction
   {

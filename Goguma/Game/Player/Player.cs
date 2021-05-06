@@ -4,13 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Goguma
+namespace Goguma.Game.Player
 {
-  class Program
+  class Player
   {
-    static void Main(string[] args)
-    {
-      Game.InGame.Go();
-    }
   }
 }

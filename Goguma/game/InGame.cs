@@ -1,16 +1,14 @@
-﻿using Goguma.game.Console;
-using static Goguma.game.Console.ConsoleFunction;
-using static System.ConsoleColor;
-using static System.Console;
+﻿using Goguma.Game.Console;
+using static Goguma.Game.Console.ConsoleFunction;
 
-namespace Goguma.game
+namespace Goguma.Game
 {
   static class InGame
   {
 
     public static void Go()
     {
-      Test();
+      
     }
 
     public static void Test()
@@ -31,7 +29,6 @@ namespace Goguma.game
       PrintText(ReadTextScean(questionCText2));
 
       Pause();
-
 
     }
 

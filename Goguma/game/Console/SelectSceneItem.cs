@@ -1,4 +1,4 @@
-﻿namespace Goguma.game.Console
+﻿namespace Goguma.Game.Console
 {
   class SelectSceneItem
   {

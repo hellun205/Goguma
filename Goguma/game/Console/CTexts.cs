@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using static Goguma.game.Console.StringFunction;
+using static Goguma.Game.Console.StringFunction;
 
-namespace Goguma.game.Console
+namespace Goguma.Game.Console
 {
   class CTexts
   {

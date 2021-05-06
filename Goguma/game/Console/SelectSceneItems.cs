@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Goguma.game.Console
+namespace Goguma.Game.Console
 {
   class SelectSceneItems
   {
