@@ -52,6 +52,8 @@
     <Compile Include="Game\Console\SelectSceneItems.cs" />
     <Compile Include="Game\Console\StringFunction.cs" />
     <Compile Include="Game\InGame.cs" />
+    <Compile Include="Game\Player\Interface\IMonster.cs" />
+    <Compile Include="Game\Player\Interface\IPlayer.cs" />
     <Compile Include="Game\Player\Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
