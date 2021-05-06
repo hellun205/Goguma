@@ -29,50 +29,23 @@ namespace Goguma.game.Console
       ResetColor();
     }
 
-
-
-    static public CTexts MakeCTexts(string cText)
+    static public void Pause(bool isPauseText = true)
     {
-      CTexts result = new CTexts();
-      string remainingString = cText;
+      if (isPauseText)
+        PrintText(CTexts.Make("{\n계속하려면 아무 키를 누르시오., gray}"));
 
-      for (int i = 0; i <= remainingString.Split('{').Length; i++)
-      {
-
-        string splitStrings = Splits(remainingString,'{','}');
-        remainingString = remainingString.Substring(remainingString.IndexOf('}') + 1);
-
-        string splitText = "";
-        string splitFGColor = "White";
-        string splitBGColor = "Black";
-
-        string[] ssSplit = splitStrings.Split(',');
-
-        if (ssSplit.Length > 0)
-          splitText = ssSplit[0];
-
-        if (ssSplit.Length > 1)
-          splitFGColor = ssSplit[1].Trim();
-
-        if (ssSplit.Length > 2)
-          splitBGColor = ssSplit[2].Trim();
-
-        result.Texts.Add(new CText(splitText, 
-          (ConsoleColor)Enum.Parse(typeof(ConsoleColor), splitFGColor), 
-          (ConsoleColor)Enum.Parse(typeof(ConsoleColor), splitBGColor)));
-
-      }
-
-      return result;
+      ReadKey();
     }
+
+
 
     static public int SelectScene(CTexts qustionText, SelectSceneItems answerItems)
     {
       while (true)
       {
-        PrintText("\n Q. ");
+        PrintText("\n\n Q. ");
         PrintText(qustionText);
-        PrintText("\n");
+        PrintText("\n\n");
 
         for (int i = 1; i <= answerItems.Items.Count; i++)
         {
@@ -81,7 +54,12 @@ namespace Goguma.game.Console
           PrintText("\n");
         }
 
+        PrintText(CTexts.Make("{\n>> , cyan}"));
+
         string readText = ReadLine();
+
+        PrintText("\n");
+
         if (IsInt(readText))
         {
           int readInt = Convert.ToInt32(readText);

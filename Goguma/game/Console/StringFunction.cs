@@ -18,7 +18,15 @@ namespace Goguma.game.Console
 
       string stringA;
 
-      stringA = strings.Split(char1)[1].Split((char)char2)[0];
+      try
+      {
+        stringA = strings.Split(char1)[1].Split((char)char2)[0];
+      }
+      catch
+      {
+        return "";
+      }
+
 
       return stringA;
     }
