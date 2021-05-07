@@ -62,8 +62,8 @@ namespace Goguma.Game.Console
         {
           result.Texts.Add(new CText(splitText,
             (ConsoleColor)Enum.Parse(typeof(ConsoleColor), splitFGColor),
-            (ConsoleColor)Enum.Parse(typeof(ConsoleColor), splitBGColor))
-          );
+            (ConsoleColor)Enum.Parse(typeof(ConsoleColor), splitBGColor)
+          ));
         }
         catch
         {
