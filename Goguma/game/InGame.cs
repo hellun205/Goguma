@@ -65,13 +65,6 @@ namespace Goguma.Game
 
 
       myInventory.PrintInventory(Object.Enum.ItemType.Equipment);
-      Pause();
-
-      myInventory.PrintInventory(Object.Enum.ItemType.Consume);
-      Pause();
-
-      myInventory.PrintInventory(Object.Enum.ItemType.Other);
-      Pause();
     }
 
 

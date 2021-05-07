@@ -13,7 +13,7 @@ namespace Goguma.Game.Object.Inventory
   class InvenInfo
   {
     public string TypeString { get; set; }
-    public List<IItem> TypeItem { get; set; }
+    public List<IItem> TypeItems { get; set; }
 
 
     public InvenInfo(Inventory inventory, ItemType itemType)
@@ -22,17 +22,17 @@ namespace Goguma.Game.Object.Inventory
       {
         case ItemType.Equipment:
           TypeString = "장비";
-          TypeItem = inventory.EquipmentItems;
+          TypeItems = inventory.EquipmentItems;
           break;
 
         case ItemType.Consume:
           TypeString = "소비";
-          TypeItem = inventory.ConsumeItems;
+          TypeItems = inventory.ConsumeItems;
           break;
 
         case ItemType.Other:
           TypeString = "기타";
-          TypeItem = inventory.OtherItems;
+          TypeItems = inventory.OtherItems;
           break;
 
       }

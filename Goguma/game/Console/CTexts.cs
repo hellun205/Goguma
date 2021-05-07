@@ -14,12 +14,15 @@ namespace Goguma.Game.Console
       Texts = new List<CText>();
     }
 
-    public void Combine(CTexts cTexts)
+    public CTexts Combine(CTexts cTexts)
     {
+      CTexts resultCTexts = this;
       for (int i = 0; i < cTexts.Texts.Count; i++)
       {
-        Texts.Add(cTexts.Texts[i]);
+        resultCTexts.Texts.Add(cTexts.Texts[i]);
       }
+
+      return resultCTexts;
     }
 
     static public CTexts Make(string cText)

@@ -32,14 +32,10 @@ namespace Goguma.Game.Object.Inventory
       questionText = CTexts.Make($"{{인벤토리, cyan}}{{ : }}{{{invenInfo.TypeString}, green}}{{ 를 엽니다. }}{{\n    아이템, cyan}}{{를 선택하세요.}}");
       selectSceneItems = new SelectSceneItems();
 
-      for (int i = 0; i < invenInfo.TypeItem.Count; i++)
+      for (int i = 0; i < invenInfo.TypeItems.Count; i++)
       {
-        CTexts answerText;
-
-        answerText = invenInfo.TypeItem[i].Name;
-        answerText.Combine(CTexts.Make($"{{ ( }} {{{invenInfo.TypeItem[i].Count}개, cyan}} {{ )}}"));
-
-        selectSceneItems.Items.Add(new SelectSceneItem(answerText));
+        selectSceneItems.Items.Add(
+          new SelectSceneItem(invenInfo.TypeItems[i].Name.Combine(CTexts.Make($"{{ ( }} {{{invenInfo.TypeItems[i].Count}개, cyan}} {{ )}}"))));
       }
 
       SelectItem(itemType, SelectScene(questionText, selectSceneItems) - 1);
@@ -47,7 +43,19 @@ namespace Goguma.Game.Object.Inventory
 
     public void SelectItem(ItemType itemType, int index)
     {
+      InvenInfo invenInfo = new InvenInfo(this, itemType);
+      ItemInfo itemInfo = new ItemInfo( itemType);
 
+      CTexts questionText = new CTexts();
+      SelectSceneItems selectSceneItems = new SelectSceneItems();
+
+      questionText = CTexts.Make(
+        $"{{무슨 작업을 하시겠습니까?\n    }} {{선택된 아이템 : , gray}}").Combine(invenInfo.TypeItems[index].Name).Combine(CTexts.Make(" {{ ( }} {{{invenInfo.TypeString},green}} {{ : }} {{{index},green}} {{ )}}"));
+
+      for (int i = 0; i < itemInfo.SelectItemAnswers.Count; i++)
+        selectSceneItems.Items.Add(new SelectSceneItem(itemInfo.SelectItemAnswers[i]));
+
+      SelectScene(questionText, selectSceneItems);
     }
   }
 }
