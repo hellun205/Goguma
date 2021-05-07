@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
+using Colorify;
 using static Goguma.Game.Console.StringFunction;
 
 namespace Goguma.Game.Console
@@ -36,7 +37,7 @@ namespace Goguma.Game.Console
 
     static public CTexts Make(string cText)
     {
-      var textInfo = new CultureInfo("en-US", false).TextInfo;
+      // var textInfo = new CultureInfo("en-US", false).TextInfo;
       var result = new CTexts();
       var remainingString = cText;
 
@@ -46,24 +47,18 @@ namespace Goguma.Game.Console
         remainingString = remainingString.Substring(remainingString.IndexOf('}') + 1);
 
         var splitText = "";
-        var splitFGColor = "White";
-        var splitBGColor = "Black";
+        var splitColor = Colors.txtDefault;
 
         var ssSplit = splitStrings.Split(',');
 
         if (ssSplit.Length > 0)
           splitText = ssSplit[0];
         else if (ssSplit.Length > 1)
-          splitFGColor = textInfo.ToTitleCase(ssSplit[1].Trim().ToLower());
-        else if (ssSplit.Length > 2)
-          splitBGColor = textInfo.ToTitleCase(ssSplit[2].Trim().ToLower());
+          splitColor = ssSplit[1].Trim().ToLower();
 
         try
         {
-          result.Texts.Add(new CText(splitText,
-            (ConsoleColor)Enum.Parse(typeof(ConsoleColor), splitFGColor),
-            (ConsoleColor)Enum.Parse(typeof(ConsoleColor), splitBGColor)
-          ));
+          result.Texts.Add(new CText(splitText, splitColor));
         }
         catch
         {

@@ -1,35 +1,31 @@
 using System;
 using static Goguma.Game.Console.StringFunction;
 using static System.Console;
+using Colorify;
 
 namespace Goguma.Game.Console
 {
   static class ConsoleFunction
   {
+    public static Format colorify { get; set; }
+
     static public void PrintText(CTexts printCText)
     {
       for (var i = 0; i < printCText.Texts.Count; i++)
       {
-        BackgroundColor = printCText.Texts[i].BackgroundColor;
-        ForegroundColor = printCText.Texts[i].ForegroundColor;
-
-        Write(printCText.Texts[i].Text);
+        colorify.Write(printCText.Texts[i].Text, printCText.Texts[i].Color);
         ResetColor();
       }
     }
-
     static public void PrintText(string printstring)
     {
-      BackgroundColor = ConsoleColor.Black;
-      ForegroundColor = ConsoleColor.White;
-      Write(printstring);
-      ResetColor();
+      colorify.Write(printstring, Colors.txtDefault);
     }
 
     static public void Pause(bool isPauseText = true)
     {
       if (isPauseText)
-        PrintText(CTexts.Make("{\n계속하려면 아무 키를 누르시오., gray}"));
+        PrintText(CTexts.Make($"{{\n계속하려면 아무 키나 누르시오., {Colors.txtMuted} }}"));
 
       ReadKey();
     }
@@ -49,7 +45,7 @@ namespace Goguma.Game.Console
           PrintText("\n");
         }
 
-        PrintText(CTexts.Make("{\n>> , cyan}"));
+        PrintText(CTexts.Make($"{{\n>> , {Colors.txtInfo}}}"));
 
         string readText = ReadLine();
 
@@ -74,7 +70,7 @@ namespace Goguma.Game.Console
         PrintText(qustionText);
         PrintText("\n\n");
 
-        PrintText(CTexts.Make("{\n>> , cyan}"));
+        PrintText(CTexts.Make($"{{\n>> , {Colors.txtInfo}}}"));
 
         string readText = ReadLine();
 

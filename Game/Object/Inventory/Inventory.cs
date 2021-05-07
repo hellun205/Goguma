@@ -1,4 +1,6 @@
-﻿using Goguma.Game.Console;
+﻿using Colorify;
+using Colorify.UI;
+using Goguma.Game.Console;
 using Goguma.Game.Object.Enum;
 using Goguma.Game.Object.Interface;
 using System.Collections.Generic;
@@ -31,14 +33,14 @@ namespace Goguma.Game.Object.Inventory
       var questionText = new CTexts();
       var selectSceneItems = new SelectSceneItems();
 
-      questionText = CTexts.Make($"{{인벤토리, cyan}}{{ : }}{{{invenInfo.TypeString}, green}}{{ 를 엽니다. }}{{\n    아이템, cyan}}{{를 선택하세요.}}");
+      questionText = CTexts.Make($"{{인벤토리, {Colors.txtInfo}}}{{ : }}{{{invenInfo.TypeString}, {Colors.txtInfo}}}{{ 를 엽니다. }}{{\n    아이템, {Colors.txtInfo}}}{{를 선택하세요.}}");
       selectSceneItems = new SelectSceneItems();
 
       for (int i = 0; i < invenInfo.TypeItems.Count; i++)
         selectSceneItems.Items.Add(
-          new SelectSceneItem(invenInfo.TypeItems[i].Name.Combine(CTexts.Make($"{{ ( }} {{{invenInfo.TypeItems[i].Count}개, cyan}} {{ )}}"))));
+          new SelectSceneItem(invenInfo.TypeItems[i].Name.Combine(CTexts.Make($"{{ ( }} {{{invenInfo.TypeItems[i].Count}개, {Colors.txtInfo}}} {{ )}}"))));
 
-      selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make("{뒤로 가기, Gray}")));
+      selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make($"{{뒤로 가기, {Colors.txtMuted}}}")));
 
       while (repeat)
       {
@@ -63,12 +65,10 @@ namespace Goguma.Game.Object.Inventory
         var selectSceneItems = new SelectSceneItems();
 
         questionText = CTexts.Make(
-          $"{{무슨 작업을 하시겠습니까?\n    }} {{선택된 아이템 : , gray}}").Combine(invenInfo.TypeItems[index].Name).Combine(CTexts.Make($" {{ ( }} {{{invenInfo.TypeString},green}} {{ : }} {{{index + 1},green}} {{ )}}"));
+          $"{{무슨 작업을 하시겠습니까?\n    }} {{선택된 아이템 : , {Colors.txtMuted}}}").Combine(invenInfo.TypeItems[index].Name).Combine(CTexts.Make($" {{ ( }} {{{invenInfo.TypeString},green}} {{ : }} {{{index + 1},green}} {{ )}}"));
 
         for (int i = 0; i < itemInfo.SelectItemAnswers.Count; i++)
           selectSceneItems.Items.Add(new SelectSceneItem(itemInfo.SelectItemAnswers[i]));
-
-        //selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make("{뒤로 가기, Gray}")));
 
         var answer = SelectScene(questionText, selectSceneItems) - 1;
         string answerText;

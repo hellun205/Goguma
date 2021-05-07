@@ -1,17 +1,16 @@
 using System;
+using Colorify;
 
 namespace Goguma.Game.Console
 {
   class CText
   {
-    public ConsoleColor ForegroundColor { get; set; }
-    public ConsoleColor BackgroundColor { get; set; }
+    public string Color { get; set; }
     public string Text { get; set; }
 
-    public CText(string text, ConsoleColor foregroundColor = ConsoleColor.White, ConsoleColor backgroundColor = ConsoleColor.Black)
+    public CText(string text, string color = Colors.txtDefault)
     {
-      BackgroundColor = backgroundColor;
-      ForegroundColor = foregroundColor;
+      Color = color;
       Text = text;
     }
   }

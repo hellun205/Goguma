@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Goguma.Game.Object.Enum;
 using Goguma.Game.Console;
+using Colorify;
 
 namespace Goguma.Game.Object.Inventory
 {
@@ -26,9 +27,8 @@ namespace Goguma.Game.Object.Inventory
         case ItemType.Other:
 
           break;
-
       }
-      SelectItemAnswers.Add(CTexts.Make("{뒤로 가기, Gray}"));
+      SelectItemAnswers.Add(CTexts.Make($"{{뒤로 가기, {Colors.txtMuted}}}"));
     }
   }
 }
