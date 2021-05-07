@@ -70,7 +70,7 @@ namespace Goguma.Game.Object.Inventory
 
         //selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make("{뒤로 가기, Gray}")));
 
-        int answer = SelectScene(questionText, selectSceneItems) - 1;
+        var answer = SelectScene(questionText, selectSceneItems) - 1;
         string answerText;
 
         answerText = selectSceneItems.Items[answer].Texts.ToString();

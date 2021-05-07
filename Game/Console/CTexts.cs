@@ -16,22 +16,17 @@ namespace Goguma.Game.Console
 
     public CTexts Combine(CTexts cTexts)
     {
-      CTexts resultCTexts = new CTexts
-      {
-        Texts = this.Texts
-      };
-      for (int i = 0; i < cTexts.Texts.Count; i++)
-      {
+      var resultCTexts = new CTexts { Texts = this.Texts };
+      for (var i = 0; i < cTexts.Texts.Count; i++)
         resultCTexts.Texts.Add(cTexts.Texts[i]);
-      }
 
       return resultCTexts;
     }
 
     public override string ToString()
     {
-      string resultStr = "";
-      for (int i = 0; i < Texts.Count; i++)
+      var resultStr = "";
+      for (var i = 0; i < Texts.Count; i++)
       {
         resultStr = resultStr + Texts[i].Text;
       }
@@ -41,51 +36,41 @@ namespace Goguma.Game.Console
 
     static public CTexts Make(string cText)
     {
-      TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
-      CTexts result = new CTexts();
-      string remainingString = cText;
-      
-      for (int i = 0; i <= cText.Split('{').Length; i++)
+      var textInfo = new CultureInfo("en-US", false).TextInfo;
+      var result = new CTexts();
+      var remainingString = cText;
+
+      for (var i = 0; i <= cText.Split('{').Length; i++)
       {
-        string splitStrings = Splits(remainingString, '{', '}');
+        var splitStrings = Splits(remainingString, '{', '}');
         remainingString = remainingString.Substring(remainingString.IndexOf('}') + 1);
 
-        
+        var splitText = "";
+        var splitFGColor = "White";
+        var splitBGColor = "Black";
 
-        string splitText = "";
-        string splitFGColor = "White";
-        string splitBGColor = "Black";
-
-        string[] ssSplit = splitStrings.Split(',');
+        var ssSplit = splitStrings.Split(',');
 
         if (ssSplit.Length > 0)
           splitText = ssSplit[0];
-
-        
-
-        if (ssSplit.Length > 1)
+        else if (ssSplit.Length > 1)
           splitFGColor = textInfo.ToTitleCase(ssSplit[1].Trim().ToLower());
-
-        if (ssSplit.Length > 2)
+        else if (ssSplit.Length > 2)
           splitBGColor = textInfo.ToTitleCase(ssSplit[2].Trim().ToLower());
 
         try
         {
           result.Texts.Add(new CText(splitText,
-                    (ConsoleColor)Enum.Parse(typeof(ConsoleColor), splitFGColor),
-                    (ConsoleColor)Enum.Parse(typeof(ConsoleColor), splitBGColor)));
-
+            (ConsoleColor)Enum.Parse(typeof(ConsoleColor), splitFGColor),
+            (ConsoleColor)Enum.Parse(typeof(ConsoleColor), splitBGColor))
+          );
         }
         catch
         {
-
+          throw new NotImplementedException();
         }
-
       }
-
-
       return result;
     }
-
   }
 }

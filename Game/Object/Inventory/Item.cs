@@ -15,13 +15,9 @@ namespace Goguma.Game.Object.Inventory
 
     static public IItem GetAir()
     {
-      Item resultItem = new Item
-      {
-        IsAir = true
-      };
+      Item resultItem = new Item { IsAir = true };
 
       return resultItem;
     }
-
   }
 }

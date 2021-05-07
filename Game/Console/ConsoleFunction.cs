@@ -8,8 +8,7 @@ namespace Goguma.Game.Console
   {
     static public void PrintText(CTexts printCText)
     {
-
-      for (int i = 0; i < printCText.Texts.Count; i++)
+      for (var i = 0; i < printCText.Texts.Count; i++)
       {
         BackgroundColor = printCText.Texts[i].BackgroundColor;
         ForegroundColor = printCText.Texts[i].ForegroundColor;
@@ -61,12 +60,8 @@ namespace Goguma.Game.Console
           int readInt = Convert.ToInt32(readText);
 
           for (int i = 1; i <= answerItems.Items.Count; i++)
-          {
             if (readInt == i)
-            {
               return readInt;
-            }
-          }
         }
       }
     }

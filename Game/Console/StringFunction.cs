@@ -6,7 +6,7 @@ namespace Goguma.Game.Console
   {
     static public bool IsInt(string text)
     {
-      bool result = Int32.TryParse(text, out int n);
+      var result = Int32.TryParse(text, out int n);
       return result;
     }
 

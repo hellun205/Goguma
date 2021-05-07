@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Goguma.Game.Console;
+﻿using System.Collections.Generic;
 using Goguma.Game.Object.Enum;
 using Goguma.Game.Object.Interface;
-using static Goguma.Game.Console.ConsoleFunction;
 
 namespace Goguma.Game.Object.Inventory
 {
@@ -37,7 +31,6 @@ namespace Goguma.Game.Object.Inventory
           TypeString = "기타";
           TypeItems = inventory.OtherItems;
           break;
-
       }
     }
   }

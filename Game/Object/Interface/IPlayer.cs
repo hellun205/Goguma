@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Goguma.Game.Object.Interface;
-using Goguma.Game.Object.Inventory;
-using Goguma.Game.Console;
+﻿using Goguma.Game.Console;
 
 namespace Goguma.Game.Object.Interface
 {
@@ -25,7 +18,7 @@ namespace Goguma.Game.Object.Interface
     int Exp { get; set; }
     int Gold { get; set; }
 
-    int AttDmg { get;  }
+    int AttDmg { get; }
     int ItemDmg { get; set; }
 
     int DefPer { get; set; }

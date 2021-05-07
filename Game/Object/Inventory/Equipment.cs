@@ -38,9 +38,5 @@ namespace Goguma.Game.Object.Inventory
         return 0;
       }
     }
-
-
-
-
   }
 }

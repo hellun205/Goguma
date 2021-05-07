@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Goguma.Game.Object.Interface;
+﻿using System.Collections.Generic;
 using Goguma.Game.Object.Enum;
 using Goguma.Game.Console;
 
@@ -35,8 +30,5 @@ namespace Goguma.Game.Object.Inventory
       }
       SelectItemAnswers.Add(CTexts.Make("{뒤로 가기, Gray}"));
     }
-
-
-
   }
 }

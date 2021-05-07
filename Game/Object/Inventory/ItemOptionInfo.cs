@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Goguma.Game.Object.Enum;
+﻿using Goguma.Game.Object.Enum;
 using Goguma.Game.Object.Interface;
 
 namespace Goguma.Game.Object.Inventory
@@ -34,18 +29,13 @@ namespace Goguma.Game.Object.Inventory
       switch (OptionText)
       {
         case "아이템 정보 보기":
-
           break;
-
-        default:
-          break;
-
       }
     }
 
     private void Consume()
     {
-      
+      // TODO
     }
   }
 }
