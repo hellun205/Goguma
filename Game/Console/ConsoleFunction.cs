@@ -14,7 +14,6 @@ namespace Goguma.Game.Console
       for (var i = 0; i < printCText.Texts.Count; i++)
       {
         colorify.Write(printCText.Texts[i].Text, printCText.Texts[i].Color);
-        ResetColor();
       }
     }
     static public void PrintText(string printstring)

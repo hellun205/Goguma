@@ -1,5 +1,7 @@
+using Colorify;
 using Goguma.Game.Console;
 using Goguma.Game.Object.Inventory;
+using static Goguma.Game.Console.ConsoleFunction;
 
 namespace Goguma.Game
 {

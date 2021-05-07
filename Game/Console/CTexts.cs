@@ -42,20 +42,20 @@ namespace Goguma.Game.Console
       var remainingString = cText;
 
       for (var i = 0; i <= cText.Split('{').Length; i++)
-      {
+      {       
         var splitStrings = Splits(remainingString, '{', '}');
         remainingString = remainingString.Substring(remainingString.IndexOf('}') + 1);
-
+        
         var splitText = "";
-        var splitColor = Colors.txtDefault;
+        var splitColor = "text-default";
 
         var ssSplit = splitStrings.Split(',');
 
         if (ssSplit.Length > 0)
           splitText = ssSplit[0];
-        else if (ssSplit.Length > 1)
-          splitColor = ssSplit[1].Trim().ToLower();
-
+        if (ssSplit.Length > 1)
+          splitColor = ssSplit[1].Trim();
+        
         try
         {
           result.Texts.Add(new CText(splitText, splitColor));
