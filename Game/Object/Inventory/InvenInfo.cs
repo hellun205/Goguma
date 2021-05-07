@@ -7,7 +7,7 @@ namespace Goguma.Game.Object.Inventory
   class InvenInfo
   {
     public string TypeString { get; set; }
-    public List<IItem> TypeItems;
+    public List<IItem> TypeItems { get; set; }
     public ItemType ItemType { get; set; }
 
 

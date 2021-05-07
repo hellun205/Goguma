@@ -27,23 +27,21 @@ namespace Goguma.Game.Object.Inventory
     public void PrintInventory(ItemType itemType)
     {
       var repeat = true;
-
-      var invenInfo = new InvenInfo(this, itemType);
-
-      var questionText = new CTexts();
-      var selectSceneItems = new SelectSceneItems();
-
-      questionText = CTexts.Make($"{{인벤토리, {Colors.txtInfo}}}{{ : }}{{{invenInfo.TypeString}, {Colors.txtInfo}}}{{ 를 엽니다. }}{{\n    아이템, {Colors.txtInfo}}}{{를 선택하세요.}}");
-      selectSceneItems = new SelectSceneItems();
-
-      for (int i = 0; i < invenInfo.TypeItems.Count; i++)
-        selectSceneItems.Items.Add(
-          new SelectSceneItem(invenInfo.TypeItems[i].Name.Combine(CTexts.Make($"{{ ( }} {{{invenInfo.TypeItems[i].Count}개, {Colors.txtInfo}}} {{ )}}"))));
-
-      selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make($"{{뒤로 가기, {Colors.txtMuted}}}")));
-
       while (repeat)
       {
+        var invenInfo = new InvenInfo(this, itemType);
+
+        var questionText = new CTexts();
+        var selectSceneItems = new SelectSceneItems();
+
+        questionText = CTexts.Make($"{{인벤토리, {Colors.txtSuccess}}}{{ : }}{{{invenInfo.TypeString}, {Colors.txtSuccess}}}{{ 를 엽니다. }}{{\n    아이템, {Colors.txtInfo}}}{{를 선택하세요.}}");
+        selectSceneItems = new SelectSceneItems();
+
+        for (int i = 0; i < invenInfo.TypeItems.Count; i++)
+        selectSceneItems.Items.Add(
+          new SelectSceneItem(CTexts.Make($"{{{invenInfo.TypeItems[i].Name.ToString()}}} {{ [{invenInfo.TypeItems[i].Count}], {Colors.txtInfo}}}")));
+
+        selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make($"{{뒤로 가기, {Colors.txtMuted}}}")));
         int answer = SelectScene(questionText, selectSceneItems) - 1;
 
         if (selectSceneItems.Items[answer].Texts.ToString() == "뒤로 가기")
@@ -56,20 +54,20 @@ namespace Goguma.Game.Object.Inventory
     private void SelectItem(ItemType itemType, int index)
     {
       bool repeat = true;
-      while (repeat)
-      {
-        var invenInfo = new InvenInfo(this, itemType);
+      var invenInfo = new InvenInfo(this, itemType);
         var itemInfo = new ItemInfo(itemType);
 
         var questionText = new CTexts();
         var selectSceneItems = new SelectSceneItems();
 
-        questionText = CTexts.Make(
-          $"{{무슨 작업을 하시겠습니까?\n    }} {{선택된 아이템 : ,{Colors.txtMuted}}}").Combine(invenInfo.TypeItems[index].Name).Combine(CTexts.Make($" {{ ( }} {{{invenInfo.TypeString},{Colors.txtSuccess}}} {{ : }} {{{index + 1},{Colors.txtSuccess}}} {{ )}}"));
+          questionText = 
+              CTexts.Make($"{{무슨 작업을 하시겠습니까?\n    }} {{\n    선택 : ,{Colors.txtMuted}}} {{{invenInfo.TypeItems[index].Name.ToString()}}} {{ [{invenInfo.TypeItems[index].Count}], {Colors.txtInfo}}} {{\n    위치 : }} {{{invenInfo.TypeString},{Colors.txtSuccess}}} {{ . }} {{{index + 1},{Colors.txtSuccess}}}");
 
         for (int i = 0; i < itemInfo.SelectItemAnswers.Count; i++)
           selectSceneItems.Items.Add(new SelectSceneItem(itemInfo.SelectItemAnswers[i]));
 
+      while (repeat)
+      {
         var answer = SelectScene(questionText, selectSceneItems) - 1;
         string answerText;
 

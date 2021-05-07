@@ -1,5 +1,8 @@
-﻿using Goguma.Game.Object.Enum;
+﻿using Goguma.Game.Console;
+using Goguma.Game.Object.Enum;
 using Goguma.Game.Object.Interface;
+using static Goguma.Game.Console.ConsoleFunction;
+using Colorify;
 
 namespace Goguma.Game.Object.Inventory
 {
@@ -29,6 +32,10 @@ namespace Goguma.Game.Object.Inventory
       switch (OptionText)
       {
         case "아이템 정보 보기":
+          PrintText(SelectedItem.Name);          
+          PrintText(CTexts.Make($"{{ [{SelectedItem.Count}],{Colors.txtInfo}}}"));
+          PrintText(CTexts.Make($"{{\n {SelectedItem.Lore}, {Colors.txtMuted}}}"));
+          Pause();
           break;
       }
     }

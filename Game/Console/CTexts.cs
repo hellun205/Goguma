@@ -8,21 +8,20 @@ namespace Goguma.Game.Console
 {
   class CTexts
   {
-    public List<CText> Texts { get; set; }
-
+    public List<CText> Texts;
     public CTexts()
     {
       Texts = new List<CText>();
     }
 
-    public CTexts Combine(CTexts cTexts)
-    {
-      var resultCTexts = new CTexts { Texts = this.Texts };
-      for (var i = 0; i < cTexts.Texts.Count; i++)
-        resultCTexts.Texts.Add(cTexts.Texts[i]);
+    // public static CTexts Combine(List<CText> TextsA, List<CText> TextsB)
+    // {
+    //   var resultCTexts = new CTexts{Texts = TextsA};
+    //   for (var i = 0; i < TextsB.Count; i++)
+    //     resultCTexts.Texts.Add(TextsB[i]);
 
-      return resultCTexts;
-    }
+    //   return resultCTexts;
+    // }
 
     public override string ToString()
     {
