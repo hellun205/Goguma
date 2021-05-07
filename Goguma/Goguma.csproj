@@ -64,6 +64,7 @@
     <Compile Include="Game\Object\Inventory\Inventory.cs" />
     <Compile Include="Game\Object\Inventory\Item.cs" />
     <Compile Include="Game\Object\Enum\ItemType.cs" />
+    <Compile Include="Game\Object\Inventory\ItemInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

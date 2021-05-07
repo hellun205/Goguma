@@ -34,7 +34,12 @@ namespace Goguma.Game.Object.Inventory
 
       for (int i = 0; i < invenInfo.TypeItem.Count; i++)
       {
-        selectSceneItems.Items.Add(new SelectSceneItem(invenInfo.TypeItem[i].Name));
+        CTexts answerText;
+
+        answerText = invenInfo.TypeItem[i].Name;
+        answerText.Combine(CTexts.Make($"{{ ( }} {{{invenInfo.TypeItem[i].Count}개, cyan}} {{ )}}"));
+
+        selectSceneItems.Items.Add(new SelectSceneItem(answerText));
       }
 
       SelectItem(itemType, SelectScene(questionText, selectSceneItems) - 1);
