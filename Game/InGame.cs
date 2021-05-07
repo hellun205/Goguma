@@ -1,4 +1,4 @@
-﻿using Goguma.Game.Console;
+using Goguma.Game.Console;
 using Goguma.Game.Object.Inventory;
 using static Goguma.Game.Console.ConsoleFunction;
 
@@ -6,7 +6,6 @@ namespace Goguma.Game
 {
   static class InGame
   {
-
     public static void Go()
     {
       TestInventory();
@@ -30,7 +29,6 @@ namespace Goguma.Game
       PrintText(ReadTextScean(questionCText2));
 
       Pause();
-
     }
 
     public static void TestInventory()
@@ -61,12 +59,7 @@ namespace Goguma.Game
       {
         Name = CTexts.Make("{테스트 기타 아이템, cyan}")
       });
-
-
-
       myInventory.PrintInventory(Object.Enum.ItemType.Equipment);
     }
-
-
   }
 }

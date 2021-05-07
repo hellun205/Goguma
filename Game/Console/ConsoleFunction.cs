@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using static Goguma.Game.Console.StringFunction;
 using static System.Console;
 
@@ -15,10 +15,8 @@ namespace Goguma.Game.Console
         ForegroundColor = printCText.Texts[i].ForegroundColor;
 
         Write(printCText.Texts[i].Text);
-
         ResetColor();
       }
-
     }
 
     static public void PrintText(string printstring)
@@ -36,8 +34,6 @@ namespace Goguma.Game.Console
 
       ReadKey();
     }
-
-
 
     static public int SelectScene(CTexts qustionText, SelectSceneItems answerItems)
     {
@@ -71,9 +67,7 @@ namespace Goguma.Game.Console
               return readInt;
             }
           }
-
         }
-
       }
     }
 
@@ -95,6 +89,5 @@ namespace Goguma.Game.Console
           return readText;
       }
     }
-
   }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Goguma.Game.Console
 {
@@ -25,10 +25,7 @@ namespace Goguma.Game.Console
       {
         return "";
       }
-
-
       return stringA;
     }
-
   }
 }
