@@ -1,4 +1,5 @@
 ﻿using Goguma.Game.Console;
+using Goguma.Game.Object.Inventory;
 using static Goguma.Game.Console.ConsoleFunction;
 
 namespace Goguma.Game
@@ -8,7 +9,7 @@ namespace Goguma.Game
 
     public static void Go()
     {
-      
+      TestInventory();
     }
 
     public static void Test()
@@ -30,6 +31,31 @@ namespace Goguma.Game
 
       Pause();
 
+    }
+
+    public static void TestInventory()
+    {
+      Inventory myInventory = new Inventory();
+
+      myInventory.EquipmentItems.Add(new Item()
+      {
+        Name = CTexts.Make("{테스트아이템1, yellow}{1}{2}{3}{4}{5}{6}")
+      });
+
+      myInventory.EquipmentItems.Add(new Item()
+      {
+        Name = CTexts.Make("{테스트아이템2, red}")
+      });
+
+
+      myInventory.PrintInventory(Object.Enum.ItemType.Equipment);
+      Pause();
+
+      myInventory.PrintInventory(Object.Enum.ItemType.Consume);
+      Pause();
+
+      myInventory.PrintInventory(Object.Enum.ItemType.Other);
+      Pause();
     }
 
 

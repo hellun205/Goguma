@@ -8,17 +8,17 @@ namespace Goguma.Game.Object.Inventory
 {
   class Inventory
   {
-    public List<IConsumeItem> ConsumeItems { get; set; }
-    public List<IEquipmentItem> EquipmentItems { get; set; }
-    public List<IOtherItem> OtherItems { get; set; }
+    public List<IItem> ConsumeItems { get; set; }
+    public List<IItem> EquipmentItems { get; set; }
+    public List<IItem> OtherItems { get; set; }
 
     public Equipment Equipment { get; set; }
 
     public Inventory()
     {
-      ConsumeItems = new List<IConsumeItem>();
-      EquipmentItems = new List<IEquipmentItem>();
-      OtherItems = new List<IOtherItem>();
+      ConsumeItems = new List<IItem>();
+      EquipmentItems = new List<IItem>();
+      OtherItems = new List<IItem>();
       Equipment = new Equipment();
     }
 
@@ -29,12 +29,12 @@ namespace Goguma.Game.Object.Inventory
       CTexts questionText = new CTexts();
       SelectSceneItems selectSceneItems = new SelectSceneItems();
 
-      questionText = CTexts.Make($"{{인벤토리, cyan}}{{ : }}{{{invenInfo.TypeString}, green}}{{ 를 엽니다. }}{{\n  아이템, cyan}}{{을 선택하시오.}}");
+      questionText = CTexts.Make($"{{인벤토리, cyan}}{{ : }}{{{invenInfo.TypeString}, green}}{{ 를 엽니다. 아이템을 선택 하시오 }}");
       selectSceneItems = new SelectSceneItems();
 
       for (int i = 0; i < invenInfo.TypeItem.Count; i++)
       {
-        selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make($"{{{invenInfo.TypeItem[i].Name}}}")));
+        selectSceneItems.Items.Add(new SelectSceneItem(invenInfo.TypeItem[i].Name));
       }
 
       SelectItem(itemType, SelectScene(questionText, selectSceneItems) - 1);

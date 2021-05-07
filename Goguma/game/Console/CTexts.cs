@@ -24,17 +24,19 @@ namespace Goguma.Game.Console
 
     static public CTexts Make(string cText)
     {
+      TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
       CTexts result = new CTexts();
       string remainingString = cText;
-
-      for (int i = 0; i <= remainingString.Split('{').Length; i++)
+      
+      for (int i = 0; i <= cText.Split('{').Length; i++)
       {
-
         string splitStrings = Splits(remainingString, '{', '}');
         remainingString = remainingString.Substring(remainingString.IndexOf('}') + 1);
 
+        
+
         string splitText = "";
-        string splitFGColor = "hite";
+        string splitFGColor = "White";
         string splitBGColor = "Black";
 
         string[] ssSplit = splitStrings.Split(',');
@@ -42,7 +44,7 @@ namespace Goguma.Game.Console
         if (ssSplit.Length > 0)
           splitText = ssSplit[0];
 
-        TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+        
 
         if (ssSplit.Length > 1)
           splitFGColor = textInfo.ToTitleCase(ssSplit[1].Trim().ToLower());
@@ -59,9 +61,11 @@ namespace Goguma.Game.Console
         }
         catch
         {
+
         }
 
       }
+
 
       return result;
     }

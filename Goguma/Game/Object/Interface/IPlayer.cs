@@ -5,12 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Goguma.Game.Object.Interface;
 using Goguma.Game.Object.Inventory;
+using Goguma.Game.Console;
 
 namespace Goguma.Game.Object.Interface
 {
   interface IPlayer
   {
-    string Name { get; set; }
+    CTexts Name { get; set; }
 
     Inventory.Inventory Inventory { get; set; }
 
