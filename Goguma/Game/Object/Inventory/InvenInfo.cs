@@ -13,11 +13,14 @@ namespace Goguma.Game.Object.Inventory
   class InvenInfo
   {
     public string TypeString { get; set; }
-    public List<IItem> TypeItems { get; set; }
+    public List<IItem> TypeItems;
+    public ItemType ItemType { get; set; }
 
 
     public InvenInfo(Inventory inventory, ItemType itemType)
     {
+      ItemType = ItemType;
+
       switch (itemType)
       {
         case ItemType.Equipment:

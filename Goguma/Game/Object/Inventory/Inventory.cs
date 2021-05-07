@@ -24,38 +24,68 @@ namespace Goguma.Game.Object.Inventory
 
     public void PrintInventory(ItemType itemType)
     {
-      InvenInfo invenInfo = new InvenInfo(this, itemType);
+      bool repeat = true;
 
-      CTexts questionText = new CTexts();
-      SelectSceneItems selectSceneItems = new SelectSceneItems();
-
-      questionText = CTexts.Make($"{{인벤토리, cyan}}{{ : }}{{{invenInfo.TypeString}, green}}{{ 를 엽니다. }}{{\n    아이템, cyan}}{{를 선택하세요.}}");
-      selectSceneItems = new SelectSceneItems();
-
-      for (int i = 0; i < invenInfo.TypeItems.Count; i++)
+      while (repeat)
       {
-        selectSceneItems.Items.Add(
-          new SelectSceneItem(invenInfo.TypeItems[i].Name.Combine(CTexts.Make($"{{ ( }} {{{invenInfo.TypeItems[i].Count}개, cyan}} {{ )}}"))));
-      }
+        InvenInfo invenInfo = new InvenInfo(this, itemType);
 
-      SelectItem(itemType, SelectScene(questionText, selectSceneItems) - 1);
+        CTexts questionText = new CTexts();
+        SelectSceneItems selectSceneItems = new SelectSceneItems();
+
+        questionText = CTexts.Make($"{{인벤토리, cyan}}{{ : }}{{{invenInfo.TypeString}, green}}{{ 를 엽니다. }}{{\n    아이템, cyan}}{{를 선택하세요.}}");
+        selectSceneItems = new SelectSceneItems();
+
+        for (int i = 0; i < invenInfo.TypeItems.Count; i++)
+          selectSceneItems.Items.Add(
+            new SelectSceneItem(invenInfo.TypeItems[i].Name.Combine(CTexts.Make($"{{ ( }} {{{invenInfo.TypeItems[i].Count}개, cyan}} {{ )}}"))));
+
+        selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make("{뒤로 가기, Gray}")));
+
+        int answer = SelectScene(questionText, selectSceneItems) - 1;
+
+        if (selectSceneItems.Items[answer].Texts.ToString() == "뒤로 가기")
+          repeat = false;
+        else
+          SelectItem(itemType, answer);
+      }
     }
 
-    public void SelectItem(ItemType itemType, int index)
+    private void SelectItem(ItemType itemType, int index)
     {
-      InvenInfo invenInfo = new InvenInfo(this, itemType);
-      ItemInfo itemInfo = new ItemInfo( itemType);
+      bool repeat = true;
+      while (repeat)
+      {
+        InvenInfo invenInfo = new InvenInfo(this, itemType);
+        ItemInfo itemInfo = new ItemInfo(itemType);
 
-      CTexts questionText = new CTexts();
-      SelectSceneItems selectSceneItems = new SelectSceneItems();
+        CTexts questionText = new CTexts();
+        SelectSceneItems selectSceneItems = new SelectSceneItems();
 
-      questionText = CTexts.Make(
-        $"{{무슨 작업을 하시겠습니까?\n    }} {{선택된 아이템 : , gray}}").Combine(invenInfo.TypeItems[index].Name).Combine(CTexts.Make(" {{ ( }} {{{invenInfo.TypeString},green}} {{ : }} {{{index},green}} {{ )}}"));
+        questionText = CTexts.Make(
+          $"{{무슨 작업을 하시겠습니까?\n    }} {{선택된 아이템 : , gray}}").Combine(invenInfo.TypeItems[index].Name).Combine(CTexts.Make($" {{ ( }} {{{invenInfo.TypeString},green}} {{ : }} {{{index + 1},green}} {{ )}}"));
 
-      for (int i = 0; i < itemInfo.SelectItemAnswers.Count; i++)
-        selectSceneItems.Items.Add(new SelectSceneItem(itemInfo.SelectItemAnswers[i]));
+        for (int i = 0; i < itemInfo.SelectItemAnswers.Count; i++)
+          selectSceneItems.Items.Add(new SelectSceneItem(itemInfo.SelectItemAnswers[i]));
 
-      SelectScene(questionText, selectSceneItems);
+        //selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make("{뒤로 가기, Gray}")));
+
+        int answer = SelectScene(questionText, selectSceneItems) - 1;
+        string answerText;
+
+        answerText = selectSceneItems.Items[answer].Texts.ToString();
+
+        if (selectSceneItems.Items[answer].Texts.ToString() == "뒤로 가기")
+          repeat = false;
+        else
+          ChooseSelectedItemOption(itemType, index, answerText);
+      }
+    }
+
+    private void ChooseSelectedItemOption(ItemType itemType, int selectedItemIndex, string chooseOptionText)
+    {
+      ItemOptionInfo itemOptionInfo = new ItemOptionInfo(this, itemType, selectedItemIndex, chooseOptionText);
+      itemOptionInfo.Act();
     }
   }
 }

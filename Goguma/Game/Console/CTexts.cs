@@ -16,7 +16,10 @@ namespace Goguma.Game.Console
 
     public CTexts Combine(CTexts cTexts)
     {
-      CTexts resultCTexts = this;
+      CTexts resultCTexts = new CTexts
+      {
+        Texts = this.Texts
+      };
       for (int i = 0; i < cTexts.Texts.Count; i++)
       {
         resultCTexts.Texts.Add(cTexts.Texts[i]);
