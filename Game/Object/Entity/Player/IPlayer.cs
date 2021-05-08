@@ -1,6 +1,7 @@
 ﻿using Goguma.Game.Console;
 using Goguma.Game.Object.Entity.Monster;
 using Goguma.Game.Object.Inventory;
+using Goguma.Game.Object.Map;
 
 namespace Goguma.Game.Object.Entity.Player
 {
@@ -9,7 +10,7 @@ namespace Goguma.Game.Object.Entity.Player
     string Name { get; set; }
 
     Inventory.Inventory Inventory { get; set; }
-
+    MapList Map { get; set; }
     int Hp { get; set; }
     int Ep { get; set; }
 

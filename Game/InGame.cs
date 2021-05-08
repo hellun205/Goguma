@@ -14,6 +14,19 @@ namespace Goguma.Game
     {
       SetPlayerDataScene();
       TestInventory();
+      PlayerActScene(player);
+    }
+
+    static public void PlayerActScene(IPlayer player)
+    {
+      while (true)
+      {
+        var playerActInfo = new PlayerActInfo(player.Map);
+        var answer = SelectScene(playerActInfo.QuestionText, playerActInfo.SelectItemAnswers) - 1;
+        var selectActText = playerActInfo.SelectItemAnswers.Items[answer].Texts.ToString();
+        var pdai = new PlayerDoActInfo(playerActInfo, selectActText);
+        pdai.Act(player);
+      }
     }
 
     static public void SetPlayerDataScene()
@@ -107,7 +120,6 @@ namespace Goguma.Game
         Description = CTexts.Make("{그냥 아이템이다. 이걸로 아무것도 할 수 있는 것은 없다.}"),
         Count = 10
       });
-      myInventory.PrintInventory();
     }
   }
 }
