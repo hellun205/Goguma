@@ -79,5 +79,30 @@ namespace Goguma.Game.Console
           return readText;
       }
     }
+
+    static public int ReadIntScean(CTexts qustionText, int minValue = Int32.MinValue, int maxValue = Int32.MaxValue)
+    {
+      while (true)
+      {
+        PrintText("\n\n Q. ");
+        PrintText(qustionText);
+        PrintText("\n\n");
+
+        PrintText(CTexts.Make($"{{\n>> , {Colors.txtInfo}}}"));
+
+        string readText = ReadLine();
+
+        PrintText("\n");
+
+        if (IsInt(readText))
+        {
+          var resultInt = Convert.ToInt32(readText);
+          if (resultInt >= minValue && resultInt <= maxValue)
+          {
+            return resultInt;
+          }
+        }
+      }
+    }
   }
 }

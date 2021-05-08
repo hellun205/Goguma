@@ -29,5 +29,9 @@ namespace Goguma.Game.Object.Inventory.Item
     {
       // TODO
     }
+    public virtual void RemoveItem(int count)
+    {
+
+    }
   }
 }

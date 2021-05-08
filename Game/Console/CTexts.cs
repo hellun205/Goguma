@@ -14,14 +14,14 @@ namespace Goguma.Game.Console
       Texts = new List<CText>();
     }
 
-    // public static CTexts Combine(List<CText> TextsA, List<CText> TextsB)
-    // {
-    //   var resultCTexts = new CTexts{Texts = TextsA};
-    //   for (var i = 0; i < TextsB.Count; i++)
-    //     resultCTexts.Texts.Add(TextsB[i]);
+    public CTexts Combine(CTexts TextsB)
+    {
+      var resultCTexts = new CTexts{Texts = Texts};
+      for (var i = 0; i < TextsB.Texts.Count ; i++)
+        resultCTexts.Texts.Add(TextsB.Texts[i]);
 
-    //   return resultCTexts;
-    // }
+      return resultCTexts;
+    }
 
     public override string ToString()
     {

@@ -6,18 +6,12 @@ using static Goguma.Game.Console.StringFunction;
 
 namespace Goguma.Game.Object.Inventory.Item
 {
-    class EquipmentItem : IEquipmentItem
+    class EquipmentItem : Item, IEquipmentItem
     {
         public EquipmentType EquipmentType { get ; set ; }
         public ItemIncrease Increase { get ; set ; }
-        public CTexts Name { get ; set ; }
-        public CTexts Lore { get  ; set; }
-        public CTexts Description { get ; set ; }
-        public int Count { get ; set; }
-        public bool IsAir { get ; set ; }
-        public ItemType Type { get; set; }
 
-        public void DescriptionItem()
+        new public void DescriptionItem()
         {
             if (Increase.MaxHp != 0)
             {
@@ -46,7 +40,7 @@ namespace Goguma.Game.Object.Inventory.Item
             //TODO
         }
 
-        public void UseItem(IPlayer player)
+        new public void UseItem(IPlayer player)
         {
             //TODO
         }

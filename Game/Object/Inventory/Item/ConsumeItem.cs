@@ -6,17 +6,11 @@ using static Goguma.Game.Console.StringFunction;
 
 namespace Goguma.Game.Object.Inventory.Item
 {
-    class ConsumeItem : IConsumeItem
+    class ConsumeItem : Item, IConsumeItem 
     {
         public ItemEffect Effect { get; set; }
-        public CTexts Name { get; set; }
-        public CTexts Lore { get; set; }
-        public CTexts Description { get; set; }
-        public int Count { get; set; }
-        public bool IsAir { get; set; }
-        public ItemType Type { get; set; }
 
-        public void DescriptionItem()
+        new public void DescriptionItem()
         {
             if (Effect.Hp != 0)
             {
@@ -56,9 +50,11 @@ namespace Goguma.Game.Object.Inventory.Item
             }
         }
 
-        public void UseItem(IPlayer toPlayer)
+        new public void UseItem(IPlayer toPlayer)
         {
             //TODO
         }
+
+        
     }
 }

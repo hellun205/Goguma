@@ -27,6 +27,7 @@ namespace Goguma.Game.Object.Inventory.Item
 
           break;
       }
+      SelectItemAnswers.Add(CTexts.Make("{버리기}"));
       SelectItemAnswers.Add(CTexts.Make($"{{뒤로 가기, {Colors.txtMuted}}}"));
     }
   }

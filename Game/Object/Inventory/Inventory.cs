@@ -55,30 +55,30 @@ namespace Goguma.Game.Object.Inventory
     private void SelectItem(ItemType itemType, int index)
     {
       bool repeat = true;
-      var invenInfo = new InvenInfo(this, itemType);
-        var itemInfo = new ItemInfo(itemType);
+      while (repeat)
+        {  
+          var invenInfo = new InvenInfo(this, itemType);
+          var itemInfo = new ItemInfo(itemType);
 
-        var questionText = new CTexts();
-        var selectSceneItems = new SelectSceneItems();
+          var questionText = new CTexts();
+          var selectSceneItems = new SelectSceneItems();
 
           questionText = 
               CTexts.Make($"{{무슨 작업을 하시겠습니까?\n    }} {{\n    선택 : }} {{{invenInfo.TypeItems[index].Name.ToString()}}} {{ [{invenInfo.TypeItems[index].Count}], {Colors.txtInfo}}} {{\n    위치 : }} {{{invenInfo.TypeString},{Colors.txtSuccess}}} {{ . }} {{{index + 1},{Colors.txtSuccess}}}");
 
-        for (int i = 0; i < itemInfo.SelectItemAnswers.Count; i++)
-          selectSceneItems.Items.Add(new SelectSceneItem(itemInfo.SelectItemAnswers[i]));
+          for (int i = 0; i < itemInfo.SelectItemAnswers.Count; i++)
+            selectSceneItems.Items.Add(new SelectSceneItem(itemInfo.SelectItemAnswers[i]));
 
-      while (repeat)
-      {
-        var answer = SelectScene(questionText, selectSceneItems) - 1;
-        string answerText;
+          var answer = SelectScene(questionText, selectSceneItems) - 1;
+          string answerText;
 
-        answerText = selectSceneItems.Items[answer].Texts.ToString();
+          answerText = selectSceneItems.Items[answer].Texts.ToString();
 
-        if (selectSceneItems.Items[answer].Texts.ToString() == "뒤로 가기")
-          repeat = false;
-        else
-          ChooseSelectedItemOption(itemType, index, answerText);
-      }
+          if (selectSceneItems.Items[answer].Texts.ToString() == "뒤로 가기")
+            repeat = false;
+          else
+            ChooseSelectedItemOption(itemType, index, answerText);
+        }
     }
 
     private void ChooseSelectedItemOption(ItemType itemType, int selectedItemIndex, string chooseOptionText)

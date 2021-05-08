@@ -1,4 +1,5 @@
-﻿using Goguma.Game.Console;
+﻿using System.Runtime.CompilerServices;
+using Goguma.Game.Console;
 using Goguma.Game.Object.Entity.Player;
 
 namespace Goguma.Game.Object.Inventory.Item
@@ -14,6 +15,7 @@ namespace Goguma.Game.Object.Inventory.Item
     ItemType Type { get; set; }
 
     void UseItem(IPlayer player);
+    void RemoveItem(int count);
     void DescriptionItem();
   }
 }
