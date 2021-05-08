@@ -21,6 +21,7 @@ namespace Goguma.Game.Object.Entity.Player
           player.Inventory.PrintInventory();
           break;
         case "게임 종료":
+          InGame.ExitGame();
           break;
       }
     }

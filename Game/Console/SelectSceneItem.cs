@@ -1,5 +1,8 @@
+using System;
+
 namespace Goguma.Game.Console
 {
+  [Serializable]
   class SelectSceneItem
   {
     public CTexts Texts { get; set; }

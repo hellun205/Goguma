@@ -6,6 +6,7 @@ using static Goguma.Game.Console.StringFunction;
 
 namespace Goguma.Game.Console
 {
+  [Serializable]
   class CTexts
   {
     public List<CText> Texts;

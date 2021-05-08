@@ -2,9 +2,11 @@
 using Goguma.Game.Object.Inventory;
 using Goguma.Game.Console;
 using Colorify;
+using System;
 
 namespace Goguma.Game.Object.Inventory.Item
 {
+  [Serializable]
   class ItemInfo
   {
     public List<CTexts> SelectItemAnswers { get; set; }

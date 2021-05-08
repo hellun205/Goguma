@@ -7,6 +7,7 @@ using Colorify;
 
 namespace Goguma.Game.Object.Inventory.Item
 {
+  [Serializable]
   class ItemOptionInfo
   {
     private Inventory MyInventory { get; set; }

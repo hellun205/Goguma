@@ -4,6 +4,7 @@ using Goguma.Game.Object.Inventory;
 using static Goguma.Game.Console.ConsoleFunction;
 using Goguma.Game.Object.Inventory.Item;
 using Goguma.Game.Object.Entity.Player;
+using System;
 
 namespace Goguma.Game
 {
@@ -13,7 +14,6 @@ namespace Goguma.Game
     public static void Go()
     {
       SetPlayerDataScene();
-      TestInventory();
       PlayerActScene(player);
     }
 
@@ -67,7 +67,10 @@ namespace Goguma.Game
 
     static public void ExitGame()
     {
-      System.Environment.Exit(0);
+      if (ReadYesOrNoScean(CTexts.Make("{진짜로 종료하시겠습니까?}")))
+      {
+        Environment.Exit(0);
+      }
     }
     public static void TestInventory()
     {

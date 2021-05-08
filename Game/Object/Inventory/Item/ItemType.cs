@@ -1,5 +1,8 @@
-﻿namespace Goguma.Game.Object.Inventory.Item
+﻿using System;
+
+namespace Goguma.Game.Object.Inventory.Item
 {
+  [Serializable]
   enum ItemType
   {
     Equipment,
