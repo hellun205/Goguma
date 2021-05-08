@@ -34,7 +34,13 @@ namespace Goguma.Game.Object.Inventory
         case "아이템 정보 보기":
           PrintText(SelectedItem.Name);          
           PrintText(CTexts.Make($"{{ [{SelectedItem.Count}],{Colors.txtInfo}}}"));
-          PrintText(CTexts.Make($"{{\n {SelectedItem.Lore}, {Colors.txtMuted}}}"));
+          PrintText(CTexts.Make($"{{ {MyInvenInfo.TypeString} 아이템\n  , {Colors.txtWarning}}}"));
+          PrintText(SelectedItem.Lore);
+          PrintText("\n");
+          PrintText(SelectedItem.Description);
+          PrintText("\n");
+
+          SelectedItem.DescriptionItem();
           Pause();
           break;
       }

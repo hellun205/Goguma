@@ -11,6 +11,7 @@ namespace Goguma.Game.Object.Inventory
 
     public ItemType Type { get; set; }
     public CTexts Lore { get; set; }
+    public CTexts Description { get; set; }
     public bool IsAir { get; set; }
 
     static public IItem GetAir()
@@ -18,6 +19,16 @@ namespace Goguma.Game.Object.Inventory
       Item resultItem = new Item { IsAir = true };
 
       return resultItem;
+    }
+
+    public void UseItem(IPlayer player)
+    {
+      // TO DO
+    }
+
+    public void DescriptionItem()
+    {
+      // TODO
     }
   }
 }

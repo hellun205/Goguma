@@ -19,7 +19,10 @@ namespace Goguma.Game
 
       myInventory.EquipmentItems.Add(new Item()
       {
-        Name = CTexts.Make("{테스트아이템1}")
+        Name = CTexts.Make("{테스트아이템1}"),
+        Lore = CTexts.Make("{테스트용으로 만들어진 아이템이다. 번호는 1이다., text-muted}"),
+        Type = Object.Enum.ItemType.Equipment,
+        Description = CTexts.Make("{착용하면 아무런 효과도 얻을 수 없다., text-muted}")
       });
 
       myInventory.EquipmentItems.Add(new Item()
