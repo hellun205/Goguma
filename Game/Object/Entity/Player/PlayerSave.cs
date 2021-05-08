@@ -12,6 +12,18 @@ namespace Goguma.Game.Object.Entity.Player
   [Serializable]
   static class PlayerSave
   {
+    public static void SaveCurrentPlayer()
+    {
+      CreateDirectory(InGame.player.Name);
+
+      var ws = new FileStream($"datas/{InGame.player.Name}/player.pdata", FileMode.OpenOrCreate);
+      var serializer = new BinaryFormatter();
+
+#pragma warning disable SYSLIB0011
+      serializer.Serialize(ws, InGame.player);
+      ws.Close();
+    }
+
     public static void SavePlayerData(Player player)
     {
       CreateDirectory(player.Name);

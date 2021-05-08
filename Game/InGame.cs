@@ -9,7 +9,7 @@ namespace Goguma.Game
 {
   static class InGame
   {
-    static Player player;
+    public static Player player;
     public static void Go()
     {
       SetPlayerDataScene();
@@ -67,7 +67,7 @@ namespace Goguma.Game
 
     static public void ExitGame()
     {
-
+      System.Environment.Exit(0);
     }
     public static void TestInventory()
     {

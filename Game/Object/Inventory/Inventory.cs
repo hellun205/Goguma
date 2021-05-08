@@ -1,9 +1,6 @@
 ﻿using Colorify;
-using Colorify.UI;
 using Goguma.Game.Console;
 using Goguma.Game.Object.Inventory.Item;
-using Goguma.Game.Object.Entity.Monster;
-using Goguma.Game.Object.Entity.Player;
 using System.Collections.Generic;
 using static Goguma.Game.Console.ConsoleFunction;
 using System;
@@ -114,12 +111,12 @@ namespace Goguma.Game.Object.Inventory
     public void RemoveItem(ItemType itemType, int index, int count)
     {
       var invenInfo = new InvenInfo(this, itemType);
-      var selectedItem = invenInfo.TypeItems[index];
+      // var selectedItem = invenInfo.TypeItems[index];
 
-      if (count == selectedItem.Count)
+      if (count == invenInfo.TypeItems[index].Count)
         invenInfo.TypeItems.RemoveAt(index);
       else
-        selectedItem.Count -= count;
+        invenInfo.TypeItems[index].Count -= count;
     }
   }
 }
