@@ -109,7 +109,7 @@ namespace Goguma.Game.Console
 
           if (readInt == 1)
             return true;
-          else if (readInt == 0)
+          else if (readInt == 2)
             return false;
         }
       }

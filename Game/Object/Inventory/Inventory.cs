@@ -98,25 +98,25 @@ namespace Goguma.Game.Object.Inventory
       answerText = selectSceneItems.Items[answer].Texts.ToString();
 
       if (selectSceneItems.Items[answer].Texts.ToString() != "뒤로 가기")
-        ChooseSelectedItemOption(itemType, index, answerText);
-      // }
-    }
+      {
+        var itemOptionInfo = new ItemOptionInfo(this, itemType, index, answerText);
+        itemOptionInfo.Act();
+        Pause();
+      }
 
-    private void ChooseSelectedItemOption(ItemType itemType, int selectedItemIndex, string chooseOptionText)
-    {
-      var itemOptionInfo = new ItemOptionInfo(this, itemType, selectedItemIndex, chooseOptionText);
-      itemOptionInfo.Act();
+
+      // }
     }
 
     public void RemoveItem(ItemType itemType, int index, int count)
     {
       var invenInfo = new InvenInfo(this, itemType);
-      // var selectedItem = invenInfo.TypeItems[index];
+      var selectedItem = invenInfo.TypeItems[index];
 
-      if (count == invenInfo.TypeItems[index].Count)
+      if (count == selectedItem.Count)
         invenInfo.TypeItems.RemoveAt(index);
       else
-        invenInfo.TypeItems[index].Count -= count;
+        selectedItem.Count -= count;
     }
   }
 }

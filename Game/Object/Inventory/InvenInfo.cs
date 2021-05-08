@@ -12,7 +12,7 @@ namespace Goguma.Game.Object.Inventory
 
     public InvenInfo(Inventory inventory, ItemType itemType)
     {
-      ItemType = ItemType;
+      ItemType = itemType;
 
       switch (itemType)
       {

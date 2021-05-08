@@ -90,17 +90,11 @@ namespace Goguma.Game.Object.Inventory.Item
 
     private void RemoveItem(int count)
     {
-      var questionText = new CTexts();
-      var selectSceneItems = new SelectSceneItems();
-
-      questionText = CTexts.Make($"{{선택된 아이템 }} {{{count}개, {Colors.txtInfo}}} {{ 를 버리시겠습니까?}}");
-      selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make("{예}")));
-      selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make("{아니요}")));
       SelectedItemCTexts();
-      var answer = SelectScene(questionText, selectSceneItems, false);
+      var answer = ReadYesOrNoScean(CTexts.Make($"{{선택된 아이템 }} {{{count}개, {Colors.txtInfo}}} {{ 를 버리시겠습니까?}}"), false);
 
       PrintText(SelectedItem.Name);
-      if (answer == 1)
+      if (answer == true)
       {
         if (count == SelectedItem.Count)
         {
@@ -110,7 +104,6 @@ namespace Goguma.Game.Object.Inventory.Item
         {
           PrintText(CTexts.Make($"{{ {count}개, {Colors.txtInfo}}} {{를 버려서 현재 }} {{{SelectedItem.Count - count}개, {Colors.txtInfo}}} {{남았습니다.}}"));
         }
-
         Lose(count);
         PrintText("\n");
       }
@@ -118,7 +111,6 @@ namespace Goguma.Game.Object.Inventory.Item
       {
         PrintText(CTexts.Make("{(을)를 버리지 않았습니다.}"));
       }
-      Pause();
     }
   }
 }
