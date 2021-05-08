@@ -9,5 +9,9 @@ namespace Goguma.Game.Object.Interface
     int IncreaseDefPer { get; set; }
     int IncreaseMaxHp { get; set; }
     int IncreaseMaxEp { get; set; }
+
+    new void UseItem(IPlayer player);
+
+    new void DescriptionItem();
   }
 }
