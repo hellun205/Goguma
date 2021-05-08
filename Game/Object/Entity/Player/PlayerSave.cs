@@ -77,7 +77,18 @@ namespace Goguma.Game.Object.Entity.Player
 
     public static Player GetPlayerData()
     {
-      var name = ReadTextScean(CTexts.Make("{불러올 플레이어 이름을 입력하세요}.")).Trim();
+      var questionText = CTexts.Make("{불러올 캐릭터를 선택하세요.}");
+      var selectSceneItems = new SelectSceneItems();
+
+      var di = new DirectoryInfo("datas");
+
+      foreach (var item in di.GetDirectories())
+      {
+        selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make($"{{{item.Name}}}")));
+      }
+      var anwser = SelectScene(questionText, selectSceneItems) - 1;
+
+      var name = selectSceneItems.Items[anwser].Texts.ToString().Trim();
 
       if (name == "" || name == null) return null;
 
