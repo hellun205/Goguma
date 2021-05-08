@@ -28,12 +28,9 @@ namespace Goguma.Game.Object.Inventory.Item
       SelectedItem = MyInvenInfo.TypeItems[SelectedItemIndex];
     }
 
-    public CTexts SelectedItemCTexts(CTexts message)
+    public void SelectedItemCTexts()
     {
-      var cTexts = new CTexts();
-      cTexts = message;
-      cTexts = cTexts.Combine(CTexts.Make($"{{\n    선택 : }} {{{SelectedItem.Name.ToString()}}} {{ [{SelectedItem.Count}], {Colors.txtInfo}}} {{\n    위치 : }} {{{MyInvenInfo.TypeString},{Colors.txtSuccess}}} {{ . }} {{{SelectedItem.Count + 1},{Colors.txtSuccess}}}"));
-      return cTexts;
+      PrintText(CTexts.Make($"{{\n    선택 : }} {{{SelectedItem.Name.ToString()}}} {{ [{SelectedItem.Count}], {Colors.txtInfo}}} {{\n    위치 : }} {{{MyInvenInfo.TypeString},{Colors.txtSuccess}}} {{ . }} {{{SelectedItemIndex + 1},{Colors.txtSuccess}}}"));
     }
 
     public void Act()
@@ -62,8 +59,9 @@ namespace Goguma.Game.Object.Inventory.Item
             while (repeat)
             {
               var questionText = new CTexts();
-              questionText = SelectedItemCTexts(CTexts.Make($"{{선택된 아이템이 총 }} {{{SelectedItem.Count}개, {Colors.txtInfo}}} {{가 있습니다. 몇개를 버리시겠습니까?\n    0을 입력하면 취소됩니다.}}"));
-              var answer = ReadIntScean(questionText, 0, SelectedItem.Count);
+              questionText = CTexts.Make($"{{선택된 아이템이 총 }} {{{SelectedItem.Count}개, {Colors.txtInfo}}} {{가 있습니다. 몇개를 버리시겠습니까?\n    0을 입력하면 취소됩니다.}}");
+              SelectedItemCTexts();
+              var answer = ReadIntScean(questionText, 0, SelectedItem.Count, false);
 
               if (answer == 0) repeat = false;
               else
@@ -87,10 +85,11 @@ namespace Goguma.Game.Object.Inventory.Item
       var questionText = new CTexts();
       var selectSceneItems = new SelectSceneItems();
 
-      questionText = SelectedItemCTexts(CTexts.Make("{선택된 아이템을 버리시겠습니까?}"));
+      questionText = CTexts.Make("{선택된 아이템을 버리시겠습니까?}");
       selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make("{예}")));
       selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make("{아니요}")));
-      var answer = SelectScene(questionText, selectSceneItems);
+      SelectedItemCTexts();
+      var answer = SelectScene(questionText, selectSceneItems, false);
 
       PrintText(SelectedItem.Name);
 

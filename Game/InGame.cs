@@ -42,6 +42,7 @@ namespace Goguma.Game
         Name = CTexts.Make("{테스트 소비 아이템1}"),
         Lore = CTexts.Make("{테스트용으로 만들어진 아이템이다. C2,text-muted}"),
         Description = CTexts.Make("{사용하면 여러가지 효과를 볼 수 있다.}"),
+        Type = ItemType.Consume,
         Effect = new ItemEffect() { Hp = 10, Ep = -10, AttDmg = 5, DefPer = 2, Exp = 4040, Gold = -10 },
         Count = 2
       });
@@ -52,16 +53,19 @@ namespace Goguma.Game
         Lore = CTexts.Make("{테스트용으로 만들어진 포션이다. C1,text-muted}"),
         Description = CTexts.Make("{사용하면 Hp를 회복하는 효과를 볼 수 있다.}"),
         Effect = new ItemEffect() { Hp = 500 },
+        Type = ItemType.Consume,
         Count = 1
       });
 
       myInventory.OtherItems.Add(new Item()
       {
-        Name = CTexts.Make("{테스트 기타 아이템}")
+        Name = CTexts.Make("{테스트 기타 아이템}"),
+        Type = ItemType.Other,
+        Lore = CTexts.Make("{테스트용으로 만들어진 기타아이템이다. C1,text-muted}"),
+        Description = CTexts.Make("{그냥 아이템이다. 이걸로 아무것도 할 수 있는 것은 없다.}"),
+        Count = 10
       });
-      myInventory.PrintInventory(ItemType.Equipment);
-      myInventory.PrintInventory(ItemType.Consume);
-      myInventory.PrintInventory(ItemType.Other);
+      myInventory.PrintInventory();
     }
   }
 }

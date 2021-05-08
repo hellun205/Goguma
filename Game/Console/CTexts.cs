@@ -14,14 +14,14 @@ namespace Goguma.Game.Console
       Texts = new List<CText>();
     }
 
-    public CTexts Combine(CTexts TextsB)
-    {
-      var resultCTexts = new CTexts{Texts = Texts};
-      for (var i = 0; i < TextsB.Texts.Count ; i++)
-        resultCTexts.Texts.Add(TextsB.Texts[i]);
+    // public CTexts Combine(CTexts TextsB)
+    // {
+    //   var resultCTexts = new CTexts{Texts = Texts};
+    //   for (var i = 0; i < TextsB.Texts.Count ; i++)
+    //     resultCTexts.Texts.Add(TextsB.Texts[i]);
 
-      return resultCTexts;
-    }
+    //   return resultCTexts;
+    // }
 
     public override string ToString()
     {
@@ -41,10 +41,10 @@ namespace Goguma.Game.Console
       var remainingString = cText;
 
       for (var i = 0; i <= cText.Split('{').Length; i++)
-      {       
+      {
         var splitStrings = Splits(remainingString, '{', '}');
         remainingString = remainingString.Substring(remainingString.IndexOf('}') + 1);
-        
+
         var splitText = "";
         var splitColor = "text-default";
 
@@ -54,7 +54,7 @@ namespace Goguma.Game.Console
           splitText = ssSplit[0];
         if (ssSplit.Length > 1)
           splitColor = ssSplit[1].Trim();
-        
+
         try
         {
           result.Texts.Add(new CText(splitText, splitColor));

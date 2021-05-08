@@ -6,6 +6,7 @@ using Goguma.Game.Object.Entity.Monster;
 using Goguma.Game.Object.Entity.Player;
 using System.Collections.Generic;
 using static Goguma.Game.Console.ConsoleFunction;
+using System;
 
 namespace Goguma.Game.Object.Inventory
 {
@@ -25,6 +26,30 @@ namespace Goguma.Game.Object.Inventory
       Equipment = new Equipment();
     }
 
+    public void PrintInventory()
+    {
+      var repeat = true;
+      while (repeat)
+      {
+        var questionText = new CTexts();
+        var selectSceneItems = new SelectSceneItems();
+
+        questionText = CTexts.Make("{어떤 인벤토리를 열으시겠습니까?}");
+        for (var i = 0; i < Enum.GetValues(typeof(ItemType)).Length; i++)
+        {
+          var invenInfo = new InvenInfo(new Inventory(), (ItemType)i);
+          selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make($"{{{invenInfo.TypeString} 아이템, {Colors.txtSuccess}}} {{ 인벤토리}}")));
+        }
+        selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make($"{{뒤로 가기, {Colors.txtMuted}}}")));
+        var answer = SelectScene(questionText, selectSceneItems) - 1;
+
+        if (selectSceneItems.Items[answer].Texts.ToString() == "뒤로 가기")
+          repeat = false;
+        else
+          PrintInventory((ItemType)answer);
+      }
+
+    }
     public void PrintInventory(ItemType itemType)
     {
       var repeat = true;
@@ -36,7 +61,6 @@ namespace Goguma.Game.Object.Inventory
         var selectSceneItems = new SelectSceneItems();
 
         questionText = CTexts.Make($"{{인벤토리, {Colors.txtSuccess}}}{{ : }}{{{invenInfo.TypeString}, {Colors.txtSuccess}}}{{ 를 엽니다. }}{{\n    아이템, {Colors.txtInfo}}}{{를 선택하세요.}}");
-        selectSceneItems = new SelectSceneItems();
 
         for (int i = 0; i < invenInfo.TypeItems.Count; i++)
           selectSceneItems.Items.Add(

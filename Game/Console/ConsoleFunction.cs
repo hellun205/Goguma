@@ -29,13 +29,25 @@ namespace Goguma.Game.Console
       ReadKey();
     }
 
-    static public int SelectScene(CTexts qustionText, SelectSceneItems answerItems)
+    static private void PrintQuestionText(CTexts questionText, bool air)
+    {
+      if (air)
+        PrintText("\n");
+      PrintText("\nQ. ");
+      PrintText(questionText);
+      PrintText("\n\n");
+    }
+
+    static private void PrintReadText()
+    {
+      PrintText(CTexts.Make($"{{\n>> , {Colors.txtInfo}}}"));
+    }
+
+    static public int SelectScene(CTexts questionText, SelectSceneItems answerItems, bool air = true)
     {
       while (true)
       {
-        PrintText("\n\n Q. ");
-        PrintText(qustionText);
-        PrintText("\n\n");
+        PrintQuestionText(questionText, air);
 
         for (int i = 1; i <= answerItems.Items.Count; i++)
         {
@@ -44,7 +56,7 @@ namespace Goguma.Game.Console
           PrintText("\n");
         }
 
-        PrintText(CTexts.Make($"{{\n>> , {Colors.txtInfo}}}"));
+        PrintReadText();
 
         string readText = ReadLine();
 
@@ -61,15 +73,12 @@ namespace Goguma.Game.Console
       }
     }
 
-    static public string ReadTextScean(CTexts qustionText)
+    static public string ReadTextScean(CTexts questionText, bool air = true)
     {
       while (true)
       {
-        PrintText("\n\n Q. ");
-        PrintText(qustionText);
-        PrintText("\n\n");
-
-        PrintText(CTexts.Make($"{{\n>> , {Colors.txtInfo}}}"));
+        PrintQuestionText(questionText, air);
+        PrintReadText();
 
         string readText = ReadLine();
 
@@ -80,15 +89,12 @@ namespace Goguma.Game.Console
       }
     }
 
-    static public int ReadIntScean(CTexts qustionText, int minValue = Int32.MinValue, int maxValue = Int32.MaxValue)
+    static public int ReadIntScean(CTexts questionText, int minValue = Int32.MinValue, int maxValue = Int32.MaxValue, bool air = true)
     {
       while (true)
       {
-        PrintText("\n\n Q. ");
-        PrintText(qustionText);
-        PrintText("\n\n");
-
-        PrintText(CTexts.Make($"{{\n>> , {Colors.txtInfo}}}"));
+        PrintQuestionText(questionText, air);
+        PrintReadText();
 
         string readText = ReadLine();
 
