@@ -1,19 +1,19 @@
 using Goguma.Game.Console;
 using Goguma.Game.Object.Entity.Player;
-using Goguma.Game.Object.Enum;
+using Goguma.Game.Object.Inventory;
 
 namespace Goguma.Game.Object.Inventory.Item
 {
     class EquipmentItem : IEquipmentItem
     {
-        public EquipmentType EquipmentType { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public ItemIncrease Increase { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public CTexts Name { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public CTexts Lore { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public CTexts Description { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public int Count { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public bool IsAir { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public ItemType Type { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        public EquipmentType EquipmentType { get ; set ; }
+        public ItemIncrease Increase { get ; set ; }
+        public CTexts Name { get ; set ; }
+        public CTexts Lore { get  ; set; }
+        public CTexts Description { get ; set ; }
+        public int Count { get ; set; }
+        public bool IsAir { get ; set ; }
+        public ItemType Type { get; set; }
 
         public void DescriptionItem()
         {

@@ -62,7 +62,7 @@ namespace Goguma.Game.Object.Inventory
         var selectSceneItems = new SelectSceneItems();
 
           questionText = 
-              CTexts.Make($"{{무슨 작업을 하시겠습니까?\n    }} {{\n    선택 : ,{Colors.txtMuted}}} {{{invenInfo.TypeItems[index].Name.ToString()}}} {{ [{invenInfo.TypeItems[index].Count}], {Colors.txtInfo}}} {{\n    위치 : }} {{{invenInfo.TypeString},{Colors.txtSuccess}}} {{ . }} {{{index + 1},{Colors.txtSuccess}}}");
+              CTexts.Make($"{{무슨 작업을 하시겠습니까?\n    }} {{\n    선택 : }} {{{invenInfo.TypeItems[index].Name.ToString()}}} {{ [{invenInfo.TypeItems[index].Count}], {Colors.txtInfo}}} {{\n    위치 : }} {{{invenInfo.TypeString},{Colors.txtSuccess}}} {{ . }} {{{index + 1},{Colors.txtSuccess}}}");
 
         for (int i = 0; i < itemInfo.SelectItemAnswers.Count; i++)
           selectSceneItems.Items.Add(new SelectSceneItem(itemInfo.SelectItemAnswers[i]));

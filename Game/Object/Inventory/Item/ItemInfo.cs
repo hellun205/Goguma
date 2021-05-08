@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Goguma.Game.Object.Enum;
+using Goguma.Game.Object.Inventory;
 using Goguma.Game.Console;
 using Colorify;
 
@@ -18,12 +18,11 @@ namespace Goguma.Game.Object.Inventory.Item
       switch (itemType)
       {
         case ItemType.Equipment:
-          SelectItemAnswers.Add(CTexts.Make("{착용}"));
+          SelectItemAnswers.Add(CTexts.Make("{착용 하기}"));
           break;
         case ItemType.Consume:
-          SelectItemAnswers.Add(CTexts.Make("{사용}"));
+          SelectItemAnswers.Add(CTexts.Make("{사용 하기}"));
           break;
-
         case ItemType.Other:
 
           break;

@@ -29,20 +29,23 @@ namespace Goguma.Game.Console
       return stringA;
     }
 
-    static public CText NumberColor(int number, string minusColor, string plusColor, string zeroColor = Colors.txtDefault)
+    static public CTexts NumberColor(int number, string minusColor = Colors.txtDanger, string plusColor = Colors.txtInfo, string zeroColor = Colors.txtMuted)
     {
-      CText resultCT = new CText();
+      CTexts resultCT = new CTexts();
       var resultColor = Colors.txtDefault;
+      resultCT.Texts.Add(new CText(number.ToString()));
 
-      if (number > 0)
+      if (number > 0){
         resultColor = plusColor;
+        resultCT.Texts[0].Text = resultCT.Texts[0].Text.Insert(0, "+");
+      }       
       else if (number == 0)
         resultColor = zeroColor;
       else if (number < 0)
         resultColor = minusColor;
       
-      resultCT.Text = number.ToString();
-      resultCT.Color = resultColor;
+      
+      resultCT.Texts[0].Color = resultColor;
 
       return resultCT;
     }
