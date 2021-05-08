@@ -1,4 +1,4 @@
-﻿using Goguma.Game.Object.Interface;
+﻿using Goguma.Game.Object.Inventory.Item;
 
 namespace Goguma.Game.Object.Inventory
 {

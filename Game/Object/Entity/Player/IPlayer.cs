@@ -1,6 +1,7 @@
 ﻿using Goguma.Game.Console;
+using Goguma.Game.Object.Entity.Monster;
 
-namespace Goguma.Game.Object.Interface
+namespace Goguma.Game.Object.Entity.Player
 {
   interface IPlayer
   {

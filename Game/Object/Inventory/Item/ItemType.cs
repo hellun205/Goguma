@@ -1,4 +1,4 @@
-﻿namespace Goguma.Game.Object.Enum
+﻿namespace Goguma.Game.Object.Inventory.Item
 {
   enum ItemType
   {

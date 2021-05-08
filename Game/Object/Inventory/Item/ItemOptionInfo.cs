@@ -1,10 +1,9 @@
 ﻿using Goguma.Game.Console;
-using Goguma.Game.Object.Enum;
-using Goguma.Game.Object.Interface;
+
 using static Goguma.Game.Console.ConsoleFunction;
 using Colorify;
 
-namespace Goguma.Game.Object.Inventory
+namespace Goguma.Game.Object.Inventory.Item
 {
   class ItemOptionInfo
   {

@@ -1,8 +1,9 @@
 ﻿using Colorify;
 using Colorify.UI;
 using Goguma.Game.Console;
-using Goguma.Game.Object.Enum;
-using Goguma.Game.Object.Interface;
+using Goguma.Game.Object.Inventory.Item;
+using Goguma.Game.Object.Entity.Monster;
+using Goguma.Game.Object.Entity.Player;
 using System.Collections.Generic;
 using static Goguma.Game.Console.ConsoleFunction;
 

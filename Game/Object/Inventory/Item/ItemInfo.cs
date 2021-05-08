@@ -3,7 +3,7 @@ using Goguma.Game.Object.Enum;
 using Goguma.Game.Console;
 using Colorify;
 
-namespace Goguma.Game.Object.Inventory
+namespace Goguma.Game.Object.Inventory.Item
 {
   class ItemInfo
   {

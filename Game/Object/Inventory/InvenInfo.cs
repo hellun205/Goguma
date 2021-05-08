@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
-using Goguma.Game.Object.Enum;
-using Goguma.Game.Object.Interface;
+using Goguma.Game.Object.Inventory.Item;
 
 namespace Goguma.Game.Object.Inventory
 {

@@ -1,4 +1,6 @@
-﻿namespace Goguma.Game.Object.Interface
+﻿using Goguma.Game.Object.Entity.Player;
+
+namespace Goguma.Game.Object.Inventory.Item
 {
   interface IConsumeItem : IItem
   {

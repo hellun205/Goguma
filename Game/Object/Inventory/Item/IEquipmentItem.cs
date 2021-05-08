@@ -1,14 +1,12 @@
 ﻿using Goguma.Game.Object.Enum;
+using Goguma.Game.Object.Entity.Player;
 
-namespace Goguma.Game.Object.Interface
+namespace Goguma.Game.Object.Inventory.Item
 {
   interface IEquipmentItem : IItem
   {
     EquipmentType EquipmentType { get; set; }
-    int IncreaseAttDmg { get; set; }
-    int IncreaseDefPer { get; set; }
-    int IncreaseMaxHp { get; set; }
-    int IncreaseMaxEp { get; set; }
+    ItemIncrease Increase { get; set; }
 
     new void UseItem(IPlayer player);
 

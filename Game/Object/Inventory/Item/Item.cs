@@ -1,8 +1,7 @@
-﻿using Goguma.Game.Object.Enum;
-using Goguma.Game.Object.Interface;
+﻿using Goguma.Game.Object.Entity.Player;
 using Goguma.Game.Console;
 
-namespace Goguma.Game.Object.Inventory
+namespace Goguma.Game.Object.Inventory.Item
 {
   class Item : IItem
   {

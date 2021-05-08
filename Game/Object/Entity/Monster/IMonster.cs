@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using Goguma.Game.Object.Entity.Player;
+using Goguma.Game.Object.Inventory.Item;
 
-namespace Goguma.Game.Object.Interface
+namespace Goguma.Game.Object.Entity.Monster
 {
   interface IMonster
   {
