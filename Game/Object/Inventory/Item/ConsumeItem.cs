@@ -52,9 +52,8 @@ namespace Goguma.Game.Object.Inventory.Item
             {
                 PrintText(CTexts.Make("{\nEXP [ }"));
                 PrintText(NumberColor(Effect.Ep));
-                PrintText(CTexts.Make("{ ]}"));
+                PrintText(CTexts.Make("{ ]\n}"));
             }
-            //TODO
         }
 
         public void UseItem(IPlayer toPlayer)
