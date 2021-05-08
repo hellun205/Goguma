@@ -9,7 +9,7 @@ namespace Goguma.Game.Object.Inventory.Item
     public int Count { get; set; }
 
     public ItemType Type { get; set; }
-    public CTexts Lore { get; set; }
+    public string Lore { get; set; }
     public CTexts Description { get; set; }
     public bool IsAir { get; set; }
 

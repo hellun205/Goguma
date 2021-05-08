@@ -41,7 +41,7 @@ namespace Goguma.Game.Object.Inventory.Item
           PrintText(SelectedItem.Name);
           PrintText(CTexts.Make($"{{ [{SelectedItem.Count}],{Colors.txtInfo}}}"));
           PrintText(CTexts.Make($"{{ {MyInvenInfo.TypeString} 아이템\n  , {Colors.txtWarning}}}"));
-          PrintText(SelectedItem.Lore);
+          PrintText(CTexts.Make($"{{{SelectedItem.Lore}, {Colors.txtMuted}}}"));
           PrintText("\n");
           PrintText(SelectedItem.Description);
           PrintText("\n");
@@ -85,27 +85,31 @@ namespace Goguma.Game.Object.Inventory.Item
       var questionText = new CTexts();
       var selectSceneItems = new SelectSceneItems();
 
-      questionText = CTexts.Make("{선택된 아이템을 버리시겠습니까?}");
+      questionText = CTexts.Make($"{{선택된 아이템 }} {{{count}개, {Colors.txtInfo}}} {{ 를 버리시겠습니까?}}");
       selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make("{예}")));
       selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make("{아니요}")));
       SelectedItemCTexts();
       var answer = SelectScene(questionText, selectSceneItems, false);
 
       PrintText(SelectedItem.Name);
-
-      if (count == SelectedItem.Count)
+      if (answer == 1)
       {
-        PrintText(CTexts.Make($"{{을(를) 다 버렸습니다.}}"));
+        if (count == SelectedItem.Count)
+        {
+          PrintText(CTexts.Make($"{{을(를) 다 버렸습니다.}}"));
+        }
+        else
+        {
+          PrintText(CTexts.Make($"{{ {count}개, {Colors.txtInfo}}} {{를 버려서 현재 }} {{{SelectedItem.Count - count}개, {Colors.txtInfo}}} {{남았습니다.}}"));
+        }
+
+        MyInventory.RemoveItem(MyInvenInfo.ItemType, SelectedItemIndex, count);
+        PrintText("\n");
       }
       else
       {
-        PrintText(CTexts.Make($"{{ {count}개, {Colors.txtInfo}}} {{를 버려서 현재 }} {{{SelectedItem.Count - count}개, {Colors.txtInfo}}} {{남았습니다.}}"));
+        PrintText(CTexts.Make("{(을)를 버리지 않았습니다.}"));
       }
-
-      MyInventory.RemoveItem(MyInvenInfo.ItemType, SelectedItemIndex, count);
-      PrintText("\n");
-
-
       Pause();
     }
   }
