@@ -8,6 +8,11 @@ namespace Goguma.Game.Console
     public string Color { get; set; }
     public string Text { get; set; }
 
+    public CText()
+    {
+      Text = "";
+      Color = Colors.txtDefault;
+    }
     public CText(string text, string color = Colors.txtDefault)
     {
       Color = color;
