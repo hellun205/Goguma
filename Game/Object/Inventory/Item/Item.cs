@@ -16,7 +16,6 @@ namespace Goguma.Game.Object.Inventory.Item
     static public IItem GetAir()
     {
       Item resultItem = new Item { IsAir = true };
-
       return resultItem;
     }
 
@@ -29,9 +28,6 @@ namespace Goguma.Game.Object.Inventory.Item
     {
       // TODO
     }
-    public virtual void RemoveItem(int count)
-    {
 
-    }
   }
 }

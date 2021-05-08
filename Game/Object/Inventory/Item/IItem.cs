@@ -15,7 +15,6 @@ namespace Goguma.Game.Object.Inventory.Item
     ItemType Type { get; set; }
 
     void UseItem(IPlayer player);
-    void RemoveItem(int count);
     void DescriptionItem();
   }
 }

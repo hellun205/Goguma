@@ -39,8 +39,8 @@ namespace Goguma.Game.Object.Inventory
         selectSceneItems = new SelectSceneItems();
 
         for (int i = 0; i < invenInfo.TypeItems.Count; i++)
-        selectSceneItems.Items.Add(
-          new SelectSceneItem(CTexts.Make($"{{{invenInfo.TypeItems[i].Name.ToString()}}} {{ [{invenInfo.TypeItems[i].Count}], {Colors.txtInfo}}}")));
+          selectSceneItems.Items.Add(
+            new SelectSceneItem(CTexts.Make($"{{{invenInfo.TypeItems[i].Name.ToString()}}} {{ [{invenInfo.TypeItems[i].Count}], {Colors.txtInfo}}}")));
 
         selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make($"{{뒤로 가기, {Colors.txtMuted}}}")));
         int answer = SelectScene(questionText, selectSceneItems) - 1;
@@ -54,37 +54,47 @@ namespace Goguma.Game.Object.Inventory
 
     private void SelectItem(ItemType itemType, int index)
     {
-      bool repeat = true;
-      while (repeat)
-        {  
-          var invenInfo = new InvenInfo(this, itemType);
-          var itemInfo = new ItemInfo(itemType);
+      // bool repeat = true;
+      // while (repeat)
+      // {
+      var invenInfo = new InvenInfo(this, itemType);
+      var itemInfo = new ItemInfo(itemType);
+      var selectedItem = invenInfo.TypeItems[index];
 
-          var questionText = new CTexts();
-          var selectSceneItems = new SelectSceneItems();
+      var questionText = new CTexts();
+      var selectSceneItems = new SelectSceneItems();
 
-          questionText = 
-              CTexts.Make($"{{무슨 작업을 하시겠습니까?\n    }} {{\n    선택 : }} {{{invenInfo.TypeItems[index].Name.ToString()}}} {{ [{invenInfo.TypeItems[index].Count}], {Colors.txtInfo}}} {{\n    위치 : }} {{{invenInfo.TypeString},{Colors.txtSuccess}}} {{ . }} {{{index + 1},{Colors.txtSuccess}}}");
+      questionText =
+          CTexts.Make($"{{무슨 작업을 하시겠습니까?\n    }} {{\n    선택 : }} {{{selectedItem.Name.ToString()}}} {{ [{selectedItem.Count}], {Colors.txtInfo}}} {{\n    위치 : }} {{{invenInfo.TypeString},{Colors.txtSuccess}}} {{ . }} {{{index + 1},{Colors.txtSuccess}}}");
 
-          for (int i = 0; i < itemInfo.SelectItemAnswers.Count; i++)
-            selectSceneItems.Items.Add(new SelectSceneItem(itemInfo.SelectItemAnswers[i]));
+      for (int i = 0; i < itemInfo.SelectItemAnswers.Count; i++)
+        selectSceneItems.Items.Add(new SelectSceneItem(itemInfo.SelectItemAnswers[i]));
 
-          var answer = SelectScene(questionText, selectSceneItems) - 1;
-          string answerText;
+      var answer = SelectScene(questionText, selectSceneItems) - 1;
+      string answerText;
 
-          answerText = selectSceneItems.Items[answer].Texts.ToString();
+      answerText = selectSceneItems.Items[answer].Texts.ToString();
 
-          if (selectSceneItems.Items[answer].Texts.ToString() == "뒤로 가기")
-            repeat = false;
-          else
-            ChooseSelectedItemOption(itemType, index, answerText);
-        }
+      if (selectSceneItems.Items[answer].Texts.ToString() != "뒤로 가기")
+        ChooseSelectedItemOption(itemType, index, answerText);
+      // }
     }
 
     private void ChooseSelectedItemOption(ItemType itemType, int selectedItemIndex, string chooseOptionText)
     {
       var itemOptionInfo = new ItemOptionInfo(this, itemType, selectedItemIndex, chooseOptionText);
       itemOptionInfo.Act();
+    }
+
+    public void RemoveItem(ItemType itemType, int index, int count)
+    {
+      var invenInfo = new InvenInfo(this, itemType);
+      var selectedItem = invenInfo.TypeItems[index];
+
+      if (count == selectedItem.Count)
+        invenInfo.TypeItems.RemoveAt(index);
+      else
+        selectedItem.Count -= count;
     }
   }
 }
