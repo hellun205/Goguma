@@ -1,11 +1,12 @@
 ﻿using Goguma.Game.Console;
 using Goguma.Game.Object.Entity.Monster;
+using Goguma.Game.Object.Inventory;
 
 namespace Goguma.Game.Object.Entity.Player
 {
   interface IPlayer
   {
-    CTexts Name { get; set; }
+    string Name { get; set; }
 
     Inventory.Inventory Inventory { get; set; }
 

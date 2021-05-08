@@ -89,6 +89,31 @@ namespace Goguma.Game.Console
       }
     }
 
+    static public bool ReadYesOrNoScean(CTexts questionText, bool air = true)
+    {
+      while (true)
+      {
+        PrintQuestionText(questionText, air);
+
+        PrintText("1. 예\n2. 아니오");
+
+        PrintReadText();
+
+        string readText = ReadLine();
+
+        PrintText("\n");
+
+        if (IsInt(readText))
+        {
+          int readInt = Convert.ToInt32(readText);
+
+          if (readInt == 1)
+            return true;
+          else if (readInt == 0)
+            return false;
+        }
+      }
+    }
     static public int ReadIntScean(CTexts questionText, int minValue = Int32.MinValue, int maxValue = Int32.MaxValue, bool air = true)
     {
       while (true)

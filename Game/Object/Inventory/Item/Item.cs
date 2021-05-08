@@ -1,8 +1,10 @@
 ﻿using Goguma.Game.Object.Entity.Player;
 using Goguma.Game.Console;
+using System;
 
 namespace Goguma.Game.Object.Inventory.Item
 {
+  [Serializable]
   class Item : IItem
   {
     public CTexts Name { get; set; }

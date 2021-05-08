@@ -72,12 +72,20 @@ namespace Goguma.Game.Object.Inventory.Item
             }
           }
           break;
+
+        case "착용 하기": //Equipment Item
+
+          break;
+
+        case "사용 하기": //Consume Item
+          // SelectedItem.UseItem();
+          break;
       }
     }
 
-    private void Consume()
+    private void Lose(int count = 1)
     {
-      // TODO
+      MyInventory.RemoveItem(MyInvenInfo.ItemType, SelectedItemIndex, count);
     }
 
     private void RemoveItem(int count)
@@ -103,7 +111,7 @@ namespace Goguma.Game.Object.Inventory.Item
           PrintText(CTexts.Make($"{{ {count}개, {Colors.txtInfo}}} {{를 버려서 현재 }} {{{SelectedItem.Count - count}개, {Colors.txtInfo}}} {{남았습니다.}}"));
         }
 
-        MyInventory.RemoveItem(MyInvenInfo.ItemType, SelectedItemIndex, count);
+        Lose(count);
         PrintText("\n");
       }
       else

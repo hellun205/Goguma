@@ -1,7 +1,9 @@
-﻿using Goguma.Game.Object.Inventory.Item;
+﻿using System;
+using Goguma.Game.Object.Inventory.Item;
 
 namespace Goguma.Game.Object.Inventory
 {
+  [Serializable]
   class Equipment
   {
     public IEquipmentItem HeadEquipment { get; set; }

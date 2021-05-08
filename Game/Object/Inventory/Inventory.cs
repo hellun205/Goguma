@@ -10,6 +10,7 @@ using System;
 
 namespace Goguma.Game.Object.Inventory
 {
+  [Serializable]
   class Inventory
   {
     public List<IItem> ConsumeItems { get; set; }

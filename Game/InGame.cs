@@ -3,20 +3,62 @@ using Goguma.Game.Console;
 using Goguma.Game.Object.Inventory;
 using static Goguma.Game.Console.ConsoleFunction;
 using Goguma.Game.Object.Inventory.Item;
+using Goguma.Game.Object.Entity.Player;
 
 namespace Goguma.Game
 {
   static class InGame
   {
+    static Player player;
     public static void Go()
     {
+      SetPlayerDataScene();
       TestInventory();
     }
 
+    static public void SetPlayerDataScene()
+    {
+      while (true)
+      {
+        Player playerData;
+        var questionText = CTexts.Make($"{{고구마 게임,{Colors.bgWarning}}}");
+        var selectSceneItems = new SelectSceneItems();
+        selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make("{새로 시작}")));
+        selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make("{이어서 시작}")));
+        selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make("{게임 종료}")));
 
+        switch (SelectScene(questionText, selectSceneItems))
+        {
+          case 1:
+            playerData = PlayerSave.CreatePlayerData();
+            if (playerData != null)
+            {
+              player = playerData;
+              return;
+            }
+            break;
+          case 2:
+            playerData = PlayerSave.GetPlayerData();
+            if (playerData != null)
+            {
+              player = playerData;
+              return;
+            }
+            break;
+          case 3:
+            ExitGame();
+            break;
+        }
+      }
+    }
+
+    static public void ExitGame()
+    {
+
+    }
     public static void TestInventory()
     {
-      Inventory myInventory = new Inventory();
+      Inventory myInventory = player.Inventory;
 
       myInventory.EquipmentItems.Add(new EquipmentItem()
       {
