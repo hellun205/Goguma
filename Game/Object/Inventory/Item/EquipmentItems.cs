@@ -16,6 +16,7 @@ namespace Goguma.Game.Object.Inventory.Item
     public void SetItem(EquipmentType type, EquipmentItem item)
     {
       Items[(int)type] = item;
+      Items[(int)type].Count = 1;
     }
 
     public EquipmentItems()

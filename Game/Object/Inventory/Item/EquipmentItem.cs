@@ -11,10 +11,14 @@ namespace Goguma.Game.Object.Inventory.Item
   [Serializable]
   class EquipmentItem : Item, IEquipmentItem
   {
-
     public EquipmentType EquipmentType { get; set; }
     public ItemIncrease Increase { get; set; }
 
+    public EquipmentItem()
+    {
+      MaxCount = 1;
+      Count = 1;
+    }
     new public void DescriptionItem()
     {
       if (Increase.MaxHp != 0)

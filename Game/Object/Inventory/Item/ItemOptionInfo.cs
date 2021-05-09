@@ -63,11 +63,11 @@ namespace Goguma.Game.Object.Inventory.Item
     {
       var invenInfo = new InvenInfo(MyInventory, item.Type);
 
-      for (var i = 0; i < invenInfo.TypeItems.Count; i++)
+      foreach (var item1 in invenInfo.TypeItems)
       {
-        if (invenInfo.TypeItems[i].Name.ToString() == item.Name.ToString()/* && item1.Lore == item.Lore && item1.Description == item.Description*/)
+        if (item1.Name.ToString() == item.Name.ToString() && (item1.Count + item.Count)! <= item1.MaxCount /* && item1.Lore == item.Lore && item1.Description == item.Description*/)
         {
-          invenInfo.TypeItems[i].Count += item.Count;
+          item1.Count += item.Count;
           return;
         }
       }

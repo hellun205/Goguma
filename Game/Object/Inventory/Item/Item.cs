@@ -7,13 +7,30 @@ namespace Goguma.Game.Object.Inventory.Item
   [Serializable]
   class Item : IItem
   {
+    private int count;
     public CTexts Name { get; set; }
-    public int Count { get; set; }
+    public int Count
+    {
+      get => count;
+      set
+      {
+        if (count <= MaxCount)
+          count = value;
+        else
+          count = MaxCount;
+      }
+    }
+    public int MaxCount { get; set; }
     public ItemType Type { get; set; }
     public string Lore { get; set; }
     public bool IsAir { get; set; }
     public CTexts Description { get; set; }
 
+    public Item()
+    {
+      MaxCount = Int32.MaxValue;
+      Count = 1;
+    }
     static public IItem GetAir()
     {
       Item resultItem = new Item { IsAir = true };

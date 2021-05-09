@@ -81,8 +81,7 @@ namespace Goguma.Game
         Name = CTexts.Make("{테스트아이템1}"),
         Lore = "테스트용으로 만들어진 아이템이다. 번호는 1이다.",
         Type = ItemType.Equipment,
-        Description = CTexts.Make("{착용하면 아무런 효과도 얻을 수 없다.}"),
-        Count = 1
+        Description = CTexts.Make("{착용하면 아무런 효과도 얻을 수 없다.}")
       });
 
       myInventory.EquipmentItems.Add(new EquipmentItem()
@@ -91,8 +90,7 @@ namespace Goguma.Game
         Lore = "테스트용으로 만들어진 아이템이다. 번호는 2이다.",
         Type = ItemType.Equipment,
         Description = CTexts.Make("{착용하면 여러가지 효과를 얻을 수 있다.}"),
-        Increase = new ItemIncrease() { MaxHp = 500, MaxEp = 20, AttDmg = -5, DefPer = 1 },
-        Count = 5
+        Increase = new ItemIncrease() { MaxHp = 500, MaxEp = 20, AttDmg = -5, DefPer = 1 }
       });
 
       myInventory.ConsumeItems.Add(new ConsumeItem()
