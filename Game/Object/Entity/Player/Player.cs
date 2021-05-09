@@ -11,18 +11,63 @@ namespace Goguma.Game.Object.Entity.Player
   [Serializable]
   class Player : IPlayer
   {
+    private int hp;
+    private int ep;
+    private int exp;
     public string Name { get; set; }
     public Inventory.Inventory Inventory { get; set; }
     public MapList Map { get; set; }
-    public int Hp { get; set; }
-    public int Ep { get; set; }
+    public int Hp
+    {
+      get => hp;
+      set
+      {
+        if (MaxHp >= value)
+          hp = value;
+        else if (MaxHp < value)
+          hp = MaxHp;
+      }
+    }
+    public int Ep
+    {
+      get => ep;
+      set
+      {
+        if (MaxEp >= value)
+          ep = value;
+        else if (MaxEp < value)
+          ep = MaxEp;
+      }
+    }
     public int MaxHp { get; set; }
     public int MaxEp { get; set; }
 
-    public int Level { get; }
+    public int Level { get; set; }
 
-    public int Exp { get; set; }
+    public int Exp
+    {
+      get => exp;
+      set
+      {
+        if (MaxExp >= value)
+          exp = value;
+        else if (MaxExp < value)
+        {
+          Level += 1;
+          MaxExp += IncreaseMaxExp;
+          PrintText(CTexts.Make($"{{\nLevel UP! Lv. }} {{{Level}\n, {Colors.txtInfo}}}"));
+          Pause();
+          Exp = value - MaxExp;
+        }
+      }
+    }
     public int MaxExp { get; set; }
+    private int increaseMaxExp;
+    public int IncreaseMaxExp
+    {
+      get => increaseMaxExp * (Level / 2);
+      set => increaseMaxExp = value;
+    }
     public int Gold { get; set; }
 
     public int AttDmg { get => PAttDmg + ItemDmg; }
@@ -46,9 +91,11 @@ namespace Goguma.Game.Object.Entity.Player
       Ep = MaxEp;
       Level = 1;
       Exp = 0;
+      MaxExp = 20;
       PAttDmg = 4;
       ItemDmg = 4; // e
       DefPer = 0;
+      IncreaseMaxExp = 2;
       // InGame.TestInventory(this);
     }
     public void AttackMonster(IMonster moster)
