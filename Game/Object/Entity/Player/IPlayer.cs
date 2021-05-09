@@ -23,11 +23,9 @@ namespace Goguma.Game.Object.Entity.Player
     int IncreaseMaxExp { get; set; }
     int Gold { get; set; }
 
-    int AttDmg { get; }
-    int PAttDmg { get; set; }
-    int DefPer { get; }
+    int AttDmg { get; set; }
 
-    int PDefPer { get; set; }
+    int DefPer { get; set; }
 
     object Skill { get; set; }
 

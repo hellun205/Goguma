@@ -17,7 +17,7 @@ namespace Goguma.Game
       PlayerActScene(player);
     }
 
-    static public void PlayerActScene(IPlayer player)
+    static public void PlayerActScene(Player player)
     {
       while (true)
       {

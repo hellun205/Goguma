@@ -11,7 +11,7 @@ namespace Goguma.Game.Object.Entity.Player
       SelectedActText = selectActText;
     }
 
-    public void Act(IPlayer player)
+    public void Act(Player player)
     {
       switch (SelectedActText)
       {
@@ -25,6 +25,9 @@ namespace Goguma.Game.Object.Entity.Player
           InGame.TestInventory(player);
           PrintText("추가완료");
           Pause();
+          break;
+        case "레벨 업": // TEST
+          player.Exp += player.RequiredForLevelUp();
           break;
         case "게임 종료":
           InGame.ExitGame();

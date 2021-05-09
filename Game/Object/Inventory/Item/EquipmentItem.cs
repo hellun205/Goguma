@@ -79,10 +79,10 @@ namespace Goguma.Game.Object.Inventory.Item
       }
       if (Increase.DefPer != 0)
       {
-        PrintText(CTexts.Make($"{{\nDEF }} {{{player.PDefPer}, {Colors.txtWarning}}} {{ % [ }}"));
+        PrintText(CTexts.Make($"{{\nDEF }} {{{player.DefPer}, {Colors.txtWarning}}} {{ % [ }}"));
         PrintText(NumberColor(Increase.DefPer));
         PrintText(CTexts.Make("{ % ] → }"));
-        PrintText(NumberColor(Increase.DefPer + player.PDefPer));
+        PrintText(NumberColor(Increase.DefPer + player.DefPer));
         PrintText(CTexts.Make("{ %}"));
       }
     }

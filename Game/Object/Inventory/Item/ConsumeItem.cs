@@ -89,10 +89,10 @@ namespace Goguma.Game.Object.Inventory.Item
       }
       if (Effect.DefPer != 0)
       {
-        PrintText(CTexts.Make($"{{\nDEF }} {{{player.PDefPer}, {Colors.txtWarning}}} {{ % [ }}"));
+        PrintText(CTexts.Make($"{{\nDEF }} {{{player.DefPer}, {Colors.txtWarning}}} {{ % [ }}"));
         PrintText(NumberColor(Effect.DefPer));
         PrintText(CTexts.Make("{ % ] → }"));
-        PrintText(NumberColor(Effect.DefPer + player.PDefPer));
+        PrintText(NumberColor(Effect.DefPer + player.DefPer));
         PrintText(CTexts.Make("{ %}"));
       }
       if (Effect.Gold != 0)
@@ -116,8 +116,8 @@ namespace Goguma.Game.Object.Inventory.Item
     {
       player.Hp += Effect.Hp;
       player.Ep += Effect.Ep;
-      player.PAttDmg += Effect.AttDmg;
-      player.PDefPer += Effect.DefPer;
+      player.AttDmg += Effect.AttDmg;
+      player.DefPer += Effect.DefPer;
       player.Gold += Effect.Gold;
       player.Exp += Effect.Exp;
     }
