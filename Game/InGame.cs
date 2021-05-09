@@ -72,7 +72,7 @@ namespace Goguma.Game
         Environment.Exit(0);
       }
     }
-    public static void TestInventory()
+    public static void TestInventory(IPlayer player)
     {
       Inventory myInventory = player.Inventory;
 
@@ -102,7 +102,8 @@ namespace Goguma.Game
         Description = CTexts.Make("{사용하면 여러가지 효과를 볼 수 있다.}"),
         Type = ItemType.Consume,
         Effect = new ItemEffect() { Hp = 10, Ep = -10, AttDmg = 5, DefPer = 2, Exp = 4040, Gold = -10 },
-        Count = 2
+        Count = 2,
+        LoseCount = 1
       });
 
       myInventory.ConsumeItems.Add(new ConsumeItem()
@@ -112,10 +113,11 @@ namespace Goguma.Game
         Description = CTexts.Make("{사용하면 Hp를 회복하는 효과를 볼 수 있다.}"),
         Effect = new ItemEffect() { Hp = 500 },
         Type = ItemType.Consume,
-        Count = 1
+        Count = 1,
+        LoseCount = 1
       });
 
-      myInventory.OtherItems.Add(new Item()
+      myInventory.OtherItems.Add(new OtherItem()
       {
         Name = CTexts.Make("{테스트 기타 아이템}"),
         Type = ItemType.Other,

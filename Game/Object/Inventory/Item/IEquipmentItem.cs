@@ -11,5 +11,6 @@ namespace Goguma.Game.Object.Inventory.Item
     new void UseItem(IPlayer player);
 
     new void DescriptionItem();
+    new void DescriptionItemAP(IPlayer player);
   }
 }

@@ -19,9 +19,11 @@ namespace Goguma.Game.Object.Entity.Player
 
     int Level { get; }
     int Exp { get; set; }
+    int MaxExp { get; set; }
     int Gold { get; set; }
 
     int AttDmg { get; }
+    int PAttDmg { get; set; }
     int ItemDmg { get; set; }
 
     int DefPer { get; set; }
@@ -30,8 +32,7 @@ namespace Goguma.Game.Object.Entity.Player
 
     void AttackMonster(IMonster moster);
 
-    void UseConsumedItem();
-
     void UseSkill();
+    void PrintAbout();
   }
 }

@@ -12,6 +12,7 @@ namespace Goguma.Game.Object.Inventory.Item
   {
     public ItemEffect Effect { get; set; }
 
+
     new public void DescriptionItem()
     {
       if (Effect.Hp != 0)
@@ -36,13 +37,13 @@ namespace Goguma.Game.Object.Inventory.Item
       {
         PrintText(CTexts.Make("{  DEF [ }"));
         PrintText(NumberColor(Effect.Ep));
-        PrintText(CTexts.Make("{% ]}"));
+        PrintText(CTexts.Make("{ % ]}"));
       }
       if (Effect.Gold != 0)
       {
         PrintText(CTexts.Make("{\nGOLD [ }"));
         PrintText(NumberColor(Effect.AttDmg));
-        PrintText(CTexts.Make("{G ]}"));
+        PrintText(CTexts.Make("{ G ]}"));
       }
       if (Effect.Exp != 0)
       {
@@ -52,8 +53,68 @@ namespace Goguma.Game.Object.Inventory.Item
       }
     }
 
-    new public void UseItem(IPlayer toPlayer)
+    new public void DescriptionItemAP(IPlayer player)
     {
+      if (Effect.Hp != 0)
+      {
+        PrintText(CTexts.Make($"{{\nHP }} {{{player.Hp} / {player.MaxHp}, {Colors.txtWarning}}} {{ [ }}"));
+        PrintText(NumberColor(Effect.Hp));
+        PrintText(CTexts.Make("{ ] → }"));
+        if (Effect.Hp + player.Hp <= player.MaxHp)
+          PrintText(NumberColor(Effect.Hp + player.Hp));
+        else
+          PrintText(NumberColor(player.MaxHp));
+      }
+      if (Effect.Ep != 0)
+      {
+        PrintText(CTexts.Make($"{{\nEP }} {{{player.Ep} / {player.MaxEp}, {Colors.txtWarning}}} {{ [ }}"));
+        PrintText(NumberColor(Effect.Ep));
+        PrintText(CTexts.Make("{ ] → }"));
+        if (Effect.Ep + player.Ep <= player.MaxEp)
+          PrintText(NumberColor(Effect.Ep + player.Ep));
+        else
+          PrintText(NumberColor(player.MaxEp));
+      }
+      if (Effect.AttDmg != 0)
+      {
+        PrintText(CTexts.Make($"{{\nATT }} {{{player.AttDmg}, {Colors.txtWarning}}} {{ [ }}"));
+        PrintText(NumberColor(Effect.AttDmg));
+        PrintText(CTexts.Make("{ ] → }"));
+        PrintText(NumberColor(Effect.AttDmg + player.AttDmg));
+      }
+      if (Effect.DefPer != 0)
+      {
+        PrintText(CTexts.Make($"{{\nDEF }} {{{player.DefPer}, {Colors.txtWarning}}} {{ % [ }}"));
+        PrintText(NumberColor(Effect.DefPer));
+        PrintText(CTexts.Make("{ % ] → }"));
+        PrintText(NumberColor(Effect.DefPer + player.DefPer));
+        PrintText(CTexts.Make("{ %}"));
+      }
+      if (Effect.Gold != 0)
+      {
+        PrintText(CTexts.Make($"{{\nGOLD }} {{{player.Gold}, {Colors.txtWarning}}} {{ G [ }}"));
+        PrintText(NumberColor(Effect.Gold));
+        PrintText(CTexts.Make("{ G ] → }"));
+        PrintText(NumberColor(Effect.Gold + player.Gold));
+        PrintText(CTexts.Make("{ G}"));
+      }
+      if (Effect.Exp != 0)
+      {
+        PrintText(CTexts.Make($"{{\nEXP }} {{{player.Exp} / {player.MaxExp}, {Colors.txtWarning}}} {{ [ }}"));
+        PrintText(NumberColor(Effect.Exp));
+        PrintText(CTexts.Make("{ ] → }"));
+        PrintText(NumberColor(Effect.Exp + player.Exp));
+      }
+    }
+
+    new public void UseItem(IPlayer player)
+    {
+      player.Hp += Effect.Hp;
+      player.Ep += Effect.Ep;
+      player.PAttDmg += Effect.AttDmg;
+      player.DefPer += Effect.DefPer;
+      player.Gold += Effect.Gold;
+      player.Exp += Effect.Exp;
       //TODO
     }
 

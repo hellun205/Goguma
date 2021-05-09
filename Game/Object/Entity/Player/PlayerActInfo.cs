@@ -23,6 +23,7 @@ namespace Goguma.Game.Object.Entity.Player
 
       SelectItemAnswers.Items.Add(new SelectSceneItem(CTexts.Make("{캐릭터 정보 보기}")));
       SelectItemAnswers.Items.Add(new SelectSceneItem(CTexts.Make("{인벤토리 열기}")));
+      SelectItemAnswers.Items.Add(new SelectSceneItem(CTexts.Make("{테스트 아이템 획득}"))); // TEST
       switch (map)
       {
         case MapList.Not:

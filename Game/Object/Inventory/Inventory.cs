@@ -4,6 +4,7 @@ using Goguma.Game.Object.Inventory.Item;
 using System.Collections.Generic;
 using static Goguma.Game.Console.ConsoleFunction;
 using System;
+using Goguma.Game.Object.Entity.Player;
 
 namespace Goguma.Game.Object.Inventory
 {
@@ -15,13 +16,15 @@ namespace Goguma.Game.Object.Inventory
     public List<IItem> OtherItems { get; set; }
 
     public Equipment Equipment { get; set; }
+    public IPlayer Player { get; set; }
 
-    public Inventory()
+    public Inventory(IPlayer player)
     {
       ConsumeItems = new List<IItem>();
       EquipmentItems = new List<IItem>();
       OtherItems = new List<IItem>();
       Equipment = new Equipment();
+      Player = player;
     }
 
     public void PrintInventory()
@@ -35,7 +38,7 @@ namespace Goguma.Game.Object.Inventory
         questionText = CTexts.Make("{어떤 인벤토리를 열으시겠습니까?}");
         for (var i = 0; i < Enum.GetValues(typeof(ItemType)).Length; i++)
         {
-          var invenInfo = new InvenInfo(new Inventory(), (ItemType)i);
+          var invenInfo = new InvenInfo(this, (ItemType)i);
           selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make($"{{{invenInfo.TypeString} 아이템, {Colors.txtSuccess}}} {{ 인벤토리}}")));
         }
         selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make($"{{뒤로 가기, {Colors.txtMuted}}}")));

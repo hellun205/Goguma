@@ -11,10 +11,12 @@ namespace Goguma.Game.Object.Inventory.Item
     string Lore { get; set; }
     CTexts Description { get; set; }
     int Count { get; set; }
-    bool IsAir { get; set; }
+    int LoseCount { get; set; }
     ItemType Type { get; set; }
 
     void UseItem(IPlayer player);
     void DescriptionItem();
+
+    void DescriptionItemAP(IPlayer player);
   }
 }

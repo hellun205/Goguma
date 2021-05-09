@@ -75,11 +75,21 @@ namespace Goguma.Game.Object.Inventory.Item
           break;
 
         case "착용 하기": //Equipment Item
-
+          SelectedItem.UseItem(MyInventory.Player);
           break;
 
         case "사용 하기": //Consume Item
-          // SelectedItem.UseItem();
+          SelectedItem.DescriptionItemAP(MyInventory.Player);
+          if (ReadYesOrNoScean(CTexts.Make($"{{{SelectedItem.Name.ToString()}, {Colors.txtInfo}}} {{을(를) 사용하시겠습니까?}}")))
+          {
+            SelectedItem.UseItem(MyInventory.Player);
+            Lose(SelectedItem.LoseCount);
+            PrintText(SelectedItem.Name);
+            PrintText("를 사용하였습니다.");
+            Pause();
+            MyInventory.Player.PrintAbout();
+          }
+
           break;
       }
     }
