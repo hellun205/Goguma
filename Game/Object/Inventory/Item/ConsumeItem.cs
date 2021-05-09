@@ -11,7 +11,7 @@ namespace Goguma.Game.Object.Inventory.Item
   class ConsumeItem : Item, IConsumeItem
   {
     public ItemEffect Effect { get; set; }
-
+    public int LoseCount { get; set; }
 
     new public void DescriptionItem()
     {
@@ -36,19 +36,19 @@ namespace Goguma.Game.Object.Inventory.Item
       if (Effect.DefPer != 0)
       {
         PrintText(CTexts.Make("{  DEF [ }"));
-        PrintText(NumberColor(Effect.Ep));
+        PrintText(NumberColor(Effect.DefPer));
         PrintText(CTexts.Make("{ % ]}"));
       }
       if (Effect.Gold != 0)
       {
         PrintText(CTexts.Make("{\nGOLD [ }"));
-        PrintText(NumberColor(Effect.AttDmg));
+        PrintText(NumberColor(Effect.Gold));
         PrintText(CTexts.Make("{ G ]}"));
       }
       if (Effect.Exp != 0)
       {
         PrintText(CTexts.Make("{\nEXP [ }"));
-        PrintText(NumberColor(Effect.Ep));
+        PrintText(NumberColor(Effect.Exp));
         PrintText(CTexts.Make("{ ]\n}"));
       }
     }
@@ -115,7 +115,6 @@ namespace Goguma.Game.Object.Inventory.Item
       player.DefPer += Effect.DefPer;
       player.Gold += Effect.Gold;
       player.Exp += Effect.Exp;
-      //TODO
     }
 
 

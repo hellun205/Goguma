@@ -41,7 +41,6 @@ namespace Goguma.Game.Object.Inventory.Item
         PrintText(NumberColor(Increase.DefPer));
         PrintText(CTexts.Make("{ % ]}"));
       }
-      //TODO
     }
     new public void DescriptionItemAP(IPlayer player)
     {
@@ -74,12 +73,11 @@ namespace Goguma.Game.Object.Inventory.Item
         PrintText(NumberColor(Increase.DefPer + player.DefPer));
         PrintText(CTexts.Make("{ %}"));
       }
-      //TODO
     }
 
     new public void UseItem(IPlayer player)
     {
-      //TODO
+
     }
   }
 }

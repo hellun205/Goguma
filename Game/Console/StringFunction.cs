@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Colorify;
 
 namespace Goguma.Game.Console
@@ -35,19 +36,21 @@ namespace Goguma.Game.Console
       var resultColor = Colors.txtDefault;
       resultCT.Texts.Add(new CText(number.ToString()));
 
-      if (number > 0){
+      if (number > 0)
+      {
         resultColor = plusColor;
         resultCT.Texts[0].Text = resultCT.Texts[0].Text.Insert(0, "+");
-      }       
+      }
       else if (number == 0)
         resultColor = zeroColor;
       else if (number < 0)
         resultColor = minusColor;
-      
-      
+
+
       resultCT.Texts[0].Color = resultColor;
 
       return resultCT;
     }
+
   }
 }

@@ -9,16 +9,16 @@ namespace Goguma.Game.Object.Inventory.Item
   {
     public CTexts Name { get; set; }
     public int Count { get; set; }
-    public int LoseCount { get; set; }
     public ItemType Type { get; set; }
     public string Lore { get; set; }
+    public bool IsAir { get; set; }
     public CTexts Description { get; set; }
 
-    // static public IItem GetAir()
-    // {
-    //   Item resultItem = new Item { IsAir = true };
-    //   return resultItem;
-    // }
+    static public IItem GetAir()
+    {
+      Item resultItem = new Item { IsAir = true };
+      return resultItem;
+    }
 
     public void UseItem(IPlayer player) { }
 
