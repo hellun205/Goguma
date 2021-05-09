@@ -18,7 +18,15 @@ namespace Goguma.Game.Object.Inventory.Item
     {
       MaxCount = 1;
       Count = 1;
+
     }
+
+    new static public IItem GetAir()
+    {
+      IItem resultItem = new EquipmentItem { IsAir = true };
+      return resultItem;
+    }
+
     new public void DescriptionItem()
     {
       if (Increase.MaxHp != 0)
@@ -71,10 +79,10 @@ namespace Goguma.Game.Object.Inventory.Item
       }
       if (Increase.DefPer != 0)
       {
-        PrintText(CTexts.Make($"{{\nDEF }} {{{player.DefPer}, {Colors.txtWarning}}} {{ % [ }}"));
+        PrintText(CTexts.Make($"{{\nDEF }} {{{player.PDefPer}, {Colors.txtWarning}}} {{ % [ }}"));
         PrintText(NumberColor(Increase.DefPer));
         PrintText(CTexts.Make("{ % ] → }"));
-        PrintText(NumberColor(Increase.DefPer + player.DefPer));
+        PrintText(NumberColor(Increase.DefPer + player.PDefPer));
         PrintText(CTexts.Make("{ %}"));
       }
     }

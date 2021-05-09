@@ -9,28 +9,28 @@ namespace Goguma.Game.Object.Inventory.Item
   [Serializable]
   class ItemInfo
   {
-    public List<CTexts> SelectItemAnswers { get; set; }
+    public SelectSceneItems SelectItemAnswers { get; set; }
 
     public ItemInfo(ItemType itemType)
     {
-      SelectItemAnswers = new List<CTexts>
-      {
-        CTexts.Make("{아이템 정보 보기}")
-      };
+      SelectItemAnswers = new SelectSceneItems();
+
+      SelectItemAnswers.Items.Add(new SelectSceneItem(CTexts.Make("{아이템 정보 보기}")));
+
       switch (itemType)
       {
         case ItemType.Equipment:
-          SelectItemAnswers.Add(CTexts.Make("{착용 하기}"));
+          SelectItemAnswers.Items.Add(new SelectSceneItem(CTexts.Make("{착용 하기}")));
           break;
         case ItemType.Consume:
-          SelectItemAnswers.Add(CTexts.Make("{사용 하기}"));
+          SelectItemAnswers.Items.Add(new SelectSceneItem(CTexts.Make("{사용 하기}}")));
           break;
         case ItemType.Other:
 
           break;
       }
-      SelectItemAnswers.Add(CTexts.Make("{버리기}"));
-      SelectItemAnswers.Add(CTexts.Make($"{{뒤로 가기, {Colors.txtMuted}}}"));
+      SelectItemAnswers.Items.Add(new SelectSceneItem(CTexts.Make("{버리기}")));
+      SelectItemAnswers.Items.Add(new SelectSceneItem(CTexts.Make($"{{뒤로가기, {Colors.txtMuted}}}")));
     }
   }
 }

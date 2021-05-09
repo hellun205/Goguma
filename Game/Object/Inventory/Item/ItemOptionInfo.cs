@@ -133,8 +133,7 @@ namespace Goguma.Game.Object.Inventory.Item
       PrintText(SelectedItem.Description);
       PrintText("\n");
 
-      SelectedItem.DescriptionItem();
-      Pause();
+      SelectedItem.DescriptionItemAP(MyInventory.Player);
     }
 
     private void ConsumeItemUse()
@@ -147,7 +146,6 @@ namespace Goguma.Game.Object.Inventory.Item
         Lose(sItem.LoseCount);
         PrintText(sItem.Name);
         PrintText("(을)를 사용하였습니다.");
-        Pause();
         MyInventory.Player.PrintAbout();
       }
     }
@@ -157,7 +155,7 @@ namespace Goguma.Game.Object.Inventory.Item
       var sItem = (EquipmentItem)SelectedItem;
       var eType = sItem.EquipmentType;
       var em = MyInventory.Equipment;
-      sItem.DescriptionItemAP(MyInventory.Player);
+      // sItem.DescriptionItemAP(MyInventory.Player);
 
       if (em.Items.GetItem(eType).IsAir)
       {
@@ -189,7 +187,7 @@ namespace Goguma.Game.Object.Inventory.Item
           Lose();
           Get(em.Items.GetItem(eType));
           em.Items.SetItem(eType, sItem);
-          Pause();
+          // Pause();
         }
       }
     }

@@ -8,15 +8,14 @@ namespace Goguma.Game.Object.Inventory.Item
   {
     public List<IItem> Items { get; set; }
 
-    public IItem GetItem(EquipmentType type)
+    public IEquipmentItem GetItem(EquipmentType type)
     {
-      return Items[(int)type];
+      return (EquipmentItem)Items[(int)type];
     }
 
     public void SetItem(EquipmentType type, EquipmentItem item)
     {
       Items[(int)type] = item;
-      Items[(int)type].Count = 1;
     }
 
     public EquipmentItems()
@@ -24,7 +23,7 @@ namespace Goguma.Game.Object.Inventory.Item
       Items = new List<IItem>();
       foreach (var i in Enum.GetValues(typeof(EquipmentType)))
       {
-        Items.Add(Item.GetAir());
+        Items.Add(EquipmentItem.GetAir());
       }
     }
 

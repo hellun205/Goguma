@@ -25,9 +25,9 @@ namespace Goguma.Game.Object.Entity.Player
 
     int AttDmg { get; }
     int PAttDmg { get; set; }
-    int ItemDmg { get; set; }
+    int DefPer { get; }
 
-    int DefPer { get; set; }
+    int PDefPer { get; set; }
 
     object Skill { get; set; }
 

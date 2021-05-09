@@ -36,6 +36,7 @@ namespace Goguma.Game.Object.Inventory
         var selectSceneItems = new SelectSceneItems();
 
         questionText = CTexts.Make("{어떤 인벤토리를 열으시겠습니까?}");
+        selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make($"{{장비 창}}")));
         for (var i = 0; i < Enum.GetValues(typeof(ItemType)).Length; i++)
         {
           var invenInfo = new InvenInfo(this, (ItemType)i);
@@ -46,8 +47,10 @@ namespace Goguma.Game.Object.Inventory
 
         if (selectSceneItems.Items[answer].Texts.ToString() == "뒤로 가기")
           repeat = false;
+        else if (selectSceneItems.Items[answer].Texts.ToString() == "장비 창")
+          PrintEquipment();
         else
-          PrintInventory((ItemType)answer);
+          PrintInventory((ItemType)answer - 1);
       }
 
     }
@@ -92,8 +95,7 @@ namespace Goguma.Game.Object.Inventory
       questionText =
           CTexts.Make($"{{무슨 작업을 하시겠습니까?\n    }} {{\n    선택 : }} {{{selectedItem.Name.ToString()}}} {{ [{selectedItem.Count}], {Colors.txtInfo}}} {{\n    위치 : }} {{{invenInfo.TypeString},{Colors.txtSuccess}}} {{ . }} {{{index + 1},{Colors.txtSuccess}}}");
 
-      for (int i = 0; i < itemInfo.SelectItemAnswers.Count; i++)
-        selectSceneItems.Items.Add(new SelectSceneItem(itemInfo.SelectItemAnswers[i]));
+      selectSceneItems = itemInfo.SelectItemAnswers;
 
       var answer = SelectScene(questionText, selectSceneItems) - 1;
       string answerText;
@@ -106,8 +108,6 @@ namespace Goguma.Game.Object.Inventory
         itemOptionInfo.Act();
         Pause();
       }
-
-
       // }
     }
 
@@ -120,6 +120,11 @@ namespace Goguma.Game.Object.Inventory
         invenInfo.TypeItems.RemoveAt(index);
       else
         selectedItem.Count -= count;
+    }
+
+    public void PrintEquipment()
+    {
+
     }
   }
 }

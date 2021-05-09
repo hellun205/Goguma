@@ -14,6 +14,8 @@ namespace Goguma.Game.Object.Entity.Player
     private int hp;
     private int ep;
     private int exp;
+    private int maxHp;
+    private int maxEp;
     public string Name { get; set; }
     public Inventory.Inventory Inventory { get; set; }
     public MapList Map { get; set; }
@@ -39,8 +41,16 @@ namespace Goguma.Game.Object.Entity.Player
           ep = MaxEp;
       }
     }
-    public int MaxHp { get; set; }
-    public int MaxEp { get; set; }
+    public int MaxHp
+    {
+      get => maxHp + ItemMaxHp;
+      set => maxHp = value;
+    }
+    public int MaxEp
+    {
+      get => maxEp + ItemMaxEp;
+      set => maxEp = value;
+    }
 
     public int Level { get; set; }
 
@@ -70,10 +80,16 @@ namespace Goguma.Game.Object.Entity.Player
     }
     public int Gold { get; set; }
 
-    public int AttDmg { get => PAttDmg + ItemDmg; }
+    public int AttDmg { get => PAttDmg + ItemAttDmg; }
     public int PAttDmg { get; set; }
-    public int ItemDmg { get; set; }
-    public int DefPer { get; set; }
+
+    public int DefPer { get => PDefPer + ItemDefPer; }
+    public int PDefPer { get; set; }
+
+    private int ItemAttDmg { get => Inventory.Equipment.ItemsAtt; }
+    private int ItemDefPer { get => Inventory.Equipment.ItemsDef; }
+    private int ItemMaxHp { get => Inventory.Equipment.ItemsMaxHp; }
+    private int ItemMaxEp { get => Inventory.Equipment.ItemsMaxEp; }
     public object Skill { get; set; }
 
     public Player()
@@ -93,8 +109,7 @@ namespace Goguma.Game.Object.Entity.Player
       Exp = 0;
       MaxExp = 20;
       PAttDmg = 4;
-      ItemDmg = 4; // e
-      DefPer = 0;
+      PDefPer = 0;
       IncreaseMaxExp = 2;
       // InGame.TestInventory(this);
     }
@@ -118,7 +133,7 @@ namespace Goguma.Game.Object.Entity.Player
       PrintText(CTexts.Make($"{{\nHP : }} {{{Hp} / {MaxHp}, {Colors.txtWarning}}}"));
       PrintText(CTexts.Make($"{{\nEP : }} {{{Ep} / {MaxEp}, {Colors.txtWarning}}}"));
       PrintText(CTexts.Make($"{{\nATT : }} {{{AttDmg}, {Colors.txtWarning}}}"));
-      PrintText(CTexts.Make($"{{\nDEF : }} {{{DefPer} %, {Colors.txtWarning}}}"));
+      PrintText(CTexts.Make($"{{\nDEF : }} {{{PDefPer} %, {Colors.txtWarning}}}"));
       PrintText(CTexts.Make($"{{\n{Name}, {Colors.txtInfo}}} {{의 정보 =====================}}"));
       Pause();
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Goguma.Game.Object.Inventory.Item;
+using static Goguma.Game.Console.ConsoleFunction;
 
 namespace Goguma.Game.Object.Inventory
 {
@@ -11,10 +12,11 @@ namespace Goguma.Game.Object.Inventory
     public Equipment()
     {
       Items = new EquipmentItems();
+
     }
-    private EquipmentItem GetItem(EquipmentType type)
+    private IEquipmentItem GetItem(EquipmentType type)
     {
-      return (EquipmentItem)Items.GetItem(type);
+      return Items.GetItem(type);
     }
     public int ItemsAtt
     {
