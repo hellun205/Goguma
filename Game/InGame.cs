@@ -76,7 +76,7 @@ namespace Goguma.Game
     {
       Inventory myInventory = player.Inventory;
 
-      myInventory.EquipmentItems.Add(new EquipmentItem()
+      myInventory.Items.having.GetItems(HavingType.Equipment).Add(new EquipmentItem()
       {
         Name = CTexts.Make("{테스트아이템1}"),
         Lore = "테스트용으로 만들어진 아이템이다. 번호는 1이다.",
@@ -84,7 +84,7 @@ namespace Goguma.Game
         Description = CTexts.Make("{착용하면 아무런 효과도 얻을 수 없다.}")
       });
 
-      myInventory.EquipmentItems.Add(new EquipmentItem()
+      myInventory.Items.having.GetItems(HavingType.Equipment).Add(new EquipmentItem()
       {
         Name = CTexts.Make("{테스트아이템2}"),
         Lore = "테스트용으로 만들어진 아이템이다. 번호는 2이다.",
@@ -93,7 +93,7 @@ namespace Goguma.Game
         Increase = new ItemIncrease() { MaxHp = 500, MaxEp = 20, AttDmg = -5, DefPer = 1 }
       });
 
-      myInventory.ConsumeItems.Add(new ConsumeItem()
+      myInventory.Items.having.GetItems(HavingType.Consume).Add(new ConsumeItem()
       {
         Name = CTexts.Make("{테스트 소비 아이템1}"),
         Lore = "{테스트용으로 만들어진 아이템이다. C2",
@@ -104,7 +104,7 @@ namespace Goguma.Game
         LoseCount = 1
       });
 
-      myInventory.ConsumeItems.Add(new ConsumeItem()
+      myInventory.Items.having.GetItems(HavingType.Other).Add(new ConsumeItem()
       {
         Name = CTexts.Make("{테스트포션1}"),
         Lore = "테스트용으로 만들어진 포션이다. C1",
@@ -115,7 +115,7 @@ namespace Goguma.Game
         LoseCount = 1
       });
 
-      myInventory.OtherItems.Add(new OtherItem()
+      myInventory.Items.having.GetItems(HavingType.Other).Add(new OtherItem()
       {
         Name = CTexts.Make("{테스트 기타 아이템}"),
         Type = ItemType.Other,

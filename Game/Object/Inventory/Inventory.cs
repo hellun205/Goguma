@@ -11,120 +11,152 @@ namespace Goguma.Game.Object.Inventory
   [Serializable]
   class Inventory
   {
-    public List<IItem> ConsumeItems { get; set; }
-    public List<IItem> EquipmentItems { get; set; }
-    public List<IItem> OtherItems { get; set; }
-
-    public Equipment Equipment { get; set; }
+    public InvenItems Items { get; set; }
     public IPlayer Player { get; set; }
 
     public Inventory(IPlayer player)
     {
-      ConsumeItems = new List<IItem>();
-      EquipmentItems = new List<IItem>();
-      OtherItems = new List<IItem>();
-      Equipment = new Equipment();
+      Items = new InvenItems();
       Player = player;
     }
 
-    public void PrintInventory()
+    public void Print() // Select Inventory (Wearing, Having)
     {
       var repeat = true;
       while (repeat)
       {
-        var questionText = new CTexts();
-        var selectSceneItems = new SelectSceneItems();
+        var qt = InvenInfo.Scene.SelInvenType.GetQText();
+        var ssi = InvenInfo.Scene.SelInvenType.GetSSI();
+        var answer = SelectScene(qt, ssi) - 1;
 
-        questionText = CTexts.Make("{어떤 인벤토리를 열으시겠습니까?}");
-        selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make($"{{장비 창}}")));
-        for (var i = 0; i < Enum.GetValues(typeof(ItemType)).Length; i++)
-        {
-          var invenInfo = new InvenInfo(this, (ItemType)i);
-          selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make($"{{{invenInfo.TypeString} 아이템, {Colors.txtSuccess}}} {{ 인벤토리}}")));
-        }
-        selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make($"{{뒤로 가기, {Colors.txtMuted}}}")));
-        var answer = SelectScene(questionText, selectSceneItems) - 1;
-
-        if (selectSceneItems.Items[answer].Texts.ToString() == "뒤로 가기")
+        if (ssi.Items[answer].Texts.ToString() == "뒤로 가기")
           repeat = false;
-        else if (selectSceneItems.Items[answer].Texts.ToString() == "장비 창")
-          PrintEquipment();
         else
-          PrintInventory((ItemType)answer - 1);
+          Print((InvenType)answer);
       }
-
     }
-    public void PrintInventory(ItemType itemType)
+    public void Print(InvenType invenType)
+    {
+      switch (invenType)
+      {
+        case InvenType.Wearing: // Select WearingItems
+          while (true)
+          {
+            var qt = InvenInfo.Scene.WearingInven.GetQText();
+            var ssi = InvenInfo.Scene.WearingInven.GetSSI(this);
+            var answer = SelectScene(qt, ssi) - 1;
+
+            if (ssi.Items[answer].Texts.ToString() == "뒤로 가기")
+              return;
+            else
+              Select((WearingType)answer);
+          }
+        case InvenType.Having: // Select HavingType
+          while (true)
+          {
+            var qt = InvenInfo.Scene.SelHavingInven.GetQText();
+            var ssi = InvenInfo.Scene.SelHavingInven.GetSSI();
+            var answer = SelectScene(qt, ssi) - 1;
+
+            if (ssi.Items[answer].Texts.ToString() == "뒤로 가기")
+              return;
+            else
+              Print((HavingType)answer);
+          }
+      }
+    }
+
+    public void Print(HavingType hType) // Select HavingItems
     {
       var repeat = true;
       while (repeat)
       {
-        var invenInfo = new InvenInfo(this, itemType);
+        var qt = InvenInfo.Scene.HavingInven.GetQText(hType);
+        var ssi = InvenInfo.Scene.HavingInven.GetSSI(this, hType);
+        var answer = SelectScene(qt, ssi) - 1;
 
-        var questionText = new CTexts();
-        var selectSceneItems = new SelectSceneItems();
-
-        questionText = CTexts.Make($"{{인벤토리, {Colors.txtSuccess}}}{{ : }}{{{invenInfo.TypeString}, {Colors.txtSuccess}}}{{ 를 엽니다. }}{{\n    아이템, {Colors.txtInfo}}}{{를 선택하세요.}}");
-
-        for (int i = 0; i < invenInfo.TypeItems.Count; i++)
-          selectSceneItems.Items.Add(
-            new SelectSceneItem(CTexts.Make($"{{{invenInfo.TypeItems[i].Name.ToString()}}} {{ [{invenInfo.TypeItems[i].Count}], {Colors.txtInfo}}}")));
-
-        selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make($"{{뒤로 가기, {Colors.txtMuted}}}")));
-        int answer = SelectScene(questionText, selectSceneItems) - 1;
-
-        if (selectSceneItems.Items[answer].Texts.ToString() == "뒤로 가기")
+        if (ssi.Items[answer].Texts.ToString() == "뒤로 가기")
           repeat = false;
         else
-          SelectItem(itemType, answer);
+          Select(hType, answer);
       }
     }
 
-    private void SelectItem(ItemType itemType, int index)
+    public void Select(WearingType wType) // Selected WearingItem
     {
-      // bool repeat = true;
-      // while (repeat)
-      // {
-      var invenInfo = new InvenInfo(this, itemType);
-      var itemInfo = new ItemInfo(itemType);
-      var selectedItem = invenInfo.TypeItems[index];
+      var qt = InvenInfo.Scene.ItemOption.Wearing.GetQText(this, wType);
+      var ssi = InvenInfo.Scene.ItemOption.Wearing.GetSSI(wType);
+      var answer = SelectScene(qt, ssi) - 1;
 
-      var questionText = new CTexts();
-      var selectSceneItems = new SelectSceneItems();
-
-      questionText =
-          CTexts.Make($"{{무슨 작업을 하시겠습니까?\n    }} {{\n    선택 : }} {{{selectedItem.Name.ToString()}}} {{ [{selectedItem.Count}], {Colors.txtInfo}}} {{\n    위치 : }} {{{invenInfo.TypeString},{Colors.txtSuccess}}} {{ . }} {{{index + 1},{Colors.txtSuccess}}}");
-
-      selectSceneItems = itemInfo.SelectItemAnswers;
-
-      var answer = SelectScene(questionText, selectSceneItems) - 1;
-      string answerText;
-
-      answerText = selectSceneItems.Items[answer].Texts.ToString();
-
-      if (selectSceneItems.Items[answer].Texts.ToString() != "뒤로 가기")
-      {
-        var itemOptionInfo = new ItemOptionInfo(this, itemType, index, answerText);
-        itemOptionInfo.Act();
-        Pause();
-      }
-      // }
-    }
-
-    public void RemoveItem(ItemType itemType, int index, int count)
-    {
-      var invenInfo = new InvenInfo(this, itemType);
-      var selectedItem = invenInfo.TypeItems[index];
-
-      if (count == selectedItem.Count)
-        invenInfo.TypeItems.RemoveAt(index);
+      if (ssi.Items[answer].Texts.ToString() == "뒤로 가기")
+        return;
       else
-        selectedItem.Count -= count;
+      {
+        var io = new ItemOption(this, wType, ssi.Items[answer].Texts.ToString());
+        io.Act();
+      }
+
     }
 
-    public void PrintEquipment()
+    public void Select(HavingType hType, int index) // Selected HavingItem
     {
+      var qt = InvenInfo.Scene.ItemOption.Having.GetQText(this, hType, index);
+      var ssi = InvenInfo.Scene.ItemOption.Having.GetSSI(hType, index);
+      var answer = SelectScene(qt, ssi) - 1;
+
+      if (ssi.Items[answer].Texts.ToString() == "뒤로 가기")
+        return;
+      else
+      {
+        var io = new ItemOption(this, hType, index, ssi.Items[answer].Texts.ToString());
+        io.Act();
+      }
 
     }
+    public void RemoveItem(WearingType wType, int count) // Wearing Item Remove
+    {
+      var inven = Items.wearing.Items;
+      var sItem = Items.wearing.GetItem(wType);
+
+      if (count == sItem.Count)
+        inven[(int)wType] = EquipmentItem.GetAir();
+      else
+        sItem.Count -= count;
+    }
+    public void RemoveItem(HavingType hType, int index, int count) // Having Item Remove
+    {
+      var inven = Items.having.GetItems(hType);
+      var sItem = inven[index];
+
+      if (count == sItem.Count)
+        inven.RemoveAt(index);
+      else
+        sItem.Count -= count;
+    }
+
+    public void SetItem(WearingType wType, IEquipmentItem item) // Wearing Item Set
+    {
+      var inven = Items.wearing.Items;
+      inven[(int)wType] = item;
+    }
+    public void SetItem(HavingType hType, int index, IEquipmentItem item) // Having Item Set
+    {
+      var inven = Items.having.GetItems(hType);
+      inven[index] = item;
+    }
+    public void GetItem(HavingType hType, IItem item) // Having Item Get
+    {
+      var inven = Items.having.GetItems(hType);
+      foreach (var item1 in inven)
+      {
+        if (item1.Name.ToString() == item.Name.ToString() && (item1.Count + item.Count)! <= item1.MaxCount)
+        {
+          item1.Count += item.Count;
+          return;
+        }
+      }
+      inven.Add(item);
+    }
+
   }
 }

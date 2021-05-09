@@ -119,10 +119,10 @@ namespace Goguma.Game.Object.Entity.Player
     private int attDmg { get; set; }
     private int defPer { get; set; }
 
-    private int ItemAttDmg { get => Inventory.Equipment.ItemsAtt; }
-    private int ItemDefPer { get => Inventory.Equipment.ItemsDef; }
-    private int ItemMaxHp { get => Inventory.Equipment.ItemsMaxHp; }
-    private int ItemMaxEp { get => Inventory.Equipment.ItemsMaxEp; }
+    private int ItemAttDmg { get => Inventory.Items.wearing.ItemsAtt; }
+    private int ItemDefPer { get => Inventory.Items.wearing.ItemsDef; }
+    private int ItemMaxHp { get => Inventory.Items.wearing.ItemsMaxHp; }
+    private int ItemMaxEp { get => Inventory.Items.wearing.ItemsMaxEp; }
     private int increaseMaxExp;
     private int increaseAttDmg;
     // private int increaseDefPer;

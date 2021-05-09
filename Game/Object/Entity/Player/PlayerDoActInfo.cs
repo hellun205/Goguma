@@ -19,7 +19,7 @@ namespace Goguma.Game.Object.Entity.Player
           player.PrintAbout();
           break;
         case "인벤토리 열기":
-          player.Inventory.PrintInventory();
+          player.Inventory.Print();
           break;
         case "테스트 아이템 획득": // TEST
           InGame.TestInventory(player);

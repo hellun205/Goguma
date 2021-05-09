@@ -1,9 +1,9 @@
 using System;
 
-namespace Goguma.Game.Object.Inventory.Item
+namespace Goguma.Game.Object.Inventory
 {
   [Serializable]
-  enum ItemType
+  enum HavingType
   {
     Equipment,
     Consume,

@@ -5,7 +5,7 @@ namespace Goguma.Game.Object.Inventory.Item
 {
   interface IEquipmentItem : IItem
   {
-    EquipmentType EquipmentType { get; set; }
+    WearingType EquipmentType { get; set; }
     ItemIncrease Increase { get; set; }
 
     new void UseItem(IPlayer player);

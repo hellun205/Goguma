@@ -11,7 +11,7 @@ namespace Goguma.Game.Object.Inventory.Item
   [Serializable]
   class EquipmentItem : Item, IEquipmentItem
   {
-    public EquipmentType EquipmentType { get; set; }
+    public WearingType EquipmentType { get; set; }
     public ItemIncrease Increase { get; set; }
 
     public EquipmentItem()
@@ -21,9 +21,9 @@ namespace Goguma.Game.Object.Inventory.Item
 
     }
 
-    new static public IItem GetAir()
+    new static public IEquipmentItem GetAir()
     {
-      IItem resultItem = new EquipmentItem { IsAir = true };
+      IEquipmentItem resultItem = new EquipmentItem { IsAir = true };
       return resultItem;
     }
 

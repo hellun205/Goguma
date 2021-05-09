@@ -67,7 +67,7 @@ namespace Goguma.Game.Console
           int readInt = Convert.ToInt32(readText);
 
           for (int i = 1; i <= answerItems.Items.Count; i++)
-            if (readInt == i)
+            if (readInt == i && answerItems.Items[readInt - 1].Enabled)
               return readInt;
         }
       }
