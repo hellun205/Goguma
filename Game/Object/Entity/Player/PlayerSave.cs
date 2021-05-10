@@ -1,9 +1,6 @@
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Runtime.Serialization;
 using Goguma.Game.Console;
 using static Goguma.Game.Console.ConsoleFunction;
 

@@ -1,7 +1,5 @@
-using System.Collections.Generic;
 using Colorify;
 using Goguma.Game.Console;
-using Goguma.Game.Object.Inventory.Item;
 using Goguma.Game.Object.Map;
 
 namespace Goguma.Game.Object.Entity.Player

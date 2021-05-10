@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using Colorify;
 using static Goguma.Game.Console.StringFunction;
 
 namespace Goguma.Game.Console

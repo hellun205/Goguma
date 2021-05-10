@@ -2,7 +2,6 @@ using System;
 using static Goguma.Game.Console.StringFunction;
 using static System.Console;
 using Colorify;
-using System.Linq;
 
 namespace Goguma.Game.Console
 {

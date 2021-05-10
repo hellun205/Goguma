@@ -2,7 +2,6 @@ using System;
 using Colorify;
 using Goguma.Game.Console;
 using Goguma.Game.Object.Entity.Player;
-using Goguma.Game.Object.Inventory;
 using static Goguma.Game.Console.ConsoleFunction;
 using static Goguma.Game.Console.StringFunction;
 

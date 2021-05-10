@@ -4,7 +4,6 @@ using Goguma.Game.Console;
 using Goguma.Game.Object.Entity.Monster;
 using Goguma.Game.Object.Map;
 using static Goguma.Game.Console.ConsoleFunction;
-using static Goguma.Game.Console.StringFunction;
 
 namespace Goguma.Game.Object.Entity.Player
 {

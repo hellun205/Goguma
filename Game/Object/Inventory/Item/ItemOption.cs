@@ -1,10 +1,7 @@
 ﻿using Goguma.Game.Console;
 using System;
-
-using static Goguma.Game.Console.StringFunction;
 using static Goguma.Game.Console.ConsoleFunction;
 using Colorify;
-using Microsoft.VisualBasic;
 
 namespace Goguma.Game.Object.Inventory.Item
 {

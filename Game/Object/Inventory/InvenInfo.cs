@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using Colorify;
 using Goguma.Game.Console;
-using Goguma.Game.Object.Inventory.Item;
 
 namespace Goguma.Game.Object.Inventory
 {
