@@ -6,15 +6,15 @@ namespace Goguma.Game.Object.Entity.Player
 {
   class PlayerActInfo
   {
-    public MapList Map { get; set; }
-    public MapInfo MapInfo { get; set; }
+    public MapList CurrnetMap { get; set; }
+    public Map.Map MapInfo { get; set; }
     public CTexts QuestionText { get; set; }
     public SelectSceneItems SelectItemAnswers { get; set; }
 
     public PlayerActInfo(MapList map)
     {
-      Map = map;
-      MapInfo = new MapInfo(map);
+      CurrnetMap = map;
+      MapInfo = new Map.Map(map);
 
       QuestionText = CTexts.Make($"{{[ {MapInfo.Text} ] , {Colors.bgSuccess}}} {{이 곳에서 무슨 작업을 하시겠습니까?}}");
       SelectItemAnswers = new SelectSceneItems();
