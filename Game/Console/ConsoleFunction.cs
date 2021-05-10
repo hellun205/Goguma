@@ -31,51 +31,15 @@ namespace Goguma.Game.Console
 
     static private void PrintQuestionText(CTexts questionText, bool air)
     {
-      if (air)
-        PrintText("\n");
-      PrintText("\nQ. ");
-      PrintText(questionText);
-      PrintText("\n\n");
+      SelectScene.PrintQuestionText(questionText, air);
     }
 
     static private void PrintReadText()
     {
-      PrintText(CTexts.Make($"{{\n>> , {Colors.txtInfo}}}"));
+      SelectScene.PrintReadText();
     }
 
-    static public int SelectScene(CTexts questionText, SelectSceneItems answerItems, bool air = true)
-    {
-      while (true)
-      {
 
-        PrintQuestionText(questionText, air);
-
-        for (int i = 1; i <= answerItems.Items.Count; i++)
-        {
-          var enabledColor = Colors.txtDefault;
-          if (!answerItems.Items[i - 1].Enabled)
-            enabledColor = Colors.txtMuted;
-          PrintText(CTexts.Make($"{{{i}. , {enabledColor}}}"));
-          PrintText(answerItems.Items[i - 1].Texts);
-          PrintText("\n");
-        }
-
-        PrintReadText();
-
-        string readText = ReadLine();
-
-        PrintText("\n");
-
-        if (IsInt(readText))
-        {
-          int readInt = Convert.ToInt32(readText);
-
-          for (int i = 1; i <= answerItems.Items.Count; i++)
-            if (readInt == i && answerItems.Items[readInt - 1].Enabled)
-              return readInt;
-        }
-      }
-    }
 
     static public string ReadTextScean(CTexts questionText, bool air = true)
     {

@@ -95,12 +95,9 @@ namespace Goguma.Game.Object.Entity.Player
       {
         selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make($"{{{item.Name}}}")));
       }
-      var anwser = SelectScene(questionText, selectSceneItems) - 1;
-
-      var name = selectSceneItems.Items[anwser].Texts.ToString().Trim();
-
+      var ss = new SelectScene(questionText, selectSceneItems);
+      var name = ss.GetString.Trim();
       if (name == "" || name == null) return null;
-
       var player = LoadPlayerData(name);
 
       if (player == null)

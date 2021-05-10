@@ -21,11 +21,10 @@ namespace Goguma.Game
     {
       while (true)
       {
-        var playerActInfo = new PlayerActInfo(player.Map);
-        var answer = SelectScene(playerActInfo.QuestionText, playerActInfo.SelectItemAnswers) - 1;
-        var selectActText = playerActInfo.SelectItemAnswers.Items[answer].Texts.ToString();
-        var pdai = new PlayerDoActInfo(playerActInfo, selectActText);
-        pdai.Act(player);
+        var qt = PlayerAct.Scene.SelPlayerAct.GetQText(player.Map);
+        var ssi = PlayerAct.Scene.SelPlayerAct.GetSSI(player.Map);
+        var ss = new SelectScene(qt, ssi);
+        PlayerAct.Act(player, ss.GetString);
       }
     }
 
@@ -39,8 +38,8 @@ namespace Goguma.Game
         selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make("{새로 시작}")));
         selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make("{이어서 시작}")));
         selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make("{게임 종료}")));
-
-        switch (SelectScene(questionText, selectSceneItems))
+        var ss = new SelectScene(questionText, selectSceneItems);
+        switch (ss.GetIndex)
         {
           case 1:
             playerData = PlayerSave.CreatePlayerData();

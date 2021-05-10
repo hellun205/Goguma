@@ -2,6 +2,7 @@
 using static Goguma.Game.Console.ConsoleFunction;
 using System;
 using Goguma.Game.Object.Entity.Player;
+using Goguma.Game.Console;
 
 namespace Goguma.Game.Object.Inventory
 {
@@ -24,12 +25,12 @@ namespace Goguma.Game.Object.Inventory
       {
         var qt = InvenInfo.Scene.SelInvenType.GetQText();
         var ssi = InvenInfo.Scene.SelInvenType.GetSSI();
-        var answer = SelectScene(qt, ssi) - 1;
+        var ss = new SelectScene(qt, ssi);
 
-        if (ssi.Items[answer].Texts.ToString() == "뒤로 가기")
+        if (ss.GetString == "뒤로 가기")
           repeat = false;
         else
-          Print((InvenType)answer);
+          Print((InvenType)ss.GetIndex);
       }
     }
     public void Print(InvenType invenType)
@@ -41,24 +42,24 @@ namespace Goguma.Game.Object.Inventory
           {
             var qt = InvenInfo.Scene.WearingInven.GetQText();
             var ssi = InvenInfo.Scene.WearingInven.GetSSI(this);
-            var answer = SelectScene(qt, ssi) - 1;
+            var ss = new SelectScene(qt, ssi);
 
-            if (ssi.Items[answer].Texts.ToString() == "뒤로 가기")
+            if (ss.GetString == "뒤로 가기")
               return;
             else
-              Select((WearingType)answer);
+              Select((WearingType)ss.GetIndex);
           }
         case InvenType.Having: // Select HavingType
           while (true)
           {
             var qt = InvenInfo.Scene.SelHavingInven.GetQText();
             var ssi = InvenInfo.Scene.SelHavingInven.GetSSI();
-            var answer = SelectScene(qt, ssi) - 1;
+            var ss = new SelectScene(qt, ssi);
 
-            if (ssi.Items[answer].Texts.ToString() == "뒤로 가기")
+            if (ss.GetString == "뒤로 가기")
               return;
             else
-              Print((HavingType)answer);
+              Print((HavingType)ss.GetIndex);
           }
       }
     }
@@ -70,12 +71,12 @@ namespace Goguma.Game.Object.Inventory
       {
         var qt = InvenInfo.Scene.HavingInven.GetQText(hType);
         var ssi = InvenInfo.Scene.HavingInven.GetSSI(this, hType);
-        var answer = SelectScene(qt, ssi) - 1;
+        var ss = new SelectScene(qt, ssi);
 
-        if (ssi.Items[answer].Texts.ToString() == "뒤로 가기")
+        if (ss.GetString == "뒤로 가기")
           repeat = false;
         else
-          Select(hType, answer);
+          Select(hType, ss.GetIndex);
       }
     }
 
@@ -83,13 +84,13 @@ namespace Goguma.Game.Object.Inventory
     {
       var qt = InvenInfo.Scene.ItemOption.Wearing.GetQText(this, wType);
       var ssi = InvenInfo.Scene.ItemOption.Wearing.GetSSI(wType);
-      var answer = SelectScene(qt, ssi) - 1;
+      var ss = new SelectScene(qt, ssi);
 
-      if (ssi.Items[answer].Texts.ToString() == "뒤로 가기")
+      if (ss.GetString == "뒤로 가기")
         return;
       else
       {
-        var io = new ItemOption(this, wType, ssi.Items[answer].Texts.ToString());
+        var io = new ItemOption(this, wType, ss.GetString);
         io.Act();
       }
 
@@ -99,13 +100,13 @@ namespace Goguma.Game.Object.Inventory
     {
       var qt = InvenInfo.Scene.ItemOption.Having.GetQText(this, hType, index);
       var ssi = InvenInfo.Scene.ItemOption.Having.GetSSI(hType, index);
-      var answer = SelectScene(qt, ssi) - 1;
+      var ss = new SelectScene(qt, ssi);
 
-      if (ssi.Items[answer].Texts.ToString() == "뒤로 가기")
+      if (ss.GetString == "뒤로 가기")
         return;
       else
       {
-        var io = new ItemOption(this, hType, index, ssi.Items[answer].Texts.ToString());
+        var io = new ItemOption(this, hType, index, ss.GetString);
         io.Act();
       }
 
