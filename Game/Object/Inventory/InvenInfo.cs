@@ -133,7 +133,12 @@ namespace Goguma.Game.Object.Inventory
           foreach (var item in inven.Items.having.GetItems(hType))
           {
             if (!item.IsAir)
-              resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{{item.Name.ToString()}}} {{ [{item.Count}], {Colors.txtInfo}}}")));
+            {
+              if (hType == HavingType.Equipment)
+                resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{{item.Name.ToString()}}} {{ [{item.Count}], {Colors.txtInfo}}} {{ [{InvenInfo.WearingInven.GetTypeString((WearingType)item.Type)}],{Colors.txtWarning}}}")));
+              else
+                resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{{item.Name.ToString()}}} {{ [{item.Count}], {Colors.txtInfo}}}")));
+            }
             else
               resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{비어 있음}} {{ [{item.Count}], {Colors.txtInfo}}}"), false));
           }
