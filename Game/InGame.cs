@@ -22,7 +22,7 @@ namespace Goguma.Game
       while (true)
       {
         var qt = PlayerAct.Scene.SelPlayerAct.GetQText(player.Map);
-        var ssi = PlayerAct.Scene.SelPlayerAct.GetSSI(player.Map);
+        var ssi = PlayerAct.Scene.SelPlayerAct.GetSSI(player.Map, true /*Admin*/);
         var ss = new SelectScene(qt, ssi);
         PlayerAct.Act(player, ss.GetString);
       }

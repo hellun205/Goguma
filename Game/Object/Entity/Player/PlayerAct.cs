@@ -60,7 +60,7 @@ namespace Goguma.Game.Object.Entity.Player
           player.PrintAbout();
           break;
         case "ADMIN":
-          AdminOption(true);
+          AdminOption(player, true);
           break;
         case "인벤토리 열기":
           player.Inventory.Print();
@@ -70,11 +70,27 @@ namespace Goguma.Game.Object.Entity.Player
           break;
       }
     }
-    static private void AdminOption(bool isAdmin = false)
+    static private void AdminOption(Player player, bool isAdmin = false)
     {
       if (isAdmin)
       {
-        var selectedText = new SelectScene(Scene.SelAdminAct.GetQText(), Scene.SelAdminAct.GetSSI());
+        while (true)
+        {
+          var ss = new SelectScene(Scene.SelAdminAct.GetQText(), Scene.SelAdminAct.GetSSI());
+          switch (ss.GetString)
+          {
+            case "Test Inventory":
+              InGame.TestInventory(player);
+              break;
+            case "Player Level Up":
+              player.Exp += player.RequiredForLevelUp();
+              break;
+            default:
+              return;
+          }
+          PrintText(CTexts.Make($"{{\nSuccess : {ss.GetString}, {Colors.txtSuccess}}}"));
+          Pause();
+        }
       }
     }
 
