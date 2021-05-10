@@ -46,12 +46,14 @@ namespace Goguma.Game.Console
       while (true)
       {
         PrintQuestionText(questionText, air);
+        PrintText("\n'취소'를 입력하시면 입력을 취소합니다.\n");
         PrintReadText();
 
         string readText = ReadLine();
 
         PrintText("\n");
-
+        if (readText.Trim() == "취소")
+          return null;
         if (readText != "")
           return readText;
       }

@@ -1,6 +1,9 @@
 using System.Globalization;
+using System.Threading;
 using Colorify;
 using Goguma.Game.Console;
+using Goguma.Game.Object.Inventory;
+using Goguma.Game.Object.Inventory.Item;
 using Goguma.Game.Object.Map;
 using static Goguma.Game.Console.ConsoleFunction;
 
