@@ -2,6 +2,7 @@ using System;
 using static Goguma.Game.Console.StringFunction;
 using static System.Console;
 using Colorify;
+using System.Linq;
 
 namespace Goguma.Game.Console
 {
@@ -47,11 +48,15 @@ namespace Goguma.Game.Console
     {
       while (true)
       {
+
         PrintQuestionText(questionText, air);
 
         for (int i = 1; i <= answerItems.Items.Count; i++)
         {
-          PrintText($"{i}. ");
+          var enabledColor = Colors.txtDefault;
+          if (!answerItems.Items[i - 1].Enabled)
+            enabledColor = Colors.txtMuted;
+          PrintText(CTexts.Make($"{{{i}. , {enabledColor}}}"));
           PrintText(answerItems.Items[i - 1].Texts);
           PrintText("\n");
         }
