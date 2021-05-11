@@ -6,8 +6,10 @@ namespace Goguma.Game.Object.Entity.Monster
 {
   interface IMonster
   {
+    string Name { get; set; }
     int Hp { get; set; }
     int MaxHp { get; set; }
+    int Level { get; set; }
 
     int AttDmg { get; set; }
     int DefPer { get; set; }
@@ -18,6 +20,7 @@ namespace Goguma.Game.Object.Entity.Monster
     List<IItem> DroppingItems { get; set; }
 
     void AttackPlayer(IPlayer player);
+    void PrintAbout();
     void UseSkill();
   }
 }
