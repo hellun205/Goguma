@@ -55,7 +55,7 @@ namespace Goguma.Game.Console
 
     static public void PrintReadText()
     {
-      PrintText(CTexts.Make($"{{>> , {Colors.txtInfo}}}"));
+      PrintText(CTexts.Make($"{{\n>> , {Colors.txtInfo}}}"));
     }
   }
 }
