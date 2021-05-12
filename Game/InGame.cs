@@ -33,11 +33,26 @@ namespace Goguma.Game
       while (true)
       {
         Player playerData;
+        var pc = PlayerSave.GetPlayerList().Count;
+
         var questionText = CTexts.Make($"{{고구마 게임,{Colors.bgWarning}}}");
+
         var selectSceneItems = new SelectSceneItems();
         selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make("{새로 시작}")));
-        selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make("{이어서 시작}")));
+        if (pc > 0)
+          selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make("{이어서 시작}")));
         selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make("{게임 종료}")));
+
+        Action keepPlay = () =>
+        {
+          playerData = PlayerSave.GetPlayerData();
+          if (playerData != null)
+          {
+            player = playerData;
+            return;
+          }
+        };
+
         var ss = new SelectScene(questionText, selectSceneItems);
         switch (ss.getIndex)
         {
@@ -50,12 +65,11 @@ namespace Goguma.Game
             }
             break;
           case 2:
-            playerData = PlayerSave.GetPlayerData();
-            if (playerData != null)
-            {
-              player = playerData;
-              return;
-            }
+            if (pc > 0)
+              keepPlay();
+            else
+              ExitGame();
+
             break;
           case 3:
             ExitGame();
@@ -69,6 +83,5 @@ namespace Goguma.Game
       if (ReadYesOrNoScean(CTexts.Make("{진짜로 종료하시겠습니까?}")))
         Environment.Exit(0);
     }
-
   }
 }
