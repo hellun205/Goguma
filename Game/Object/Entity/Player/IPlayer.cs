@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Goguma.Game.Object.Entity.Monster;
 using Goguma.Game.Object.Map;
+using Goguma.Game.Object.Skill;
 
 namespace Goguma.Game.Object.Entity.Player
 {
@@ -26,7 +27,7 @@ namespace Goguma.Game.Object.Entity.Player
 
     double DefPer { get; set; }
 
-    List<Skill.Skill> Skills { get; set; }
+    List<ISkill> Skills { get; set; }
 
     void AttackMonster(IMonster moster);
 

@@ -4,6 +4,7 @@ using Colorify;
 using Goguma.Game.Console;
 using Goguma.Game.Object.Entity.Monster;
 using Goguma.Game.Object.Map;
+using Goguma.Game.Object.Skill;
 using static Goguma.Game.Console.ConsoleFunction;
 
 namespace Goguma.Game.Object.Entity.Player
@@ -134,17 +135,19 @@ namespace Goguma.Game.Object.Entity.Player
     private double exp;
     private double maxHp;
     private double maxEp;
-    public List<Skill.Skill> Skills { get; set; }
+    public List<ISkill> Skills { get; set; }
 
     public Player()
     {
       Inventory = new Inventory.Inventory(this);
+      Skills = new List<ISkill>();
     }
 
     public Player(string name)
     {
       Name = name;
       Inventory = new Inventory.Inventory(this);
+      Skills = new List<ISkill>();
       MaxHp = 50;
       MaxEp = 30;
       Hp = MaxHp;

@@ -7,6 +7,7 @@ using Goguma.Game.Object.Entity.Monster;
 using Goguma.Game.Object.Inventory;
 using Goguma.Game.Object.Inventory.Item;
 using Goguma.Game.Object.Map;
+using Goguma.Game.Object.Skill;
 using static Goguma.Game.Console.ConsoleFunction;
 
 namespace Goguma.Game.Object.Entity.Player
@@ -51,6 +52,7 @@ namespace Goguma.Game.Object.Entity.Player
           resultSSI.Items.Add(new SelectSceneItem(CTexts.Make("{Test Inventory}")));
           resultSSI.Items.Add(new SelectSceneItem(CTexts.Make("{Player Level Up}")));
           resultSSI.Items.Add(new SelectSceneItem(CTexts.Make("{Battle with test monster}")));
+          resultSSI.Items.Add(new SelectSceneItem(CTexts.Make("{Add Test Skill}")));
           resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{뒤로 가기, {Colors.txtMuted}}}")));
           return resultSSI;
         }
@@ -92,6 +94,10 @@ namespace Goguma.Game.Object.Entity.Player
             case "Battle with test monster":
               var testMonster = Monsters.Get(MonsterList.TestMonster);
               Battle.Battle.PvE(player, testMonster);
+              break;
+            case "Add Test Skill":
+              player.Skills.Add(Skills.Get(SkillList.TestSkill1));
+              player.Skills.Add(Skills.Get(SkillList.TestSkill2));
               break;
             default:
               return;
