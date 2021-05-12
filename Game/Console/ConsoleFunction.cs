@@ -39,8 +39,6 @@ namespace Goguma.Game.Console
       SelectScene.PrintReadText();
     }
 
-
-
     static public string ReadTextScean(CTexts questionText, bool air = true)
     {
       while (true)
@@ -49,10 +47,10 @@ namespace Goguma.Game.Console
         PrintText("\n'취소'를 입력하시면 입력을 취소합니다.\n");
         PrintReadText();
 
-        string readText = ReadLine();
+        string readText = ReadLine().Trim();
 
         PrintText("\n");
-        if (readText.Trim() == "취소")
+        if (readText == "취소")
           return null;
         if (readText != "")
           return readText;

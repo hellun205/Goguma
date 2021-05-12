@@ -24,10 +24,10 @@ namespace Goguma.Game.Object.Inventory
       {
         var ss = InvenInfo.Scene.SelInvenType.Scene();
 
-        if (ss.GetString == "뒤로 가기")
+        if (ss.getString == "뒤로 가기")
           return false;
         else
-          if (Print((InvenType)ss.GetIndex - 1)) return true;
+          if (Print((InvenType)ss.getIndex - 1)) return true;
       }
     }
     private bool Print(InvenType invenType)
@@ -39,20 +39,20 @@ namespace Goguma.Game.Object.Inventory
           {
             var ss = InvenInfo.Scene.WearingInven.Scene(this);
 
-            if (ss.GetString == "뒤로 가기")
+            if (ss.getString == "뒤로 가기")
               return false;
             else
-              return Select((WearingType)ss.GetIndex - 1);
+              return Select((WearingType)ss.getIndex - 1);
           }
         case InvenType.Having: // Select HavingType
           while (true)
           {
             var ss = InvenInfo.Scene.SelHavingInven.Scene();
 
-            if (ss.GetString == "뒤로 가기")
+            if (ss.getString == "뒤로 가기")
               return false;
             else
-              return Print((HavingType)ss.GetIndex - 1);
+              return Print((HavingType)ss.getIndex - 1);
           }
         default:
           return false;
@@ -65,10 +65,10 @@ namespace Goguma.Game.Object.Inventory
       {
         var ss = InvenInfo.Scene.HavingInven.Scene(this, hType);
 
-        if (ss.GetString == "뒤로 가기")
+        if (ss.getString == "뒤로 가기")
           return false;
         else
-          if (Select(hType, ss.GetIndex - 1)) return true;
+          if (Select(hType, ss.getIndex - 1)) return true;
       }
     }
 
@@ -76,11 +76,11 @@ namespace Goguma.Game.Object.Inventory
     {
       var ss = InvenInfo.Scene.ItemOption.Wearing.Scene(this, wType);
 
-      if (ss.GetString == "뒤로 가기")
+      if (ss.getString == "뒤로 가기")
         return false;
       else
       {
-        var io = new ItemOption(this, wType, ss.GetString);
+        var io = new ItemOption(this, wType, ss.getString);
         return io.Act();
       }
     }
@@ -89,11 +89,11 @@ namespace Goguma.Game.Object.Inventory
     {
       var ss = InvenInfo.Scene.ItemOption.Having.Scene(this, hType, index);
 
-      if (ss.GetString == "뒤로 가기")
+      if (ss.getString == "뒤로 가기")
         return false;
       else
       {
-        var io = new ItemOption(this, hType, index, ss.GetString);
+        var io = new ItemOption(this, hType, index, ss.getString);
         return io.Act();
       }
     }
