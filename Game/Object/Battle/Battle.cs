@@ -2,7 +2,8 @@ using Goguma.Game.Object.Entity.Player;
 using Goguma.Game.Object.Entity.Monster;
 using static Goguma.Game.Console.ConsoleFunction;
 using Colorify;
-using Goguma.Game.Object.Inventory.Item;
+using System.Linq;
+using Goguma.Game.Object.Skill;
 
 namespace Goguma.Game.Object.Battle
 {
@@ -54,12 +55,12 @@ namespace Goguma.Game.Object.Battle
             switch (attackScene.getString)
             {
               case "공격 하기":
-                skip = true;
-                if (GeneralAttack(player, monster)) return;
+                skip = GeneralAttack(player, monster);
+                if (monster.Hp == 0) return;
                 break;
               case "스킬 사용":
-                skip = true;
-                if (SkillAttack(player, monster)) return;
+                skip = UseSkill(player, monster);
+                if (monster.Hp == 0) return;
                 break;
               case "뒤로 가기":
                 break;
@@ -73,30 +74,55 @@ namespace Goguma.Game.Object.Battle
         {
           PrintText("SKIP\n");
           // TO DO
+          // Monster Attack to Player
         }
       }
     }
     static private bool GeneralAttack(IPlayer player, IMonster monster)
     {
-      double damage = player.AttDmg * (1 - (monster.DefPer / 100));
+      double damage = DamageByLevel(player.AttDmg, player.Level, monster.Level) * (1 - (monster.DefPer / 100));
       BattleScene.PvE.GeneralAttack.Scean(player, monster, (int)damage);
 
       if (monster.Hp - damage <= 0)
       {
         monster.Hp = 0;
         Kill(player, monster);
-        return true;
       }
       else
       {
         monster.Hp -= damage;
-        return false;
+      }
+      return true;
+    }
+    static private bool UseSkill(IPlayer player, IMonster monster)
+    {
+      var skillTypeSc = BattleScene.PvE.SelSkill.Scean();
+      SkillType skillType;
+      if (skillTypeSc.GetString == "뒤로 가기") return false;
+      else skillType = (SkillType)(skillTypeSc.GetIndex - 1);
+      var skills = from sk in player.Skills
+                   where sk.Type == skillType
+                   select sk;
+
+      var selIndexSc = BattleScene.PvE.SelSkill.Scean(player, skillType);
+      int selIndex;
+      if (selIndexSc.GetString == "뒤로 가기") return false;
+      else selIndex = selIndexSc.GetIndex - 1;
+      var skill = skills.ToList<ISkill>()[selIndex];
+
+      switch (skill.Type)
+      {
+        case SkillType.AttackSkill:
+          return SkillAttack(player, monster, (AttackSkill)skill);
+        default:
+          return false;
       }
     }
-    static private bool SkillAttack(IPlayer player, IMonster monster)
+    static private bool SkillAttack(IPlayer player, IMonster monster, IAttackSkill skill)
     {
-      double damage = player.AttDmg * (1 - (monster.DefPer / 100)); // TO DO
-      // TO DO
+      double damage = DamageByLevel((player.AttDmg + skill.Damage), player.Level, monster.Level) * (1 - ((monster.DefPer / 100) - skill.IgnoreDef)); // TO DO
+      BattleScene.PvE.SkillAttack.Scean(player, monster, skill, (int)damage);
+
       if (monster.Hp - damage <= 0)
       {
         monster.Hp = 0;
@@ -112,8 +138,8 @@ namespace Goguma.Game.Object.Battle
     static private void Kill(IPlayer player, IMonster monster)
     {
       BattleScene.PvE.Kill.Scene(monster);
-      player.Gold += monster.GivingGold;
-      player.Exp += monster.GivingExp;
+      player.Gold += GoldByLevel(monster.GivingGold, player.Level, monster.Level);
+      player.Exp += ExpByLevel(monster.GivingExp, player.Level, monster.Level);
       foreach (var item in monster.DroppingItems.Items)
         player.Inventory.GetItem(item.Item);
     }
