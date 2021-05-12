@@ -14,7 +14,7 @@ namespace Goguma.Game.Object.Battle
       while (true)
       {
         var scene = BattleScene.PvE.Meet.Scean(player, monster);
-        switch (scene.GetString)
+        switch (scene.getString)
         {
           case "플레이어 정보 보기":
             player.PrintAbout();
@@ -39,7 +39,7 @@ namespace Goguma.Game.Object.Battle
         var skip = false;
         var scene = BattleScene.PvE.Main.Scean(player, monster, first);
         first = false;
-        switch (scene.GetString)
+        switch (scene.getString)
         {
           case "플레이어 정보 보기":
             player.PrintAbout();
@@ -52,7 +52,7 @@ namespace Goguma.Game.Object.Battle
             break;
           case "공격 하기":
             var attackScene = BattleScene.PvE.Attack.Scean();
-            switch (attackScene.GetString)
+            switch (attackScene.getString)
             {
               case "공격 하기":
                 skip = GeneralAttack(player, monster);

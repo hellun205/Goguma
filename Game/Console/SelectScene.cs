@@ -7,25 +7,23 @@ namespace Goguma.Game.Console
 {
   class SelectScene
   {
-    public int GetIndex;
-    public string GetString;
+    public int getIndex;
+    public string getString;
 
     public SelectScene(CTexts questionText, SelectSceneItems answerItems, bool air = true)
     {
+      PrintQuestionText(questionText, air);
+
+      for (int i = 1; i <= answerItems.Items.Count; i++)
+      {
+        var enabledColor = answerItems.Items[i - 1].Enabled ? Colors.txtDefault : Colors.txtMuted;
+        PrintText(CTexts.Make($"{{{i}. , {enabledColor}}}"));
+        PrintText(answerItems.Items[i - 1].Texts);
+        PrintText("\n");
+      }
+
       while (true)
       {
-        PrintQuestionText(questionText, air);
-
-        for (int i = 1; i <= answerItems.Items.Count; i++)
-        {
-          var enabledColor = Colors.txtDefault;
-          if (!answerItems.Items[i - 1].Enabled)
-            enabledColor = Colors.txtMuted;
-          PrintText(CTexts.Make($"{{{i}. , {enabledColor}}}"));
-          PrintText(answerItems.Items[i - 1].Texts);
-          PrintText("\n");
-        }
-
         PrintReadText();
 
         string readText = ReadLine();
@@ -39,8 +37,8 @@ namespace Goguma.Game.Console
           for (int i = 1; i <= answerItems.Items.Count; i++)
             if (readInt == i && answerItems.Items[readInt - 1].Enabled)
             {
-              GetIndex = readInt;
-              GetString = answerItems.Items[readInt - 1].Texts.ToString();
+              getIndex = readInt;
+              getString = answerItems.Items[readInt - 1].Texts.ToString();
               return;
             }
         }

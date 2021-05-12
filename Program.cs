@@ -9,7 +9,6 @@ namespace Gogu_Remaster
 {
   class Program
   {
-
     static void Main(string[] args)
     {
       AppDomain.CurrentDomain.ProcessExit += OnProcessExit;
