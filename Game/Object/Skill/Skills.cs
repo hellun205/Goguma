@@ -19,6 +19,16 @@ namespace Goguma.Game.Object.Skill
             IgnoreDef = 0
           };
           break;
+        case SkillList.TestSkill2:
+          resultSkill = new AttackSkill()
+          {
+            Name = "테스트 스킬2",
+            Text = CTexts.Make("{테스테스테스트!}"),
+            Type = SkillType.AttackSkill,
+            Damage = 7,
+            IgnoreDef = 0
+          };
+          break;
         default:
           return null;
       }
