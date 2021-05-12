@@ -23,6 +23,7 @@ namespace Goguma.Game.Object.Entity.Monster
             GivingExp = 5,
             GivingGold = 10 + new Random().Next(1, 10),
             DroppingItems = new DroppingItems()
+            // adasd as afas as
           };
           return resultMonster;
         default:
