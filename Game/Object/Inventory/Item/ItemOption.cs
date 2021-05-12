@@ -90,7 +90,7 @@ namespace Goguma.Game.Object.Inventory.Item
     private bool RemoveItem(int count)
     {
       SelectedItemCTexts();
-      var answer = ReadYesOrNoScean(CTexts.Make($"{{선택된 아이템 }} {{{count}개, {Colors.txtInfo}}} {{ 를 버리시겠습니까?}}"), false);
+      var answer = ReadYesOrNoScean(CTexts.Make($"{{선택된 아이템 }} {{{count}개, {Colors.txtInfo}}} {{ 를 버리시겠습니까?}}"));
 
       PrintText(SelectedItem.Name);
       if (answer == true)

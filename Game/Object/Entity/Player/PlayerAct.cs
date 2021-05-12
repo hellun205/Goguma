@@ -81,7 +81,7 @@ namespace Goguma.Game.Object.Entity.Player
         while (true)
         {
           var ss = new SelectScene(Scene.SelAdminAct.GetQText(), Scene.SelAdminAct.GetSSI());
-          switch (ss.GetString)
+          switch (ss.getString)
           {
             case "Test Inventory":
               // InGame.TestInventory(player);
@@ -96,7 +96,7 @@ namespace Goguma.Game.Object.Entity.Player
             default:
               return;
           }
-          PrintText(CTexts.Make($"{{\nSuccess : {ss.GetString}, {Colors.txtSuccess}}}"));
+          PrintText(CTexts.Make($"{{\nSuccess : {ss.getString}, {Colors.txtSuccess}}}"));
           Pause();
         }
       }

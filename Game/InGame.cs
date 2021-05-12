@@ -24,7 +24,7 @@ namespace Goguma.Game
         var qt = PlayerAct.Scene.SelPlayerAct.GetQText(player.Map);
         var ssi = PlayerAct.Scene.SelPlayerAct.GetSSI(player.Map, true /*Admin*/);
         var ss = new SelectScene(qt, ssi);
-        PlayerAct.Act(player, ss.GetString);
+        PlayerAct.Act(player, ss.getString);
       }
     }
 
@@ -39,7 +39,7 @@ namespace Goguma.Game
         selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make("{이어서 시작}")));
         selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make("{게임 종료}")));
         var ss = new SelectScene(questionText, selectSceneItems);
-        switch (ss.GetIndex)
+        switch (ss.getIndex)
         {
           case 1:
             playerData = PlayerSave.CreatePlayerData();

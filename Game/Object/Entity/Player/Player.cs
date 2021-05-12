@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 using Colorify;
 using Goguma.Game.Console;
 using Goguma.Game.Object.Entity.Monster;
@@ -169,18 +170,48 @@ namespace Goguma.Game.Object.Entity.Player
     {
 
     }
+
+    private string GetSep(int length, string txt = "")
+    {
+      var sb = new StringBuilder();
+
+      if (txt == "")
+      {
+        for (var i = 0; i < length; i++) sb.Append("=");
+      }
+      else if (txt.Length % 2 == 0)
+      {
+        var l = (length - txt.Length) / 2 - 1;
+        for (var i = 0; i < l; i++) sb.Append("=");
+        sb.Append($" {txt} ");
+        for (var i = 0; i < l; i++) sb.Append("=");
+      }
+      else
+      {
+        var l = (length - txt.Length - 1) / 2 - 1;
+        for (var i = 0; i < l; i++) sb.Append("=");
+        sb.Append($" {txt} ");
+        for (var i = 0; i < l + 1; i++) sb.Append("=");
+      }
+
+      return sb.ToString();
+    }
+
     public void PrintAbout()
     {
-      PrintText(CTexts.Make($"{{\n{Name}, {Colors.txtInfo}}} {{의 정보 =====================}}"));
+      // PrintText(CTexts.Make($"{{\n{Name}, {Colors.txtInfo}}} {{의 정보 =====================}}"));
+      PrintText($"\n{GetSep(30, $"{Name}")}");
       PrintText(CTexts.Make($"{{\nLv. : }} {{{Level}, {Colors.txtWarning}}}"));
       PrintText(CTexts.Make($"{{\nExp : }} {{{Exp} / {MaxExp}, {Colors.txtWarning}}}"));
       PrintText(CTexts.Make($"{{\nGOLD : }} {{{Gold}, {Colors.txtWarning}}}"));
-      PrintText("\n=====================");
+      // PrintText("\n=====================");
+      PrintText($"\n{GetSep(30)}");
       PrintText(CTexts.Make($"{{\nHP : }} {{{Hp} / {MaxHp}, {Colors.txtWarning}}}"));
       PrintText(CTexts.Make($"{{\nEP : }} {{{Ep} / {MaxEp}, {Colors.txtWarning}}}"));
       PrintText(CTexts.Make($"{{\nATT : }} {{{AttDmg}, {Colors.txtWarning}}}"));
       PrintText(CTexts.Make($"{{\nDEF : }} {{{defPer} %, {Colors.txtWarning}}}"));
-      PrintText(CTexts.Make($"{{\n{Name}, {Colors.txtInfo}}} {{의 정보 =====================}}"));
+      // PrintText(CTexts.Make($"{{\n{Name}, {Colors.txtInfo}}} {{의 정보 =====================}}"));
+      PrintText($"\n{GetSep(30)}");
       Pause();
     }
 

@@ -34,40 +34,38 @@ namespace Goguma.Game.Console
       SelectScene.PrintQuestionText(questionText, air);
     }
 
-    static private void PrintReadText()
+    static public string ReadTextScean(CTexts questionText, Func<string, bool> check = null)
     {
-      SelectScene.PrintReadText();
-    }
-
-
-
-    static public string ReadTextScean(CTexts questionText, bool air = true)
-    {
+      PrintQuestionText(questionText, true);
+      PrintText("\n'취소'를 입력하시면 입력을 취소합니다.\n");
       while (true)
       {
-        PrintQuestionText(questionText, air);
-        PrintText("\n'취소'를 입력하시면 입력을 취소합니다.\n");
-        PrintReadText();
+        SelectScene.PrintReadText();
 
-        string readText = ReadLine();
+        string readText = ReadLine().Trim();
 
         PrintText("\n");
-        if (readText.Trim() == "취소")
+        if (readText == "취소")
           return null;
-        if (readText != "")
-          return readText;
+        else
+        {
+          if (!check(readText))
+            continue;
+          else
+            return readText;
+        }
       }
     }
 
-    static public bool ReadYesOrNoScean(CTexts questionText, bool air = true)
+    static public bool ReadYesOrNoScean(CTexts questionText)
     {
       while (true)
       {
-        PrintQuestionText(questionText, air);
+        PrintQuestionText(questionText, true);
 
         PrintText("1. 예\n2. 아니오");
 
-        PrintReadText();
+        SelectScene.PrintReadText();
 
         string readText = ReadLine();
 
@@ -89,7 +87,7 @@ namespace Goguma.Game.Console
       while (true)
       {
         PrintQuestionText(questionText, air);
-        PrintReadText();
+        SelectScene.PrintReadText();
 
         string readText = ReadLine();
 

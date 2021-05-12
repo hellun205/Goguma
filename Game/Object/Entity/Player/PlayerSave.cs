@@ -4,6 +4,7 @@ using System;
 using Goguma.Game.Console;
 using static Goguma.Game.Console.ConsoleFunction;
 using Colorify;
+using System.Text.RegularExpressions;
 
 namespace Goguma.Game.Object.Entity.Player
 {
@@ -54,7 +55,29 @@ namespace Goguma.Game.Object.Entity.Player
 
     public static Player CreatePlayerData()
     {
-      var name = ReadTextScean(CTexts.Make("{만들 캐릭터의 이름을 입력하세요.}")).Trim();
+      Func<string, bool> checkNull = str =>
+      {
+        var reg = new Regex("^[a-zA-Z0-9]*$");
+        if (
+          str == null ||
+          str.Trim() == "" ||
+          str.IndexOf(">") != -1 ||
+          str.IndexOf("<") != -1 ||
+          str.IndexOf("|") != -1 ||
+          str.IndexOf("/") != -1 ||
+          str.IndexOf("\\") != -1 ||
+          str.IndexOf(":") != -1 ||
+          str.IndexOf("*") != -1 ||
+          str.IndexOf("?") != -1 ||
+          str.IndexOf("\"") != -1 ||
+          !reg.IsMatch(str)
+        )
+          return false;
+        else
+          return true;
+      };
+
+      var name = ReadTextScean(CTexts.Make("{만들 캐릭터의 이름을 입력하세요.}"), checkNull).Trim();
 
       if (name == "" || name == null) return null;
       if (IsExistUserName(name))
@@ -94,7 +117,7 @@ namespace Goguma.Game.Object.Entity.Player
       }
       selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make($"{{뒤로 가기, {Colors.txtMuted}}}")));
       var ss = new SelectScene(questionText, selectSceneItems);
-      var name = ss.GetString.Trim();
+      var name = ss.getString.Trim();
       var player = new Player();
       if (name == "" || name == null || name == "뒤로 가기".Trim()) return null;
       player = LoadPlayerData(name);
