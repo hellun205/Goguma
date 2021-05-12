@@ -31,7 +31,7 @@ namespace Goguma.Game.Object.Battle
     }
     static private void PvEStart(IPlayer player, IMonster monster)
     {
-
+      // TO DO
     }
     static public string ColorByLevel(int playerLevel, int monsterLevel)
     {

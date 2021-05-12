@@ -23,9 +23,7 @@ namespace Goguma.Game.Object.Inventory
       var repeat = true;
       while (repeat)
       {
-        var qt = InvenInfo.Scene.SelInvenType.GetQText();
-        var ssi = InvenInfo.Scene.SelInvenType.GetSSI();
-        var ss = new SelectScene(qt, ssi);
+        var ss = InvenInfo.Scene.SelHavingInven.Scene();
 
         if (ss.GetString == "뒤로 가기")
           repeat = false;
@@ -40,9 +38,7 @@ namespace Goguma.Game.Object.Inventory
         case InvenType.Wearing: // Select WearingItems
           while (true)
           {
-            var qt = InvenInfo.Scene.WearingInven.GetQText();
-            var ssi = InvenInfo.Scene.WearingInven.GetSSI(this);
-            var ss = new SelectScene(qt, ssi);
+            var ss = InvenInfo.Scene.WearingInven.Scene(this);
 
             if (ss.GetString == "뒤로 가기")
               return;
@@ -52,9 +48,7 @@ namespace Goguma.Game.Object.Inventory
         case InvenType.Having: // Select HavingType
           while (true)
           {
-            var qt = InvenInfo.Scene.SelHavingInven.GetQText();
-            var ssi = InvenInfo.Scene.SelHavingInven.GetSSI();
-            var ss = new SelectScene(qt, ssi);
+            var ss = InvenInfo.Scene.SelHavingInven.Scene();
 
             if (ss.GetString == "뒤로 가기")
               return;
@@ -69,9 +63,7 @@ namespace Goguma.Game.Object.Inventory
       var repeat = true;
       while (repeat)
       {
-        var qt = InvenInfo.Scene.HavingInven.GetQText(hType);
-        var ssi = InvenInfo.Scene.HavingInven.GetSSI(this, hType);
-        var ss = new SelectScene(qt, ssi);
+        var ss = InvenInfo.Scene.HavingInven.Scene(this, hType);
 
         if (ss.GetString == "뒤로 가기")
           repeat = false;
@@ -82,9 +74,7 @@ namespace Goguma.Game.Object.Inventory
 
     public void Select(WearingType wType) // Selected WearingItem
     {
-      var qt = InvenInfo.Scene.ItemOption.Wearing.GetQText(this, wType);
-      var ssi = InvenInfo.Scene.ItemOption.Wearing.GetSSI(wType);
-      var ss = new SelectScene(qt, ssi);
+      var ss = InvenInfo.Scene.ItemOption.Wearing.Scene(this, wType);
 
       if (ss.GetString == "뒤로 가기")
         return;
@@ -98,9 +88,7 @@ namespace Goguma.Game.Object.Inventory
 
     public void Select(HavingType hType, int index) // Selected HavingItem
     {
-      var qt = InvenInfo.Scene.ItemOption.Having.GetQText(this, hType, index);
-      var ssi = InvenInfo.Scene.ItemOption.Having.GetSSI(hType, index);
-      var ss = new SelectScene(qt, ssi);
+      var ss = InvenInfo.Scene.ItemOption.Having.Scene(this, hType, index);
 
       if (ss.GetString == "뒤로 가기")
         return;

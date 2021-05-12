@@ -19,7 +19,7 @@ namespace Goguma.Game.Object.Battle
         }
         static public CTexts GetQText(IPlayer player, IMonster monster)
         {
-          return CTexts.Make($"{{「{monster.Name} [Lv. {monster.Level}]」,{Battle.LevelColor(player.Level, monster.Level)}}} {{(을)를 만났다! 무엇을 하시겠습니까?}}");
+          return CTexts.Make($"{{「{monster.Name} [Lv. {monster.Level}]」,{Battle.ColorByLevel(player.Level, monster.Level)}}} {{(을)를 만났다! 무엇을 하시겠습니까?}}");
         }
         static public SelectSceneItems GetSSI()
         {
