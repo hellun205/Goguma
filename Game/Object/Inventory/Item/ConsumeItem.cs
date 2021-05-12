@@ -13,10 +13,9 @@ namespace Goguma.Game.Object.Inventory.Item
     public ItemEffect Effect { get; set; }
     public int LoseCount { get; set; }
 
-    new static public IItem GetAir()
+    new static public ConsumeItem GetAir()
     {
-      IItem resultItem = new ConsumeItem { IsAir = true };
-      return resultItem;
+      return new ConsumeItem { IsAir = true };
     }
     new public void DescriptionItem()
     {

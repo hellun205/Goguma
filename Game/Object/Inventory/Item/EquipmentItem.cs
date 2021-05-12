@@ -19,11 +19,9 @@ namespace Goguma.Game.Object.Inventory.Item
       Count = 1;
 
     }
-
     new static public IEquipmentItem GetAir()
     {
-      IEquipmentItem resultItem = new EquipmentItem { IsAir = true };
-      return resultItem;
+      return new EquipmentItem { IsAir = true };
     }
 
     new public void DescriptionItem()

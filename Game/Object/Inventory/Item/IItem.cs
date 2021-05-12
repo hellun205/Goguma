@@ -8,8 +8,7 @@ namespace Goguma.Game.Object.Inventory.Item
   interface IItem
   {
     CTexts Name { get; set; }
-    string Lore { get; set; }
-    CTexts Description { get; set; }
+    CTexts Descriptions { get; set; }
     int Count { get; set; }
     int MaxCount { get; set; }
     bool IsAir { get; set; }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Goguma.Game.Console;
 using Goguma.Game.Object.Entity.Player;
 using Goguma.Game.Object.Inventory.Item;
 
@@ -7,6 +8,7 @@ namespace Goguma.Game.Object.Entity.Monster
   interface IMonster
   {
     string Name { get; set; }
+    CTexts Descriptions { get; set; }
     int Hp { get; set; }
     int MaxHp { get; set; }
     int Level { get; set; }
@@ -21,6 +23,6 @@ namespace Goguma.Game.Object.Entity.Monster
 
     void AttackPlayer(IPlayer player);
     void PrintAbout();
-    void UseSkill();
+
   }
 }

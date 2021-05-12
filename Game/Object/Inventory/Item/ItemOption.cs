@@ -144,9 +144,8 @@ namespace Goguma.Game.Object.Inventory.Item
       PrintText(SelectedItem.Name);
       PrintText(CTexts.Make($"{{ [{SelectedItem.Count}],{Colors.txtInfo}}}"));
       PrintText(CTexts.Make($"{{ {InvenInfo.HavingInven.GetTypeString(HType)} 아이템\n  , {Colors.txtWarning}}}"));
-      PrintText(CTexts.Make($"{{{SelectedItem.Lore}, {Colors.txtMuted}}}"));
       PrintText("\n");
-      PrintText(SelectedItem.Description);
+      PrintText(SelectedItem.Descriptions);
       PrintText("\n");
 
       SelectedItem.DescriptionItemAP(MyInventory.Player);

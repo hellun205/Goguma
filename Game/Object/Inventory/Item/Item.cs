@@ -24,7 +24,7 @@ namespace Goguma.Game.Object.Inventory.Item
     public ItemType Type { get; set; }
     public string Lore { get; set; }
     public bool IsAir { get; set; }
-    public CTexts Description { get; set; }
+    public CTexts Descriptions { get; set; }
 
     public Item()
     {
