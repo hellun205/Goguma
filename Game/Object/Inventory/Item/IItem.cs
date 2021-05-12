@@ -12,7 +12,7 @@ namespace Goguma.Game.Object.Inventory.Item
     int Count { get; set; }
     int MaxCount { get; set; }
     bool IsAir { get; set; }
-    ItemType Type { get; set; }
+    HavingType Type { get; set; }
 
     void UseItem(IPlayer player);
     void DescriptionItem();

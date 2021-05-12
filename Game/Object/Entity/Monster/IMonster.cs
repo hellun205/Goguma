@@ -9,17 +9,17 @@ namespace Goguma.Game.Object.Entity.Monster
   {
     string Name { get; set; }
     CTexts Descriptions { get; set; }
-    int Hp { get; set; }
-    int MaxHp { get; set; }
+    double Hp { get; set; }
+    double MaxHp { get; set; }
     int Level { get; set; }
 
-    int AttDmg { get; set; }
-    int DefPer { get; set; }
+    double AttDmg { get; set; }
+    double DefPer { get; set; }
 
-    object Skill { get; set; }
-    int GivingGold { get; set; }
-    int GivingExp { get; set; }
-    List<IItem> DroppingItems { get; set; }
+    List<Skill.Skill> Skills { get; set; }
+    double GivingGold { get; set; }
+    double GivingExp { get; set; }
+    DroppingItems DroppingItems { get; set; }
 
     void AttackPlayer(IPlayer player);
     void PrintAbout();

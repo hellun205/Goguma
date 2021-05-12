@@ -2,6 +2,8 @@ using System.Globalization;
 using System.Threading;
 using Colorify;
 using Goguma.Game.Console;
+using Goguma.Game.Object.Battle;
+using Goguma.Game.Object.Entity.Monster;
 using Goguma.Game.Object.Inventory;
 using Goguma.Game.Object.Inventory.Item;
 using Goguma.Game.Object.Map;
@@ -46,10 +48,9 @@ namespace Goguma.Game.Object.Entity.Player
         static public SelectSceneItems GetSSI()
         {
           var resultSSI = new SelectSceneItems();
-
           resultSSI.Items.Add(new SelectSceneItem(CTexts.Make("{Test Inventory}")));
           resultSSI.Items.Add(new SelectSceneItem(CTexts.Make("{Player Level Up}")));
-
+          resultSSI.Items.Add(new SelectSceneItem(CTexts.Make("{Battle with test monster}")));
           resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{뒤로 가기, {Colors.txtMuted}}}")));
           return resultSSI;
         }
@@ -83,10 +84,14 @@ namespace Goguma.Game.Object.Entity.Player
           switch (ss.GetString)
           {
             case "Test Inventory":
-              InGame.TestInventory(player);
+              // InGame.TestInventory(player);
               break;
             case "Player Level Up":
               player.Exp += player.RequiredForLevelUp();
+              break;
+            case "Battle with test monster":
+              var testMonster = Monsters.Get(MonsterList.TestMonster);
+              Battle.Battle.PvE(player, testMonster);
               break;
             default:
               return;

@@ -11,16 +11,21 @@ namespace Goguma.Game.Object.Entity.Monster
   {
     public string Name { get; set; }
     public CTexts Descriptions { get; set; }
-    public int Hp { get; set; }
-    public int MaxHp { get; set; }
+    public double Hp { get; set; }
+    public double MaxHp { get; set; }
     public int Level { get; set; }
-    public int AttDmg { get; set; }
-    public int DefPer { get; set; }
-    public object Skill { get; set; }
-    public int GivingGold { get; set; }
-    public int GivingExp { get; set; }
-    public List<IItem> DroppingItems { get; set; }
+    public double AttDmg { get; set; }
+    public double DefPer { get; set; }
+    public List<Skill.Skill> Skills { get; set; }
+    public double GivingGold { get; set; }
+    public double GivingExp { get; set; }
+    public DroppingItems DroppingItems { get; set; }
 
+    public Monster()
+    {
+      Skills = new List<Skill.Skill>();
+      DroppingItems = new DroppingItems();
+    }
     public void AttackPlayer(IPlayer player)
     {
 
@@ -30,11 +35,11 @@ namespace Goguma.Game.Object.Entity.Monster
     {
       PrintText(CTexts.Make($"{{\n{Name}, {Colors.txtInfo}}} {{의 정보 =====================}}"));
       PrintText(CTexts.Make($"{{\nLv. : }} {{{Level}, {Colors.txtWarning}}} {{\n}}"));
-      PrintText(Descriptions);
-      PrintText("\n=====================");
       PrintText(CTexts.Make($"{{\nHP : }} {{{Hp} / {MaxHp}, {Colors.txtWarning}}}"));
       PrintText(CTexts.Make($"{{\nATT : }} {{{AttDmg}, {Colors.txtWarning}}}"));
       PrintText(CTexts.Make($"{{\nDEF : }} {{{DefPer} %, {Colors.txtWarning}}}"));
+      PrintText("\n=====================\n");
+      PrintText(Descriptions);
       PrintText(CTexts.Make($"{{\n{Name}, {Colors.txtInfo}}} {{의 정보 =====================}}"));
       Pause();
     }

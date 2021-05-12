@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Colorify;
 using Goguma.Game.Console;
 using Goguma.Game.Object.Entity.Monster;
@@ -13,7 +14,7 @@ namespace Goguma.Game.Object.Entity.Player
     public string Name { get; set; }
     public Inventory.Inventory Inventory { get; set; }
     public MapList Map { get; set; }
-    public int Hp
+    public double Hp
     {
       get => hp;
       set
@@ -24,7 +25,7 @@ namespace Goguma.Game.Object.Entity.Player
           hp = MaxHp;
       }
     }
-    public int Ep
+    public double Ep
     {
       get => ep;
       set
@@ -35,12 +36,12 @@ namespace Goguma.Game.Object.Entity.Player
           ep = MaxEp;
       }
     }
-    public int MaxHp { get => maxHp + ItemMaxHp; set => maxHp = value; }
-    public int MaxEp { get => maxEp + ItemMaxEp; set => maxEp = value; }
+    public double MaxHp { get => maxHp + ItemMaxHp; set => maxHp = value; }
+    public double MaxEp { get => maxEp + ItemMaxEp; set => maxEp = value; }
 
     public int Level { get; set; }
 
-    public int Exp
+    public double Exp
     {
       get => exp;
       set
@@ -63,14 +64,14 @@ namespace Goguma.Game.Object.Entity.Player
         }
       }
     }
-    public int MaxExp { get; set; }
+    public double MaxExp { get; set; }
 
-    public int IncreaseMaxExp
+    public double IncreaseMaxExp
     {
       get => IncreaseMul(increaseMaxExp);
       set => increaseMaxExp = value;
     }
-    public int IncreaseAttDmg
+    public double IncreaseAttDmg
     {
       get => IncreaseMul(increaseAttDmg);
       set => increaseAttDmg = value;
@@ -80,19 +81,19 @@ namespace Goguma.Game.Object.Entity.Player
     //   get => IncreaseMul(increaseDefPer);
     //   set => increaseDefPer = value;
     // }
-    public int IncreaseMaxHp
+    public double IncreaseMaxHp
     {
       get => IncreaseMul(increaseMaxHp);
       set => increaseMaxHp = value;
     }
-    public int IncreaseMaxEp
+    public double IncreaseMaxEp
     {
       get => IncreaseMul(increaseMaxEp);
       set => increaseMaxEp = value;
     }
-    public int Gold { get; set; }
+    public double Gold { get; set; }
 
-    public int AttDmg
+    public double AttDmg
     {
       get => attDmg + ItemAttDmg;
       set
@@ -104,7 +105,7 @@ namespace Goguma.Game.Object.Entity.Player
       }
     }
 
-    public int DefPer
+    public double DefPer
     {
       get => defPer + ItemDefPer;
       set
@@ -115,25 +116,25 @@ namespace Goguma.Game.Object.Entity.Player
           defPer = 0;
       }
     }
-    private int attDmg { get; set; }
-    private int defPer { get; set; }
+    private double attDmg { get; set; }
+    private double defPer { get; set; }
 
-    private int ItemAttDmg { get => Inventory.Items.wearing.ItemsAtt; }
-    private int ItemDefPer { get => Inventory.Items.wearing.ItemsDef; }
-    private int ItemMaxHp { get => Inventory.Items.wearing.ItemsMaxHp; }
-    private int ItemMaxEp { get => Inventory.Items.wearing.ItemsMaxEp; }
-    private int increaseMaxExp;
-    private int increaseAttDmg;
+    private double ItemAttDmg { get => Inventory.Items.wearing.ItemsAtt; }
+    private double ItemDefPer { get => Inventory.Items.wearing.ItemsDef; }
+    private double ItemMaxHp { get => Inventory.Items.wearing.ItemsMaxHp; }
+    private double ItemMaxEp { get => Inventory.Items.wearing.ItemsMaxEp; }
+    private double increaseMaxExp;
+    private double increaseAttDmg;
     // private int increaseDefPer;
-    private int increaseMaxHp;
-    private int increaseMaxEp;
-    private int IncreaseMul(int i) { return i * (Level); }
-    private int hp;
-    private int ep;
-    private int exp;
-    private int maxHp;
-    private int maxEp;
-    public object Skill { get; set; }
+    private double increaseMaxHp;
+    private double increaseMaxEp;
+    private double IncreaseMul(double i) { return i * (Level); }
+    private double hp;
+    private double ep;
+    private double exp;
+    private double maxHp;
+    private double maxEp;
+    public List<Skill.Skill> Skills { get; set; }
 
     public Player()
     {
@@ -183,7 +184,7 @@ namespace Goguma.Game.Object.Entity.Player
       Pause();
     }
 
-    public int RequiredForLevelUp()
+    public double RequiredForLevelUp()
     {
       return MaxExp - Exp;
     }

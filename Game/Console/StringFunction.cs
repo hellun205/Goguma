@@ -29,11 +29,11 @@ namespace Goguma.Game.Console
       return stringA;
     }
 
-    static public CTexts NumberColor(int number, string minusColor = Colors.txtDanger, string plusColor = Colors.txtInfo, string zeroColor = Colors.txtMuted)
+    static public CTexts NumberColor(double number, string minusColor = Colors.txtDanger, string plusColor = Colors.txtInfo, string zeroColor = Colors.txtMuted)
     {
       CTexts resultCT = new CTexts();
       var resultColor = Colors.txtDefault;
-      resultCT.Texts.Add(new CText(number.ToString()));
+      resultCT.Texts.Add(new CText(((int)number).ToString()));
 
       if (number > 0)
       {

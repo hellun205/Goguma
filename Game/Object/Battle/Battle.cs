@@ -22,16 +22,88 @@ namespace Goguma.Game.Object.Battle
             break;
           case "싸우기":
             PvEStart(player, monster);
-            break;
+            return;
           case "도망 가기":
-            PrintText(BattleScene.PvE.Run());
+            BattleScene.PvE.Run();
             return;
         }
       }
     }
     static private void PvEStart(IPlayer player, IMonster monster)
     {
+      var first = true;
+      while (true)
+      {
+        var skip = false;
+        var scene = BattleScene.PvE.Main.Scean(player, monster, first);
+        first = false;
+        switch (scene.GetString)
+        {
+          case "플레이어 정보 보기":
+            player.PrintAbout();
+            break;
+          case "몬스터 정보 보기":
+            monster.PrintAbout();
+            break;
+          case "인벤토리 열기":
+            skip = player.Inventory.Print();
+            break;
+          case "공격 하기":
+            var attackScene = BattleScene.PvE.Attack.Scean();
+            switch (attackScene.GetString)
+            {
+              case "공격 하기":
+                skip = true;
+                if (GeneralAttack(player, monster)) return;
+                break;
+              case "스킬 사용":
+                skip = true;
+                if (SkillAttack(player, monster)) return;
+                break;
+              case "뒤로 가기":
+                break;
+            }
+            break;
+          case "도망 가기":
+            BattleScene.PvE.Run();
+            return;
+        }
+        if (skip)
+        {
+          PrintText("SKIP\n");
+          // TO DO
+        }
+      }
+    }
+    static private bool GeneralAttack(IPlayer player, IMonster monster)
+    {
+      double damage = player.AttDmg * (1 - (monster.DefPer / 100));
+      BattleScene.PvE.GeneralAttack.Scean(player, monster, (int)damage);
+
+      if (monster.Hp - damage <= 0)
+      {
+        monster.Hp = 0;
+        return true;
+      }
+      else
+      {
+        monster.Hp -= damage;
+        return false;
+      }
+    }
+    static private bool SkillAttack(IPlayer player, IMonster monster)
+    {
       // TO DO
+      return false;
+    }
+    static public string ColorByHp(double hp, double maxHp)
+    {
+      if (hp >= (maxHp * 0.6))
+        return Colors.txtSuccess;
+      else if (hp >= (maxHp * 0.3))
+        return Colors.txtWarning;
+      else
+        return Colors.txtDanger;
     }
     static public string ColorByLevel(int playerLevel, int monsterLevel)
     {

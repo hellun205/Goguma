@@ -10,15 +10,11 @@ namespace Goguma.Game.Object.Inventory.Item
   [Serializable]
   class EquipmentItem : Item, IEquipmentItem
   {
+    new public int Count { get => 1; }
+    new public int MaxCount { get => 1; }
     public WearingType EquipmentType { get; set; }
     public ItemIncrease Increase { get; set; }
 
-    public EquipmentItem()
-    {
-      MaxCount = 1;
-      Count = 1;
-
-    }
     new static public IEquipmentItem GetAir()
     {
       return new EquipmentItem { IsAir = true };

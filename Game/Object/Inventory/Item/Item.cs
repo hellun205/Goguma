@@ -21,8 +21,7 @@ namespace Goguma.Game.Object.Inventory.Item
       }
     }
     public int MaxCount { get; set; }
-    public ItemType Type { get; set; }
-    public string Lore { get; set; }
+    public HavingType Type { get; set; }
     public bool IsAir { get; set; }
     public CTexts Descriptions { get; set; }
 

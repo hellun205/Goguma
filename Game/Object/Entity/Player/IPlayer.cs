@@ -1,4 +1,5 @@
-﻿using Goguma.Game.Object.Entity.Monster;
+﻿using System.Collections.Generic;
+using Goguma.Game.Object.Entity.Monster;
 using Goguma.Game.Object.Map;
 
 namespace Goguma.Game.Object.Entity.Player
@@ -9,23 +10,23 @@ namespace Goguma.Game.Object.Entity.Player
 
     Inventory.Inventory Inventory { get; set; }
     MapList Map { get; set; }
-    int Hp { get; set; }
-    int Ep { get; set; }
+    double Hp { get; set; }
+    double Ep { get; set; }
 
-    int MaxHp { get; set; }
-    int MaxEp { get; set; }
+    double MaxHp { get; set; }
+    double MaxEp { get; set; }
 
     int Level { get; }
-    int Exp { get; set; }
-    int MaxExp { get; set; }
-    int IncreaseMaxExp { get; set; }
-    int Gold { get; set; }
+    double Exp { get; set; }
+    double MaxExp { get; set; }
+    double IncreaseMaxExp { get; set; }
+    double Gold { get; set; }
 
-    int AttDmg { get; set; }
+    double AttDmg { get; set; }
 
-    int DefPer { get; set; }
+    double DefPer { get; set; }
 
-    object Skill { get; set; }
+    List<Skill.Skill> Skills { get; set; }
 
     void AttackMonster(IMonster moster);
 

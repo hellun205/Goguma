@@ -45,22 +45,20 @@ namespace Goguma.Game.Object.Inventory.Item
       PrintText(SText);
     }
 
-    public void Act()
+    public bool Act()
     {
       switch (OptionText)
       {
         case "아이템 정보 보기": //All Item
-          PrintInfo();
-          break;
+          return PrintInfo();
         case "버리기": //All Item
-          Trash();
-          break;
+          return Trash();
         case "착용": //Equipment Item
-          EquipItem();
-          break;
+          return EquipItem();
         case "사용": //Consume Item
-          ConsumeItemUse();
-          break;
+          return ConsumeItemUse();
+        default:
+          return false;
       }
     }
 
@@ -89,7 +87,7 @@ namespace Goguma.Game.Object.Inventory.Item
       }
     }
 
-    private void RemoveItem(int count)
+    private bool RemoveItem(int count)
     {
       SelectedItemCTexts();
       var answer = ReadYesOrNoScean(CTexts.Make($"{{선택된 아이템 }} {{{count}개, {Colors.txtInfo}}} {{ 를 버리시겠습니까?}}"), false);
@@ -98,48 +96,45 @@ namespace Goguma.Game.Object.Inventory.Item
       if (answer == true)
       {
         if (count == SelectedItem.Count)
-        {
           PrintText(CTexts.Make($"{{을(를) 다 버렸습니다.}}"));
-        }
         else
-        {
           PrintText(CTexts.Make($"{{ {count}개, {Colors.txtInfo}}} {{를 버려서 현재 }} {{{SelectedItem.Count - count}개, {Colors.txtInfo}}} {{남았습니다.}}"));
-        }
         Lose(count);
         PrintText("\n");
+        Pause();
+        return true;
       }
       else
       {
         PrintText(CTexts.Make("{(을)를 버리지 않았습니다.}"));
+        Pause();
+        return false;
       }
-      Pause();
     }
 
-    private void Trash()
+    private bool Trash()
     {
       if (SelectedItem.Count == 1)
-        RemoveItem(1);
+        return RemoveItem(1);
       else
       {
-        var repeat = true;
-        while (repeat)
+        while (true)
         {
           var questionText = new CTexts();
           questionText = CTexts.Make($"{{선택된 아이템이 총 }} {{{SelectedItem.Count}개, {Colors.txtInfo}}} {{가 있습니다. 몇개를 버리시겠습니까?\n    0을 입력하면 취소됩니다.}}");
           SelectedItemCTexts();
           var answer = ReadIntScean(questionText, 0, SelectedItem.Count, false);
 
-          if (answer == 0) repeat = false;
+          if (answer == 0) return false;
           else
           {
-            repeat = false;
-            RemoveItem(answer);
+            return RemoveItem(answer);
           }
         }
       }
     }
 
-    private void PrintInfo()
+    private bool PrintInfo()
     {
       PrintText(SelectedItem.Name);
       PrintText(CTexts.Make($"{{ [{SelectedItem.Count}],{Colors.txtInfo}}}"));
@@ -150,9 +145,10 @@ namespace Goguma.Game.Object.Inventory.Item
 
       SelectedItem.DescriptionItemAP(MyInventory.Player);
       Pause();
+      return false;
     }
 
-    private void ConsumeItemUse()
+    private bool ConsumeItemUse()
     {
       var sItem = (ConsumeItem)SelectedItem;
       sItem.DescriptionItemAP(MyInventory.Player);
@@ -163,10 +159,12 @@ namespace Goguma.Game.Object.Inventory.Item
         PrintText(sItem.Name);
         PrintText("(을)를 사용하였습니다.");
         MyInventory.Player.PrintAbout();
+        return true;
       }
+      else return false;
     }
 
-    private void EquipItem()
+    private bool EquipItem()
     {
       var sItem = (EquipmentItem)SelectedItem;
       var wType = sItem.EquipmentType;
@@ -183,7 +181,9 @@ namespace Goguma.Game.Object.Inventory.Item
           Lose();
           MyInventory.SetItem(wType, sItem);
           Pause();
+          return true;
         }
+        else return false;
       }
       else
       {
@@ -191,7 +191,7 @@ namespace Goguma.Game.Object.Inventory.Item
         {
           PrintText(CTexts.Make($"{{{InvenInfo.WearingInven.GetTypeString(wType)},{Colors.txtSuccess}}} {{에 이미 }} "));
           PrintText(CTexts.Make($"{{{em.GetItem(wType).Name}, {Colors.txtInfo}}} {{을(를) 착용하고 있습니다.}}"));
-          return;
+          return false;
         }
         if (ReadYesOrNoScean(CTexts.Make($"{{{InvenInfo.WearingInven.GetTypeString(wType)},{Colors.txtSuccess}}} {{에 }} {{{em.GetItem(wType).Name.ToString()}, {Colors.txtInfo}}} {{(이)가 이미 존재합니다. }} {{{sItem.Name.ToString()}, {Colors.txtInfo}}} {{을(를) 착용하시겠습니까?}}")))
         {
@@ -203,8 +203,9 @@ namespace Goguma.Game.Object.Inventory.Item
           Lose();
           Get(em.GetItem(wType));
           MyInventory.SetItem(wType, sItem);
-          // Pause();
+          return true;
         }
+        else return false;
       }
     }
   }
