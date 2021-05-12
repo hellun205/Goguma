@@ -98,16 +98,16 @@ namespace Goguma.Game.Object.Battle
     {
       var skillTypeSc = BattleScene.PvE.SelSkill.Scean();
       SkillType skillType;
-      if (skillTypeSc.GetString == "뒤로 가기") return false;
-      else skillType = (SkillType)(skillTypeSc.GetIndex - 1);
+      if (skillTypeSc.getString == "뒤로 가기") return false;
+      else skillType = (SkillType)(skillTypeSc.getIndex - 1);
       var skills = from sk in player.Skills
                    where sk.Type == skillType
                    select sk;
 
       var selIndexSc = BattleScene.PvE.SelSkill.Scean(player, skillType);
       int selIndex;
-      if (selIndexSc.GetString == "뒤로 가기") return false;
-      else selIndex = selIndexSc.GetIndex - 1;
+      if (selIndexSc.getString == "뒤로 가기") return false;
+      else selIndex = selIndexSc.getIndex - 1;
       var skill = skills.ToList<ISkill>()[selIndex];
 
       switch (skill.Type)
