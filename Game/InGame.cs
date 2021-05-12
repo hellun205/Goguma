@@ -83,6 +83,5 @@ namespace Goguma.Game
       if (ReadYesOrNoScean(CTexts.Make("{진짜로 종료하시겠습니까?}")))
         Environment.Exit(0);
     }
-
   }
 }
