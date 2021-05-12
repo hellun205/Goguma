@@ -82,7 +82,7 @@ namespace Goguma.Game.Object.Inventory.Item
         case InvenType.Wearing:
           break;
         case InvenType.Having:
-          MyInventory.GetItem(HType, item);
+          MyInventory.GetItem(item);
           break;
       }
     }

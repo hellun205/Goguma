@@ -33,7 +33,7 @@ namespace Goguma.Game.Console
     {
       CTexts resultCT = new CTexts();
       var resultColor = Colors.txtDefault;
-      resultCT.Texts.Add(new CText(((int)number).ToString()));
+      resultCT.Texts.Add(new CText((/*(int)*/number).ToString()));
 
       if (number > 0)
       {

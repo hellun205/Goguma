@@ -22,7 +22,7 @@ namespace Goguma.Game.Object.Inventory.Item
           {
             Name = CTexts.Make("{테스트용 모자 B}"),
             Descriptions = CTexts.Make("{테스트용으로 사용되는 아이템이다.}"),
-            Type = HavingType.Other,
+            Type = HavingType.Equipment,
             EquipmentType = WearingType.Head,
             Increase = new ItemIncrease()
             {
