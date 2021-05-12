@@ -1,2 +1,2 @@
-dotnet build
-./bin/Debug/net5.0/Gogu-Remaster
+sudo docker build -t goguma .
+sudo docker run --rm -it goguma
