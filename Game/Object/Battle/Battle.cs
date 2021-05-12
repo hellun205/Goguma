@@ -2,6 +2,7 @@ using Goguma.Game.Object.Entity.Player;
 using Goguma.Game.Object.Entity.Monster;
 using static Goguma.Game.Console.ConsoleFunction;
 using Colorify;
+using Goguma.Game.Object.Inventory.Item;
 
 namespace Goguma.Game.Object.Battle
 {
@@ -83,6 +84,7 @@ namespace Goguma.Game.Object.Battle
       if (monster.Hp - damage <= 0)
       {
         monster.Hp = 0;
+        Kill(player, monster);
         return true;
       }
       else
@@ -95,6 +97,14 @@ namespace Goguma.Game.Object.Battle
     {
       // TO DO
       return false;
+    }
+    static private void Kill(IPlayer player, IMonster monster)
+    {
+      BattleScene.PvE.Kill.Scene(monster);
+      player.Gold += monster.GivingGold;
+      player.Exp += monster.GivingExp;
+      foreach (var item in monster.DroppingItems.Items)
+        player.Inventory.GetItem(item.Item);
     }
     static public string ColorByHp(double hp, double maxHp)
     {

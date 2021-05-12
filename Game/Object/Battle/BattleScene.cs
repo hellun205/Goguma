@@ -3,6 +3,7 @@ using Colorify;
 using Goguma.Game.Console;
 using Goguma.Game.Object.Entity.Monster;
 using Goguma.Game.Object.Entity.Player;
+using Goguma.Game.Object.Inventory;
 using static Goguma.Game.Console.ConsoleFunction;
 namespace Goguma.Game.Object.Battle
 {
@@ -124,6 +125,21 @@ namespace Goguma.Game.Object.Battle
             resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{{skill.Name}}} {{[ {Skill.Skill.GetTypeString(skill.Type)} ], {Colors.txtWarning}}}")));
           resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{뒤로 가기, {Colors.txtMuted}}}")));
           return resultSSI;
+        }
+      }
+      static public class Kill
+      {
+        static public void Scene(IMonster monster)
+        {
+          PrintText(CTexts.Make($"{{\n  {monster.GivingGold} G,{Colors.txtWarning}}}{{를 획득했습니다.}}"));
+          Pause();
+          PrintText(CTexts.Make($"{{\n  {monster.GivingExp} Exp,{Colors.txtSuccess}}}{{를 획득했습니다.}}"));
+          Pause();
+          foreach (var item in monster.DroppingItems.Items)
+          {
+            PrintText(CTexts.Make($"{{\n  {InvenInfo.HavingInven.GetTypeString(item.Item.Type)} 아이템 ,{Colors.txtWarning}}}{{{item.Item.Name},{Colors.txtSuccess}}}{{(을)를 획득했습니다.}}"));
+          }
+          Pause();
         }
       }
     }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Goguma.Game.Console;
 using Goguma.Game.Object.Inventory.Item;
 
@@ -22,8 +23,11 @@ namespace Goguma.Game.Object.Entity.Monster
             DefPer = 0,
             GivingExp = 5,
             GivingGold = 10 + new Random().Next(1, 10),
-            DroppingItems = new DroppingItems()
-            // adasd as afas as
+            DroppingItems = new DroppingItems(new List<DroppingItem>()
+            {
+              new DroppingItem(Items.Get(ItemList.TestItem1), 70),
+              new DroppingItem(Items.Get(ItemList.TestItem2), 30)
+            })
           };
           return resultMonster;
         default:

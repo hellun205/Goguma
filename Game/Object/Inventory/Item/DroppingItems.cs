@@ -22,6 +22,10 @@ namespace Goguma.Game.Object.Inventory.Item
     {
       Items = new List<DroppingItem>();
     }
+    public DroppingItems(List<DroppingItem> items)
+    {
+      Items = items;
+    }
     public DroppingItem this[int index]
     {
       get => Items[index];
