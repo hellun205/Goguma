@@ -26,9 +26,7 @@ namespace Goguma.Game.Console
     {
       var resultStr = "";
       for (var i = 0; i < Texts.Count; i++)
-      {
         resultStr = resultStr + Texts[i].Text;
-      }
 
       return resultStr;
     }
@@ -58,9 +56,10 @@ namespace Goguma.Game.Console
         {
           result.Texts.Add(new CText(splitText, splitColor));
         }
-        catch
+        catch (Exception ex)
         {
-          throw new NotImplementedException();
+          System.Console.WriteLine(ex.StackTrace);
+          Environment.Exit(-1);
         }
       }
       return result;
