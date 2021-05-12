@@ -95,8 +95,19 @@ namespace Goguma.Game.Object.Battle
     }
     static private bool SkillAttack(IPlayer player, IMonster monster)
     {
+      double damage = player.AttDmg * (1 - (monster.DefPer / 100)); // TO DO
       // TO DO
-      return false;
+      if (monster.Hp - damage <= 0)
+      {
+        monster.Hp = 0;
+        Kill(player, monster);
+        return true;
+      }
+      else
+      {
+        monster.Hp -= damage;
+        return false;
+      }
     }
     static private void Kill(IPlayer player, IMonster monster)
     {
