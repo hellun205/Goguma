@@ -30,18 +30,16 @@ namespace Goguma.Game
 
     static public void SetPlayerDataScene()
     {
-      while (true)
-      {
-        Player playerData;
-        var pc = PlayerSave.GetPlayerList().Count;
+      Player playerData;
+      var pc = PlayerSave.GetPlayerList().Count;
 
-        var questionText = CTexts.Make($"{{고구마 게임,{Colors.bgWarning}}}");
+      var questionText = CTexts.Make($"{{고구마 게임,{Colors.bgWarning}}}");
 
-        var selectSceneItems = new SelectSceneItems();
-        selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make("{새로 시작}")));
-        if (pc > 0)
-          selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make("{이어서 시작}")));
-        selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make("{게임 종료}")));
+      var selectSceneItems = new SelectSceneItems();
+      selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make("{새로 시작}")));
+      if (pc > 0)
+        selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make("{이어서 시작}")));
+      selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make("{게임 종료}")));
 
         Func<bool> keepPlay = () =>
         {
