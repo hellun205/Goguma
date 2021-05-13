@@ -35,7 +35,7 @@ namespace Goguma.Game.Object.Inventory.Item
     {
       var dItems = new List<IItem>();
       var item = from it in Items
-                 where it.DropChance >= (int)(new Random().NextDouble() * 100)
+                 where it.DropChance >= (int)new Random().Next(1, 101)
                  select it;
       foreach (var it in item)
         dItems.Add(it.Item);

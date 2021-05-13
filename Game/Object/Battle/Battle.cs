@@ -4,6 +4,8 @@ using static Goguma.Game.Console.ConsoleFunction;
 using Colorify;
 using System.Linq;
 using Goguma.Game.Object.Skill;
+using System.Collections.Generic;
+using System;
 
 namespace Goguma.Game.Object.Battle
 {
@@ -34,6 +36,116 @@ namespace Goguma.Game.Object.Battle
     static private void PvEStart(IPlayer player, IMonster monster)
     {
       var first = true;
+      var turn = 0;
+      var buffs = new List<IBuffSkill>();
+      var buffTurns = new List<int>();
+
+      Action Kill = () =>
+      {
+        BattleScene.PvE.Kill.Scene(monster);
+        player.Gold += GoldByLevel(monster.GivingGold, player.Level, monster.Level);
+        player.Exp += ExpByLevel(monster.GivingExp, player.Level, monster.Level);
+        foreach (var item in monster.DroppingItems.Drop())
+          player.Inventory.GetItem(item);
+      };
+      Func<IAttackSkill, bool> UseAttackSkill = (IAttackSkill skill) =>
+      {
+        if (player.Ep < skill.useEp)
+        {
+          BattleScene.PvE.LackOfEP.Scene(player, (ISkill)skill);
+          return false;
+        }
+        double damage = DamageByLevel((player.AttDmg + skill.Damage), player.Level, monster.Level) * (1 - ((monster.DefPer / 100) - skill.IgnoreDef)); // TO DO
+        BattleScene.PvE.SkillAttack.Scean(player, monster, skill, (int)damage);
+        player.Ep -= skill.useEp;
+        if (monster.Hp - damage <= 0)
+          monster.Hp = 0;
+        else
+          monster.Hp -= damage;
+        return true;
+      };
+      Func<IBuffSkill, bool> UseBuffSkill = (IBuffSkill skill) =>
+      {
+        if (player.Ep < skill.useEp)
+        {
+          BattleScene.PvE.LackOfEP.Scene(player, (ISkill)skill);
+          return false;
+        }
+        BattleScene.PvE.BuffSkill.Scean(player, skill);
+        player.Ep -= skill.useEp;
+        buffs.Add(skill);
+        buffTurns.Add(skill.buff.turn);
+        player.MaxHp += skill.buff.MaxHp;
+        player.MaxEp += skill.buff.MaxEp;
+        player.AttDmg += skill.buff.AttDmg;
+        player.DefPer += skill.buff.DefPer;
+        return true;
+      };
+      Func<bool> SelectAttSkill = () =>
+      {
+        var skSc = BattleScene.PvE.SelSkill.Scean(player, SkillType.AttackSkill);
+        if (skSc == null) return false;
+        var skills = from sk in player.Skills
+                     where sk.Type == SkillType.AttackSkill
+                     select sk;
+        var skill = skills.ToList<ISkill>()[skSc.getIndex - 1];
+        return UseAttackSkill((AttackSkill)skill);
+      };
+      Func<bool> UseSkill = () =>
+      {
+        var skSc = BattleScene.PvE.SelSkill.Scean(player);
+        if (skSc == null) return false;
+        var skills = from sk in player.Skills
+                     where sk.Type == BattleScene.PvE.SelSkill.skType
+                     select sk;
+        var skill = skills.ToList<ISkill>()[skSc.getIndex - 1];
+        switch (skill.Type)
+        {
+          case SkillType.AttackSkill:
+            return UseAttackSkill((AttackSkill)skill);
+          case SkillType.BuffSkill:
+            return UseBuffSkill((BuffSkill)skill);
+          default:
+            return false;
+        }
+      };
+      Action<bool> EndBuff = (bool all) =>
+      {
+        IEnumerable<IBuffSkill> endBuffs;
+        if (!all)
+          endBuffs = from bf in buffs
+                     where (bf.buff.turn + buffTurns[buffs.IndexOf(bf)]) == turn
+                     select bf;
+        else
+          endBuffs = from bf in buffs
+                     select bf;
+        foreach (var eBf in endBuffs.ToList<IBuffSkill>())
+        {
+          buffTurns.RemoveAt(buffs.IndexOf(eBf));
+          buffs.Remove(eBf);
+          player.MaxHp -= eBf.buff.MaxHp;
+          player.MaxEp -= eBf.buff.MaxEp;
+          player.AttDmg -= eBf.buff.AttDmg;
+          player.DefPer -= eBf.buff.DefPer;
+        }
+      };
+      Func<bool> GeneralAttack = () =>
+      {
+        double damage = DamageByLevel(player.AttDmg, player.Level, monster.Level) * (1 - (monster.DefPer / 100));
+        BattleScene.PvE.GeneralAttack.Scean(player, monster, (int)damage);
+
+        if (monster.Hp - damage <= 0)
+        {
+          monster.Hp = 0;
+          Kill();
+        }
+        else
+        {
+          monster.Hp -= damage;
+        }
+        return true;
+      };
+
       while (true)
       {
         var skip = false;
@@ -55,16 +167,17 @@ namespace Goguma.Game.Object.Battle
             switch (attackScene.getString)
             {
               case "공격 하기":
-                skip = GeneralAttack(player, monster);
-                if (monster.Hp == 0) return;
+                skip = GeneralAttack();
                 break;
               case "스킬 사용":
-                skip = UseSkill(player, monster);
-                if (monster.Hp == 0) return;
+                skip = SelectAttSkill();
                 break;
               case "뒤로 가기":
                 break;
             }
+            break;
+          case "스킬 사용":
+            skip = UseSkill();
             break;
           case "도망 가기":
             BattleScene.PvE.Run();
@@ -73,76 +186,20 @@ namespace Goguma.Game.Object.Battle
         if (skip)
         {
           PrintText("SKIP\n");
+          if (monster.Hp == 0)
+          {
+            Kill();
+            EndBuff(true);
+            return;
+          }
+          EndBuff(false);
+          turn += 1;
           // TO DO
           // Monster Attack to Player
         }
       }
     }
-    static private bool GeneralAttack(IPlayer player, IMonster monster)
-    {
-      double damage = DamageByLevel(player.AttDmg, player.Level, monster.Level) * (1 - (monster.DefPer / 100));
-      BattleScene.PvE.GeneralAttack.Scean(player, monster, (int)damage);
 
-      if (monster.Hp - damage <= 0)
-      {
-        monster.Hp = 0;
-        Kill(player, monster);
-      }
-      else
-      {
-        monster.Hp -= damage;
-      }
-      return true;
-    }
-    static private bool UseSkill(IPlayer player, IMonster monster)
-    {
-      var skillTypeSc = BattleScene.PvE.SelSkill.Scean();
-      SkillType skillType;
-      if (skillTypeSc.getString == "뒤로 가기") return false;
-      else skillType = (SkillType)(skillTypeSc.getIndex - 1);
-      var skills = from sk in player.Skills
-                   where sk.Type == skillType
-                   select sk;
-
-      var selIndexSc = BattleScene.PvE.SelSkill.Scean(player, skillType);
-      int selIndex;
-      if (selIndexSc.getString == "뒤로 가기") return false;
-      else selIndex = selIndexSc.getIndex - 1;
-      var skill = skills.ToList<ISkill>()[selIndex];
-
-      switch (skill.Type)
-      {
-        case SkillType.AttackSkill:
-          return SkillAttack(player, monster, (AttackSkill)skill);
-        default:
-          return false;
-      }
-    }
-    static private bool SkillAttack(IPlayer player, IMonster monster, IAttackSkill skill)
-    {
-      double damage = DamageByLevel((player.AttDmg + skill.Damage), player.Level, monster.Level) * (1 - ((monster.DefPer / 100) - skill.IgnoreDef)); // TO DO
-      BattleScene.PvE.SkillAttack.Scean(player, monster, skill, (int)damage);
-
-      if (monster.Hp - damage <= 0)
-      {
-        monster.Hp = 0;
-        Kill(player, monster);
-        return true;
-      }
-      else
-      {
-        monster.Hp -= damage;
-        return false;
-      }
-    }
-    static private void Kill(IPlayer player, IMonster monster)
-    {
-      BattleScene.PvE.Kill.Scene(monster);
-      player.Gold += GoldByLevel(monster.GivingGold, player.Level, monster.Level);
-      player.Exp += ExpByLevel(monster.GivingExp, player.Level, monster.Level);
-      foreach (var item in monster.DroppingItems.Items)
-        player.Inventory.GetItem(item.Item);
-    }
     static public string ColorByHp(double hp, double maxHp)
     {
       if (hp >= (maxHp * 0.6))
