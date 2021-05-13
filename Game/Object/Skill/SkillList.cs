@@ -3,6 +3,7 @@ namespace Goguma.Game.Object.Skill
   enum SkillList
   {
     TestSkill1,
-    TestSkill2
+    TestSkill2,
+    TestBuffSkill1
   }
 }
