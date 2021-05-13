@@ -41,22 +41,21 @@ namespace Goguma.Game
         selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make("{이어서 시작}")));
       selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make("{게임 종료}")));
 
-      while (true)
-      {
-        Action keepPlay = () =>
+        Func<bool> keepPlay = () =>
         {
           playerData = PlayerSave.GetPlayerData();
           if (playerData != null)
           {
             player = playerData;
-            return;
+            return true;
           }
+          else return false;
         };
 
         var ss = new SelectScene(questionText, selectSceneItems);
-        switch (ss.getIndex)
+        switch (ss.getString)
         {
-          case 1:
+          case "새로 시작":
             playerData = PlayerSave.CreatePlayerData();
             if (playerData != null)
             {
@@ -64,14 +63,10 @@ namespace Goguma.Game
               return;
             }
             break;
-          case 2:
-            if (pc > 0)
-              keepPlay();
-            else
-              ExitGame();
-
+          case "이어서 시작":
+            if (keepPlay()) return;
             break;
-          case 3:
+          case "게임 종료":
             ExitGame();
             break;
         }

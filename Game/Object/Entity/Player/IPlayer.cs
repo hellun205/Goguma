@@ -28,10 +28,7 @@ namespace Goguma.Game.Object.Entity.Player
     double DefPer { get; set; }
 
     List<ISkill> Skills { get; set; }
-
-    void AttackMonster(IMonster moster);
-
-    void UseSkill();
+    List<IBuffSkill> Buffs { get; set; }
     void PrintAbout();
   }
 }

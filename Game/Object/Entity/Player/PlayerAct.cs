@@ -98,6 +98,7 @@ namespace Goguma.Game.Object.Entity.Player
             case "Add Test Skill":
               player.Skills.Add(Skills.Get(SkillList.TestSkill1));
               player.Skills.Add(Skills.Get(SkillList.TestSkill2));
+              player.Skills.Add(Skills.Get(SkillList.TestBuffSkill1));
               break;
             default:
               return;
