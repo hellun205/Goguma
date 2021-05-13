@@ -129,6 +129,30 @@ namespace Goguma.Game.Object.Battle
             return CTexts.Make($"{{\n\n「{monster.Name} [Lv. {monster.Level}]」,{Battle.ColorByLevel(player.Level, monster.Level)}}} {{(이)가 }}{{{aSkill.Name},{Colors.txtInfo}}}{{(을)를 맞아 }} {{{damage},{Colors.txtDanger}}} {{의 피해를 입었습니다. \n    남은 체력: }}{{[ {monster.Hp - damage} / {monster.MaxHp} ]\n, {Battle.ColorByHp(monster.Hp - damage, monster.MaxHp)}}}");
         }
       }
+      static public class BuffSkill
+      {
+        static public void Scean(IPlayer player, IBuffSkill bSkill)
+        {
+          PrintText(CTexts.Make($"{{\n  {player.Name},{Colors.txtSuccess}}}{{ : }}"));
+          PrintText(bSkill.Text);
+          PrintText("\n\n");
+          Pause();
+          PrintText(GetQText(player, bSkill));
+          Pause();
+        }
+        static public CTexts GetQText(IPlayer player, IBuffSkill bSkill)
+        {
+          return CTexts.Make($"{{\n  {Skill.Skill.GetTypeString(bSkill.Type)} 스킬 ,{Colors.txtWarning}}} {{{bSkill.Name},{Colors.txtInfo}}} {{(을)를 사용했습니다.\n}}");
+        }
+      }
+      static public class LackOfEP
+      {
+        static public void Scene(IPlayer player, ISkill skill)
+        {
+          PrintText(CTexts.Make($"{{\n  EP,{Colors.txtWarning}}}{{가 부족하여 }}{{{skill.Name}, {Colors.txtInfo}}}{{(을)를 사용 할 수 없습니다.\n    현재 EP: }}{{[{player.Ep}/{player.MaxEp}],{Colors.txtWarning}}} {{\n    필요한 EP: }} {{{skill.useEp}\n,{Colors.txtWarning}}}"));
+          Pause();
+        }
+      }
       static public class Kill
       {
         static public void Scene(IMonster monster)
