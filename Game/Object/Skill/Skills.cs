@@ -36,7 +36,7 @@ namespace Goguma.Game.Object.Skill
           {
             Name = "테스트 버프 스킬1",
             Text = CTexts.Make("{테스트 버프 !!!!!!!}"),
-            Type = SkillType.AttackSkill,
+            Type = SkillType.BuffSkill,
             useEp = 10,
             buff = new Buff()
             {
