@@ -37,7 +37,7 @@ namespace Goguma.Game.Object.Battle
     {
       var first = true;
       var turn = 0;
-      var buffs = new List<IBuffSkill>();
+      var buffs = player.Buffs;
       var buffTurns = new List<int>();
 
       Action Kill = () =>
@@ -80,10 +80,6 @@ namespace Goguma.Game.Object.Battle
         player.Ep -= skill.useEp;
         buffs.Add(skill);
         buffTurns.Add(turn);
-        player.MaxHp += skill.buff.MaxHp;
-        player.MaxEp += skill.buff.MaxEp;
-        player.AttDmg += skill.buff.AttDmg;
-        player.DefPer += skill.buff.DefPer;
         return true;
       };
       Func<bool> SelectAttSkill = () =>
@@ -130,10 +126,6 @@ namespace Goguma.Game.Object.Battle
         {
           buffTurns.RemoveAt(buffs.IndexOf(eBf));
           buffs.Remove(eBf);
-          player.MaxHp -= eBf.buff.MaxHp;
-          player.MaxEp -= eBf.buff.MaxEp;
-          player.AttDmg -= eBf.buff.AttDmg;
-          player.DefPer -= eBf.buff.DefPer;
         }
       };
       Func<bool> GeneralAttack = () =>
