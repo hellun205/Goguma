@@ -202,20 +202,23 @@ namespace Goguma.Game.Object.Entity.Player
 
     public void PrintAbout()
     {
-      // PrintText(CTexts.Make($"{{\n{Name}, {Colors.txtInfo}}} {{의 정보 =====================}}"));
-      PrintText($"\n{GetSep(30, $"{Name}")}");
-      PrintText(CTexts.Make($"{{\nLv. : }} {{{Level}, {Colors.txtWarning}}}"));
-      PrintText(CTexts.Make($"{{\nExp : }} {{{Exp} / {MaxExp}, {Colors.txtWarning}}}"));
-      PrintText(CTexts.Make($"{{\nGOLD : }} {{{Gold}, {Colors.txtWarning}}}"));
-      // PrintText("\n=====================");
-      PrintText($"\n{GetSep(30)}");
-      PrintText(CTexts.Make($"{{\nHP : }} {{{Hp} / {MaxHp}, {Colors.txtWarning}}}"));
-      PrintText(CTexts.Make($"{{\nEP : }} {{{Ep} / {MaxEp}, {Colors.txtWarning}}}"));
-      PrintText(CTexts.Make($"{{\nATT : }} {{{AttDmg}, {Colors.txtWarning}}}"));
-      PrintText(CTexts.Make($"{{\nDEF : }} {{{defPer} %, {Colors.txtWarning}}}"));
-      // PrintText(CTexts.Make($"{{\n{Name}, {Colors.txtInfo}}} {{의 정보 =====================}}"));
-      PrintText($"\n{GetSep(30)}");
+      PrintText(this.ToString());
       Pause();
+    }
+
+    public override string ToString()
+    {
+      return new StringBuilder($"\n{GetSep(30, $"{Name}")}")
+        .Append(CTexts.Make($"{{\nLv. : }} {{{Level}, {Colors.txtWarning}}}"))
+        .Append(CTexts.Make($"{{\nExp : }} {{{Exp} / {MaxExp}, {Colors.txtWarning}}}"))
+        .Append(CTexts.Make($"{{\nGOLD : }} {{{Gold}, {Colors.txtWarning}}}"))
+        .Append(($"\n{GetSep(30)}"))
+        .Append(CTexts.Make($"{{\nHP : }} {{{Hp} / {MaxHp}, {Colors.txtWarning}}}"))
+        .Append(CTexts.Make($"{{\nEP : }} {{{Ep} / {MaxEp}, {Colors.txtWarning}}}"))
+        .Append(CTexts.Make($"{{\nATT : }} {{{AttDmg}, {Colors.txtWarning}}}"))
+        .Append(CTexts.Make($"{{\nDEF : }} {{{defPer} %, {Colors.txtWarning}}}"))
+        .Append($"\n{GetSep(30)}")
+        .ToString();
     }
 
     public double RequiredForLevelUp()
