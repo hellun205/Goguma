@@ -1,7 +1,9 @@
+using System;
 using Goguma.Game.Console;
 
 namespace Goguma.Game.Object.Skill
 {
+  [Serializable]
   class Skill : ISkill
   {
     public string Name { get; set; }

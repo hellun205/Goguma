@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace Goguma.Game.Object.Inventory.Item
 {
+  [Serializable]
   class DroppingItem
   {
     public IItem Item { get; set; }
@@ -14,7 +15,7 @@ namespace Goguma.Game.Object.Inventory.Item
       DropChance = dropChance;
     }
   }
-
+  [Serializable]
   class DroppingItems
   {
     public List<DroppingItem> Items { get; set; }

@@ -21,21 +21,20 @@ namespace Goguma.Game.Object.Inventory
       {
         return Items[(int)wType];
       }
-      public double ItemsAtt
+      public ItemIncrease Increase
       {
-        get => GetItem(WearingType.Head).Increase.AttDmg + GetItem(WearingType.Chestplate).Increase.AttDmg + GetItem(WearingType.Leggings).Increase.AttDmg + GetItem(WearingType.Boots).Increase.AttDmg + GetItem(WearingType.Weapon).Increase.AttDmg;
-      }
-      public double ItemsDef
-      {
-        get => GetItem(WearingType.Head).Increase.DefPer + GetItem(WearingType.Chestplate).Increase.DefPer + GetItem(WearingType.Leggings).Increase.DefPer + GetItem(WearingType.Boots).Increase.DefPer + GetItem(WearingType.Weapon).Increase.DefPer;
-      }
-      public double ItemsMaxHp
-      {
-        get => GetItem(WearingType.Head).Increase.MaxHp + GetItem(WearingType.Chestplate).Increase.MaxHp + GetItem(WearingType.Leggings).Increase.MaxHp + GetItem(WearingType.Boots).Increase.MaxHp + GetItem(WearingType.Weapon).Increase.MaxHp;
-      }
-      public double ItemsMaxEp
-      {
-        get => GetItem(WearingType.Head).Increase.MaxEp + GetItem(WearingType.Chestplate).Increase.MaxEp + GetItem(WearingType.Leggings).Increase.MaxEp + GetItem(WearingType.Boots).Increase.MaxEp + GetItem(WearingType.Weapon).Increase.MaxEp;
+        get
+        {
+          var resultIncrease = new ItemIncrease();
+          foreach (var item in Items)
+          {
+            resultIncrease.MaxHp += item.Increase.MaxHp;
+            resultIncrease.MaxEp += item.Increase.MaxEp;
+            resultIncrease.AttDmg += item.Increase.AttDmg;
+            resultIncrease.DefPer += item.Increase.DefPer;
+          }
+          return resultIncrease;
+        }
       }
     }
     [Serializable]

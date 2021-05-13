@@ -14,15 +14,15 @@ namespace Goguma.Game.Object.Entity.Monster
         case MonsterList.TestMonster:
           var resultMonster = new Monster()
           {
-            Name = "테스트용 몬스터",
+            Name = "강력한 테스트용 몬스터",
             Descriptions = CTexts.Make("{테스트용으로 사용되는 몬스터이다.}"),
-            Level = 1,
-            MaxHp = 10,
-            Hp = 10,
+            Level = 10,
+            MaxHp = 100,
+            Hp = 100,
             AttDmg = 4,
-            DefPer = 0,
-            GivingExp = 5,
-            GivingGold = 10 + new Random().Next(1, 10),
+            DefPer = 20,
+            GivingExp = 120,
+            GivingGold = 120 + new Random().Next(0, 100),
             DroppingItems = new DroppingItems(new List<DroppingItem>()
             {
               new DroppingItem(Items.Get(ItemList.TestItem1), 70),

@@ -15,7 +15,7 @@ namespace Goguma.Game.Object.Battle
     {
       while (true)
       {
-        var scene = BattleScene.PvE.Meet.Scean(player, monster);
+        var scene = BattleScene.PvE.Meet(player, monster);
         switch (scene.getString)
         {
           case "플레이어 정보 보기":
@@ -37,12 +37,12 @@ namespace Goguma.Game.Object.Battle
     {
       var first = true;
       var turn = 0;
-      var buffs = new List<IBuffSkill>();
+      var buffs = player.Buffs;
       var buffTurns = new List<int>();
 
       Action Kill = () =>
       {
-        BattleScene.PvE.Kill.Scene(monster);
+        BattleScene.PvE.Kill(monster);
         player.Gold += GoldByLevel(monster.GivingGold, player.Level, monster.Level);
         player.Exp += ExpByLevel(monster.GivingExp, player.Level, monster.Level);
         foreach (var item in monster.DroppingItems.Drop())
@@ -52,11 +52,11 @@ namespace Goguma.Game.Object.Battle
       {
         if (player.Ep < skill.useEp)
         {
-          BattleScene.PvE.LackOfEP.Scene(player, (ISkill)skill);
+          BattleScene.PvE.LackOfEP(player, (ISkill)skill);
           return false;
         }
         double damage = DamageByLevel((player.AttDmg + skill.Damage), player.Level, monster.Level) * (1 - ((monster.DefPer / 100) - skill.IgnoreDef)); // TO DO
-        BattleScene.PvE.SkillAttack.Scean(player, monster, skill, (int)damage);
+        BattleScene.PvE.SkillAttack(player, monster, skill, (int)damage);
         player.Ep -= skill.useEp;
         if (monster.Hp - damage <= 0)
           monster.Hp = 0;
@@ -68,17 +68,18 @@ namespace Goguma.Game.Object.Battle
       {
         if (player.Ep < skill.useEp)
         {
-          BattleScene.PvE.LackOfEP.Scene(player, (ISkill)skill);
+          BattleScene.PvE.LackOfEP(player, (ISkill)skill);
           return false;
         }
-        BattleScene.PvE.BuffSkill.Scean(player, skill);
+        if (buffs.Contains(skill))
+        {
+          BattleScene.PvE.AlreadyUsingBuff(skill);
+          return false;
+        }
+        BattleScene.PvE.BuffSkill(player, skill);
         player.Ep -= skill.useEp;
         buffs.Add(skill);
-        buffTurns.Add(skill.buff.turn);
-        player.MaxHp += skill.buff.MaxHp;
-        player.MaxEp += skill.buff.MaxEp;
-        player.AttDmg += skill.buff.AttDmg;
-        player.DefPer += skill.buff.DefPer;
+        buffTurns.Add(turn);
         return true;
       };
       Func<bool> SelectAttSkill = () =>
@@ -119,20 +120,18 @@ namespace Goguma.Game.Object.Battle
         else
           endBuffs = from bf in buffs
                      select bf;
+
+        BattleScene.PvE.DeleteBuff(endBuffs.ToList<IBuffSkill>());
         foreach (var eBf in endBuffs.ToList<IBuffSkill>())
         {
           buffTurns.RemoveAt(buffs.IndexOf(eBf));
           buffs.Remove(eBf);
-          player.MaxHp -= eBf.buff.MaxHp;
-          player.MaxEp -= eBf.buff.MaxEp;
-          player.AttDmg -= eBf.buff.AttDmg;
-          player.DefPer -= eBf.buff.DefPer;
         }
       };
       Func<bool> GeneralAttack = () =>
       {
         double damage = DamageByLevel(player.AttDmg, player.Level, monster.Level) * (1 - (monster.DefPer / 100));
-        BattleScene.PvE.GeneralAttack.Scean(player, monster, (int)damage);
+        BattleScene.PvE.GeneralAttack(player, monster, (int)damage);
 
         if (monster.Hp - damage <= 0)
         {
@@ -149,7 +148,7 @@ namespace Goguma.Game.Object.Battle
       while (true)
       {
         var skip = false;
-        var scene = BattleScene.PvE.Main.Scean(player, monster, first);
+        var scene = BattleScene.PvE.Main(player, monster, first);
         first = false;
         switch (scene.getString)
         {
@@ -163,13 +162,13 @@ namespace Goguma.Game.Object.Battle
             skip = player.Inventory.Print();
             break;
           case "공격 하기":
-            var attackScene = BattleScene.PvE.Attack.Scean();
+            var attackScene = BattleScene.PvE.Attack();
             switch (attackScene.getString)
             {
-              case "공격 하기":
+              case "일반 공격":
                 skip = GeneralAttack();
                 break;
-              case "스킬 사용":
+              case "스킬 공격":
                 skip = SelectAttSkill();
                 break;
               case "뒤로 가기":
