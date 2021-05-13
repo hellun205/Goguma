@@ -38,8 +38,8 @@ namespace Goguma.Game.Object.Entity.Player
           ep = MaxEp;
       }
     }
-    public double MaxHp { get => maxHp + ItemMaxHp; set => maxHp = value; }
-    public double MaxEp { get => maxEp + ItemMaxEp; set => maxEp = value; }
+    public double MaxHp { get => maxHp + ItemsIncrease.MaxHp + BuffsIncrease.MaxHp; set => maxHp = value; }
+    public double MaxEp { get => maxEp + ItemsIncrease.MaxEp + BuffsIncrease.MaxEp; set => maxEp = value; }
 
     public int Level { get; set; }
 
@@ -58,11 +58,10 @@ namespace Goguma.Game.Object.Entity.Player
           MaxEp += IncreaseMaxEp;
           Hp = MaxHp;
           Ep = MaxEp;
-          Exp = value - MaxExp;
           MaxExp += IncreaseMaxExp;
           PrintText(CTexts.Make($"{{\nLevel UP! Lv. }} {{{Level}\n, {Colors.txtInfo}}}"));
+          Exp = value - MaxExp;
           Pause();
-          PrintAbout();
         }
       }
     }
@@ -97,7 +96,7 @@ namespace Goguma.Game.Object.Entity.Player
 
     public double AttDmg
     {
-      get => attDmg + ItemAttDmg;
+      get => attDmg + ItemsIncrease.AttDmg + BuffsIncrease.AttDmg;
       set
       {
         if (value > 0)
@@ -109,7 +108,7 @@ namespace Goguma.Game.Object.Entity.Player
 
     public double DefPer
     {
-      get => defPer + ItemDefPer;
+      get => defPer + ItemsIncrease.DefPer + BuffsIncrease.DefPer;
       set
       {
         if (value > 0)
@@ -121,27 +120,41 @@ namespace Goguma.Game.Object.Entity.Player
     private double attDmg { get; set; }
     private double defPer { get; set; }
 
-    private double ItemAttDmg { get => Inventory.Items.wearing.ItemsAtt; }
-    private double ItemDefPer { get => Inventory.Items.wearing.ItemsDef; }
-    private double ItemMaxHp { get => Inventory.Items.wearing.ItemsMaxHp; }
-    private double ItemMaxEp { get => Inventory.Items.wearing.ItemsMaxEp; }
+    private ItemIncrease ItemsIncrease { get => Inventory.Items.wearing.Increase; }
+    private Buff BuffsIncrease
+    {
+      get
+      {
+        var resultBuff = new Buff();
+        foreach (var bf in Buffs)
+        {
+          resultBuff.MaxHp += bf.buff.MaxHp;
+          resultBuff.MaxEp += bf.buff.MaxEp;
+          resultBuff.AttDmg += bf.buff.AttDmg;
+          resultBuff.DefPer += bf.buff.DefPer;
+        }
+        return resultBuff;
+      }
+    }
     private double increaseMaxExp;
     private double increaseAttDmg;
-    // private int increaseDefPer;
+    //private int increaseDefPer;
     private double increaseMaxHp;
     private double increaseMaxEp;
-    private double IncreaseMul(double i) { return i * (Level); }
+    private double IncreaseMul(double i) { return i * (Level * 0.1); }
     private double hp;
     private double ep;
     private double exp;
     private double maxHp;
     private double maxEp;
     public List<ISkill> Skills { get; set; }
+    public List<IBuffSkill> Buffs { get; set; }
 
     public Player()
     {
       Inventory = new Inventory.Inventory(this);
       Skills = new List<ISkill>();
+      Buffs = new List<IBuffSkill>();
     }
 
     public Player(string name)
@@ -149,6 +162,7 @@ namespace Goguma.Game.Object.Entity.Player
       Name = name;
       Inventory = new Inventory.Inventory(this);
       Skills = new List<ISkill>();
+      Buffs = new List<IBuffSkill>();
       MaxHp = 50;
       MaxEp = 30;
       Hp = MaxHp;
@@ -163,17 +177,6 @@ namespace Goguma.Game.Object.Entity.Player
       IncreaseMaxHp = 10;
       IncreaseMaxEp = 5;
     }
-    public void AttackMonster(IMonster moster)
-    {
-
-    }
-
-
-    public void UseSkill()
-    {
-
-    }
-
     private string GetSep(int length, string txt = "")
     {
       var sb = new StringBuilder();
