@@ -73,12 +73,13 @@ namespace Goguma.Game.Object.Battle
         }
         if (buffs.Contains(skill))
         {
+          BattleScene.PvE.AlreadyUsingBuff(skill);
           return false;
         }
         BattleScene.PvE.BuffSkill(player, skill);
         player.Ep -= skill.useEp;
         buffs.Add(skill);
-        buffTurns.Add(skill.buff.turn);
+        buffTurns.Add(turn);
         player.MaxHp += skill.buff.MaxHp;
         player.MaxEp += skill.buff.MaxEp;
         player.AttDmg += skill.buff.AttDmg;
@@ -123,6 +124,8 @@ namespace Goguma.Game.Object.Battle
         else
           endBuffs = from bf in buffs
                      select bf;
+
+        BattleScene.PvE.DeleteBuff(endBuffs.ToList<IBuffSkill>());
         foreach (var eBf in endBuffs.ToList<IBuffSkill>())
         {
           buffTurns.RemoveAt(buffs.IndexOf(eBf));
