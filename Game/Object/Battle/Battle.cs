@@ -1,6 +1,7 @@
 using Goguma.Game.Object.Entity.Player;
 using Goguma.Game.Object.Entity.Monster;
 using static Goguma.Game.Console.ConsoleFunction;
+using static Goguma.Game.Console.StringFunction;
 using Colorify;
 using System.Linq;
 using Goguma.Game.Object.Skill;
@@ -28,7 +29,7 @@ namespace Goguma.Game.Object.Battle
             PvEStart(player, monster);
             return;
           case "도망 가기":
-            BattleScene.PvE.Run();
+            BattleScene.PvE.Player.Run();
             return;
         }
       }
@@ -39,10 +40,11 @@ namespace Goguma.Game.Object.Battle
       var turn = 0;
       var buffs = player.Buffs;
       var buffTurns = new List<int>();
+      var mBuffTurns = new List<int>();
 
       Action Kill = () =>
       {
-        BattleScene.PvE.Kill(monster);
+        BattleScene.PvE.Player.Kill(monster);
         player.Gold += GoldByLevel(monster.GivingGold, player.Level, monster.Level);
         player.Exp += ExpByLevel(monster.GivingExp, player.Level, monster.Level);
         foreach (var item in monster.DroppingItems.Drop())
@@ -52,11 +54,11 @@ namespace Goguma.Game.Object.Battle
       {
         if (player.Ep < skill.useEp)
         {
-          BattleScene.PvE.LackOfEP(player, (ISkill)skill);
+          BattleScene.PvE.Player.LackOfEP(player, (ISkill)skill);
           return false;
         }
-        double damage = DamageByLevel((player.AttDmg + skill.Damage), player.Level, monster.Level) * (1 - ((monster.DefPer / 100) - skill.IgnoreDef)); // TO DO
-        BattleScene.PvE.SkillAttack(player, monster, skill, (int)damage);
+        double damage = DamageByLevel((player.AttDmg + skill.Damage), player.Level, monster.Level) * (1 - ((monster.DefPer / 100) - (skill.IgnoreDef / 100))); // TO DO
+        BattleScene.PvE.Player.SkillAttack(player, monster, skill, damage);
         player.Ep -= skill.useEp;
         if (monster.Hp - damage <= 0)
           monster.Hp = 0;
@@ -68,15 +70,15 @@ namespace Goguma.Game.Object.Battle
       {
         if (player.Ep < skill.useEp)
         {
-          BattleScene.PvE.LackOfEP(player, (ISkill)skill);
+          BattleScene.PvE.Player.LackOfEP(player, (ISkill)skill);
           return false;
         }
         if (buffs.Contains(skill))
         {
-          BattleScene.PvE.AlreadyUsingBuff(skill);
+          BattleScene.PvE.Player.AlreadyUsingBuff(skill);
           return false;
         }
-        BattleScene.PvE.BuffSkill(player, skill);
+        BattleScene.PvE.Player.BuffSkill(player, skill);
         player.Ep -= skill.useEp;
         buffs.Add(skill);
         buffTurns.Add(turn);
@@ -84,28 +86,28 @@ namespace Goguma.Game.Object.Battle
       };
       Func<bool> SelectAttSkill = () =>
       {
-        var skSc = BattleScene.PvE.SelSkill.Scean(player, SkillType.AttackSkill);
+        var skSc = BattleScene.PvE.Player.SelSkill.Scean(player, SkillType.AttackSkill);
         if (skSc == null) return false;
         var skills = from sk in player.Skills
                      where sk.Type == SkillType.AttackSkill
                      select sk;
         var skill = skills.ToList<ISkill>()[skSc.getIndex - 1];
-        return UseAttackSkill((AttackSkill)skill);
+        return UseAttackSkill((IAttackSkill)skill);
       };
       Func<bool> UseSkill = () =>
       {
-        var skSc = BattleScene.PvE.SelSkill.Scean(player);
+        var skSc = BattleScene.PvE.Player.SelSkill.Scean(player);
         if (skSc == null) return false;
         var skills = from sk in player.Skills
-                     where sk.Type == BattleScene.PvE.SelSkill.skType
+                     where sk.Type == BattleScene.PvE.Player.SelSkill.skType
                      select sk;
         var skill = skills.ToList<ISkill>()[skSc.getIndex - 1];
         switch (skill.Type)
         {
           case SkillType.AttackSkill:
-            return UseAttackSkill((AttackSkill)skill);
+            return UseAttackSkill((IAttackSkill)skill);
           case SkillType.BuffSkill:
-            return UseBuffSkill((BuffSkill)skill);
+            return UseBuffSkill((IBuffSkill)skill);
           default:
             return false;
         }
@@ -121,7 +123,7 @@ namespace Goguma.Game.Object.Battle
           endBuffs = from bf in buffs
                      select bf;
 
-        BattleScene.PvE.DeleteBuff(endBuffs.ToList<IBuffSkill>());
+        BattleScene.PvE.Player.DeleteBuff(endBuffs.ToList<IBuffSkill>());
         foreach (var eBf in endBuffs.ToList<IBuffSkill>())
         {
           buffTurns.RemoveAt(buffs.IndexOf(eBf));
@@ -131,7 +133,7 @@ namespace Goguma.Game.Object.Battle
       Func<bool> GeneralAttack = () =>
       {
         double damage = DamageByLevel(player.AttDmg, player.Level, monster.Level) * (1 - (monster.DefPer / 100));
-        BattleScene.PvE.GeneralAttack(player, monster, (int)damage);
+        BattleScene.PvE.Player.GeneralAttack(player, monster, damage);
 
         if (monster.Hp - damage <= 0)
         {
@@ -144,11 +146,87 @@ namespace Goguma.Game.Object.Battle
         }
         return true;
       };
+      Action<bool> MEndBuff = (bool all) =>
+        {
+          IEnumerable<IBuffSkill> endBuffs;
+          if (!all)
+            endBuffs = from bf in monster.Buffs
+                       where (bf.buff.turn + buffTurns[monster.Buffs.IndexOf(bf)]) == turn
+                       select bf;
+          else
+            endBuffs = from bf in monster.Buffs
+                       select bf;
+
+          BattleScene.PvE.Monster.DeleteBuff(monster, player, endBuffs.ToList<IBuffSkill>());
+          foreach (var eBf in endBuffs.ToList<IBuffSkill>())
+          {
+            mBuffTurns.RemoveAt(monster.Buffs.IndexOf(eBf));
+            monster.Buffs.Remove(eBf);
+          }
+        };
+      Action MonsterTurn = () =>
+      {
+        ISkill skill = new Skill.Skill();
+        Action Kill = () =>
+        {
+          // TO DO: Player Warp Town
+        };
+        Action GeneralAttack = () =>
+        {
+          double damage = DamageByLevel(monster.AttDmg, monster.Level, player.Level) * (1 - (player.DefPer / 100));
+          BattleScene.PvE.Monster.GeneralAttack(monster, player, damage);
+          player.Hp -= damage;
+        };
+        Func<bool> SkillAttack = () =>
+        {
+          var aSkill = (IAttackSkill)skill;
+          double damage = DamageByLevel((monster.AttDmg + aSkill.Damage), monster.Level, player.Level) * (1 - ((player.DefPer / 100) - (aSkill.IgnoreDef / 100))); // TO DO
+          BattleScene.PvE.Monster.SkillAttack(monster, player, aSkill, damage);
+          player.Hp -= damage;
+          return true;
+        };
+        Func<bool> BuffSkill = () =>
+        {
+          var bSkill = (IBuffSkill)skill;
+          if (monster.Buffs.Contains(skill)) return false;
+          BattleScene.PvE.Monster.BuffSkill(monster, player, bSkill);
+          monster.Buffs.Add(bSkill);
+          mBuffTurns.Add(turn);
+          return true;
+        };
+
+        while (true)
+        {
+          skill = monster.AttSystem.Get();
+          if (skill != null)
+          {
+            switch (skill.Type)
+            {
+              case SkillType.AttackSkill:
+                if (SkillAttack()) return;
+                break;
+              case SkillType.BuffSkill:
+                if (BuffSkill()) return;
+                else if (monster.AttSystem.Items.Count == 1)
+                {
+                  GeneralAttack();
+                  return;
+                }
+                break;
+            }
+          }
+          else
+          {
+            GeneralAttack();
+            return;
+          }
+        }
+      };
 
       while (true)
       {
         var skip = false;
-        var scene = BattleScene.PvE.Main(player, monster, first);
+        var scene = BattleScene.PvE.Player.Main(player, monster, first);
         first = false;
         switch (scene.getString)
         {
@@ -162,7 +240,7 @@ namespace Goguma.Game.Object.Battle
             skip = player.Inventory.Print();
             break;
           case "공격 하기":
-            var attackScene = BattleScene.PvE.Attack();
+            var attackScene = BattleScene.PvE.Player.Attack();
             switch (attackScene.getString)
             {
               case "일반 공격":
@@ -179,12 +257,11 @@ namespace Goguma.Game.Object.Battle
             skip = UseSkill();
             break;
           case "도망 가기":
-            BattleScene.PvE.Run();
+            BattleScene.PvE.Player.Run();
             return;
         }
         if (skip)
         {
-          PrintText("SKIP\n");
           if (monster.Hp == 0)
           {
             Kill();
@@ -192,81 +269,19 @@ namespace Goguma.Game.Object.Battle
             return;
           }
           EndBuff(false);
+          MonsterTurn();
+          if (player.Hp <= 0)
+          {
+            EndBuff(true);
+            MEndBuff(true);
+            return;
+          }
+          MEndBuff(false);
           turn += 1;
-          // TO DO
-          // Monster Attack to Player
         }
       }
     }
 
-    static public string ColorByHp(double hp, double maxHp)
-    {
-      if (hp >= (maxHp * 0.6))
-        return Colors.txtSuccess;
-      else if (hp >= (maxHp * 0.3))
-        return Colors.txtWarning;
-      else
-        return Colors.txtDanger;
-    }
-    static public string ColorByLevel(int playerLevel, int monsterLevel)
-    {
-      if (playerLevel < monsterLevel && monsterLevel - playerLevel > 10)
-        return Colors.txtDanger;
-      else if (playerLevel < monsterLevel && monsterLevel - playerLevel <= 10)
-        return Colors.txtWarning;
-      else if (playerLevel < monsterLevel && monsterLevel - playerLevel <= 5 || playerLevel > monsterLevel && playerLevel - monsterLevel <= 5 || playerLevel == monsterLevel)
-        return Colors.txtSuccess;
-      else if (playerLevel > monsterLevel && playerLevel - monsterLevel <= 10)
-        return Colors.txtPrimary;
-      else if (playerLevel > monsterLevel && playerLevel - monsterLevel > 10)
-        return Colors.txtPrimary;
-      else
-        return Colors.txtDefault;
-    }
-    static public double DamageByLevel(double damage, int playerLevel, int monsterLevel)
-    {
-      if (playerLevel < monsterLevel && monsterLevel - playerLevel > 10)
-        return damage * 0.3;
-      else if (playerLevel < monsterLevel && monsterLevel - playerLevel <= 10)
-        return damage * 0.5;
-      else if (playerLevel < monsterLevel && monsterLevel - playerLevel <= 5 || playerLevel > monsterLevel && playerLevel - monsterLevel <= 5 || playerLevel == monsterLevel)
-        return damage * 1;
-      else if (playerLevel > monsterLevel && playerLevel - monsterLevel <= 10)
-        return damage * 1.5;
-      else if (playerLevel > monsterLevel && playerLevel - monsterLevel > 10)
-        return damage * 3;
-      else
-        return damage;
-    }
-    static public int ExpByLevel(double exp, int playerLevel, int monsterLevel)
-    {
-      if (playerLevel < monsterLevel && monsterLevel - playerLevel > 10)
-        return (int)(exp * 0.2);
-      else if (playerLevel < monsterLevel && monsterLevel - playerLevel <= 10)
-        return (int)(exp * 0.8);
-      else if (playerLevel < monsterLevel && monsterLevel - playerLevel <= 5 || playerLevel > monsterLevel && playerLevel - monsterLevel <= 5 || playerLevel == monsterLevel)
-        return (int)(exp * 1);
-      else if (playerLevel > monsterLevel && playerLevel - monsterLevel <= 10)
-        return (int)(exp * 0.8);
-      else if (playerLevel > monsterLevel && playerLevel - monsterLevel > 10)
-        return (int)(exp * 0.2);
-      else
-        return (int)exp;
-    }
-    static public int GoldByLevel(double gold, int playerLevel, int monsterLevel)
-    {
-      if (playerLevel < monsterLevel && monsterLevel - playerLevel > 10)
-        return (int)(gold * 0.1);
-      else if (playerLevel < monsterLevel && monsterLevel - playerLevel <= 10)
-        return (int)(gold * 0.9);
-      else if (playerLevel < monsterLevel && monsterLevel - playerLevel <= 5 || playerLevel > monsterLevel && playerLevel - monsterLevel <= 5 || playerLevel == monsterLevel)
-        return (int)(gold * 1);
-      else if (playerLevel > monsterLevel && playerLevel - monsterLevel <= 10)
-        return (int)(gold * 0.9);
-      else if (playerLevel > monsterLevel && playerLevel - monsterLevel > 10)
-        return (int)(gold * 0.1);
-      else
-        return (int)gold;
-    }
+
   }
 }

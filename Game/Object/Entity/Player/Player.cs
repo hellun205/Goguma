@@ -7,6 +7,7 @@ using Goguma.Game.Console;
 using Goguma.Game.Object.Inventory;
 using Goguma.Game.Object.Map;
 using Goguma.Game.Object.Skill;
+using static Goguma.Game.Console.StringFunction;
 using static Goguma.Game.Console.ConsoleFunction;
 
 namespace Goguma.Game.Object.Entity.Player
@@ -199,27 +200,6 @@ namespace Goguma.Game.Object.Entity.Player
     {
       var sb = new StringBuilder();
 
-      if (txt == "")
-      {
-        for (var i = 0; i < length; i++) sb.Append("=");
-      }
-      else if (txt.Length % 2 == 0)
-      {
-        var l = (length - txt.Length) / 2 - 1;
-        for (var i = 0; i < l; i++) sb.Append("=");
-        sb.Append($" {txt} ");
-        for (var i = 0; i < l; i++) sb.Append("=");
-      }
-      else
-      {
-        var l = (length - txt.Length - 1) / 2 - 1;
-        for (var i = 0; i < l; i++) sb.Append("=");
-        sb.Append($" {txt} ");
-        for (var i = 0; i < l + 1; i++) sb.Append("=");
-      }
-
-      return sb.ToString();
-    }
 
     public void PrintAbout()
     {

@@ -9,4 +9,12 @@ namespace Goguma.Game.Object.Skill
     TestSkill2,
     TestBuffSkill1
   }
+  [Serializable]
+  enum MSkillList
+  {
+    TestMonster_TestPunch,
+    TestMonster_TestFireBall,
+    TestMonster_TestAttackSkill,
+    TestMonster_DefensivePosture
+  }
 }

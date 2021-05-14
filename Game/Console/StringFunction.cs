@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 using Colorify;
 
 namespace Goguma.Game.Console
@@ -51,5 +52,99 @@ namespace Goguma.Game.Console
       return resultCT;
     }
 
+    static public string GetSep(int length, string txt = "")
+    {
+      var sb = new StringBuilder();
+
+      if (txt == "")
+      {
+        for (var i = 0; i < length; i++) sb.Append("=");
+      }
+      else if (txt.Length % 2 == 0)
+      {
+        var l = (length - txt.Length) / 2 - 1;
+        for (var i = 0; i < l; i++) sb.Append("=");
+        sb.Append($" {txt} ");
+        for (var i = 0; i < l; i++) sb.Append("=");
+      }
+      else
+      {
+        var l = (length - txt.Length - 1) / 2 - 1;
+        for (var i = 0; i < l; i++) sb.Append("=");
+        sb.Append($" {txt} ");
+        for (var i = 0; i < l + 1; i++) sb.Append("=");
+      }
+
+      return sb.ToString();
+    }
+    static public string ColorByHp(double hp, double maxHp)
+    {
+      if (hp >= (maxHp * 0.6))
+        return Colors.txtSuccess;
+      else if (hp >= (maxHp * 0.3))
+        return Colors.txtWarning;
+      else
+        return Colors.txtDanger;
+    }
+    static public string ColorByLevel(int playerLevel, int monsterLevel)
+    {
+      if (playerLevel < monsterLevel && monsterLevel - playerLevel > 10)
+        return Colors.txtDanger;
+      else if (playerLevel < monsterLevel && monsterLevel - playerLevel <= 10)
+        return Colors.txtWarning;
+      else if (playerLevel < monsterLevel && monsterLevel - playerLevel <= 5 || playerLevel > monsterLevel && playerLevel - monsterLevel <= 5 || playerLevel == monsterLevel)
+        return Colors.txtSuccess;
+      else if (playerLevel > monsterLevel && playerLevel - monsterLevel <= 10)
+        return Colors.txtPrimary;
+      else if (playerLevel > monsterLevel && playerLevel - monsterLevel > 10)
+        return Colors.txtPrimary;
+      else
+        return Colors.txtDefault;
+    }
+    static public double DamageByLevel(double damage, int playerLevel, int monsterLevel)
+    {
+      if (playerLevel < monsterLevel && monsterLevel - playerLevel > 10)
+        return damage * 0.3;
+      else if (playerLevel < monsterLevel && monsterLevel - playerLevel <= 10)
+        return damage * 0.5;
+      else if (playerLevel < monsterLevel && monsterLevel - playerLevel <= 5 || playerLevel > monsterLevel && playerLevel - monsterLevel <= 5 || playerLevel == monsterLevel)
+        return damage * 1;
+      else if (playerLevel > monsterLevel && playerLevel - monsterLevel <= 10)
+        return damage * 1.5;
+      else if (playerLevel > monsterLevel && playerLevel - monsterLevel > 10)
+        return damage * 3;
+      else
+        return damage;
+    }
+    static public int ExpByLevel(double exp, int playerLevel, int monsterLevel)
+    {
+      if (playerLevel < monsterLevel && monsterLevel - playerLevel > 10)
+        return (int)(exp * 0.2);
+      else if (playerLevel < monsterLevel && monsterLevel - playerLevel <= 10)
+        return (int)(exp * 0.8);
+      else if (playerLevel < monsterLevel && monsterLevel - playerLevel <= 5 || playerLevel > monsterLevel && playerLevel - monsterLevel <= 5 || playerLevel == monsterLevel)
+        return (int)(exp * 1);
+      else if (playerLevel > monsterLevel && playerLevel - monsterLevel <= 10)
+        return (int)(exp * 0.8);
+      else if (playerLevel > monsterLevel && playerLevel - monsterLevel > 10)
+        return (int)(exp * 0.2);
+      else
+        return (int)exp;
+    }
+    static public int GoldByLevel(double gold, int playerLevel, int monsterLevel)
+    {
+      if (playerLevel < monsterLevel && monsterLevel - playerLevel > 10)
+        return (int)(gold * 0.1);
+      else if (playerLevel < monsterLevel && monsterLevel - playerLevel <= 10)
+        return (int)(gold * 0.9);
+      else if (playerLevel < monsterLevel && monsterLevel - playerLevel <= 5 || playerLevel > monsterLevel && playerLevel - monsterLevel <= 5 || playerLevel == monsterLevel)
+        return (int)(gold * 1);
+      else if (playerLevel > monsterLevel && playerLevel - monsterLevel <= 10)
+        return (int)(gold * 0.9);
+      else if (playerLevel > monsterLevel && playerLevel - monsterLevel > 10)
+        return (int)(gold * 0.1);
+      else
+        return (int)gold;
+    }
   }
 }
