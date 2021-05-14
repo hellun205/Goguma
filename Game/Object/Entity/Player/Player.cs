@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Colorify;
+using Gogu_Remaster.Game.Object.Map;
 using Goguma.Game.Console;
-using Goguma.Game.Object.Entity.Monster;
 using Goguma.Game.Object.Map;
 using Goguma.Game.Object.Skill;
 using static Goguma.Game.Console.ConsoleFunction;
@@ -16,6 +16,7 @@ namespace Goguma.Game.Object.Entity.Player
     public string Name { get; set; }
     public Inventory.Inventory Inventory { get; set; }
     public MapList Map { get; set; }
+    public Location Loc { get; }
     public double Hp
     {
       get => hp;
