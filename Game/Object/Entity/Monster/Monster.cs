@@ -15,16 +15,47 @@ namespace Goguma.Game.Object.Entity.Monster
     public string Name { get; set; }
     public CTexts Descriptions { get; set; }
     public double Hp { get; set; }
-    public double MaxHp { get; set; }
+    public double MaxHp
+    {
+      get => maxHp + BuffsIncrease.MaxHp;
+      set => maxHp = value;
+    }
     public int Level { get; set; }
-    public double AttDmg { get; set; }
-    public double DefPer { get; set; }
+    public double AttDmg
+    {
+      get => attDmg + BuffsIncrease.AttDmg;
+      set => attDmg = value;
+    }
+    public double DefPer
+    {
+      get => defPer + BuffsIncrease.DefPer;
+      set => defPer = value;
+    }
     public List<Skill.Skill> Skills { get; set; }
     public double GivingGold { get; set; }
     public double GivingExp { get; set; }
     public DroppingItems DroppingItems { get; set; }
     public AttackSyss AttSystem { get; set; }
     public List<IBuffSkill> Buffs { get; set; }
+
+    private double maxHp;
+    private double attDmg;
+    private double defPer;
+    private Buff BuffsIncrease
+    {
+      get
+      {
+        var resultBuff = new Buff();
+        foreach (var bf in Buffs)
+        {
+          resultBuff.MaxHp += bf.buff.MaxHp;
+          resultBuff.MaxEp += bf.buff.MaxEp;
+          resultBuff.AttDmg += bf.buff.AttDmg;
+          resultBuff.DefPer += bf.buff.DefPer;
+        }
+        return resultBuff;
+      }
+    }
 
     public Monster()
     {

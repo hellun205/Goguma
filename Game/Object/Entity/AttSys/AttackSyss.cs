@@ -7,7 +7,7 @@ namespace Goguma.Game.Object.Entity.AttSys
 {
   class AttackSyss
   {
-    private List<AttackSys> Items { get; set; }
+    public List<AttackSys> Items { get; set; }
     public AttackSyss()
     {
       Items = new List<AttackSys>();
