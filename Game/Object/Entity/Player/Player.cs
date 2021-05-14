@@ -196,11 +196,6 @@ namespace Goguma.Game.Object.Entity.Player
       Hp = Hp + heal;
     }
 
-    private string GetSep(int length, string txt = "")
-    {
-      var sb = new StringBuilder();
-
-
     public void PrintAbout()
     {
       PrintText(this.ToString());
@@ -209,16 +204,16 @@ namespace Goguma.Game.Object.Entity.Player
 
     public override string ToString()
     {
-      return new StringBuilder($"\n{GetSep(30, $"{Name}")}")
+      return new StringBuilder($"\n{StringFunction.GetSep(30, $"{Name}")}")
         .Append(CTexts.Make($"{{\nLv. : }} {{{Level}, {Colors.txtWarning}}}"))
         .Append(CTexts.Make($"{{\nExp : }} {{{Exp} / {MaxExp}, {Colors.txtWarning}}}"))
         .Append(CTexts.Make($"{{\nGOLD : }} {{{Gold}, {Colors.txtWarning}}}"))
-        .Append(($"\n{GetSep(30)}"))
+        .Append(($"\n{StringFunction.GetSep(30)}"))
         .Append(CTexts.Make($"{{\nHP : }} {{{Hp} / {MaxHp}, {Colors.txtWarning}}}"))
         .Append(CTexts.Make($"{{\nEP : }} {{{Ep} / {MaxEp}, {Colors.txtWarning}}}"))
         .Append(CTexts.Make($"{{\nATT : }} {{{AttDmg}, {Colors.txtWarning}}}"))
         .Append(CTexts.Make($"{{\nDEF : }} {{{defPer} %, {Colors.txtWarning}}}"))
-        .Append($"\n{GetSep(30)}")
+        .Append($"\n{StringFunction.GetSep(30)}")
         .ToString();
     }
 

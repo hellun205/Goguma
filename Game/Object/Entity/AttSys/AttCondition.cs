@@ -1,6 +1,6 @@
 namespace Goguma.Game.Object.Entity.AttSys
 {
-  class AttCondition
+  public class AttCondition
   {
     public double cond1;
     public double cond2;

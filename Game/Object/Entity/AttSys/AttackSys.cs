@@ -2,7 +2,7 @@ using Goguma.Game.Object.Skill;
 
 namespace Goguma.Game.Object.Entity.AttSys
 {
-  class AttackSys
+  public class AttackSys
   {
     public ISkill SkillToUse { get; set; }
     public AttCondition Condition { get; set; }

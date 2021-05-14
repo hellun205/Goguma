@@ -5,7 +5,7 @@ using System;
 
 namespace Goguma.Game.Object.Entity.AttSys
 {
-  class AttackSyss
+  public class AttackSyss
   {
     public List<AttackSys> Items { get; set; }
     public AttackSyss()

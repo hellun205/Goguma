@@ -73,6 +73,7 @@ namespace Goguma.Game.Object.Entity.Monster
       PrintText(Descriptions);
       PrintText($"\n{GetSep(40)}");
       PrintText(CTexts.Make($"{{\nHP : }} {{{Hp} / {MaxHp}, {ColorByHp(Hp, MaxHp)}}}"));
+    }
 
     public Monster(Monster monster) : this()
     {
