@@ -22,7 +22,7 @@ namespace Goguma.Game.Object.Entity.Monster
     DroppingItems DroppingItems { get; set; }
 
     void AttackPlayer(IPlayer player);
-    void PrintAbout();
+    void PrintAbout(IPlayer player = null);
 
   }
 }

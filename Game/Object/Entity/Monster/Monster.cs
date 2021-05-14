@@ -4,6 +4,7 @@ using Goguma.Game.Console;
 using Goguma.Game.Object.Entity.Player;
 using Goguma.Game.Object.Inventory.Item;
 using static Goguma.Game.Console.ConsoleFunction;
+using static Goguma.Game.Console.StringFunction;
 
 namespace Goguma.Game.Object.Entity.Monster
 {
@@ -31,16 +32,17 @@ namespace Goguma.Game.Object.Entity.Monster
 
     }
 
-    public void PrintAbout()
+    public void PrintAbout(IPlayer player = null)
     {
-      PrintText(CTexts.Make($"{{\n{Name}, {Colors.txtInfo}}} {{의 정보 =====================}}"));
-      PrintText(CTexts.Make($"{{\nLv. : }} {{{Level}, {Colors.txtWarning}}} {{\n}}"));
-      PrintText(CTexts.Make($"{{\nHP : }} {{{Hp} / {MaxHp}, {Colors.txtWarning}}}"));
+      PrintText($"\n{GetSep(30, $"「{Name}」")}");
+      if (player != null) PrintText(CTexts.Make($"{{\nLv. : }} {{{Level}\n, {ColorByLevel(player.Level, Level)}}}"));
+      else PrintText(CTexts.Make($"{{\nLv. : }} {{{Level}\n, {Colors.txtWarning}}}"));
+      PrintText(Descriptions);
+      PrintText($"\n{GetSep(30)}");
+      PrintText(CTexts.Make($"{{\nHP : }} {{{Hp} / {MaxHp}, {ColorByHp(Hp, MaxHp)}}}"));
       PrintText(CTexts.Make($"{{\nATT : }} {{{AttDmg}, {Colors.txtWarning}}}"));
       PrintText(CTexts.Make($"{{\nDEF : }} {{{DefPer} %, {Colors.txtWarning}}}"));
-      PrintText("\n=====================\n");
-      PrintText(Descriptions);
-      PrintText(CTexts.Make($"{{\n{Name}, {Colors.txtInfo}}} {{의 정보 =====================}}"));
+      PrintText($"\n{GetSep(30)}");
       Pause();
     }
   }
