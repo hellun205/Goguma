@@ -121,8 +121,8 @@ namespace Goguma.Game.Object.Entity.Player
 
       var ss = new SelectScene(questionText, selectSceneItems);
       var name = ss.getString.Trim();
-      var player = new Player();
-      if (name == "" || name == null || name == "뒤로 가기".Trim()) return null;
+      Player player;
+      if (name == "" || name == null || name == "뒤로 가기") return null;
       player = LoadPlayerData(name);
 
       if (player == null)

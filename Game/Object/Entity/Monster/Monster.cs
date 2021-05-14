@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Colorify;
+using Gogu_Remaster.Game.Object.Inventory.Item;
 using Goguma.Game.Console;
 using Goguma.Game.Object.Entity.AttSys;
 using Goguma.Game.Object.Entity.Player;
@@ -10,7 +11,7 @@ using static Goguma.Game.Console.StringFunction;
 
 namespace Goguma.Game.Object.Entity.Monster
 {
-  class Monster : IMonster
+  public class Monster : IMonster
   {
     public string Name { get; set; }
     public CTexts Descriptions { get; set; }
@@ -72,10 +73,38 @@ namespace Goguma.Game.Object.Entity.Monster
       PrintText(Descriptions);
       PrintText($"\n{GetSep(40)}");
       PrintText(CTexts.Make($"{{\nHP : }} {{{Hp} / {MaxHp}, {ColorByHp(Hp, MaxHp)}}}"));
-      PrintText(CTexts.Make($"{{\nATT : }} {{{AttDmg}, {Colors.txtWarning}}}"));
-      PrintText(CTexts.Make($"{{\nDEF : }} {{{DefPer} %, {Colors.txtWarning}}}"));
-      PrintText($"\n{GetSep(40)}");
-      Pause();
+
+    public Monster(Monster monster) : this()
+    {
+      Name = monster.Name;
+      Descriptions = monster.Descriptions;
+      Level = monster.Level;
+      MaxHp = monster.MaxHp;
+      Hp = monster.Hp;
+      AttDmg = monster.AttDmg;
+      DefPer = monster.DefPer;
+      GivingExp = monster.GivingExp;
+      GivingGold = monster.GivingGold;
+
+      var dropItem = new List<DroppingItem>();
+
+      foreach (var i in monster.DroppingItems.Items)
+      {
+        var di = new DroppingItem(i.Item.GetInstance(), i.DropChance);
+        dropItem.Add(di);
+      }
+
+      DroppingItems = new DroppingItems(dropItem);
+    }
+
+    public void AttackPlayer(IPlayer player)
+    {
+
+    }
+
+    public Monster GetInstace()
+    {
+      return new Monster(this);
     }
   }
 }

@@ -3,7 +3,7 @@
 namespace Goguma.Game.Object.Inventory
 {
   [Serializable]
-  enum WearingType
+  public enum WearingType
   {
     Head,
     Chestplate,

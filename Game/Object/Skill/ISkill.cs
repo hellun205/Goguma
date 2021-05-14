@@ -2,7 +2,7 @@ using Goguma.Game.Console;
 
 namespace Goguma.Game.Object.Skill
 {
-  interface ISkill
+  public interface ISkill
   {
     string Name { get; set; }
     CTexts Text { get; set; }

@@ -4,7 +4,7 @@ using Goguma.Game.Console;
 namespace Goguma.Game.Object.Skill
 {
   [Serializable]
-  class Skill : ISkill
+  public class Skill : ISkill
   {
     public string Name { get; set; }
     public CTexts Text { get; set; }

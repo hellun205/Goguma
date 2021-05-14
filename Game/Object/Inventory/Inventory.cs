@@ -7,7 +7,7 @@ using Goguma.Game.Console;
 namespace Goguma.Game.Object.Inventory
 {
   [Serializable]
-  class Inventory
+  public class Inventory
   {
     public InvenItems Items { get; set; }
     public IPlayer Player { get; set; }

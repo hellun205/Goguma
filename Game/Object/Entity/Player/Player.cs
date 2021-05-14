@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Colorify;
+using Gogu_Remaster.Game.Object.Map;
 using Goguma.Game.Console;
-using Goguma.Game.Object.Entity.Monster;
+using Goguma.Game.Object.Inventory;
 using Goguma.Game.Object.Map;
 using Goguma.Game.Object.Skill;
 using static Goguma.Game.Console.StringFunction;
@@ -17,15 +18,13 @@ namespace Goguma.Game.Object.Entity.Player
     public string Name { get; set; }
     public Inventory.Inventory Inventory { get; set; }
     public MapList Map { get; set; }
+    public Location Loc { get; }
     public double Hp
     {
       get => hp;
       set
       {
-        if (MaxHp >= value)
-          hp = value;
-        else if (MaxHp < value)
-          hp = MaxHp;
+        hp = Math.Min(value, MaxHp);
       }
     }
     public double Ep
@@ -39,8 +38,16 @@ namespace Goguma.Game.Object.Entity.Player
           ep = MaxEp;
       }
     }
-    public double MaxHp { get => maxHp + ItemsIncrease.MaxHp + BuffsIncrease.MaxHp; set => maxHp = value; }
-    public double MaxEp { get => maxEp + ItemsIncrease.MaxEp + BuffsIncrease.MaxEp; set => maxEp = value; }
+    public double MaxHp
+    {
+      get => maxHp + ItemsIncrease.MaxHp + BuffsIncrease.MaxHp;
+      set => maxHp = value;
+    }
+    public double MaxEp
+    {
+      get => maxEp + ItemsIncrease.MaxEp + BuffsIncrease.MaxEp;
+      set => maxEp = value;
+    }
 
     public int Level { get; set; }
 
@@ -66,6 +73,11 @@ namespace Goguma.Game.Object.Entity.Player
         }
       }
     }
+    public bool IsDead
+    {
+      get => Hp <= 0;
+    }
+
     public double MaxExp { get; set; }
 
     public double IncreaseMaxExp
@@ -179,23 +191,35 @@ namespace Goguma.Game.Object.Entity.Player
       IncreaseMaxEp = 5;
     }
 
+    public void Heal(double heal)
+    {
+      Hp = Hp + heal;
+    }
+
+    private string GetSep(int length, string txt = "")
+    {
+      var sb = new StringBuilder();
+
 
     public void PrintAbout()
     {
-      // PrintText(CTexts.Make($"{{\n{Name}, {Colors.txtInfo}}} {{의 정보 =====================}}"));
-      PrintText($"\n{GetSep(30, $"{Name}")}");
-      PrintText(CTexts.Make($"{{\nLv. : }} {{{Level}, {Colors.txtWarning}}}"));
-      PrintText(CTexts.Make($"{{\nExp : }} {{{Exp} / {MaxExp}, {Colors.txtWarning}}}"));
-      PrintText(CTexts.Make($"{{\nGOLD : }} {{{Gold}, {Colors.txtWarning}}}"));
-      // PrintText("\n=====================");
-      PrintText($"\n{GetSep(30)}");
-      PrintText(CTexts.Make($"{{\nHP : }} {{{Hp} / {MaxHp}, {Colors.txtWarning}}}"));
-      PrintText(CTexts.Make($"{{\nEP : }} {{{Ep} / {MaxEp}, {Colors.txtWarning}}}"));
-      PrintText(CTexts.Make($"{{\nATT : }} {{{AttDmg}, {Colors.txtWarning}}}"));
-      PrintText(CTexts.Make($"{{\nDEF : }} {{{defPer} %, {Colors.txtWarning}}}"));
-      // PrintText(CTexts.Make($"{{\n{Name}, {Colors.txtInfo}}} {{의 정보 =====================}}"));
-      PrintText($"\n{GetSep(30)}");
+      PrintText(this.ToString());
       Pause();
+    }
+
+    public override string ToString()
+    {
+      return new StringBuilder($"\n{GetSep(30, $"{Name}")}")
+        .Append(CTexts.Make($"{{\nLv. : }} {{{Level}, {Colors.txtWarning}}}"))
+        .Append(CTexts.Make($"{{\nExp : }} {{{Exp} / {MaxExp}, {Colors.txtWarning}}}"))
+        .Append(CTexts.Make($"{{\nGOLD : }} {{{Gold}, {Colors.txtWarning}}}"))
+        .Append(($"\n{GetSep(30)}"))
+        .Append(CTexts.Make($"{{\nHP : }} {{{Hp} / {MaxHp}, {Colors.txtWarning}}}"))
+        .Append(CTexts.Make($"{{\nEP : }} {{{Ep} / {MaxEp}, {Colors.txtWarning}}}"))
+        .Append(CTexts.Make($"{{\nATT : }} {{{AttDmg}, {Colors.txtWarning}}}"))
+        .Append(CTexts.Make($"{{\nDEF : }} {{{defPer} %, {Colors.txtWarning}}}"))
+        .Append($"\n{GetSep(30)}")
+        .ToString();
     }
 
     public double RequiredForLevelUp()

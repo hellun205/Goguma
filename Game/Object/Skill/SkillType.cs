@@ -3,7 +3,7 @@ using System;
 namespace Goguma.Game.Object.Skill
 {
   [Serializable]
-  enum SkillType
+  public enum SkillType
   {
     AttackSkill,
     BuffSkill

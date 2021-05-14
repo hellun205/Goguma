@@ -5,7 +5,7 @@ using Goguma.Game.Object.Entity.Player;
 namespace Goguma.Game.Object.Inventory.Item
 
 {
-  interface IItem
+  public interface IItem
   {
     CTexts Name { get; set; }
     CTexts Descriptions { get; set; }
@@ -18,5 +18,7 @@ namespace Goguma.Game.Object.Inventory.Item
     void DescriptionItem();
 
     void DescriptionItemAP(IPlayer player);
+
+    IItem GetInstance();
   }
 }

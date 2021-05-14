@@ -30,48 +30,45 @@ namespace Goguma.Game
 
     static public void SetPlayerDataScene()
     {
-      while (true)
+      Player playerData;
+      var pc = PlayerSave.GetPlayerList().Count;
+
+      var questionText = CTexts.Make($"{{고구마 게임,{Colors.bgWarning}}}");
+
+      var selectSceneItems = new SelectSceneItems();
+      selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make("{새로 시작}")));
+      if (pc > 0)
+        selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make("{이어서 시작}")));
+      selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make("{게임 종료}")));
+
+      Func<bool> keepPlay = () =>
       {
-        Player playerData;
-        var pc = PlayerSave.GetPlayerList().Count;
-
-        var questionText = CTexts.Make($"{{고구마 게임,{Colors.bgWarning}}}");
-
-        var selectSceneItems = new SelectSceneItems();
-        selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make("{새로 시작}")));
-        if (pc > 0)
-          selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make("{이어서 시작}")));
-        selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make("{게임 종료}")));
-
-        Func<bool> keepPlay = () =>
+        playerData = PlayerSave.GetPlayerData();
+        if (playerData != null)
         {
-          playerData = PlayerSave.GetPlayerData();
+          player = playerData;
+          return true;
+        }
+        else return false;
+      };
+
+      var ss = new SelectScene(questionText, selectSceneItems);
+      switch (ss.getString)
+      {
+        case "새로 시작":
+          playerData = PlayerSave.CreatePlayerData();
           if (playerData != null)
           {
             player = playerData;
-            return true;
+            return;
           }
-          else return false;
-        };
-
-        var ss = new SelectScene(questionText, selectSceneItems);
-        switch (ss.getString)
-        {
-          case "새로 시작":
-            playerData = PlayerSave.CreatePlayerData();
-            if (playerData != null)
-            {
-              player = playerData;
-              return;
-            }
-            break;
-          case "이어서 시작":
-            if (keepPlay()) return;
-            break;
-          case "게임 종료":
-            ExitGame();
-            break;
-        }
+          break;
+        case "이어서 시작":
+          if (keepPlay()) return;
+          break;
+        case "게임 종료":
+          ExitGame();
+          break;
       }
     }
 
