@@ -237,48 +237,43 @@ namespace Goguma.Game.Object.Battle
 
           PrintText(CTexts.Make($"{{\n\n「{monster.Name} [Lv. {monster.Level}]」,{ColorByLevel(player.Level, monster.Level)}}} {{(이)가 }}{{당신,{Colors.txtInfo}}} {{에게 }} {{\n  {Skill.Skill.GetTypeString(aSkill.Type)} 스킬 ,{Colors.txtWarning}}} {{{aSkill.Name},{Colors.txtInfo}}} {{(을)를 사용했습니다.}}"));
           Pause();
-          PrintText(CTexts.Make($"{{\n  {player.Name},{Colors.txtSuccess}}}{{ : }}"));
+          PrintText(CTexts.Make($"{{\n  {monster.Name},{Colors.txtSuccess}}}{{ : }}"));
           PrintText(aSkill.Text);
           PrintText("\n\n");
           Pause();
           PrintText(Text());
           Pause();
         }
-        static public void BuffSkill(IPlayer player, IBuffSkill bSkill)
+        static public void BuffSkill(IMonster monster, IPlayer player, IBuffSkill bSkill)
         {
-          PrintText(CTexts.Make($"{{\n  {Skill.Skill.GetTypeString(bSkill.Type)} 스킬 ,{Colors.txtWarning}}} {{{bSkill.Name},{Colors.txtInfo}}} {{(을)를 사용했습니다.\n    남은 에너지: }}{{[ {player.Ep - bSkill.useEp} / {player.MaxEp} ], {ColorByHp(player.Ep - bSkill.useEp, player.MaxEp)}}}{{\n    사용한 에너지: }}{{{bSkill.useEp}\n, {Colors.txtWarning}}}"));
+          PrintText(CTexts.Make($"{{\n\n「{monster.Name} [Lv. {monster.Level}]」,{ColorByLevel(player.Level, monster.Level)}}} {{(이)가 }} {{\n  {Skill.Skill.GetTypeString(bSkill.Type)} 스킬 ,{Colors.txtWarning}}} {{{bSkill.Name},{Colors.txtInfo}}} {{(을)를 사용했습니다.\n}}"));
           Pause();
-          PrintText(CTexts.Make($"{{\n  {player.Name},{Colors.txtSuccess}}}{{ : }}"));
+          PrintText(CTexts.Make($"{{\n  {monster.Name},{Colors.txtSuccess}}}{{ : }}"));
           PrintText(bSkill.Text);
           PrintText("\n\n");
           Pause();
           // PrintBuffEffect();
           // Pause();
         }
-        static public void AlreadyUsingBuff(IBuffSkill bSkill)
-        {
-          PrintText(CTexts.Make($"{{\n이미 }}{{{Skill.Skill.GetTypeString(bSkill.Type)} 스킬 , {Colors.txtWarning}}}{{{bSkill.Name},{Colors.txtInfo}}}{{의 효과를 받고 있습니다.\n}}"));
-          Pause();
-        }
-        static public void DeleteBuff(List<IBuffSkill> bSkills)
+        static public void DeleteBuff(IMonster monster, IPlayer player, List<IBuffSkill> bSkills)
         {
           foreach (var sk in bSkills)
-            PrintText(CTexts.Make($"{{\n{Skill.Skill.GetTypeString(sk.Type)} 스킬 , {Colors.txtWarning}}}{{{sk.Name},{Colors.txtInfo}}}{{의 지속시간이 끝났습니다.}}"));
+            PrintText(CTexts.Make($"{{\n\n「{monster.Name} [Lv. {monster.Level}]」,{ColorByLevel(player.Level, monster.Level)}}} {{의 }} {{{Skill.Skill.GetTypeString(sk.Type)} 스킬 , {Colors.txtWarning}}}{{{sk.Name},{Colors.txtInfo}}}{{의 지속시간이 끝났습니다.}}"));
           PrintText("\n");
           Pause();
         }
-        static public void Kill(IMonster monster)
-        {
-          PrintText(CTexts.Make($"{{\n\n  {monster.GivingGold} G,{Colors.txtWarning}}}{{를 획득했습니다.\n}}"));
-          Pause();
-          PrintText(CTexts.Make($"{{\n\n  {monster.GivingExp} Exp,{Colors.txtSuccess}}}{{를 획득했습니다.\n}}"));
-          Pause();
-          foreach (var item in monster.DroppingItems.Drop())
-          {
-            PrintText(CTexts.Make($"{{\n\n  {InvenInfo.HavingInven.GetTypeString(item.Type)} 아이템 ,{Colors.txtWarning}}}{{{item.Name},{Colors.txtSuccess}}}{{(을)를 획득했습니다.\n}}"));
-          }
-          Pause();
-        }
+        // static public void Kill()
+        // {
+        //   PrintText(CTexts.Make($"{{\n\n  {monster.GivingGold} G,{Colors.txtWarning}}}{{를 획득했습니다.\n}}"));
+        //   Pause();
+        //   PrintText(CTexts.Make($"{{\n\n  {monster.GivingExp} Exp,{Colors.txtSuccess}}}{{를 획득했습니다.\n}}"));
+        //   Pause();
+        //   foreach (var item in monster.DroppingItems.Drop())
+        //   {
+        //     PrintText(CTexts.Make($"{{\n\n  {InvenInfo.HavingInven.GetTypeString(item.Type)} 아이템 ,{Colors.txtWarning}}}{{{item.Name},{Colors.txtSuccess}}}{{(을)를 획득했습니다.\n}}"));
+        //   }
+        //   Pause();
+        // }
       }
     }
   }

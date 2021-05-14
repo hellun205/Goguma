@@ -4,7 +4,7 @@ namespace Goguma.Game.Object.Skill
 {
   static class Skills
   {
-    static public ISkill Get(SkillList skill)
+    static public ISkill GetPlayerSkill(SkillList skill)
     {
       ISkill resultSkill;
       switch (skill)
@@ -53,5 +53,6 @@ namespace Goguma.Game.Object.Skill
       }
       return resultSkill;
     }
+
   }
 }

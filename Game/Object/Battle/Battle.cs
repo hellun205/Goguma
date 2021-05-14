@@ -151,27 +151,26 @@ namespace Goguma.Game.Object.Battle
         ISkill skill = new Skill.Skill();
         Action Kill = () =>
         {
-          //BattleScene.PvE.Monster.Kill(monster);
           // TO DO: Player Warp Town
         };
         Action GeneralAttack = () =>
         {
           double damage = DamageByLevel(monster.AttDmg, monster.Level, player.Level) * (1 - (player.DefPer / 100));
-          // BattleScene.PvE.EntityGeneralAttack(monster, player, (int)damage);
+          BattleScene.PvE.Monster.GeneralAttack(monster, player, (int)damage);
           player.Hp -= damage;
         };
         Func<bool> SkillAttack = () =>
         {
           var aSkill = (IAttackSkill)skill;
           double damage = DamageByLevel((monster.AttDmg + aSkill.Damage), monster.Level, player.Level) * (1 - ((player.DefPer / 100) - (aSkill.IgnoreDef / 100))); // TO DO
-          // BattleScene.PvE.EntitySkillAttack(monster, player, aSkill, (int)damage);
+          BattleScene.PvE.Monster.SkillAttack(monster, player, aSkill, (int)damage);
           return true;
         };
         Func<bool> BuffSkill = () =>
         {
           var bSkill = (IBuffSkill)skill;
           if (monster.Buffs.Contains(skill)) return false;
-          // BattleScene.PvE.EntityBuffSkill(player, bSkill);
+          BattleScene.PvE.Monster.BuffSkill(monster, player, bSkill);
           monster.Buffs.Add(bSkill);
           mBuffTurns.Add(turn);
           return true;
@@ -187,7 +186,7 @@ namespace Goguma.Game.Object.Battle
             endBuffs = from bf in monster.Buffs
                        select bf;
 
-          // BattleScene.PvE.EntityDeleteBuff(endBuffs.ToList<IBuffSkill>());
+          BattleScene.PvE.Monster.DeleteBuff(monster, player, endBuffs.ToList<IBuffSkill>());
           foreach (var eBf in endBuffs.ToList<IBuffSkill>())
           {
             mBuffTurns.RemoveAt(monster.Buffs.IndexOf(eBf));
