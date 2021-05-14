@@ -22,10 +22,7 @@ namespace Goguma.Game.Object.Entity.Player
       get => hp;
       set
       {
-        if (MaxHp >= value)
-          hp = value;
-        else if (MaxHp < value)
-          hp = MaxHp;
+        hp = Math.Min(value, MaxHp);
       }
     }
     public double Ep
@@ -74,6 +71,11 @@ namespace Goguma.Game.Object.Entity.Player
         }
       }
     }
+    public bool IsDead
+    {
+      get => Hp <= 0;
+    }
+
     public double MaxExp { get; set; }
 
     public double IncreaseMaxExp
@@ -186,6 +188,12 @@ namespace Goguma.Game.Object.Entity.Player
       IncreaseMaxHp = 10;
       IncreaseMaxEp = 5;
     }
+
+    public void Heal(double heal)
+    {
+      Hp = Hp + heal;
+    }
+
     private string GetSep(int length, string txt = "")
     {
       var sb = new StringBuilder();
