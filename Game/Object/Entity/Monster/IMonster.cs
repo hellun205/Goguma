@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Goguma.Game.Console;
+using Goguma.Game.Object.Entity.AttSys;
 using Goguma.Game.Object.Entity.Player;
 using Goguma.Game.Object.Inventory.Item;
 
@@ -20,8 +21,7 @@ namespace Goguma.Game.Object.Entity.Monster
     double GivingGold { get; set; }
     double GivingExp { get; set; }
     DroppingItems DroppingItems { get; set; }
-
-    void AttackPlayer(IPlayer player);
+    AttackSyss AttSystem { get; set; }
     void PrintAbout(IPlayer player = null);
 
   }

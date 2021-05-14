@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Colorify;
 using Goguma.Game.Console;
+using Goguma.Game.Object.Entity.AttSys;
 using Goguma.Game.Object.Entity.Player;
 using Goguma.Game.Object.Inventory.Item;
 using static Goguma.Game.Console.ConsoleFunction;
@@ -21,28 +22,25 @@ namespace Goguma.Game.Object.Entity.Monster
     public double GivingGold { get; set; }
     public double GivingExp { get; set; }
     public DroppingItems DroppingItems { get; set; }
+    public AttackSyss AttSystem { get; set; }
 
     public Monster()
     {
       Skills = new List<Skill.Skill>();
       DroppingItems = new DroppingItems();
+      AttSystem = new AttackSyss();
     }
-    public void AttackPlayer(IPlayer player)
-    {
-
-    }
-
     public void PrintAbout(IPlayer player = null)
     {
-      PrintText($"\n{GetSep(30, $"「{Name}」")}");
+      PrintText($"\n{GetSep(40, $"{Name}")}");
       if (player != null) PrintText(CTexts.Make($"{{\nLv. : }} {{{Level}\n, {ColorByLevel(player.Level, Level)}}}"));
       else PrintText(CTexts.Make($"{{\nLv. : }} {{{Level}\n, {Colors.txtWarning}}}"));
       PrintText(Descriptions);
-      PrintText($"\n{GetSep(30)}");
+      PrintText($"\n{GetSep(40)}");
       PrintText(CTexts.Make($"{{\nHP : }} {{{Hp} / {MaxHp}, {ColorByHp(Hp, MaxHp)}}}"));
       PrintText(CTexts.Make($"{{\nATT : }} {{{AttDmg}, {Colors.txtWarning}}}"));
       PrintText(CTexts.Make($"{{\nDEF : }} {{{DefPer} %, {Colors.txtWarning}}}"));
-      PrintText($"\n{GetSep(30)}");
+      PrintText($"\n{GetSep(40)}");
       Pause();
     }
   }
