@@ -1,4 +1,4 @@
-namespace Gogu_Remaster.Game.Object.Map.Facilility
+namespace Gogu_Remaster.Game.Object.Map.Facility
 {
   public class Facilities
   {

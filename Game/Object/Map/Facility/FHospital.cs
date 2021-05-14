@@ -1,10 +1,9 @@
 using System;
 using System.Buffers;
-using Gogu_Remaster.Game.Object.Map.Facility;
 using Goguma.Game;
 using Goguma.Game.Console;
 
-namespace Gogu_Remaster.Game.Object.Map.Facilility
+namespace Gogu_Remaster.Game.Object.Map.Facility
 {
   public class FHospital : IFacility
   {

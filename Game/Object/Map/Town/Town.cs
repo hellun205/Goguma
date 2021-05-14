@@ -4,9 +4,10 @@ using Goguma.Game.Console;
 
 namespace Gogu_Remaster.Game.Object.Map.Town
 {
-  public class Town : IMap
+  public abstract class Town : IMap
   {
-    public string Name { get; }
+    public abstract string Name { get; }
+    public abstract string Desc { get; }
     public bool IsTown
     {
       get => true;
