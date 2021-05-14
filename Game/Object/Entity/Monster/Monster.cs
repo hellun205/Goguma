@@ -4,6 +4,7 @@ using Goguma.Game.Console;
 using Goguma.Game.Object.Entity.AttSys;
 using Goguma.Game.Object.Entity.Player;
 using Goguma.Game.Object.Inventory.Item;
+using Goguma.Game.Object.Skill;
 using static Goguma.Game.Console.ConsoleFunction;
 using static Goguma.Game.Console.StringFunction;
 
@@ -23,12 +24,14 @@ namespace Goguma.Game.Object.Entity.Monster
     public double GivingExp { get; set; }
     public DroppingItems DroppingItems { get; set; }
     public AttackSyss AttSystem { get; set; }
+    public List<IBuffSkill> Buffs { get; set; }
 
     public Monster()
     {
       Skills = new List<Skill.Skill>();
       DroppingItems = new DroppingItems();
       AttSystem = new AttackSyss();
+      Buffs = new List<IBuffSkill>();
     }
     public void PrintAbout(IPlayer player = null)
     {
