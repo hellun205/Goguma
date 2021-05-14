@@ -15,22 +15,22 @@ namespace Gogu_Remaster.Game.Object.Map.Road
 
     public struct RoadMonster
     {
-      public Monster Monster { get; }
+      public MonsterList Monster { get; }
       public byte Prob { get; } // 1 ~ 100
     }
-    public List<RoadMonster> Monsters { get; }
+    public List<RoadMonster> SummonMonsters { get; }
 
-    public Monster SummonMonster()
+    public IMonster SummonMonster()
     {
       var rand = new Random();
 
       while (true)
       {
-        var index = rand.Next(0, Monsters.Count);
+        var index = rand.Next(0, SummonMonsters.Count);
         var prob = rand.Next(0, 101);
 
-        if (Monsters[index].Prob >= prob)
-          return Monsters[index].Monster.GetInstace();
+        if (SummonMonsters[index].Prob >= prob)
+          return Monsters.Get(SummonMonsters[index].Monster);
       }
     }
   }

@@ -1,6 +1,6 @@
 namespace Goguma.Game.Object.Entity.Monster
 {
-  enum MonsterList
+  public enum MonsterList
   {
     TestMonster
   }
