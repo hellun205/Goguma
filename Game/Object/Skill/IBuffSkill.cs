@@ -1,6 +1,6 @@
 namespace Goguma.Game.Object.Skill
 {
-  interface IBuffSkill : ISkill
+  public interface IBuffSkill : ISkill
   {
     Buff buff { get; set; }
   }

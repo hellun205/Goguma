@@ -1,6 +1,6 @@
 namespace Goguma.Game.Object.Skill
 {
-  struct Buff
+  public struct Buff
   {
     public int turn { get; set; }
     public double MaxHp { get; set; }

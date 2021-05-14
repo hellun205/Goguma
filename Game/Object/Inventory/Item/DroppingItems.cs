@@ -1,22 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Gogu_Remaster.Game.Object.Inventory.Item;
 
 namespace Goguma.Game.Object.Inventory.Item
 {
   [Serializable]
-  class DroppingItem
-  {
-    public IItem Item { get; set; }
-    public int DropChance { get; set; }
-    public DroppingItem(IItem item, int dropChance)
-    {
-      Item = item;
-      DropChance = dropChance;
-    }
-  }
-  [Serializable]
-  class DroppingItems
+  public class DroppingItems
   {
     public List<DroppingItem> Items { get; set; }
     public DroppingItems()

@@ -5,7 +5,7 @@ using Goguma.Game.Object.Inventory.Item;
 
 namespace Goguma.Game.Object.Entity.Monster
 {
-  interface IMonster
+  public interface IMonster
   {
     string Name { get; set; }
     CTexts Descriptions { get; set; }

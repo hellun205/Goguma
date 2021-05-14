@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Colorify;
+using Gogu_Remaster.Game.Object.Map;
 using Goguma.Game.Console;
-using Goguma.Game.Object.Entity.Monster;
+using Goguma.Game.Object.Inventory;
 using Goguma.Game.Object.Map;
 using Goguma.Game.Object.Skill;
 using static Goguma.Game.Console.ConsoleFunction;
@@ -16,15 +17,13 @@ namespace Goguma.Game.Object.Entity.Player
     public string Name { get; set; }
     public Inventory.Inventory Inventory { get; set; }
     public MapList Map { get; set; }
+    public Location Loc { get; }
     public double Hp
     {
       get => hp;
       set
       {
-        if (MaxHp >= value)
-          hp = value;
-        else if (MaxHp < value)
-          hp = MaxHp;
+        hp = Math.Min(value, MaxHp);
       }
     }
     public double Ep
@@ -38,8 +37,16 @@ namespace Goguma.Game.Object.Entity.Player
           ep = MaxEp;
       }
     }
-    public double MaxHp { get => maxHp + ItemsIncrease.MaxHp + BuffsIncrease.MaxHp; set => maxHp = value; }
-    public double MaxEp { get => maxEp + ItemsIncrease.MaxEp + BuffsIncrease.MaxEp; set => maxEp = value; }
+    public double MaxHp
+    {
+      get => maxHp + ItemsIncrease.MaxHp + BuffsIncrease.MaxHp;
+      set => maxHp = value;
+    }
+    public double MaxEp
+    {
+      get => maxEp + ItemsIncrease.MaxEp + BuffsIncrease.MaxEp;
+      set => maxEp = value;
+    }
 
     public int Level { get; set; }
 
@@ -65,6 +72,11 @@ namespace Goguma.Game.Object.Entity.Player
         }
       }
     }
+    public bool IsDead
+    {
+      get => Hp <= 0;
+    }
+
     public double MaxExp { get; set; }
 
     public double IncreaseMaxExp
@@ -177,6 +189,12 @@ namespace Goguma.Game.Object.Entity.Player
       IncreaseMaxHp = 10;
       IncreaseMaxEp = 5;
     }
+
+    public void Heal(double heal)
+    {
+      Hp = Hp + heal;
+    }
+
     private string GetSep(int length, string txt = "")
     {
       var sb = new StringBuilder();

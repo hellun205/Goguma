@@ -4,7 +4,7 @@ using Colorify;
 namespace Goguma.Game.Console
 {
   [Serializable]
-  class CText
+  public class CText
   {
     public string Color { get; set; }
     public string Text { get; set; }
