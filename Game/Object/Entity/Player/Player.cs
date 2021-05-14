@@ -38,8 +38,16 @@ namespace Goguma.Game.Object.Entity.Player
           ep = MaxEp;
       }
     }
-    public double MaxHp { get => maxHp + ItemsIncrease.MaxHp + BuffsIncrease.MaxHp; set => maxHp = value; }
-    public double MaxEp { get => maxEp + ItemsIncrease.MaxEp + BuffsIncrease.MaxEp; set => maxEp = value; }
+    public double MaxHp
+    {
+      get => maxHp + ItemsIncrease.MaxHp + BuffsIncrease.MaxHp;
+      set => maxHp = value;
+    }
+    public double MaxEp
+    {
+      get => maxEp + ItemsIncrease.MaxEp + BuffsIncrease.MaxEp;
+      set => maxEp = value;
+    }
 
     public int Level { get; set; }
 

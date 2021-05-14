@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Goguma.Game.Console
 {
@@ -11,6 +12,11 @@ namespace Goguma.Game.Console
     public SelectSceneItems()
     {
       Items = new List<SelectSceneItem>();
+    }
+
+    public void Add(SelectSceneItem item)
+    {
+      this.Items.Add(item);
     }
   }
 }

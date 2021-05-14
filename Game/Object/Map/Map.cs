@@ -1,5 +1,8 @@
+using System;
+
 namespace Goguma.Game.Object.Map
 {
+  [Obsolete]
   class Map
   {
     public string Text { get; set; }
