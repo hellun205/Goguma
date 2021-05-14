@@ -17,8 +17,14 @@ namespace Gogu_Remaster.Game.Object.Map.Road
     {
       public MonsterList Monster { get; }
       public byte Prob { get; } // 1 ~ 100
+
+      public RoadMonster(MonsterList monster, byte prob)
+      {
+        Monster = monster;
+        Prob = prob;
+      }
     }
-    public List<RoadMonster> SummonMonsters { get; }
+    public List<RoadMonster> SummonMonsters { get; protected set; }
 
     public IMonster SummonMonster()
     {
