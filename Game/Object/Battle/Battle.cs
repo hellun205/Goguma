@@ -58,7 +58,7 @@ namespace Goguma.Game.Object.Battle
           return false;
         }
         double damage = DamageByLevel((player.AttDmg + skill.Damage), player.Level, monster.Level) * (1 - ((monster.DefPer / 100) - (skill.IgnoreDef / 100))); // TO DO
-        BattleScene.PvE.Player.SkillAttack(player, monster, skill, (int)damage);
+        BattleScene.PvE.Player.SkillAttack(player, monster, skill, damage);
         player.Ep -= skill.useEp;
         if (monster.Hp - damage <= 0)
           monster.Hp = 0;
@@ -133,7 +133,7 @@ namespace Goguma.Game.Object.Battle
       Func<bool> GeneralAttack = () =>
       {
         double damage = DamageByLevel(player.AttDmg, player.Level, monster.Level) * (1 - (monster.DefPer / 100));
-        BattleScene.PvE.Player.GeneralAttack(player, monster, (int)damage);
+        BattleScene.PvE.Player.GeneralAttack(player, monster, damage);
 
         if (monster.Hp - damage <= 0)
         {
@@ -146,36 +146,7 @@ namespace Goguma.Game.Object.Battle
         }
         return true;
       };
-      Action MonsterTurn = () =>
-      {
-        ISkill skill = new Skill.Skill();
-        Action Kill = () =>
-        {
-          // TO DO: Player Warp Town
-        };
-        Action GeneralAttack = () =>
-        {
-          double damage = DamageByLevel(monster.AttDmg, monster.Level, player.Level) * (1 - (player.DefPer / 100));
-          BattleScene.PvE.Monster.GeneralAttack(monster, player, (int)damage);
-          player.Hp -= damage;
-        };
-        Func<bool> SkillAttack = () =>
-        {
-          var aSkill = (IAttackSkill)skill;
-          double damage = DamageByLevel((monster.AttDmg + aSkill.Damage), monster.Level, player.Level) * (1 - ((player.DefPer / 100) - (aSkill.IgnoreDef / 100))); // TO DO
-          BattleScene.PvE.Monster.SkillAttack(monster, player, aSkill, (int)damage);
-          return true;
-        };
-        Func<bool> BuffSkill = () =>
-        {
-          var bSkill = (IBuffSkill)skill;
-          if (monster.Buffs.Contains(skill)) return false;
-          BattleScene.PvE.Monster.BuffSkill(monster, player, bSkill);
-          monster.Buffs.Add(bSkill);
-          mBuffTurns.Add(turn);
-          return true;
-        };
-        Action<bool> EndBuff = (bool all) =>
+      Action<bool> MEndBuff = (bool all) =>
         {
           IEnumerable<IBuffSkill> endBuffs;
           if (!all)
@@ -192,6 +163,36 @@ namespace Goguma.Game.Object.Battle
             mBuffTurns.RemoveAt(monster.Buffs.IndexOf(eBf));
             monster.Buffs.Remove(eBf);
           }
+        };
+      Action MonsterTurn = () =>
+      {
+        ISkill skill = new Skill.Skill();
+        Action Kill = () =>
+        {
+          // TO DO: Player Warp Town
+        };
+        Action GeneralAttack = () =>
+        {
+          double damage = DamageByLevel(monster.AttDmg, monster.Level, player.Level) * (1 - (player.DefPer / 100));
+          BattleScene.PvE.Monster.GeneralAttack(monster, player, damage);
+          player.Hp -= damage;
+        };
+        Func<bool> SkillAttack = () =>
+        {
+          var aSkill = (IAttackSkill)skill;
+          double damage = DamageByLevel((monster.AttDmg + aSkill.Damage), monster.Level, player.Level) * (1 - ((player.DefPer / 100) - (aSkill.IgnoreDef / 100))); // TO DO
+          BattleScene.PvE.Monster.SkillAttack(monster, player, aSkill, damage);
+          player.Hp -= damage;
+          return true;
+        };
+        Func<bool> BuffSkill = () =>
+        {
+          var bSkill = (IBuffSkill)skill;
+          if (monster.Buffs.Contains(skill)) return false;
+          BattleScene.PvE.Monster.BuffSkill(monster, player, bSkill);
+          monster.Buffs.Add(bSkill);
+          mBuffTurns.Add(turn);
+          return true;
         };
 
         while (true)
@@ -261,7 +262,6 @@ namespace Goguma.Game.Object.Battle
         }
         if (skip)
         {
-          PrintText("SKIP\n");
           if (monster.Hp == 0)
           {
             Kill();
@@ -269,9 +269,15 @@ namespace Goguma.Game.Object.Battle
             return;
           }
           EndBuff(false);
+          MonsterTurn();
+          if (player.Hp <= 0)
+          {
+            EndBuff(true);
+            MEndBuff(true);
+            return;
+          }
+          MEndBuff(false);
           turn += 1;
-          // TO DO
-          // Monster Attack to Player
         }
       }
     }

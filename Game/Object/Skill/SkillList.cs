@@ -13,6 +13,8 @@ namespace Goguma.Game.Object.Skill
   enum MSkillList
   {
     TestMonster_TestPunch,
+    TestMonster_TestFireBall,
+    TestMonster_TestAttackSkill,
     TestMonster_DefensivePosture
   }
 }

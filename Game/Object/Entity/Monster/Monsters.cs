@@ -36,6 +36,8 @@ namespace Goguma.Game.Object.Entity.Monster
             Items = new List<AttackSys>()
             {
               new AttackSys(Skills.GetMonsterSkill(MSkillList.TestMonster_TestPunch), new AttCondition(resultMonster.Hp, ">=", 70)),
+              new AttackSys(Skills.GetMonsterSkill(MSkillList.TestMonster_TestFireBall), new AttCondition(resultMonster.Hp, ">=", 70)),
+              new AttackSys(Skills.GetMonsterSkill(MSkillList.TestMonster_TestAttackSkill), new AttCondition(resultMonster.Hp, ">=", 70)),
               new AttackSys(Skills.GetMonsterSkill(MSkillList.TestMonster_DefensivePosture), new AttCondition(resultMonster.Hp, "<=", 30))
             }
           };

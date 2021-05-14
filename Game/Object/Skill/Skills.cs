@@ -64,7 +64,27 @@ namespace Goguma.Game.Object.Skill
             Name = "테스트 펀치",
             Text = CTexts.Make("{테스 펀치!}"),
             Type = SkillType.AttackSkill,
+            Damage = 1,
+            IgnoreDef = 1
+          };
+          break;
+        case MSkillList.TestMonster_TestFireBall:
+          resultSkill = new AttackSkill()
+          {
+            Name = "파이어 볼",
+            Text = CTexts.Make("{파이아  뽈 !}}"),
+            Type = SkillType.AttackSkill,
             Damage = 3,
+            IgnoreDef = 0
+          };
+          break;
+        case MSkillList.TestMonster_TestAttackSkill:
+          resultSkill = new AttackSkill()
+          {
+            Name = "그냥 공격",
+            Text = CTexts.Make("{으아아앙락ㅇ}}"),
+            Type = SkillType.AttackSkill,
+            Damage = 2,
             IgnoreDef = 0
           };
           break;
