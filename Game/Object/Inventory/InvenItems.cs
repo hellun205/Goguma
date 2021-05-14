@@ -5,7 +5,7 @@ using Goguma.Game.Object.Inventory.Item;
 namespace Goguma.Game.Object.Inventory
 {
   [Serializable]
-  class InvenItems
+  public class InvenItems
   {
     [Serializable]
     public class Wearing

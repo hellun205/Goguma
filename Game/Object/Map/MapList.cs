@@ -3,7 +3,7 @@ using System;
 namespace Goguma.Game.Object.Map
 {
   [Obsolete]
-  enum MapList
+  public enum MapList
   {
     Not
   }

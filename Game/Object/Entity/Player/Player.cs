@@ -4,6 +4,7 @@ using System.Text;
 using Colorify;
 using Gogu_Remaster.Game.Object.Map;
 using Goguma.Game.Console;
+using Goguma.Game.Object.Inventory;
 using Goguma.Game.Object.Map;
 using Goguma.Game.Object.Skill;
 using static Goguma.Game.Console.ConsoleFunction;

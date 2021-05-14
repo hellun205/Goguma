@@ -30,6 +30,13 @@ namespace Goguma.Game.Object.Inventory.Item
       MaxCount = Int32.MaxValue;
       Count = 1;
     }
+
+    public Item(Item item) : this()
+    {
+      Name = item.Name;
+      Count = item.Count;
+    }
+
     static public IItem GetAir()
     {
       IItem resultItem = new Item { IsAir = true };
@@ -42,5 +49,9 @@ namespace Goguma.Game.Object.Inventory.Item
 
     public void DescriptionItemAP(IPlayer player) { }
 
+    public IItem GetInstance()
+    {
+      return new Item(this);
+    }
   }
 }

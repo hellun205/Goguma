@@ -6,7 +6,7 @@ using Goguma.Game.Object.Skill;
 
 namespace Goguma.Game.Object.Entity.Player
 {
-  interface IPlayer
+  public interface IPlayer
   {
     string Name { get; set; }
 

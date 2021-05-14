@@ -2,7 +2,7 @@
 
 namespace Goguma.Game.Object.Inventory.Item
 {
-  interface IEquipmentItem : IItem
+  public interface IEquipmentItem : IItem
   {
     WearingType EquipmentType { get; set; }
     ItemIncrease Increase { get; set; }
