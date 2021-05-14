@@ -56,7 +56,7 @@ namespace Goguma.Game.Object.Battle
           BattleScene.PvE.LackOfEP(player, (ISkill)skill);
           return false;
         }
-        double damage = DamageByLevel((player.AttDmg + skill.Damage), player.Level, monster.Level) * (1 - ((monster.DefPer / 100) - skill.IgnoreDef)); // TO DO
+        double damage = DamageByLevel((player.AttDmg + skill.Damage), player.Level, monster.Level) * (1 - ((monster.DefPer / 100) - (skill.IgnoreDef / 100))); // TO DO
         BattleScene.PvE.SkillAttack(player, monster, skill, (int)damage);
         player.Ep -= skill.useEp;
         if (monster.Hp - damage <= 0)
@@ -91,7 +91,7 @@ namespace Goguma.Game.Object.Battle
                      where sk.Type == SkillType.AttackSkill
                      select sk;
         var skill = skills.ToList<ISkill>()[skSc.getIndex - 1];
-        return UseAttackSkill((AttackSkill)skill);
+        return UseAttackSkill((IAttackSkill)skill);
       };
       Func<bool> UseSkill = () =>
       {
@@ -104,9 +104,9 @@ namespace Goguma.Game.Object.Battle
         switch (skill.Type)
         {
           case SkillType.AttackSkill:
-            return UseAttackSkill((AttackSkill)skill);
+            return UseAttackSkill((IAttackSkill)skill);
           case SkillType.BuffSkill:
-            return UseBuffSkill((BuffSkill)skill);
+            return UseBuffSkill((IBuffSkill)skill);
           default:
             return false;
         }
@@ -144,6 +144,44 @@ namespace Goguma.Game.Object.Battle
           monster.Hp -= damage;
         }
         return true;
+      };
+      Action MonsterTurn = () =>
+      {
+        var skill = monster.AttSystem.Get();
+        Action GeneralAttack = () =>
+        {
+          double damage = DamageByLevel(monster.AttDmg, monster.Level, player.Level) * (1 - (player.DefPer / 100));
+          // BattleScene.PvE.EntityGeneralAttack(monster, player, (int)damage);
+          player.Hp -= damage;
+        };
+        Action SkillAttack = () =>
+        {
+          var aSkill = (IAttackSkill)skill;
+          double damage = DamageByLevel((monster.AttDmg + aSkill.Damage), monster.Level, player.Level) * (1 - ((player.DefPer / 100) - (aSkill.IgnoreDef / 100))); // TO DO
+          // BattleScene.PvE.EntitySkillAttack(monster, player, aSkill, (int)damage);
+        };
+        Action BuffSkill = () =>
+        {
+          var bSkill = (IBuffSkill)skill;
+
+        };
+
+        if (skill != null)
+        {
+          switch (skill.Type)
+          {
+            case SkillType.AttackSkill:
+              SkillAttack();
+              break;
+            case SkillType.BuffSkill:
+              BuffSkill();
+              break;
+          }
+        }
+        else
+        {
+          GeneralAttack();
+        }
       };
 
       while (true)
