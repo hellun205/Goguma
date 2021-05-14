@@ -53,6 +53,41 @@ namespace Goguma.Game.Object.Skill
       }
       return resultSkill;
     }
-
+    static public ISkill GetMonsterSkill(MSkillList skill)
+    {
+      ISkill resultSkill;
+      switch (skill)
+      {
+        case MSkillList.TestMonster_TestPunch:
+          resultSkill = new AttackSkill()
+          {
+            Name = "테스트 펀치",
+            Text = CTexts.Make("{테스 펀치!}"),
+            Type = SkillType.AttackSkill,
+            Damage = 3,
+            IgnoreDef = 0
+          };
+          break;
+        case MSkillList.TestMonster_DefensivePosture:
+          resultSkill = new BuffSkill()
+          {
+            Name = "방어태세",
+            Text = CTexts.Make("{방어태세!}"),
+            Type = SkillType.BuffSkill,
+            buff = new Buff()
+            {
+              MaxHp = 0,
+              MaxEp = 0,
+              AttDmg = -10,
+              DefPer = 50,
+              turn = 3
+            }
+          };
+          break;
+        default:
+          return null;
+      }
+      return resultSkill;
+    }
   }
 }

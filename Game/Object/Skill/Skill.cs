@@ -11,6 +11,11 @@ namespace Goguma.Game.Object.Skill
     public SkillType Type { get; set; }
     public double useEp { get; set; }
 
+    public Skill()
+    {
+      Text = CTexts.Make("");
+      useEp = 0;
+    }
     static public string GetTypeString(SkillType sType)
     {
       switch (sType)
