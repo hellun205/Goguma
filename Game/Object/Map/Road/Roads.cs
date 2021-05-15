@@ -4,10 +4,10 @@ namespace Gogu_Remaster.Game.Object.Map.Road
   {
     public static RKRoad kRoad = new RKRoad();
 
-    public static Road GetRoadByName(string name)
-    {
-      if (name == kRoad.Name) return kRoad;
-      else return null;
-    }
+    // public static Road GetRoadByName(string name)
+    // {
+    //   if (name == kRoad.Name) return kRoad;
+    //   else return null;
+    // }
   }
 }

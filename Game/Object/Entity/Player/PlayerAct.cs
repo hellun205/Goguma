@@ -25,18 +25,14 @@ namespace Goguma.Game.Object.Entity.Player
 
         static public CTexts GetQText(Location loc)
         {
-          IMap map;
+          var map = Maps.GetMapByName(loc.Loc);
           string colors;
+
           if (loc.InTown)
-          {
-            map = Towns.GetTownByName(loc.Loc);
             colors = Colors.txtSuccess;
-          }
           else
-          {
-            map = Roads.GetRoadByName(loc.Loc);
             colors = Colors.txtDanger;
-          }
+
           return CTexts.Make($"{{[ {map.Name} ] , {colors}}} {{무엇을 하시겠습니까?}}");
         }
 
@@ -44,12 +40,18 @@ namespace Goguma.Game.Object.Entity.Player
         {
           var resultSSI = new SelectSceneItems();
 
-          resultSSI.Items.Add(new SelectSceneItem(CTexts.Make("{캐릭터 정보 보기}")));
-          resultSSI.Items.Add(new SelectSceneItem(CTexts.Make("{인벤토리 열기}")));
+          resultSSI.Add(new SelectSceneItem(CTexts.Make("{캐릭터 정보 보기}")));
+          resultSSI.Add(new SelectSceneItem(CTexts.Make("{인벤토리 열기}")));
+          resultSSI.Add(new SelectSceneItem(CTexts.Make("{이동하기}")));
+
+          if (InGame.player.Loc.InTown)
+            resultSSI.Add(new SelectSceneItem(CTexts.Make("{시설 이용하기}")));
+          else
+            resultSSI.Add(new SelectSceneItem(CTexts.Make("{전투하기}")));
 
           if (isAdmin)
-            resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{A,{Colors.txtWarning}}} {{D,{Colors.txtDanger}}} {{M,{Colors.txtSuccess}}} {{I,{Colors.txtInfo}}} {{N,{Colors.txtPrimary}}}")));
-          resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{게임 종료, {Colors.txtMuted}}}")));
+            resultSSI.Add(new SelectSceneItem(CTexts.Make($"{{A,{Colors.txtWarning}}} {{D,{Colors.txtDanger}}} {{M,{Colors.txtSuccess}}} {{I,{Colors.txtInfo}}} {{N,{Colors.txtPrimary}}}")));
+          resultSSI.Add(new SelectSceneItem(CTexts.Make($"{{게임 종료, {Colors.txtMuted}}}")));
           return resultSSI;
         }
       }
@@ -84,11 +86,31 @@ namespace Goguma.Game.Object.Entity.Player
         case "인벤토리 열기":
           player.Inventory.Print();
           break;
+        case "이동하기":
+          player.Loc.Move();
+          break;
+        case "시설 이용하기":
+          UseFacility();
+          break;
+        case "전투하기":
+          StartRoadPvE();
+          break;
         case "게임 종료":
           InGame.ExitGame();
           break;
       }
     }
+
+    static private void UseFacility()
+    {
+      throw new NotImplementedException();
+    }
+
+    static private void StartRoadPvE()
+    {
+      throw new NotImplementedException();
+    }
+
     static private void AdminOption(Player player, bool isAdmin = false)
     {
       if (isAdmin)

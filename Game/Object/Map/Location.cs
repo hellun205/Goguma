@@ -1,6 +1,5 @@
 using System;
-using Gogu_Remaster.Game.Object.Map.Road;
-using Gogu_Remaster.Game.Object.Map.Town;
+using Goguma.Game.Console;
 
 namespace Gogu_Remaster.Game.Object.Map
 {
@@ -12,12 +11,17 @@ namespace Gogu_Remaster.Game.Object.Map
 
     public Location(string loc, bool isTown)
     {
-      if (isTown)
-        Loc = Towns.GetTownByName(loc).Name;
-      else
-        Loc = Roads.GetRoadByName(loc).Name;
+      Loc = Maps.GetMapByName(loc).Name;
 
       InTown = isTown;
+    }
+
+    public void Move()
+    {
+      var qt = $"이동 (현재 : ${Loc}";
+      var ssi = new SelectSceneItems();
+
+
     }
   }
 }
