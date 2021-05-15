@@ -19,7 +19,7 @@ namespace Goguma.Game.Object.Entity.Player
     public Inventory.Inventory Inventory { get; set; }
     [Obsolete]
     public MapList Map { get; set; }
-    public Location Loc { get; }
+    public Location Loc { get; set; }
     public double Hp
     {
       get => hp;
@@ -213,7 +213,7 @@ namespace Goguma.Game.Object.Entity.Player
         .Append(CTexts.Make($"{{\nATT : }} {{{AttDmg}, {Colors.txtWarning}}}"))
         .Append(CTexts.Make($"{{\nDEF : }} {{{defPer} %, {Colors.txtWarning}}}"))
         .Append($"\n{StringFunction.GetSep(30)}")
-        .Append($"위치 : {Loc.Loc}")
+        .Append($"\n위치 : {Loc.Loc}")
         .Append($"\n{StringFunction.GetSep(30)}")
         .ToString();
     }
