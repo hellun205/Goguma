@@ -219,6 +219,8 @@ namespace Goguma.Game.Object.Entity.Player
         .Append(CTexts.Make($"{{\nATT : }} {{{AttDmg}, {Colors.txtWarning}}}"))
         .Append(CTexts.Make($"{{\nDEF : }} {{{defPer} %, {Colors.txtWarning}}}"))
         .Append($"\n{StringFunction.GetSep(30)}")
+        .Append($"위치 : {Loc.Loc}")
+        .Append($"\n{StringFunction.GetSep(30)}")
         .ToString();
     }
 
