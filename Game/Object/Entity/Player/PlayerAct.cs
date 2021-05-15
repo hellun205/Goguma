@@ -1,7 +1,6 @@
 using System;
 using Colorify;
 using Gogu_Remaster.Game.Object.Map;
-using Gogu_Remaster.Game.Object.Map.Road;
 using Gogu_Remaster.Game.Object.Map.Town;
 using Goguma.Game.Console;
 using Goguma.Game.Object.Entity.Monster;
@@ -33,18 +32,18 @@ namespace Goguma.Game.Object.Entity.Player
         {
           var resultSSI = new SelectSceneItems();
 
-          resultSSI.Add(new SelectSceneItem(CTexts.Make("{캐릭터 정보 보기}")));
-          resultSSI.Add(new SelectSceneItem(CTexts.Make("{인벤토리 열기}")));
-          resultSSI.Add(new SelectSceneItem(CTexts.Make("{이동하기}")));
+          resultSSI.Add("{캐릭터 정보 보기}");
+          resultSSI.Add("{인벤토리 열기}");
+          resultSSI.Add("{이동하기}");
 
           if (InGame.player.Loc.InTown)
             resultSSI.Add(new SelectSceneItem(CTexts.Make("{시설 이용하기}")));
           else
-            resultSSI.Add(new SelectSceneItem(CTexts.Make("{전투하기}")));
+            resultSSI.Add("{전투하기}");
 
           if (isAdmin)
-            resultSSI.Add(new SelectSceneItem(CTexts.Make($"{{A,{Colors.txtWarning}}} {{D,{Colors.txtDanger}}} {{M,{Colors.txtSuccess}}} {{I,{Colors.txtInfo}}} {{N,{Colors.txtPrimary}}}")));
-          resultSSI.Add(new SelectSceneItem(CTexts.Make($"{{게임 종료, {Colors.txtMuted}}}")));
+            resultSSI.Add($"{{A,{Colors.txtWarning}}} {{D,{Colors.txtDanger}}} {{M,{Colors.txtSuccess}}} {{I,{Colors.txtInfo}}} {{N,{Colors.txtPrimary}}}");
+          resultSSI.Add($"{{게임 종료, {Colors.txtMuted}}}");
           return resultSSI;
         }
       }
@@ -57,11 +56,11 @@ namespace Goguma.Game.Object.Entity.Player
         static public SelectSceneItems GetSSI()
         {
           var resultSSI = new SelectSceneItems();
-          resultSSI.Items.Add(new SelectSceneItem(CTexts.Make("{Test Inventory}")));
-          resultSSI.Items.Add(new SelectSceneItem(CTexts.Make("{Player Level Up}")));
-          resultSSI.Items.Add(new SelectSceneItem(CTexts.Make("{Battle with test monster}")));
-          resultSSI.Items.Add(new SelectSceneItem(CTexts.Make("{Add Test Skill}")));
-          resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{뒤로 가기, {Colors.txtMuted}}}")));
+          resultSSI.Add("{Test Inventory}");
+          resultSSI.Add("{Player Level Up}");
+          resultSSI.Add("{Battle with test monster}");
+          resultSSI.Add("{Add Test Skill}");
+          resultSSI.Add($"{{뒤로 가기, {Colors.txtMuted}}}");
           return resultSSI;
         }
       }
@@ -96,7 +95,15 @@ namespace Goguma.Game.Object.Entity.Player
 
     static private void UseFacility()
     {
-      throw new NotImplementedException();
+      if (!InGame.player.Loc.InTown) return;
+      var town = (Town)Maps.GetMapByName(InGame.player.Loc.Loc);
+      var ssi = new SelectSceneItems();
+
+      foreach (var f in town.Facilities)
+        ssi.Add($"{{{f.Name} - {f.Fee}원 필요}}");
+
+      var select = new SelectScene(CTexts.Make("{무엇을 하시겠습니까}"), ssi);
+      town.Facilities[select.getIndex].OnUse();
     }
 
     static private void StartRoadPvE()

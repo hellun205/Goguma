@@ -91,7 +91,7 @@ namespace Goguma.Game.Object.Battle
         var skills = from sk in player.Skills
                      where sk.Type == SkillType.AttackSkill
                      select sk;
-        var skill = skills.ToList<ISkill>()[skSc.getIndex - 1];
+        var skill = skills.ToList<ISkill>()[skSc.getIndex];
         return UseAttackSkill((IAttackSkill)skill);
       };
       Func<bool> UseSkill = () =>
@@ -101,7 +101,7 @@ namespace Goguma.Game.Object.Battle
         var skills = from sk in player.Skills
                      where sk.Type == BattleScene.PvE.Player.SelSkill.skType
                      select sk;
-        var skill = skills.ToList<ISkill>()[skSc.getIndex - 1];
+        var skill = skills.ToList<ISkill>()[skSc.getIndex];
         switch (skill.Type)
         {
           case SkillType.AttackSkill:

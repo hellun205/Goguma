@@ -37,7 +37,7 @@ namespace Goguma.Game.Console
           for (int i = 1; i <= answerItems.Items.Count; i++)
             if (readInt == i && answerItems.Items[readInt - 1].Enabled)
             {
-              getIndex = readInt;
+              getIndex = readInt - 1;
               getString = answerItems.Items[readInt - 1].Texts.ToString();
               return;
             }
