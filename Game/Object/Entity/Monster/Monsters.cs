@@ -32,16 +32,11 @@ namespace Goguma.Game.Object.Entity.Monster
               new DroppingItem(Items.Get(ItemList.TestItem2), 30)
             })
           };
-          resultMonster.AttSystem = new AttackSyss()
-          {
-            Items = new List<AttackSys>()
-            {
-              new AttackSys(Skills.GetMonsterSkill(MSkillList.TestMonster_TestPunch), new AttCondition(resultMonster.Hp, ">=", 70)),
-              new AttackSys(Skills.GetMonsterSkill(MSkillList.TestMonster_TestFireBall), new AttCondition(resultMonster.Hp, ">=", 70)),
-              new AttackSys(Skills.GetMonsterSkill(MSkillList.TestMonster_TestAttackSkill), new AttCondition(resultMonster.Hp, ">=", 70)),
-              new AttackSys(Skills.GetMonsterSkill(MSkillList.TestMonster_DefensivePosture), new AttCondition(resultMonster.Hp, "<=", 30))
-            }
-          };
+          resultMonster.AttSystem.Add(Skills.GetMonsterSkill(MSkillList.TestMonster_TestPunch), new AttCondition(Cond.MonsterHpPer, ">=", 0.7));
+          resultMonster.AttSystem.Add(Skills.GetMonsterSkill(MSkillList.TestMonster_TestFireBall), new AttCondition(Cond.PlayerHpPer, "<=", 0.3));
+          resultMonster.AttSystem.Add(Skills.GetMonsterSkill(MSkillList.TestMonster_TestAttackSkill), new AttCondition(Cond.MonsterHpPer, ">=", 0.7));
+          resultMonster.AttSystem.Add(Skills.GetMonsterSkill(MSkillList.TestMonster_DefensivePosture), new AttCondition(Cond.MonsterHpPer, "<=", 0.4));
+
           return resultMonster;
         default:
           return null;

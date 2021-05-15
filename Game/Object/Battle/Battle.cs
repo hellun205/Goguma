@@ -12,8 +12,9 @@ namespace Goguma.Game.Object.Battle
 {
   class Battle
   {
-    static public void PvE(IPlayer player, IMonster monster)
+    static public void PvE(IMonster monster)
     {
+      var player = InGame.player;
       while (true)
       {
         var scene = BattleScene.PvE.Meet(player, monster);
@@ -26,7 +27,7 @@ namespace Goguma.Game.Object.Battle
             monster.PrintAbout();
             break;
           case "싸우기":
-            PvEStart(player, monster);
+            PvEStart(monster);
             return;
           case "도망 가기":
             BattleScene.PvE.Player.Run();
@@ -34,8 +35,9 @@ namespace Goguma.Game.Object.Battle
         }
       }
     }
-    static private void PvEStart(IPlayer player, IMonster monster)
+    static private void PvEStart(IMonster monster)
     {
+      var player = InGame.player;
       var first = true;
       var turn = 0;
       var buffs = player.Buffs;
@@ -151,7 +153,7 @@ namespace Goguma.Game.Object.Battle
           IEnumerable<IBuffSkill> endBuffs;
           if (!all)
             endBuffs = from bf in monster.Buffs
-                       where (bf.buff.turn + buffTurns[monster.Buffs.IndexOf(bf)]) == turn
+                       where (bf.buff.turn + mBuffTurns[monster.Buffs.IndexOf(bf)]) == turn
                        select bf;
           else
             endBuffs = from bf in monster.Buffs
@@ -197,7 +199,8 @@ namespace Goguma.Game.Object.Battle
 
         while (true)
         {
-          skill = monster.AttSystem.Get();
+          List<ISkill> sList;
+          skill = monster.AttSystem.Get(out sList);
           if (skill != null)
           {
             switch (skill.Type)
@@ -207,7 +210,7 @@ namespace Goguma.Game.Object.Battle
                 break;
               case SkillType.BuffSkill:
                 if (BuffSkill()) return;
-                else if (monster.AttSystem.Items.Count == 1)
+                else if (sList.Count == 1)
                 {
                   GeneralAttack();
                   return;
