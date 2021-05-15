@@ -93,7 +93,7 @@ namespace Goguma.Game.Object.Entity.Player
               break;
             case "Battle with test monster":
               var testMonster = Monsters.Get(MonsterList.TestMonster);
-              Battle.Battle.PvE(player, testMonster);
+              Battle.Battle.PvE(testMonster);
               break;
             case "Add Test Skill":
               player.Skills.Add(Skills.GetPlayerSkill(SkillList.TestSkill1));

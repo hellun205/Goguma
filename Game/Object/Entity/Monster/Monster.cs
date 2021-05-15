@@ -62,7 +62,7 @@ namespace Goguma.Game.Object.Entity.Monster
     {
       Skills = new List<Skill.Skill>();
       DroppingItems = new DroppingItems();
-      AttSystem = new AttackSyss();
+      AttSystem = new AttackSyss(InGame.player, this);
       Buffs = new List<IBuffSkill>();
     }
     public void PrintAbout(IPlayer player = null)

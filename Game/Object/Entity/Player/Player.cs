@@ -13,7 +13,7 @@ using static Goguma.Game.Console.ConsoleFunction;
 namespace Goguma.Game.Object.Entity.Player
 {
   [Serializable]
-  class Player : IPlayer
+  public class Player : IPlayer
   {
     public string Name { get; set; }
     public Inventory.Inventory Inventory { get; set; }
