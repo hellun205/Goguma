@@ -32,12 +32,13 @@ namespace Goguma.Game.Object.Entity.AttSys
       Condition[Condition.Count - 1].player = mPlayer;
       Condition[Condition.Count - 1].monster = mMonster;
     }
-    public ISkill Get()
+    public ISkill Get(out List<ISkill> slist)
     {
       var skills = from it in Condition
                    where it.Get()
                    select Skill[Condition.IndexOf(it)];
       var sList = skills.ToList<ISkill>();
+      slist = sList;
       if (sList.Count == 0) return null;
       else return sList[new Random().Next(0, sList.Count)];
     }

@@ -199,7 +199,8 @@ namespace Goguma.Game.Object.Battle
 
         while (true)
         {
-          skill = monster.AttSystem.Get();
+          List<ISkill> sList;
+          skill = monster.AttSystem.Get(out sList);
           if (skill != null)
           {
             switch (skill.Type)
@@ -209,7 +210,7 @@ namespace Goguma.Game.Object.Battle
                 break;
               case SkillType.BuffSkill:
                 if (BuffSkill()) return;
-                else if (monster.AttSystem.Skill.Count == 1)
+                else if (sList.Count == 1)
                 {
                   GeneralAttack();
                   return;

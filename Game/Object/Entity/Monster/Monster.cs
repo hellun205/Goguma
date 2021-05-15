@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Colorify;
 using Gogu_Remaster.Game.Object.Inventory.Item;
@@ -24,13 +25,13 @@ namespace Goguma.Game.Object.Entity.Monster
     public int Level { get; set; }
     public double AttDmg
     {
-      get => attDmg + BuffsIncrease.AttDmg;
-      set => attDmg = value;
+      get => Math.Max(1, attDmg + BuffsIncrease.AttDmg);
+      set => attDmg = Math.Max(1, value);
     }
     public double DefPer
     {
-      get => defPer + BuffsIncrease.DefPer;
-      set => defPer = value;
+      get => Math.Max(0, defPer + BuffsIncrease.DefPer);
+      set => defPer = Math.Max(0, value);
     }
     public List<Skill.Skill> Skills { get; set; }
     public double GivingGold { get; set; }
@@ -68,11 +69,16 @@ namespace Goguma.Game.Object.Entity.Monster
     public void PrintAbout(IPlayer player = null)
     {
       PrintText($"\n{GetSep(40, $"{Name}")}");
-      if (player != null) PrintText(CTexts.Make($"{{\nLv. : }} {{{Level}\n, {ColorByLevel(player.Level, Level)}}}"));
-      else PrintText(CTexts.Make($"{{\nLv. : }} {{{Level}\n, {Colors.txtWarning}}}"));
+      PrintText("\n");
       PrintText(Descriptions);
       PrintText($"\n{GetSep(40)}");
-      PrintText(CTexts.Make($"{{\nHP : }} {{{Hp} / {MaxHp}, {ColorByHp(Hp, MaxHp)}}}"));
+      if (player != null) PrintText(CTexts.Make($"{{\nLv. : }} {{{Level}, {ColorByLevel(player.Level, Level)}}}"));
+      else PrintText(CTexts.Make($"{{\nLv. : }} {{{Level}, {Colors.txtWarning}}}"));
+      PrintText(CTexts.Make($"{{\nHP : }} {{[{Hp} / {MaxHp}], {ColorByHp(Hp, MaxHp)}}}"));
+      PrintText(CTexts.Make($"{{\nATT : }} {{{AttDmg}, {Colors.txtWarning}}}"));
+      PrintText(CTexts.Make($"{{\nDEF : }} {{{DefPer} %, {Colors.txtWarning}}}"));
+      PrintText($"\n{GetSep(40)}");
+      Pause();
     }
 
     public Monster(Monster monster) : this()
