@@ -3,20 +3,21 @@ using Gogu_Remaster.Game.Object.Map.Road;
 
 namespace Gogu_Remaster.Game.Object.Map.Town
 {
-  public class TKks : Town
+  public class THellun : Town
   {
     public override string Name
     {
-      get => "KKS 마을";
+      get => "Hellun 마을";
     }
     public override string Desc
     {
-      get => "제작자 KKS를 기리기 위한 마을";
+      get => "제작자 Hellun을 기리기 위한 마을";
     }
 
-    internal TKks()
+    internal THellun()
     {
       base.AddFacility(Facility.Facilities.hospital);
+
       Adjacents = new List<MapList>()
       {
         MapList.KRoad

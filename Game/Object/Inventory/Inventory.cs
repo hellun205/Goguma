@@ -27,7 +27,7 @@ namespace Goguma.Game.Object.Inventory
         if (ss.getString == "뒤로 가기")
           return false;
         else
-          if (Print((InvenType)ss.getIndex - 1)) return true;
+          if (Print((InvenType)ss.getIndex)) return true;
       }
     }
     private bool Print(InvenType invenType)
@@ -42,7 +42,7 @@ namespace Goguma.Game.Object.Inventory
             if (ss.getString == "뒤로 가기")
               return false;
             else
-              return Select((WearingType)ss.getIndex - 1);
+              return Select((WearingType)ss.getIndex);
           }
         case InvenType.Having: // Select HavingType
           while (true)
@@ -52,7 +52,7 @@ namespace Goguma.Game.Object.Inventory
             if (ss.getString == "뒤로 가기")
               return false;
             else
-              return Print((HavingType)ss.getIndex - 1);
+              return Print((HavingType)ss.getIndex);
           }
         default:
           return false;
@@ -68,7 +68,7 @@ namespace Goguma.Game.Object.Inventory
         if (ss.getString == "뒤로 가기")
           return false;
         else
-          if (Select(hType, ss.getIndex - 1)) return true;
+          if (Select(hType, ss.getIndex)) return true;
       }
     }
 

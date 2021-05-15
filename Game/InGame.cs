@@ -25,8 +25,8 @@ namespace Goguma.Game
       if (player == null) return;
       while (true)
       {
-        var qt = PlayerAct.Scene.SelPlayerAct.GetQText(player.Map);
-        var ssi = PlayerAct.Scene.SelPlayerAct.GetSSI(player.Map, true /*Admin*/);
+        var qt = PlayerAct.Scene.SelPlayerAct.GetQText(player.Loc);
+        var ssi = PlayerAct.Scene.SelPlayerAct.GetSSI(true /*Admin*/);
         var ss = new SelectScene(qt, ssi);
         PlayerAct.Act(player, ss.getString);
       }
