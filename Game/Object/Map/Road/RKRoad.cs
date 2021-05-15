@@ -23,10 +23,10 @@ namespace Gogu_Remaster.Game.Object.Map.Road
         new RoadMonster(MonsterList.TestMonster, 100)
       };
 
-      Adjacents = new List<IMap>()
+      Adjacents = new List<MapList>()
       {
-        Towns.kks,
-        Towns.hellun
+        MapList.KksTown,
+        MapList.HellunTown
       };
     }
   }

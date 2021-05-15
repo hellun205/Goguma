@@ -22,10 +22,14 @@ namespace Gogu_Remaster.Game.Object.Map
       var qt = $"{{이동 (현재 : {InGame.player.Loc.Loc})}}";
       var ssi = new SelectSceneItems();
 
-      ConsoleFunction.PrintText(Maps.GetMapByName(InGame.player.Loc.Loc).Adjacents[0].Name);
+      // ConsoleFunction.PrintText(Maps.GetMapByName(InGame.player.Loc.Loc).Adjacents[0].Name);
 
       foreach (var a in Maps.GetMapByName(InGame.player.Loc.Loc).Adjacents)
-        ssi.Add($"{{{a.Name}}}");
+      {
+        var map = Maps.GetMapByEnum(a);
+        ssi.Add($"{{{map.Name}}}");
+      }
+
 
       var ss = new SelectScene(CTexts.Make(qt), ssi);
       var to = Maps.GetMapByName(ss.getString);

@@ -7,6 +7,6 @@ namespace Gogu_Remaster.Game.Object.Map
     public string Name { get; }
     public string Desc { get; }
     public bool IsTown { get; }
-    public List<IMap> Adjacents { get; }
+    public List<MapList> Adjacents { get; }
   }
 }

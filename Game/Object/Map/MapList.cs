@@ -1,10 +1,9 @@
-using System;
-
-namespace Goguma.Game.Object.Map
+namespace Gogu_Remaster.Game.Object.Map
 {
-  [Obsolete]
   public enum MapList
   {
-    Not
+    KRoad,
+    HellunTown,
+    KksTown
   }
 }

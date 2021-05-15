@@ -5,7 +5,6 @@ using Gogu_Remaster.Game.Object.Map.Road;
 using Gogu_Remaster.Game.Object.Map.Town;
 using Goguma.Game.Console;
 using Goguma.Game.Object.Entity.Monster;
-using Goguma.Game.Object.Map;
 using Goguma.Game.Object.Skill;
 using static Goguma.Game.Console.ConsoleFunction;
 
@@ -17,12 +16,6 @@ namespace Goguma.Game.Object.Entity.Player
     {
       static public class SelPlayerAct
       {
-        [Obsolete]
-        static public CTexts GetQText(MapList map)
-        {
-          return CTexts.Make($"{{[ {Map.Map.GetText(map)} ] , {Colors.bgSuccess}}} {{이 곳에서 무슨 작업을 하시겠습니까?}}");
-        }
-
         static public CTexts GetQText(Location loc)
         {
           var map = Maps.GetMapByName(loc.Loc);

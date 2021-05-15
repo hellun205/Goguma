@@ -18,9 +18,9 @@ namespace Gogu_Remaster.Game.Object.Map.Town
     {
       base.AddFacility(Facility.Facilities.hospital);
 
-      Adjacents = new List<IMap>()
+      Adjacents = new List<MapList>()
       {
-        Roads.kRoad
+        MapList.KRoad
       };
     }
   }

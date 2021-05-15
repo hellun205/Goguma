@@ -5,7 +5,6 @@ using Colorify;
 using Gogu_Remaster.Game.Object.Map;
 using Goguma.Game.Console;
 using Goguma.Game.Object.Inventory;
-using Goguma.Game.Object.Map;
 using Goguma.Game.Object.Skill;
 using static Goguma.Game.Console.ConsoleFunction;
 using Gogu_Remaster.Game.Object.Map.Town;
@@ -17,8 +16,6 @@ namespace Goguma.Game.Object.Entity.Player
   {
     public string Name { get; set; }
     public Inventory.Inventory Inventory { get; set; }
-    [Obsolete]
-    public MapList Map { get; set; }
     public Location Loc { get; set; }
     public double Hp
     {

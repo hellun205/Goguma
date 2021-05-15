@@ -12,5 +12,16 @@ namespace Gogu_Remaster.Game.Object.Map
       else if (name == Towns.hellun.Name) return Towns.hellun;
       else return null;
     }
+
+    public static IMap GetMapByEnum(MapList map)
+    {
+      switch (map)
+      {
+        case MapList.KksTown: return Towns.kks;
+        case MapList.HellunTown: return Towns.hellun;
+        case MapList.KRoad: return Roads.kRoad;
+        default: return null;
+      }
+    }
   }
 }

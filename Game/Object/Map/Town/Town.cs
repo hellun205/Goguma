@@ -12,7 +12,7 @@ namespace Gogu_Remaster.Game.Object.Map.Town
     {
       get => true;
     }
-    public List<IMap> Adjacents { get; protected set; }
+    public List<MapList> Adjacents { get; protected set; }
 
     public List<IFacility> Facilities { get; }
 
