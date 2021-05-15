@@ -9,6 +9,7 @@ using Goguma.Game.Object.Map;
 using Goguma.Game.Object.Skill;
 using static Goguma.Game.Console.StringFunction;
 using static Goguma.Game.Console.ConsoleFunction;
+using Gogu_Remaster.Game.Object.Map.Town;
 
 namespace Goguma.Game.Object.Entity.Player
 {
@@ -17,6 +18,7 @@ namespace Goguma.Game.Object.Entity.Player
   {
     public string Name { get; set; }
     public Inventory.Inventory Inventory { get; set; }
+    [Obsolete]
     public MapList Map { get; set; }
     public Location Loc { get; }
     public double Hp
@@ -168,14 +170,7 @@ namespace Goguma.Game.Object.Entity.Player
       Inventory = new Inventory.Inventory(this);
       Skills = new List<ISkill>();
       Buffs = new List<IBuffSkill>();
-    }
-
-    public Player(string name)
-    {
-      Name = name;
-      Inventory = new Inventory.Inventory(this);
-      Skills = new List<ISkill>();
-      Buffs = new List<IBuffSkill>();
+      Loc = new Location(Towns.kks.Name, true);
       MaxHp = 50;
       MaxEp = 30;
       Hp = MaxHp;
@@ -189,6 +184,16 @@ namespace Goguma.Game.Object.Entity.Player
       IncreaseAttDmg = 2;
       IncreaseMaxHp = 10;
       IncreaseMaxEp = 5;
+
+    }
+
+    public Player(string name) : this()
+    {
+      Name = name;
+      // Inventory = new Inventory.Inventory(this);
+      // Skills = new List<ISkill>();
+      // Buffs = new List<IBuffSkill>();
+
     }
 
     public void Heal(double heal)

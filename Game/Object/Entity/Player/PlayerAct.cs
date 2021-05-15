@@ -1,11 +1,10 @@
-using System.Globalization;
-using System.Threading;
+using System;
 using Colorify;
+using Gogu_Remaster.Game.Object.Map;
+using Gogu_Remaster.Game.Object.Map.Road;
+using Gogu_Remaster.Game.Object.Map.Town;
 using Goguma.Game.Console;
-using Goguma.Game.Object.Battle;
 using Goguma.Game.Object.Entity.Monster;
-using Goguma.Game.Object.Inventory;
-using Goguma.Game.Object.Inventory.Item;
 using Goguma.Game.Object.Map;
 using Goguma.Game.Object.Skill;
 using static Goguma.Game.Console.ConsoleFunction;
@@ -18,22 +17,36 @@ namespace Goguma.Game.Object.Entity.Player
     {
       static public class SelPlayerAct
       {
+        [Obsolete]
         static public CTexts GetQText(MapList map)
         {
           return CTexts.Make($"{{[ {Map.Map.GetText(map)} ] , {Colors.bgSuccess}}} {{이 곳에서 무슨 작업을 하시겠습니까?}}");
         }
-        static public SelectSceneItems GetSSI(MapList map, bool isAdmin = false)
+
+        static public CTexts GetQText(Location loc)
+        {
+          IMap map;
+          string colors;
+          if (loc.InTown)
+          {
+            map = Towns.GetTownByName(loc.Loc);
+            colors = Colors.txtSuccess;
+          }
+          else
+          {
+            map = Roads.GetRoadByName(loc.Loc);
+            colors = Colors.txtDanger;
+          }
+          return CTexts.Make($"{{[ {map.Name} ] , {colors}}} {{무엇을 하시겠습니까?}}");
+        }
+
+        static public SelectSceneItems GetSSI(bool isAdmin = false)
         {
           var resultSSI = new SelectSceneItems();
 
           resultSSI.Items.Add(new SelectSceneItem(CTexts.Make("{캐릭터 정보 보기}")));
           resultSSI.Items.Add(new SelectSceneItem(CTexts.Make("{인벤토리 열기}")));
-          switch (map)
-          {
-            case MapList.Not:
-              // resultSSI.Items.Add(new SelectSceneItem(CTexts.Make("{}")));
-              break;
-          }
+
           if (isAdmin)
             resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{A,{Colors.txtWarning}}} {{D,{Colors.txtDanger}}} {{M,{Colors.txtSuccess}}} {{I,{Colors.txtInfo}}} {{N,{Colors.txtPrimary}}}")));
           resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{게임 종료, {Colors.txtMuted}}}")));
