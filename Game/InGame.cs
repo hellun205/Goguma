@@ -13,12 +13,16 @@ namespace Goguma.Game
     public static Player player;
     public static void Go()
     {
-      SetPlayerDataScene();
-      PlayerActScene(player);
+      while (true)
+      {
+        SetPlayerDataScene();
+        PlayerActScene();
+      }
     }
 
-    static public void PlayerActScene(Player player)
+    static public void PlayerActScene()
     {
+      if (player == null) return;
       while (true)
       {
         var qt = PlayerAct.Scene.SelPlayerAct.GetQText(player.Map);
