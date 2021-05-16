@@ -1,8 +1,10 @@
 using System;
 using Colorify;
 using Gogu_Remaster.Game.Object.Map;
+using Gogu_Remaster.Game.Object.Map.Road;
 using Gogu_Remaster.Game.Object.Map.Town;
 using Goguma.Game.Console;
+using Goguma.Game.Object.Battle;
 using Goguma.Game.Object.Entity.Monster;
 using Goguma.Game.Object.Skill;
 using static Goguma.Game.Console.ConsoleFunction;
@@ -108,7 +110,12 @@ namespace Goguma.Game.Object.Entity.Player
 
     static private void StartRoadPvE()
     {
-      throw new NotImplementedException();
+      if (InGame.player.Loc.InTown) return;
+
+      var road = (Road)Maps.GetMapByName(InGame.player.Loc.Loc);
+      var monster = road.SummonMonster();
+
+      Battle.Battle.PvE(monster);
     }
 
     static private void AdminOption(Player player, bool isAdmin = false)
