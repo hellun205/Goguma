@@ -134,6 +134,7 @@ namespace Goguma.Game.Object.Entity.Player
 
       sb.Append("\n" + StringFunction.GetSep(30));
       PrintText(sb.ToString());
+      Pause();
     }
 
     static private void UseFacility()
@@ -144,8 +145,10 @@ namespace Goguma.Game.Object.Entity.Player
 
       foreach (var f in town.Facilities)
         ssi.Add($"{{{f.Name} - {f.Fee}원 필요}}");
+      ssi.Add($"{{뒤로 가기, {Colors.txtMuted}}}");
 
       var select = new SelectScene(CTexts.Make("{무엇을 하시겠습니까}"), ssi);
+      if (select.getString == "뒤로 가기") return;
       town.Facilities[select.getIndex].OnUse();
     }
 
