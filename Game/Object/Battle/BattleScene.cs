@@ -180,7 +180,7 @@ namespace Goguma.Game.Object.Battle
             };
             var skillTypeSc = new SelectScene(GetQText(), GetSSI());
             if (skillTypeSc.getString == "뒤로 가기") return null;
-            skType = (SkillType)(skillTypeSc.getIndex - 1);
+            skType = (SkillType)(skillTypeSc.getIndex);
             var skills = from sk in player.Skills
                          where sk.Type == skType
                          select sk;

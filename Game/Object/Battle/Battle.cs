@@ -93,7 +93,7 @@ namespace Goguma.Game.Object.Battle
         var skills = from sk in player.Skills
                      where sk.Type == SkillType.AttackSkill
                      select sk;
-        var skill = skills.ToList<ISkill>()[skSc.getIndex - 1];
+        var skill = skills.ToList<ISkill>()[skSc.getIndex];
         return UseAttackSkill((IAttackSkill)skill);
       };
       Func<bool> UseSkill = () =>
@@ -103,7 +103,7 @@ namespace Goguma.Game.Object.Battle
         var skills = from sk in player.Skills
                      where sk.Type == BattleScene.PvE.Player.SelSkill.skType
                      select sk;
-        var skill = skills.ToList<ISkill>()[skSc.getIndex - 1];
+        var skill = skills.ToList<ISkill>()[skSc.getIndex];
         switch (skill.Type)
         {
           case SkillType.AttackSkill:
@@ -137,15 +137,8 @@ namespace Goguma.Game.Object.Battle
         double damage = DamageByLevel(player.AttDmg, player.Level, monster.Level) * (1 - (monster.DefPer / 100));
         BattleScene.PvE.Player.GeneralAttack(player, monster, damage);
 
-        if (monster.Hp - damage <= 0)
-        {
-          monster.Hp = 0;
-          Kill();
-        }
-        else
-        {
-          monster.Hp -= damage;
-        }
+        monster.Hp = Math.Max(0, monster.Hp - damage);
+
         return true;
       };
       Action<bool> MEndBuff = (bool all) =>

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Gogu_Remaster.Game.Object.Map
 {
   public interface IMap
@@ -5,5 +7,6 @@ namespace Gogu_Remaster.Game.Object.Map
     public string Name { get; }
     public string Desc { get; }
     public bool IsTown { get; }
+    public List<MapList> Adjacents { get; }
   }
 }

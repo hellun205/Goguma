@@ -12,10 +12,11 @@ namespace Goguma.Game.Object.Entity.Monster
   {
     static public IMonster Get(MonsterList monster)
     {
+      var resultMonster = new Monster();
       switch (monster)
       {
         case MonsterList.TestMonster:
-          var resultMonster = new Monster()
+          resultMonster = new Monster()
           {
             Name = "강력한 테스트용 몬스터",
             Descriptions = CTexts.Make("{테스트용으로 사용되는 몬스터이다.}"),
@@ -28,14 +29,35 @@ namespace Goguma.Game.Object.Entity.Monster
             GivingGold = 120 + new Random().Next(0, 100),
             DroppingItems = new DroppingItems(new List<DroppingItem>()
             {
-              new DroppingItem(Items.Get(ItemList.TestItem1), 70),
-              new DroppingItem(Items.Get(ItemList.TestItem2), 30)
+              new DroppingItem(Items.Get(ItemList.TEST_ITEM1), 70),
+              new DroppingItem(Items.Get(ItemList.TEST_ITEM2), 30)
             })
           };
           resultMonster.AttSystem.Add(Skills.GetMonsterSkill(MSkillList.TestMonster_TestPunch), new AttCondition(Cond.MonsterHpPer, ">=", 0.7));
           resultMonster.AttSystem.Add(Skills.GetMonsterSkill(MSkillList.TestMonster_TestFireBall), new AttCondition(Cond.PlayerHpPer, "<=", 0.3));
           resultMonster.AttSystem.Add(Skills.GetMonsterSkill(MSkillList.TestMonster_TestAttackSkill), new AttCondition(Cond.MonsterHpPer, ">=", 0.7));
           resultMonster.AttSystem.Add(Skills.GetMonsterSkill(MSkillList.TestMonster_DefensivePosture), new AttCondition(Cond.MonsterHpPer, "<=", 0.4));
+
+          return resultMonster;
+        case MonsterList.Slime:
+          resultMonster = new Monster()
+          {
+            Name = "슬라임",
+            Descriptions = CTexts.Make("{끈적끈적하니 기분이 더럽다.}"),
+            Level = 2,
+            MaxHp = 5,
+            Hp = 5,
+            AttDmg = 2,
+            DefPer = 0,
+            GivingExp = 7.5,
+            GivingGold = 10 + new Random().Next(0, 10),
+            DroppingItems = new DroppingItems(new List<DroppingItem>()
+            {
+              new DroppingItem(Items.Get(ItemList.STICKY_LIQUID), 80),
+            })
+          };
+          resultMonster.AttSystem.Add(Skills.GetMonsterSkill(MSkillList.SLIME_STICKY_ATTACK), new AttCondition(Cond.MonsterHpPer, ">=", 0.7));
+          resultMonster.AttSystem.Add(Skills.GetMonsterSkill(MSkillList.SLIME_SPOUT_STICKY_LIQUID), new AttCondition(Cond.PlayerHpPer, "<=", 0.5));
 
           return resultMonster;
         default:

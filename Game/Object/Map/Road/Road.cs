@@ -12,6 +12,7 @@ namespace Gogu_Remaster.Game.Object.Map.Road
     {
       get => false;
     }
+    public List<MapList> Adjacents { get; protected set; }
 
     public struct RoadMonster
     {

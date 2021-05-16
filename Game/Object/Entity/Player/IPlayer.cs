@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Gogu_Remaster.Game.Object.Map;
-using Goguma.Game.Object.Entity.Monster;
-using Goguma.Game.Object.Map;
 using Goguma.Game.Object.Skill;
 
 namespace Goguma.Game.Object.Entity.Player
@@ -11,7 +10,6 @@ namespace Goguma.Game.Object.Entity.Player
     string Name { get; set; }
 
     Inventory.Inventory Inventory { get; set; }
-    MapList Map { get; set; }
     Location Loc { get; }
     double Hp { get; set; }
     double Ep { get; set; }

@@ -5,7 +5,8 @@ namespace Goguma.Game.Object.Inventory.Item
   [Serializable]
   enum ItemList
   {
-    TestItem1,
-    TestItem2
+    TEST_ITEM1,
+    TEST_ITEM2,
+    STICKY_LIQUID
   }
 }

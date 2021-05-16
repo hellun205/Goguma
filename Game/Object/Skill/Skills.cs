@@ -104,6 +104,26 @@ namespace Goguma.Game.Object.Skill
             }
           };
           break;
+        case MSkillList.SLIME_STICKY_ATTACK:
+          resultSkill = new AttackSkill()
+          {
+            Name = "끈적끈적 공격",
+            Text = CTexts.Make("{(폴짝폴짝)}"),
+            Type = SkillType.AttackSkill,
+            Damage = 2,
+            IgnoreDef = 0
+          };
+          break;
+        case MSkillList.SLIME_SPOUT_STICKY_LIQUID:
+          resultSkill = new AttackSkill()
+          {
+            Name = "끈적 액체 내뿜기",
+            Text = CTexts.Make("{(쮸르륵쭈욱..)}"),
+            Type = SkillType.AttackSkill,
+            Damage = 2.7,
+            IgnoreDef = 0.3
+          };
+          break;
         default:
           return null;
       }
