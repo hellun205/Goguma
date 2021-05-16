@@ -101,7 +101,7 @@ namespace Goguma.Game.Object.Battle
               return CTexts.Make($"{{\n\n「{monster.Name} [Lv. {monster.Level}]」,{ColorByLevel(player.Level, monster.Level)}}} {{{rText} }} {{{damage},{Colors.txtDanger}}} {{의 피해를 입혔습니다.\n    남은 체력: }} {{[ {(int)(monster.Hp - damage)} / {monster.MaxHp} ]\n, {ColorByHp(monster.Hp - damage, monster.MaxHp)}}}");
           };
           PrintText(GetText(new Random().Next(0, 3)));
-          Pause();
+          // Pause();
         }
         static public void SkillAttack(IPlayer player, IMonster monster, IAttackSkill aSkill, double damage)
         {
@@ -153,14 +153,13 @@ namespace Goguma.Game.Object.Battle
         static public void Kill(IMonster monster)
         {
           PrintText(CTexts.Make($"{{\n\n  {monster.GivingGold} G,{Colors.txtWarning}}}{{를 획득했습니다.\n}}"));
-          Pause();
           PrintText(CTexts.Make($"{{\n\n  {monster.GivingExp} Exp,{Colors.txtSuccess}}}{{를 획득했습니다.\n}}"));
           Pause();
           foreach (var item in monster.DroppingItems.Drop())
           {
             PrintText(CTexts.Make($"{{\n\n  {InvenInfo.HavingInven.GetTypeString(item.Type)} 아이템 ,{Colors.txtWarning}}}{{{item.Name},{Colors.txtSuccess}}}{{(을)를 획득했습니다.\n}}"));
           }
-          Pause();
+          // Pause();
         }
         static public class SelSkill
         {
@@ -223,7 +222,7 @@ namespace Goguma.Game.Object.Battle
               return CTexts.Make($"{{\n\n「{monster.Name} [Lv. {monster.Level}]」,{ColorByLevel(player.Level, monster.Level)}}} {{(이)가 }} {{당신,{Colors.txtInfo}}} {{에게 }} {{{damage},{Colors.txtDanger}}} {{의 피해를 입혔습니다.\n    남은 체력: }} {{[ {(int)(player.Hp - damage)} / {player.MaxHp} ]\n, {ColorByHp(player.Hp - damage, player.MaxHp)}}}");
           };
           PrintText(GetText());
-          Pause();
+          // Pause();
         }
         static public void SkillAttack(IMonster monster, IPlayer player, IAttackSkill aSkill, double damage)
         {
@@ -242,7 +241,7 @@ namespace Goguma.Game.Object.Battle
           PrintText("\n");
           Pause();
           PrintText(Text());
-          Pause();
+          // Pause();
         }
         static public void BuffSkill(IMonster monster, IPlayer player, IBuffSkill bSkill)
         {
@@ -251,7 +250,7 @@ namespace Goguma.Game.Object.Battle
           PrintText(CTexts.Make($"{{\n\n  {monster.Name},{Colors.txtSuccess}}}{{ : }}"));
           PrintText(bSkill.Text);
           PrintText("\n");
-          Pause();
+          // Pause();
           // PrintBuffEffect();
           // Pause();
         }
