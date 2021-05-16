@@ -20,7 +20,7 @@ namespace Gogu_Remaster.Game.Object.Map.Road
     {
       SummonMonsters = new List<Road.RoadMonster>()
       {
-        new RoadMonster(MonsterList.TestMonster, 100)
+        new RoadMonster(MonsterList.Slime, 100)
       };
 
       Adjacents = new List<MapList>()

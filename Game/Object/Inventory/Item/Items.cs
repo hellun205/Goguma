@@ -9,7 +9,7 @@ namespace Goguma.Game.Object.Inventory.Item
       IItem resultItem;
       switch (item)
       {
-        case ItemList.TestItem1:
+        case ItemList.TEST_ITEM1:
           resultItem = new OtherItem()
           {
             Name = CTexts.Make("{테스트용 아이템 A}"),
@@ -17,7 +17,7 @@ namespace Goguma.Game.Object.Inventory.Item
             Type = HavingType.Other
           };
           return resultItem;
-        case ItemList.TestItem2:
+        case ItemList.TEST_ITEM2:
           resultItem = new EquipmentItem()
           {
             Name = CTexts.Make("{테스트용 모자 B}"),
@@ -29,6 +29,14 @@ namespace Goguma.Game.Object.Inventory.Item
               MaxHp = 20,
               DefPer = 0.2,
             }
+          };
+          return resultItem;
+        case ItemList.STICKY_LIQUID:
+          resultItem = new OtherItem()
+          {
+            Name = CTexts.Make("{끈적끈적한 액체}"),
+            Descriptions = CTexts.Make("{만지기 싫은 아이템이다. 주로 슬라임을 잡으면 드랍한다.}"),
+            Type = HavingType.Other
           };
           return resultItem;
         default:

@@ -137,15 +137,8 @@ namespace Goguma.Game.Object.Battle
         double damage = DamageByLevel(player.AttDmg, player.Level, monster.Level) * (1 - (monster.DefPer / 100));
         BattleScene.PvE.Player.GeneralAttack(player, monster, damage);
 
-        if (monster.Hp - damage <= 0)
-        {
-          monster.Hp = 0;
-          Kill();
-        }
-        else
-        {
-          monster.Hp -= damage;
-        }
+        monster.Hp = Math.Max(0, monster.Hp - damage);
+
         return true;
       };
       Action<bool> MEndBuff = (bool all) =>
