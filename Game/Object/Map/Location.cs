@@ -1,4 +1,5 @@
 using System;
+using Colorify;
 using Goguma.Game;
 using Goguma.Game.Console;
 
@@ -29,9 +30,11 @@ namespace Gogu_Remaster.Game.Object.Map
         var map = Maps.GetMapByEnum(a);
         ssi.Add($"{{{map.Name}}}");
       }
-
+      ssi.Add($"{{뒤로 가기, {Colors.txtMuted}}}");
 
       var ss = new SelectScene(CTexts.Make(qt), ssi);
+      if (ss.getString == "뒤로 가기") return;
+
       var to = Maps.GetMapByName(ss.getString);
 
       InGame.player.Loc = new Location(to.Name, to.IsTown);
