@@ -55,6 +55,8 @@ namespace Goguma.Game.Object.Inventory.Item
           return Trash();
         case "착용": //Equipment Item
           return EquipItem();
+        case "착용 해제":
+          return UnEquipItem();
         case "사용": //Consume Item
           return ConsumeItemUse();
         default:
@@ -208,6 +210,25 @@ namespace Goguma.Game.Object.Inventory.Item
         else return false;
       }
     }
+    private bool UnEquipItem()
+    {
+      var sItem = (EquipmentItem)SelectedItem;
+      var hType = sItem.Type;
+      var em = MyInventory.Items.wearing;
+      // sItem.DescriptionItemAP(MyInventory.Player);
+
+      if (ReadYesOrNoScean(CTexts.Make($"{{{sItem.Name.ToString()}, {Colors.txtInfo}}} {{의 착용을 해제 하시겠습니까?}}")))
+      {
+        PrintText(sItem.Name);
+        PrintText("의 착용을 해제 하였습니다.");
+        Lose();
+        MyInventory.GetItem(sItem);
+        Pause();
+        return true;
+      }
+      else return false;
+    }
   }
 }
+
 
