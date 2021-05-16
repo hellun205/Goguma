@@ -1,5 +1,8 @@
+using System;
+
 namespace Goguma.Game.Object.Skill
 {
+  [Serializable]
   public struct Buff
   {
     public int turn { get; set; }
