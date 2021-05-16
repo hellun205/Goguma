@@ -20,7 +20,7 @@ namespace Gogu_Remaster.Game.Object.Map.Town
 
       Adjacents = new List<MapList>()
       {
-        MapList.KRoad
+        MapList.K_ROAD
       };
     }
   }
