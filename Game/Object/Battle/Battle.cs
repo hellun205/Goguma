@@ -46,10 +46,11 @@ namespace Goguma.Game.Object.Battle
 
       Action Kill = () =>
       {
-        BattleScene.PvE.Player.Kill(monster);
+        var drop = monster.DroppingItems.Drop();
+        BattleScene.PvE.Player.Kill(monster, drop);
         player.Gold += GoldByLevel(monster.GivingGold, player.Level, monster.Level);
         player.Exp += ExpByLevel(monster.GivingExp, player.Level, monster.Level);
-        foreach (var item in monster.DroppingItems.Drop())
+        foreach (var item in drop)
           player.Inventory.GetItem(item);
       };
       Func<IAttackSkill, bool> UseAttackSkill = (IAttackSkill skill) =>
