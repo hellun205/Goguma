@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 using Colorify;
 using Gogu_Remaster.Game.Object.Map;
 using Gogu_Remaster.Game.Object.Map.Road;
@@ -37,6 +38,7 @@ namespace Goguma.Game.Object.Entity.Player
           resultSSI.Add("{캐릭터 정보 보기}");
           resultSSI.Add("{인벤토리 열기}");
           resultSSI.Add("{이동하기}");
+          resultSSI.Add($"{{{InGame.player.Loc.Loc} 살펴보기}}");
 
           if (InGame.player.Loc.InTown)
             resultSSI.Add(new SelectSceneItem(CTexts.Make("{시설 이용하기}")));
@@ -92,7 +94,46 @@ namespace Goguma.Game.Object.Entity.Player
         case "게임 종료":
           InGame.ExitGame();
           break;
+        default:
+          if (actText.StartsWith(InGame.player.Loc.Loc))
+            InsepctLoc();
+          break;
       }
+    }
+
+    static private void InsepctLoc()
+    {
+      var sb = new StringBuilder();
+      sb.Append(StringFunction.GetSep(30, InGame.player.Loc.Loc));
+
+
+      if (InGame.player.Loc.InTown)
+      {
+        sb.Append("\n\n편의 시설");
+
+        var town = (Town)Maps.GetMapByName(InGame.player.Loc.Loc);
+
+        if (town.Facilities.Count < 1)
+          sb.Append("\n없음");
+        else
+          foreach (var f in town.Facilities)
+            sb.Append($"\n{f.Name}");
+      }
+      else
+      {
+        sb.Append("\n\n출현 몬스터");
+
+        var road = (Road)Maps.GetMapByName(InGame.player.Loc.Loc);
+
+        if (road.SummonMonsters.Count < 1)
+          sb.Append("\n없음");
+        else
+          foreach (var m in road.SummonMonsters)
+            sb.Append($"\n{Monsters.Get(m.Monster).Name}");
+      }
+
+      sb.Append("\n" + StringFunction.GetSep(30));
+      PrintText(sb.ToString());
     }
 
     static private void UseFacility()
