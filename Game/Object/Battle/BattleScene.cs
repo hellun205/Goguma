@@ -153,7 +153,6 @@ namespace Goguma.Game.Object.Battle
         static public void Kill(IMonster monster)
         {
           PrintText(CTexts.Make($"{{\n\n  {monster.GivingGold} G,{Colors.txtWarning}}}{{를 획득했습니다.\n}}"));
-          Pause();
           PrintText(CTexts.Make($"{{\n\n  {monster.GivingExp} Exp,{Colors.txtSuccess}}}{{를 획득했습니다.\n}}"));
           Pause();
           foreach (var item in monster.DroppingItems.Drop())
