@@ -178,7 +178,7 @@ namespace Goguma.Game.Object.Entity.Player
               player.Exp += player.RequiredForLevelUp();
               break;
             case "Battle with test monster":
-              var testMonster = Monsters.Get(MonsterList.TestMonster);
+              var testMonster = Monsters.Get(MonsterList.TEST_MONSTER);
               Battle.Battle.PvE(testMonster);
               break;
             case "Add Test Skill":

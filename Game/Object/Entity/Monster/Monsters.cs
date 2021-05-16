@@ -15,7 +15,7 @@ namespace Goguma.Game.Object.Entity.Monster
       var resultMonster = new Monster();
       switch (monster)
       {
-        case MonsterList.TestMonster:
+        case MonsterList.TEST_MONSTER:
           resultMonster = new Monster()
           {
             Name = "강력한 테스트용 몬스터",
@@ -39,7 +39,7 @@ namespace Goguma.Game.Object.Entity.Monster
           resultMonster.AttSystem.Add(Skills.GetMonsterSkill(MSkillList.TestMonster_DefensivePosture), new AttCondition(Cond.MonsterHpPer, "<=", 0.4));
 
           return resultMonster;
-        case MonsterList.Slime:
+        case MonsterList.SLIME:
           resultMonster = new Monster()
           {
             Name = "슬라임",
@@ -48,7 +48,7 @@ namespace Goguma.Game.Object.Entity.Monster
             MaxHp = 5,
             Hp = 5,
             AttDmg = 2,
-            DefPer = 0,
+            DefPer = 0.2,
             GivingExp = 7.5,
             GivingGold = 10 + new Random().Next(0, 10),
             DroppingItems = new DroppingItems(new List<DroppingItem>()
@@ -58,6 +58,26 @@ namespace Goguma.Game.Object.Entity.Monster
           };
           resultMonster.AttSystem.Add(Skills.GetMonsterSkill(MSkillList.SLIME_STICKY_ATTACK), new AttCondition(Cond.MonsterHpPer, ">=", 0.7));
           resultMonster.AttSystem.Add(Skills.GetMonsterSkill(MSkillList.SLIME_SPOUT_STICKY_LIQUID), new AttCondition(Cond.PlayerHpPer, "<=", 0.5));
+
+          return resultMonster;
+        case MonsterList.GOBLIN:
+          resultMonster = new Monster()
+          {
+            Name = "고블린",
+            Descriptions = CTexts.Make("{못생겼다.}"),
+            Level = 3,
+            MaxHp = 7,
+            Hp = 7,
+            AttDmg = 2.6,
+            DefPer = 0.3,
+            GivingExp = 8.4,
+            GivingGold = 17 + new Random().Next(0, 16),
+            DroppingItems = new DroppingItems(new List<DroppingItem>()
+            {
+              new DroppingItem(Items.Get(ItemList.GOBLINS_SWORD), 35),
+              new DroppingItem(Items.Get(ItemList.GOBLINS_ARMOR), 30)
+            })
+          };
 
           return resultMonster;
         default:

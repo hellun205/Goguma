@@ -7,6 +7,8 @@ namespace Goguma.Game.Object.Inventory.Item
   {
     TEST_ITEM1,
     TEST_ITEM2,
-    STICKY_LIQUID
+    STICKY_LIQUID,
+    GOBLINS_SWORD,
+    GOBLINS_ARMOR
   }
 }
