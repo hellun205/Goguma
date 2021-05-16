@@ -124,6 +124,42 @@ namespace Goguma.Game.Object.Skill
             IgnoreDef = 0.3
           };
           break;
+        case MSkillList.GOLD_GOBLIN_SWORD_SWING:
+          resultSkill = new AttackSkill()
+          {
+            Name = "검 휘두르기",
+            Text = CTexts.Make("{...}"),
+            Type = SkillType.AttackSkill,
+            Damage = 3.2,
+            IgnoreDef = 0.2
+          };
+          break;
+        case MSkillList.GOLD_GOBLIN_SWORD_STING:
+          resultSkill = new AttackSkill()
+          {
+            Name = "찌르기",
+            Text = CTexts.Make("{...}"),
+            Type = SkillType.AttackSkill,
+            Damage = 2.6,
+            IgnoreDef = 1.5
+          };
+          break;
+        case MSkillList.GOLD_GOBLIN_ANGER:
+          resultSkill = new BuffSkill()
+          {
+            Name = "분노",
+            Text = CTexts.Make("{..!}"),
+            Type = SkillType.BuffSkill,
+            buff = new Buff()
+            {
+              MaxHp = 0,
+              MaxEp = 0,
+              AttDmg = 6.6,
+              DefPer = -22.5,
+              turn = 3
+            }
+          };
+          break;
         default:
           return null;
       }

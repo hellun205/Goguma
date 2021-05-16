@@ -9,6 +9,12 @@ namespace Goguma.Game.Object.Inventory.Item
     TEST_ITEM2,
     STICKY_LIQUID,
     GOBLINS_SWORD,
-    GOBLINS_ARMOR
+    GOBLINS_ARMOR,
+    GOLD_GOBLIN_COIN,
+    GOLD_GOBLINS_SWORD,
+    DIAMOND,
+    RED_DIAMOND,
+    GOLD_INGOT,
+    EMERALD
   }
 }

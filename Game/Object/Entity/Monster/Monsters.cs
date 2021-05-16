@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Colorify;
 using Gogu_Remaster.Game.Object.Inventory.Item;
 using Goguma.Game.Console;
 using Goguma.Game.Object.Entity.AttSys;
@@ -78,6 +79,34 @@ namespace Goguma.Game.Object.Entity.Monster
               new DroppingItem(Items.Get(ItemList.GOBLINS_ARMOR), 30)
             })
           };
+
+          return resultMonster;
+        case MonsterList.GOLD_GOBLIN:
+          resultMonster = new Monster()
+          {
+            Name = "황금 고블린",
+            Descriptions = CTexts.Make($"{{와! 황금색 고블린이다. 죽이면 }}{{보물,{Colors.txtWarning}}}{{을 줄지도 모른다.}}"),
+            Level = 17,
+            MaxHp = 80,
+            Hp = 80,
+            AttDmg = 4.7,
+            DefPer = 2,
+            GivingExp = 26,
+            GivingGold = 1500 + new Random().Next(10, 750),
+            DroppingItems = new DroppingItems(new List<DroppingItem>()
+            {
+              new DroppingItem(Items.Get(ItemList.GOBLINS_ARMOR), 30),
+              new DroppingItem(Items.Get(ItemList.GOLD_GOBLINS_SWORD), 20),
+              new DroppingItem(Items.Get(ItemList.GOLD_GOBLIN_COIN), 10),
+              new DroppingItem(Items.Get(ItemList.DIAMOND), 6),
+              new DroppingItem(Items.Get(ItemList.RED_DIAMOND), 2),
+              new DroppingItem(Items.Get(ItemList.EMERALD), 9),
+              new DroppingItem(Items.Get(ItemList.GOLD_INGOT), 16)
+            })
+          };
+          resultMonster.AttSystem.Add(Skills.GetMonsterSkill(MSkillList.GOLD_GOBLIN_SWORD_SWING), new AttCondition(Cond.MonsterHpPer, ">=", 0.6));
+          resultMonster.AttSystem.Add(Skills.GetMonsterSkill(MSkillList.GOLD_GOBLIN_SWORD_STING), new AttCondition(Cond.MonsterHpPer, ">=", 0.6));
+          resultMonster.AttSystem.Add(Skills.GetMonsterSkill(MSkillList.GOLD_GOBLIN_ANGER), new AttCondition(Cond.MonsterHpPer, "<=", 0.5));
 
           return resultMonster;
         default:

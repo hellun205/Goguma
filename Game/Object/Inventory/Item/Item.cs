@@ -23,6 +23,8 @@ namespace Goguma.Game.Object.Inventory.Item
     public int MaxCount { get; set; }
     public HavingType Type { get; set; }
     public bool IsAir { get; set; }
+    public int SellPrice { get; set; }
+    public int BuyPrice { get; set; }
     public CTexts Descriptions { get; set; }
 
     public Item()
