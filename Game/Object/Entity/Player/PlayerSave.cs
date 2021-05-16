@@ -71,6 +71,7 @@ namespace Goguma.Game.Object.Entity.Player
           str.IndexOf("*") != -1 ||
           str.IndexOf("?") != -1 ||
           str.IndexOf("\"") != -1 ||
+          str.Length > 16 ||
           !reg.IsMatch(str)
         )
           return false;
