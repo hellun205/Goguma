@@ -1,5 +1,8 @@
+using System;
+
 namespace Goguma.Game.Object.Skill
 {
+  [Serializable]
   class AttackSkill : Skill, IAttackSkill
   {
     public double Damage { get; set; }
