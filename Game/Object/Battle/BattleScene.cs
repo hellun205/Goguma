@@ -9,6 +9,7 @@ using System.Linq;
 using static Goguma.Game.Console.ConsoleFunction;
 using static Goguma.Game.Console.StringFunction;
 using System.Collections.Generic;
+using Goguma.Game.Object.Inventory.Item;
 
 namespace Goguma.Game.Object.Battle
 {
@@ -150,12 +151,12 @@ namespace Goguma.Game.Object.Battle
           PrintText("\n");
           Pause();
         }
-        static public void Kill(IMonster monster)
+        static public void Kill(IMonster monster, List<IItem> dropItemList)
         {
           PrintText(CTexts.Make($"{{\n\n  {monster.GivingGold} G,{Colors.txtWarning}}}{{를 획득했습니다.\n}}"));
           PrintText(CTexts.Make($"{{\n\n  {monster.GivingExp} Exp,{Colors.txtSuccess}}}{{를 획득했습니다.\n}}"));
           Pause();
-          foreach (var item in monster.DroppingItems.Drop())
+          foreach (var item in dropItemList)
           {
             PrintText(CTexts.Make($"{{\n\n  {InvenInfo.HavingInven.GetTypeString(item.Type)} 아이템 ,{Colors.txtWarning}}}{{{item.Name},{Colors.txtSuccess}}}{{(을)를 획득했습니다.\n}}"));
           }
