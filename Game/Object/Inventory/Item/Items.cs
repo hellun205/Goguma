@@ -1,3 +1,4 @@
+using Colorify;
 using Goguma.Game.Console;
 
 namespace Goguma.Game.Object.Inventory.Item
@@ -37,6 +38,33 @@ namespace Goguma.Game.Object.Inventory.Item
             Name = CTexts.Make("{끈적끈적한 액체}"),
             Descriptions = CTexts.Make("{만지기 싫은 아이템이다. 주로 슬라임을 잡으면 드랍한다.}"),
             Type = HavingType.Other
+          };
+          return resultItem;
+        case ItemList.GOBLINS_SWORD:
+          resultItem = new EquipmentItem()
+          {
+            Name = CTexts.Make($"{{고블린,{Colors.txtInfo}}}{{의 검}}"),
+            Descriptions = CTexts.Make($"{{고블린,{Colors.txtInfo}}}{{들이 주로 사용하는 검이다.}}"),
+            Type = HavingType.Equipment,
+            EquipmentType = WearingType.Weapon,
+            Increase = new ItemIncrease()
+            {
+              AttDmg = 3
+            }
+          };
+          return resultItem;
+        case ItemList.GOBLINS_ARMOR:
+          resultItem = new EquipmentItem()
+          {
+            Name = CTexts.Make($"{{고블린,{Colors.txtInfo}}}{{의 갑옷}}"),
+            Descriptions = CTexts.Make($"{{고블린,{Colors.txtInfo}}}{{들이 주로 착용하는 갑옷이다.}}"),
+            Type = HavingType.Equipment,
+            EquipmentType = WearingType.Chestplate,
+            Increase = new ItemIncrease()
+            {
+              MaxHp = 5,
+              DefPer = 0.5
+            }
           };
           return resultItem;
         default:
