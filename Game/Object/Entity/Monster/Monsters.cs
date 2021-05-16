@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Colorify;
 using Gogu_Remaster.Game.Object.Inventory.Item;
 using Goguma.Game.Console;
 using Goguma.Game.Object.Entity.AttSys;
@@ -72,6 +73,26 @@ namespace Goguma.Game.Object.Entity.Monster
             DefPer = 0.3,
             GivingExp = 8.4,
             GivingGold = 17 + new Random().Next(0, 16),
+            DroppingItems = new DroppingItems(new List<DroppingItem>()
+            {
+              new DroppingItem(Items.Get(ItemList.GOBLINS_SWORD), 35),
+              new DroppingItem(Items.Get(ItemList.GOBLINS_ARMOR), 30)
+            })
+          };
+
+          return resultMonster;
+        case MonsterList.GOLD_GOBLIN:
+          resultMonster = new Monster()
+          {
+            Name = "황금 고블린",
+            Descriptions = CTexts.Make($"{{와! 황금색 고블린이다. 죽이면 }}{{보물,{Colors.txtWarning}}}{{을 줄지도 모른다.}}"),
+            Level = 12,
+            MaxHp = 40,
+            Hp = 40,
+            AttDmg = 4.7,
+            DefPer = 2,
+            GivingExp = 26,
+            GivingGold = 1500 + new Random().Next(10, 750),
             DroppingItems = new DroppingItems(new List<DroppingItem>()
             {
               new DroppingItem(Items.Get(ItemList.GOBLINS_SWORD), 35),

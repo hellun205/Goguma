@@ -4,6 +4,7 @@ namespace Goguma.Game.Object.Entity.Monster
   {
     TEST_MONSTER,
     SLIME,
-    GOBLIN
+    GOBLIN,
+    GOLD_GOBLIN
   }
 }

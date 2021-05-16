@@ -67,6 +67,14 @@ namespace Goguma.Game.Object.Inventory.Item
             }
           };
           return resultItem;
+        case ItemList.GOLD_GOBLIN_COIN:
+          resultItem = new OtherItem()
+          {
+            Name = CTexts.Make($"{{골드 고블린 코인,{Colors.txtWarning}}}"),
+            Descriptions = CTexts.Make("{헉! 골드 고블린을 잡으면 나오는 코인이다. 아주 비싸다.}"),
+            Type = HavingType.Other
+          };
+          return resultItem;
         default:
           return null;
       }
