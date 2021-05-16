@@ -15,6 +15,8 @@ namespace Goguma.Game.Object.Skill
     TestMonster_TestPunch,
     TestMonster_TestFireBall,
     TestMonster_TestAttackSkill,
-    TestMonster_DefensivePosture
+    TestMonster_DefensivePosture,
+    SLIME_STICKY_ATTACK,
+    SLIME_SPOUT_STICKY_LIQUID
   }
 }
