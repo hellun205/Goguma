@@ -16,9 +16,9 @@ namespace Goguma.Game.Object.Entity.Player
   {
     static public class Scene
     {
-      static public class SelPlayerAct
+      static public SelectScene SelPlayerAct(Location loc, bool isAdmin = false)
       {
-        static public CTexts GetQText(Location loc)
+        Func<Location, CTexts> GetQText = (Location loc) =>
         {
           var map = Maps.GetMapByName(loc.Loc);
           string colors;
@@ -29,9 +29,9 @@ namespace Goguma.Game.Object.Entity.Player
             colors = Colors.txtDanger;
 
           return CTexts.Make($"{{[ {map.Name} ] , {colors}}} {{무엇을 하시겠습니까?}}");
-        }
+        };
 
-        static public SelectSceneItems GetSSI(bool isAdmin = false)
+        Func<bool, SelectSceneItems> GetSSI = (bool isAdmin) =>
         {
           var resultSSI = new SelectSceneItems();
 
@@ -49,15 +49,16 @@ namespace Goguma.Game.Object.Entity.Player
             resultSSI.Add($"{{A,{Colors.txtWarning}}} {{D,{Colors.txtDanger}}} {{M,{Colors.txtSuccess}}} {{I,{Colors.txtInfo}}} {{N,{Colors.txtPrimary}}}");
           resultSSI.Add($"{{게임 종료, {Colors.txtMuted}}}");
           return resultSSI;
-        }
+        };
+        return new SelectScene(GetQText(loc), GetSSI(isAdmin));
       }
-      static public class SelAdminAct
+      static public SelectScene SelAdminAct()
       {
-        static public CTexts GetQText()
+        Func<CTexts> GetQText = () =>
         {
           return CTexts.Make($"{{작업을 선택하세요.}}");
-        }
-        static public SelectSceneItems GetSSI()
+        };
+        Func<SelectSceneItems> GetSSI = () =>
         {
           var resultSSI = new SelectSceneItems();
           resultSSI.Add("{Test Inventory}");
@@ -66,7 +67,8 @@ namespace Goguma.Game.Object.Entity.Player
           resultSSI.Add("{Add Test Skill}");
           resultSSI.Add($"{{뒤로 가기, {Colors.txtMuted}}}");
           return resultSSI;
-        }
+        };
+        return new SelectScene(GetQText(), GetSSI());
       }
     }
     static public void Act(Player player, string actText)
@@ -168,7 +170,7 @@ namespace Goguma.Game.Object.Entity.Player
       {
         while (true)
         {
-          var ss = new SelectScene(Scene.SelAdminAct.GetQText(), Scene.SelAdminAct.GetSSI());
+          var ss = Scene.SelAdminAct();
           switch (ss.getString)
           {
             case "Test Inventory":
