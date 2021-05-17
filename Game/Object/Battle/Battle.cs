@@ -162,7 +162,7 @@ namespace Goguma.Game.Object.Battle
         };
       Action MonsterTurn = () =>
       {
-        ISkill skill = new Skill.Skill();
+        ISkill skill = null;
         Action Kill = () =>
         {
           // TO DO: Player Warp Town

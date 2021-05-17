@@ -3,19 +3,14 @@ using Goguma.Game.Console;
 
 namespace Goguma.Game.Object.Skill
 {
-  [Serializable]
-  public class Skill : ISkill
+  public abstract class Skill : ISkill
   {
     public string Name { get; set; }
     public CTexts Text { get; set; }
-    public SkillType Type { get; set; }
+    public CTexts Descriptions { get; set; }
+    public abstract SkillType Type { get; }
     public double useEp { get; set; }
 
-    public Skill()
-    {
-      Text = CTexts.Make("");
-      useEp = 0;
-    }
     static public string GetTypeString(SkillType sType)
     {
       switch (sType)
@@ -28,5 +23,6 @@ namespace Goguma.Game.Object.Skill
           return null;
       }
     }
+    public abstract void Information();
   }
 }
