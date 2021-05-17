@@ -89,7 +89,7 @@ namespace Goguma.Game.Object.Battle
       };
       Func<bool> SelectAttSkill = () =>
       {
-        var skSc = BattleScene.PvE.Player.SelSkill.Scean(player, SkillType.AttackSkill);
+        var skSc = BattleScene.PvE.Player.SelSkill(player, SkillType.AttackSkill);
         if (skSc == null) return false;
         var skills = from sk in player.Skills
                      where sk.Type == SkillType.AttackSkill
@@ -99,10 +99,11 @@ namespace Goguma.Game.Object.Battle
       };
       Func<bool> UseSkill = () =>
       {
-        var skSc = BattleScene.PvE.Player.SelSkill.Scean(player);
+        SkillType skillType;
+        var skSc = BattleScene.PvE.Player.SelSkillType(player, out skillType);
         if (skSc == null) return false;
         var skills = from sk in player.Skills
-                     where sk.Type == BattleScene.PvE.Player.SelSkill.skType
+                     where sk.Type == skillType
                      select sk;
         var skill = skills.ToList<ISkill>()[skSc.getIndex];
         switch (skill.Type)

@@ -162,54 +162,53 @@ namespace Goguma.Game.Object.Battle
           }
           // Pause();
         }
-        static public class SelSkill
+
+        static public SelectScene SelSkillType(IPlayer player, out SkillType skType)
         {
-          static public SkillType skType { get; set; }
-          static public SelectScene Scean(IPlayer player)
+          Func<CTexts> GetQText = () =>
           {
-            Func<CTexts> GetQText = () =>
-            {
-              return CTexts.Make($"{{무슨 스킬을 사용하시겠습니까?}}");
-            };
-            Func<SelectSceneItems> GetSSI = () =>
-            {
-              var resultSSI = new SelectSceneItems();
-              for (var i = 0; i < Enum.GetValues(typeof(SkillType)).Length; i++)
-                resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{{Skill.Skill.GetTypeString((SkillType)i)} 스킬}}")));
-              resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{뒤로 가기, {Colors.txtMuted}}}")));
-              return resultSSI;
-            };
-            var skillTypeSc = new SelectScene(GetQText(), GetSSI());
-            if (skillTypeSc.getString == "뒤로 가기") return null;
-            skType = (SkillType)(skillTypeSc.getIndex);
-            var skills = from sk in player.Skills
-                         where sk.Type == skType
-                         select sk;
-            var selIndexSc = Scean(player, skType);
-            return selIndexSc;
-          }
-          static public SelectScene Scean(IPlayer player, SkillType sType)
+            return CTexts.Make($"{{무슨 스킬을 사용하시겠습니까?}}");
+          };
+          Func<SelectSceneItems> GetSSI = () =>
           {
-            Func<SkillType, CTexts> GetQText = (SkillType sType) =>
-             {
-               return CTexts.Make($"{{무슨 스킬을 사용하시겠습니까? }} {{[ {Skill.Skill.GetTypeString(sType)} 스킬 ],{Colors.txtWarning}}}");
-             };
-            Func<SkillType, SelectSceneItems> GetSSI = (SkillType sType) =>
-            {
-              var resultSSI = new SelectSceneItems();
-              var skill = from sk in player.Skills
-                          where sk.Type == sType
-                          select sk;
-              foreach (var sk in skill)
-                resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{{sk.Name}}}")));
-              resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{뒤로 가기, {Colors.txtMuted}}}")));
-              return resultSSI;
-            };
-            var scene = new SelectScene(GetQText(sType), GetSSI(sType));
-            if (scene.getString == "뒤로 가기") return null;
-            return scene;
-          }
+            var resultSSI = new SelectSceneItems();
+            for (var i = 0; i < Enum.GetValues(typeof(SkillType)).Length; i++)
+              resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{{Skill.Skill.GetTypeString((SkillType)i)} 스킬}}")));
+            resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{뒤로 가기, {Colors.txtMuted}}}")));
+            return resultSSI;
+          };
+          skType = (SkillType)0;
+          var skillTypeSc = new SelectScene(GetQText(), GetSSI());
+          if (skillTypeSc.getString == "뒤로 가기") return null;
+          skType = (SkillType)(skillTypeSc.getIndex);
+          var skills = from sk in player.Skills
+                       where sk.Type == (SkillType)(skillTypeSc.getIndex)
+                       select sk;
+          var selIndexSc = SelSkill(player, skType);
+          return selIndexSc;
         }
+        static public SelectScene SelSkill(IPlayer player, SkillType sType)
+        {
+          Func<SkillType, CTexts> GetQText = (SkillType sType) =>
+           {
+             return CTexts.Make($"{{무슨 스킬을 사용하시겠습니까? }} {{[ {Skill.Skill.GetTypeString(sType)} 스킬 ],{Colors.txtWarning}}}");
+           };
+          Func<SkillType, SelectSceneItems> GetSSI = (SkillType sType) =>
+          {
+            var resultSSI = new SelectSceneItems();
+            var skill = from sk in player.Skills
+                        where sk.Type == sType
+                        select sk;
+            foreach (var sk in skill)
+              resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{{sk.Name}}}")));
+            resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{뒤로 가기, {Colors.txtMuted}}}")));
+            return resultSSI;
+          };
+          var scene = new SelectScene(GetQText(sType), GetSSI(sType));
+          if (scene.getString == "뒤로 가기") return null;
+          return scene;
+        }
+
       }
       static public class Monster
       {
