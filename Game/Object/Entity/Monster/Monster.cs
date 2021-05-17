@@ -33,7 +33,7 @@ namespace Goguma.Game.Object.Entity.Monster
       get => Math.Max(0, defPer + BuffsIncrease.DefPer);
       set => defPer = Math.Max(0, value);
     }
-    public List<Skill.Skill> Skills { get; set; }
+    public List<ISkill> Skills { get; set; }
     public double GivingGold { get; set; }
     public double GivingExp { get; set; }
     public DroppingItems DroppingItems { get; set; }
@@ -61,13 +61,14 @@ namespace Goguma.Game.Object.Entity.Monster
 
     public Monster()
     {
-      Skills = new List<Skill.Skill>();
+      Skills = new List<ISkill>();
       DroppingItems = new DroppingItems();
       AttSystem = new AttackSyss(InGame.player, this);
       Buffs = new List<IBuffSkill>();
     }
-    public void PrintAbout(IPlayer player = null)
+    public void PrintAbout()
     {
+      var player = InGame.player;
       PrintText($"\n{GetSep(40, $"{Name}")}");
       PrintText("\n");
       PrintText(Descriptions);
