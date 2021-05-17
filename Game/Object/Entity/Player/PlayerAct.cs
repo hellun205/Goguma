@@ -80,7 +80,7 @@ namespace Goguma.Game.Object.Entity.Player
           AdminOption(player, true);
           break;
         case "인벤토리 열기":
-          player.Inventory.Print();
+          player.Inventory.Open();
           break;
         case "이동하기":
           player.Loc.Move();

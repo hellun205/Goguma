@@ -234,7 +234,7 @@ namespace Goguma.Game.Object.Battle
             monster.PrintAbout();
             break;
           case "인벤토리 열기":
-            skip = player.Inventory.Print();
+            skip = player.Inventory.Open();
             break;
           case "공격 하기":
             var attackScene = BattleScene.PvE.Player.Attack();

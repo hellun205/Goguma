@@ -3,7 +3,7 @@ using System;
 namespace Goguma.Game.Object.Inventory
 {
   [Serializable]
-  enum InvenType
+  public enum InvenType
   {
     Wearing,
     Having
