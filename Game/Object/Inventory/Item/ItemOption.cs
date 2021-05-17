@@ -3,6 +3,7 @@ using System;
 using static Goguma.Game.Console.ConsoleFunction;
 using static Goguma.Game.Console.StringFunction;
 using Colorify;
+using Goguma.Game.Object.Inventory.Item.ConsumeItem;
 
 namespace Goguma.Game.Object.Inventory.Item
 {
@@ -151,7 +152,7 @@ namespace Goguma.Game.Object.Inventory.Item
 
     private bool ConsumeItemUse()
     {
-      var sItem = (ConsumeItem)SelectedItem;
+      var sItem = (IConsumeItem)SelectedItem;
       sItem.DescriptionItem();
       if (ReadYesOrNoScean(CTexts.Make($"{{{sItem.Name.ToString()}, {Colors.txtInfo}}} {{을(를) 사용하시겠습니까?}}")))
       {

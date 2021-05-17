@@ -1,10 +1,9 @@
 ﻿using Goguma.Game.Object.Entity.Player;
 
-namespace Goguma.Game.Object.Inventory.Item
+namespace Goguma.Game.Object.Inventory.Item.ConsumeItem
 {
   interface IConsumeItem : IItem
   {
-    ItemEffect Effect { get; set; }
     int LoseCount { get; set; }
   }
 }

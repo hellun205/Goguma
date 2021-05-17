@@ -5,28 +5,19 @@ using Goguma.Game.Object.Entity.Player;
 using static Goguma.Game.Console.ConsoleFunction;
 using static Goguma.Game.Console.StringFunction;
 
-namespace Goguma.Game.Object.Inventory.Item
+namespace Goguma.Game.Object.Inventory.Item.ConsumeItem
 {
   [Serializable]
-  class ConsumeItem : Item, IConsumeItem
+  class CPotion : ConsumeItem
   {
     public ItemEffect Effect { get; set; }
-    public int LoseCount { get; set; }
-    public override HavingType Type => HavingType.Consume;
-    public override int MaxCount => 64;
-    public ConsumeItem()
+    public CPotion() : base()
     {
-      Count = 1;
-      LoseCount = 1;
     }
-    public ConsumeItem(IItem item) : this()
+    public CPotion(IItem item) : this()
     {
       Name = item.Name;
       Count = item.Count;
-    }
-    static public ConsumeItem GetAir()
-    {
-      return new ConsumeItem { IsAir = true };
     }
     public override void DescriptionItem()
     {
@@ -82,10 +73,6 @@ namespace Goguma.Game.Object.Inventory.Item
         PrintText(NumberColor(Effect.Exp + player.Exp));
       }
     }
-    public override IItem GetInstance()
-    {
-      return new ConsumeItem(this);
-    }
 
     public override void UseItem(IPlayer player)
     {
@@ -95,6 +82,10 @@ namespace Goguma.Game.Object.Inventory.Item
       player.DefPer += Effect.DefPer;
       player.Gold += Effect.Gold;
       player.Exp += Effect.Exp;
+    }
+    public override IItem GetInstance()
+    {
+      return new CPotion(this);
     }
   }
 }

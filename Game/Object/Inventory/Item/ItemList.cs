@@ -15,6 +15,7 @@ namespace Goguma.Game.Object.Inventory.Item
     DIAMOND,
     RED_DIAMOND,
     GOLD_INGOT,
-    EMERALD
+    EMERALD,
+    POTION_1
   }
 }

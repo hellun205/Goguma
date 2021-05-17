@@ -97,7 +97,7 @@ namespace Goguma.Game.Object.Entity.Monster
 
       foreach (var i in monster.DroppingItems.Items)
       {
-        var di = new DroppingItem(i.Item.GetInstance(), i.DropChance);
+        var di = new DroppingItem(i.Item, i.DropChance);
         dropItem.Add(di);
       }
 

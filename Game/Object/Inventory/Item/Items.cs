@@ -1,5 +1,6 @@
 using Colorify;
 using Goguma.Game.Console;
+using Goguma.Game.Object.Inventory.Item.ConsumeItem;
 
 namespace Goguma.Game.Object.Inventory.Item
 {
@@ -126,6 +127,19 @@ namespace Goguma.Game.Object.Inventory.Item
             Descriptions = CTexts.Make("{말 그대로 금괴.}"),
             SellPrice = 10000,
             BuyPrice = 12500
+          };
+          return resultItem;
+        case ItemList.POTION_1:
+          resultItem = new CPotion()
+          {
+            Name = CTexts.Make($"{{포션1}},{Colors.txtInfo}}}"),
+            Descriptions = CTexts.Make("{체력을 회복시켜준다.}"),
+            Effect = new ItemEffect()
+            {
+              Hp = 10
+            },
+            SellPrice = 100,
+            BuyPrice = 150
           };
           return resultItem;
         default:
