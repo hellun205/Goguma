@@ -25,6 +25,7 @@ namespace Goguma.Game.Object.Entity.Monster
     AttackSyss AttSystem { get; set; }
     List<IBuffSkill> Buffs { get; set; }
     void PrintAbout(IPlayer player = null);
-
+    void AddBuff(IBuffSkill skill);
+    void RemoveBuff(IBuffSkill skill);
   }
 }

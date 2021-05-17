@@ -8,6 +8,7 @@ using Goguma.Game.Console;
 using Goguma.Game.Object.Battle;
 using Goguma.Game.Object.Entity.Monster;
 using Goguma.Game.Object.Skill;
+using System.Linq;
 using static Goguma.Game.Console.ConsoleFunction;
 
 namespace Goguma.Game.Object.Entity.Player
@@ -37,6 +38,7 @@ namespace Goguma.Game.Object.Entity.Player
 
           resultSSI.Add("{캐릭터 정보 보기}");
           resultSSI.Add("{인벤토리 열기}");
+          resultSSI.Add("{스킬 보기}");
           resultSSI.Add("{이동하기}");
           resultSSI.Add($"{{{InGame.player.Loc.Loc} 살펴보기}}");
 
@@ -70,22 +72,70 @@ namespace Goguma.Game.Object.Entity.Player
         };
         return new SelectScene(GetQText(), GetSSI());
       }
+      static public SelectScene SelSkillType(IPlayer player, out SkillType skType)
+      {
+        Func<CTexts> GetQText = () =>
+        {
+          return CTexts.Make($"{{스킬을 선택하세요.}}");
+        };
+        Func<SelectSceneItems> GetSSI = () =>
+        {
+          var resultSSI = new SelectSceneItems();
+          for (var i = 0; i < Enum.GetValues(typeof(SkillType)).Length; i++)
+            resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{{Skill.Skill.GetTypeString((SkillType)i)} 스킬}}")));
+          resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{뒤로 가기, {Colors.txtMuted}}}")));
+          return resultSSI;
+        };
+        skType = (SkillType)0;
+        var skillTypeSc = new SelectScene(GetQText(), GetSSI());
+        if (skillTypeSc.getString == "뒤로 가기") return null;
+        skType = (SkillType)(skillTypeSc.getIndex);
+        var skills = from sk in player.Skills
+                     where sk.Type == (SkillType)(skillTypeSc.getIndex)
+                     select sk;
+        var selIndexSc = SelSkill(player, skType);
+        return selIndexSc;
+      }
+      static public SelectScene SelSkill(IPlayer player, SkillType sType)
+      {
+        Func<SkillType, CTexts> GetQText = (SkillType sType) =>
+         {
+           return CTexts.Make($"{{스킬을 선택하세요.}} {{[ {Skill.Skill.GetTypeString(sType)} 스킬 ],{Colors.txtWarning}}}");
+         };
+        Func<SkillType, SelectSceneItems> GetSSI = (SkillType sType) =>
+        {
+          var resultSSI = new SelectSceneItems();
+          var skill = from sk in player.Skills
+                      where sk.Type == sType
+                      select sk;
+          foreach (var sk in skill)
+            resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{{sk.Name}}}")));
+          resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{뒤로 가기, {Colors.txtMuted}}}")));
+          return resultSSI;
+        };
+        var scene = new SelectScene(GetQText(sType), GetSSI(sType));
+        if (scene.getString == "뒤로 가기") return null;
+        return scene;
+      }
     }
-    static public void Act(Player player, string actText)
+    static public void Act(string actText)
     {
       switch (actText)
       {
         case "캐릭터 정보 보기":
-          player.PrintAbout();
+          InGame.player.PrintAbout();
           break;
         case "ADMIN":
-          AdminOption(player, true);
+          AdminOption(InGame.player, true);
           break;
         case "인벤토리 열기":
-          player.Inventory.Open();
+          InGame.player.Inventory.Open();
+          break;
+        case "스킬 보기":
+          ViewSkill();
           break;
         case "이동하기":
-          player.Loc.Move();
+          InGame.player.Loc.Move();
           break;
         case "시설 이용하기":
           UseFacility();
@@ -100,6 +150,22 @@ namespace Goguma.Game.Object.Entity.Player
           if (actText.StartsWith(InGame.player.Loc.Loc))
             InsepctLoc();
           break;
+      }
+    }
+
+    static private void ViewSkill()
+    {
+      IPlayer player = InGame.player;
+      while (true)
+      {
+        SkillType skillType;
+        var skSc = Scene.SelSkillType(InGame.player, out skillType);
+        if (skSc == null) return;
+        var skills = from sk in player.Skills
+                     where sk.Type == skillType
+                     select sk;
+        var skill = skills.ToList<ISkill>()[skSc.getIndex];
+        skill.Information();
       }
     }
 

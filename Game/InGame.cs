@@ -26,7 +26,7 @@ namespace Goguma.Game
       while (true)
       {
         var ss = PlayerAct.Scene.SelPlayerAct(player.Loc, true /*Admin*/);
-        PlayerAct.Act(player, ss.getString);
+        PlayerAct.Act(ss.getString);
       }
     }
 

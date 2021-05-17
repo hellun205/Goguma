@@ -6,7 +6,8 @@ namespace Goguma.Game.Object.Skill
   {
     string Name { get; set; }
     CTexts Text { get; set; }
-    SkillType Type { get; set; }
+    SkillType Type { get; }
     double useEp { get; set; }
+    void Information();
   }
 }
