@@ -6,9 +6,5 @@ namespace Goguma.Game.Object.Inventory.Item
   {
     ItemEffect Effect { get; set; }
     int LoseCount { get; set; }
-    new void UseItem(IPlayer player);
-
-    new void DescriptionItem();
-    new void DescriptionItemAP(IPlayer player);
   }
 }

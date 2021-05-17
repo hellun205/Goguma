@@ -10,16 +10,14 @@ namespace Goguma.Game.Object.Inventory.Item
     CTexts Name { get; set; }
     CTexts Descriptions { get; set; }
     int Count { get; set; }
-    int MaxCount { get; set; }
+    int MaxCount { get; }
     bool IsAir { get; set; }
     int BuyPrice { get; set; }
     int SellPrice { get; set; }
-    HavingType Type { get; set; }
+    HavingType Type { get; }
 
     void UseItem(IPlayer player);
     void DescriptionItem();
-
-    void DescriptionItemAP(IPlayer player);
 
     IItem GetInstance();
   }

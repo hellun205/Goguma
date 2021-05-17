@@ -6,10 +6,5 @@ namespace Goguma.Game.Object.Inventory.Item
   {
     WearingType EquipmentType { get; set; }
     ItemIncrease Increase { get; set; }
-
-    new void UseItem(IPlayer player);
-
-    new void DescriptionItem();
-    new void DescriptionItemAP(IPlayer player);
   }
 }

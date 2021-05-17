@@ -15,7 +15,6 @@ namespace Goguma.Game.Object.Inventory.Item
           {
             Name = CTexts.Make("{테스트용 아이템 A}"),
             Descriptions = CTexts.Make("{테스트용으로 사용되는 아이템이다.}"),
-            Type = HavingType.Other
           };
           return resultItem;
         case ItemList.TEST_ITEM2:
@@ -23,7 +22,6 @@ namespace Goguma.Game.Object.Inventory.Item
           {
             Name = CTexts.Make("{테스트용 모자 B}"),
             Descriptions = CTexts.Make("{테스트용으로 사용되는 아이템이다.}"),
-            Type = HavingType.Equipment,
             EquipmentType = WearingType.Head,
             Increase = new ItemIncrease()
             {
@@ -37,7 +35,6 @@ namespace Goguma.Game.Object.Inventory.Item
           {
             Name = CTexts.Make("{끈적끈적한 액체}"),
             Descriptions = CTexts.Make("{만지기 싫은 아이템이다. 주로 슬라임을 잡으면 드랍한다.}"),
-            Type = HavingType.Other,
             SellPrice = 300,
             BuyPrice = 6
           };
@@ -47,7 +44,6 @@ namespace Goguma.Game.Object.Inventory.Item
           {
             Name = CTexts.Make($"{{고블린,{Colors.txtInfo}}}{{의 검}}"),
             Descriptions = CTexts.Make($"{{고블린,{Colors.txtInfo}}}{{들이 주로 사용하는 검이다.}}"),
-            Type = HavingType.Equipment,
             SellPrice = 500,
             BuyPrice = 1000,
             EquipmentType = WearingType.Weapon,
@@ -62,7 +58,6 @@ namespace Goguma.Game.Object.Inventory.Item
           {
             Name = CTexts.Make($"{{고블린,{Colors.txtInfo}}}{{의 갑옷}}"),
             Descriptions = CTexts.Make($"{{고블린,{Colors.txtInfo}}}{{들이 주로 착용하는 갑옷이다.}}"),
-            Type = HavingType.Equipment,
             SellPrice = 500,
             BuyPrice = 1000,
             EquipmentType = WearingType.Chestplate,
@@ -78,7 +73,6 @@ namespace Goguma.Game.Object.Inventory.Item
           {
             Name = CTexts.Make($"{{황금 고블린 코인,{Colors.txtWarning}}}"),
             Descriptions = CTexts.Make("{헉! 황금 고블린을 잡으면 나오는 코인이다.}"),
-            Type = HavingType.Other,
             SellPrice = 50000,
             BuyPrice = 100000
           };
@@ -88,7 +82,6 @@ namespace Goguma.Game.Object.Inventory.Item
           {
             Name = CTexts.Make("{황금 고블린의 검}"),
             Descriptions = CTexts.Make("{황금 고블린들이 사용하는 검이다.}"),
-            Type = HavingType.Equipment,
             SellPrice = 1500,
             BuyPrice = 3000,
             EquipmentType = WearingType.Chestplate,
@@ -104,7 +97,6 @@ namespace Goguma.Game.Object.Inventory.Item
           {
             Name = CTexts.Make($"{{다이아몬드,{Colors.txtInfo}}}"),
             Descriptions = CTexts.Make("{보석이다. 매우 희귀하다.}}"),
-            Type = HavingType.Other,
             SellPrice = 75000,
             BuyPrice = 100000
           };
@@ -114,7 +106,6 @@ namespace Goguma.Game.Object.Inventory.Item
           {
             Name = CTexts.Make($"{{레드 다이아몬드,{Colors.txtInfo}}}"),
             Descriptions = CTexts.Make("{보석이다. 다이아몬드보다 비싸고 희귀하다.}}"),
-            Type = HavingType.Other,
             SellPrice = 375000,
             BuyPrice = 500000
           };
@@ -124,7 +115,6 @@ namespace Goguma.Game.Object.Inventory.Item
           {
             Name = CTexts.Make($"{{에메랄드,{Colors.txtInfo}}}"),
             Descriptions = CTexts.Make("{보석이다.}"),
-            Type = HavingType.Other,
             SellPrice = 50000,
             BuyPrice = 75000
           };
@@ -134,7 +124,6 @@ namespace Goguma.Game.Object.Inventory.Item
           {
             Name = CTexts.Make($"{{금괴}},{Colors.txtInfo}}}"),
             Descriptions = CTexts.Make("{말 그대로 금괴.}"),
-            Type = HavingType.Other,
             SellPrice = 10000,
             BuyPrice = 12500
           };

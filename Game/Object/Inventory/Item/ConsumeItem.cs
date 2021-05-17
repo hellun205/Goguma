@@ -12,53 +12,25 @@ namespace Goguma.Game.Object.Inventory.Item
   {
     public ItemEffect Effect { get; set; }
     public int LoseCount { get; set; }
-
-    new static public ConsumeItem GetAir()
+    public override HavingType Type => HavingType.Consume;
+    public override int MaxCount => 64;
+    public ConsumeItem()
+    {
+      Count = 1;
+      LoseCount = 1;
+    }
+    public ConsumeItem(IItem item) : this()
+    {
+      Name = item.Name;
+      Count = item.Count;
+    }
+    static public ConsumeItem GetAir()
     {
       return new ConsumeItem { IsAir = true };
     }
-    new public void DescriptionItem()
+    public override void DescriptionItem()
     {
-      if (Effect.Hp != 0)
-      {
-        PrintText(CTexts.Make("{\nHP [ }"));
-        PrintText(NumberColor(Effect.Hp));
-        PrintText(CTexts.Make("{ ]}"));
-      }
-      if (Effect.Ep != 0)
-      {
-        PrintText(CTexts.Make("{  EP [ }"));
-        PrintText(NumberColor(Effect.Ep));
-        PrintText(CTexts.Make("{ ]}"));
-      }
-      if (Effect.AttDmg != 0)
-      {
-        PrintText(CTexts.Make("{\nATT [ }"));
-        PrintText(NumberColor(Effect.AttDmg));
-        PrintText(CTexts.Make("{ ]}"));
-      }
-      if (Effect.DefPer != 0)
-      {
-        PrintText(CTexts.Make("{  DEF [ }"));
-        PrintText(NumberColor(Effect.DefPer));
-        PrintText(CTexts.Make("{ % ]}"));
-      }
-      if (Effect.Gold != 0)
-      {
-        PrintText(CTexts.Make("{\nGOLD [ }"));
-        PrintText(NumberColor(Effect.Gold));
-        PrintText(CTexts.Make("{ G ]}"));
-      }
-      if (Effect.Exp != 0)
-      {
-        PrintText(CTexts.Make("{\nEXP [ }"));
-        PrintText(NumberColor(Effect.Exp));
-        PrintText(CTexts.Make("{ ]\n}"));
-      }
-    }
-
-    new public void DescriptionItemAP(IPlayer player)
-    {
+      var player = InGame.player;
       if (Effect.Hp != 0)
       {
         PrintText(CTexts.Make($"{{\nHP }} {{{player.Hp} / {player.MaxHp}, {Colors.txtWarning}}} {{ [ }}"));
@@ -110,8 +82,12 @@ namespace Goguma.Game.Object.Inventory.Item
         PrintText(NumberColor(Effect.Exp + player.Exp));
       }
     }
+    public override IItem GetInstance()
+    {
+      return new ConsumeItem(this);
+    }
 
-    new public void UseItem(IPlayer player)
+    public override void UseItem(IPlayer player)
     {
       player.Hp += Effect.Hp;
       player.Ep += Effect.Ep;
@@ -120,7 +96,5 @@ namespace Goguma.Game.Object.Inventory.Item
       player.Gold += Effect.Gold;
       player.Exp += Effect.Exp;
     }
-
-
   }
 }
