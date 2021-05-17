@@ -16,12 +16,12 @@ namespace Goguma.Game.Object.Skill
     public override void Information()
     {
       IPlayer player = InGame.player;
-      GetSep(30, base.Name);
-      PrintText(CTexts.Make($"{{\n\t\t{Skill.GetTypeString(Type)} 스킬,{Colors.txtWarning}}}"));
+      PrintText(GetSep(30, base.Name));
+      PrintText(CTexts.Make($"{{\n{Skill.GetTypeString(Type)} 스킬,{Colors.txtWarning}}}"));
       PrintText(CTexts.Make($"{{\n필요 에너지: }}{{{base.useEp}\n, {Colors.txtWarning}}}"));
-      GetSep(30);
+      PrintText(GetSep(30) + "\n");
       PrintText(base.Descriptions);
-      GetSep(30);
+      PrintText("\n" + GetSep(30));
       if (buff.MaxHp != 0)
       {
         PrintText(CTexts.Make($"{{\n최대 체력 증가: }} {{{player.MaxHp}, {Colors.txtWarning}}} {{ [ }}"));
@@ -49,9 +49,9 @@ namespace Goguma.Game.Object.Skill
         PrintText(NumberColor(buff.DefPer));
         PrintText(CTexts.Make("{ % ] → }"));
         PrintText(NumberColor(buff.DefPer + player.DefPer));
-        PrintText(CTexts.Make("{ %}"));
+        PrintText(CTexts.Make("{ %\n}"));
       }
-      GetSep(30);
+      PrintText(GetSep(30) + "\n");
       Pause();
     }
   }
