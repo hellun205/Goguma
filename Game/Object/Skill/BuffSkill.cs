@@ -29,12 +29,28 @@ namespace Goguma.Game.Object.Skill
         PrintText(CTexts.Make("{ ] → }"));
         PrintText(NumberColor(buff.MaxHp + player.MaxHp));
       }
+      if (buff.Hp != 0)
+      {
+        PrintText(CTexts.Make($"{{\n체력 증가: }} {{{player.Hp}, {Colors.txtWarning}}} {{ % [ }}"));
+        PrintText(NumberColor(buff.Hp));
+        PrintText(CTexts.Make("{ % ] → }"));
+        PrintText(NumberColor(buff.Hp + player.Hp));
+        PrintText(CTexts.Make("{ %\n}"));
+      }
       if (buff.MaxEp != 0)
       {
         PrintText(CTexts.Make($"{{\n최대 에너지 증가: }} {{{player.MaxEp}, {Colors.txtWarning}}} {{ [ }}"));
         PrintText(NumberColor(buff.MaxEp));
         PrintText(CTexts.Make("{ ] → }"));
         PrintText(NumberColor(buff.MaxEp + player.MaxEp));
+      }
+      if (buff.Ep != 0)
+      {
+        PrintText(CTexts.Make($"{{\n에너지 증가: }} {{{player.DefPer}, {Colors.txtWarning}}} {{ % [ }}"));
+        PrintText(NumberColor(buff.Ep));
+        PrintText(CTexts.Make("{ % ] → }"));
+        PrintText(NumberColor(buff.Ep + player.Ep));
+        PrintText(CTexts.Make("{ %\n}"));
       }
       if (buff.AttDmg != 0)
       {

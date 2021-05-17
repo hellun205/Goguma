@@ -104,14 +104,19 @@ namespace Goguma.Game.Object.Entity.Monster
       DroppingItems = new DroppingItems(dropItem);
     }
 
-    public void AttackPlayer(IPlayer player)
-    {
-
-    }
-
     public Monster GetInstace()
     {
       return new Monster(this);
+    }
+    public void AddBuff(IBuffSkill skill)
+    {
+      Buffs.Add(skill);
+      if (skill.buff.Hp != 0)
+        Hp += skill.buff.Hp;
+    }
+    public void RemoveBuff(IBuffSkill skill)
+    {
+      Buffs.Remove(skill);
     }
   }
 }

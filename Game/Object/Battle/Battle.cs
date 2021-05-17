@@ -83,7 +83,7 @@ namespace Goguma.Game.Object.Battle
         }
         BattleScene.PvE.Player.BuffSkill(player, skill);
         player.Ep -= skill.useEp;
-        buffs.Add(skill);
+        player.AddBuff(skill);
         buffTurns.Add(turn);
         return true;
       };
@@ -161,7 +161,7 @@ namespace Goguma.Game.Object.Battle
         foreach (var eBf in endBuffs.ToList<IBuffSkill>())
         {
           buffTurns.RemoveAt(buffs.IndexOf(eBf));
-          buffs.Remove(eBf);
+          player.RemoveBuff(eBf);
         }
       };
       Func<bool> GeneralAttack = () =>
@@ -188,7 +188,7 @@ namespace Goguma.Game.Object.Battle
           foreach (var eBf in endBuffs.ToList<IBuffSkill>())
           {
             mBuffTurns.RemoveAt(monster.Buffs.IndexOf(eBf));
-            monster.Buffs.Remove(eBf);
+            monster.RemoveBuff(eBf);
           }
         };
       Action MonsterTurn = () =>
@@ -217,7 +217,7 @@ namespace Goguma.Game.Object.Battle
           var bSkill = (IBuffSkill)skill;
           if (monster.Buffs.Contains(skill)) return false;
           BattleScene.PvE.Monster.BuffSkill(monster, player, bSkill);
-          monster.Buffs.Add(bSkill);
+          monster.AddBuff(bSkill);
           mBuffTurns.Add(turn);
           return true;
         };
