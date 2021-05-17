@@ -52,13 +52,13 @@ namespace Goguma.Game.Object.Entity.Player
         };
         return new SelectScene(GetQText(loc), GetSSI(isAdmin));
       }
-      static public class SelAdminAct
+      static public SelectScene SelAdminAct()
       {
-        static public CTexts GetQText()
+        Func<CTexts> GetQText = () =>
         {
           return CTexts.Make($"{{작업을 선택하세요.}}");
-        }
-        static public SelectSceneItems GetSSI()
+        };
+        Func<SelectSceneItems> GetSSI = () =>
         {
           var resultSSI = new SelectSceneItems();
           resultSSI.Add("{Test Inventory}");
@@ -67,7 +67,8 @@ namespace Goguma.Game.Object.Entity.Player
           resultSSI.Add("{Add Test Skill}");
           resultSSI.Add($"{{뒤로 가기, {Colors.txtMuted}}}");
           return resultSSI;
-        }
+        };
+        return new SelectScene(GetQText(), GetSSI());
       }
     }
     static public void Act(Player player, string actText)
@@ -169,7 +170,7 @@ namespace Goguma.Game.Object.Entity.Player
       {
         while (true)
         {
-          var ss = new SelectScene(Scene.SelAdminAct.GetQText(), Scene.SelAdminAct.GetSSI());
+          var ss = Scene.SelAdminAct();
           switch (ss.getString)
           {
             case "Test Inventory":
