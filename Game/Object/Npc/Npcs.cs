@@ -4,13 +4,13 @@ namespace Gogu_Remaster.Game.Object.Npc
   {
     public static NTrader trader = new NTrader();
 
-    public NTrader GetTraderByName(string name)
+    public static NTrader GetTraderByName(string name)
     {
       if (name == trader.Name) return trader;
       else return null;
     }
 
-    public NTrader GetTraderByEnum(NpcList npc)
+    public static NTrader GetTraderByEnum(NpcList npc)
     {
       switch (npc)
       {

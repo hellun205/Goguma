@@ -3,6 +3,7 @@ using Colorify;
 using Gogu_Remaster.Game.Object.Map;
 using Gogu_Remaster.Game.Object.Map.Road;
 using Gogu_Remaster.Game.Object.Map.Town;
+using Gogu_Remaster.Game.Object.Npc;
 using Goguma.Game.Console;
 using Goguma.Game.Object.Entity.Monster;
 using Goguma.Game.Object.Skill;
@@ -107,7 +108,20 @@ namespace Goguma.Game.Object.Entity.Player
 
     static private void TalkWithNpc()
     {
+      if (!InGame.player.Loc.InTown) return;
+      var town = (Town)Maps.GetMapByName(InGame.player.Loc.Loc);
 
+      var ssi = new SelectSceneItems();
+
+      if (town.Npcs.Count < 1)
+        ssi.Add("{없음}");
+      else
+        foreach (var n in town.Npcs)
+          ssi.Add($"{{{Npcs.GetTraderByEnum(n).Name}}}");
+
+      var s = new SelectScene(CTexts.Make("{누구와 대화하시겠습니까?}"), ssi);
+
+      Npcs.GetTraderByEnum(town.Npcs[s.getIndex]).OnUse();
     }
 
     static private void InsepctLoc()
