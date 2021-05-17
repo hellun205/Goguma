@@ -3,6 +3,7 @@ using Goguma.Game.Console;
 
 namespace Goguma.Game.Object.Skill
 {
+  [Serializable]
   public abstract class Skill : ISkill
   {
     public string Name { get; set; }

@@ -89,31 +89,61 @@ namespace Goguma.Game.Object.Battle
       };
       Func<bool> SelectAttSkill = () =>
       {
-        var skSc = BattleScene.PvE.Player.SelSkill(player, SkillType.AttackSkill);
-        if (skSc == null) return false;
-        var skills = from sk in player.Skills
-                     where sk.Type == SkillType.AttackSkill
-                     select sk;
-        var skill = skills.ToList<ISkill>()[skSc.getIndex];
-        return UseAttackSkill((IAttackSkill)skill);
+        while (true)
+        {
+          var skSc = BattleScene.PvE.Player.SelSkill(player, SkillType.AttackSkill);
+          if (skSc == null) return false;
+          var skills = from sk in player.Skills
+                       where sk.Type == SkillType.AttackSkill
+                       select sk;
+          var skill = skills.ToList<ISkill>()[skSc.getIndex];
+          while (true)
+          {
+            var skActSC = BattleScene.PvE.Player.SkillAction(skill);
+            if (skActSC == null) break;
+            switch (skActSC.getString)
+            {
+              case "사용 하기":
+                return UseAttackSkill((IAttackSkill)skill);
+              case "정보 보기":
+                skill.Information();
+                break;
+            }
+          }
+        }
       };
       Func<bool> UseSkill = () =>
       {
-        SkillType skillType;
-        var skSc = BattleScene.PvE.Player.SelSkillType(player, out skillType);
-        if (skSc == null) return false;
-        var skills = from sk in player.Skills
-                     where sk.Type == skillType
-                     select sk;
-        var skill = skills.ToList<ISkill>()[skSc.getIndex];
-        switch (skill.Type)
+        while (true)
         {
-          case SkillType.AttackSkill:
-            return UseAttackSkill((IAttackSkill)skill);
-          case SkillType.BuffSkill:
-            return UseBuffSkill((IBuffSkill)skill);
-          default:
-            return false;
+          SkillType skillType;
+          var skSc = BattleScene.PvE.Player.SelSkillType(player, out skillType);
+          if (skSc == null) return false;
+          var skills = from sk in player.Skills
+                       where sk.Type == skillType
+                       select sk;
+          var skill = skills.ToList<ISkill>()[skSc.getIndex];
+          while (true)
+          {
+            var skActSC = BattleScene.PvE.Player.SkillAction(skill);
+            if (skActSC == null) break;
+            switch (skActSC.getString)
+            {
+              case "사용 하기":
+                switch (skill.Type)
+                {
+                  case SkillType.AttackSkill:
+                    return UseAttackSkill((IAttackSkill)skill);
+                  case SkillType.BuffSkill:
+                    return UseBuffSkill((IBuffSkill)skill);
+                  default:
+                    return false;
+                }
+              case "정보 보기":
+                skill.Information();
+                break;
+            }
+          }
         }
       };
       Action<bool> EndBuff = (bool all) =>

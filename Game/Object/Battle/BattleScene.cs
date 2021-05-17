@@ -208,7 +208,24 @@ namespace Goguma.Game.Object.Battle
           if (scene.getString == "뒤로 가기") return null;
           return scene;
         }
-
+        static public SelectScene SkillAction(ISkill skill)
+        {
+          Func<ISkill, CTexts> GetQText = (ISkill skill) =>
+          {
+            return CTexts.Make($"{{{Skill.Skill.GetTypeString(skill.Type)} 스킬,{Colors.txtWarning}}}{{ 「{skill.Name}」}}");
+          };
+          Func<SelectSceneItems> GetSSI = () =>
+          {
+            var resultSSI = new SelectSceneItems();
+            resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{사용 하기,{Colors.txtSuccess}}}")));
+            resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{정보 보기,{Colors.txtSuccess}}}")));
+            resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{뒤로 가기, {Colors.txtMuted}}}")));
+            return resultSSI;
+          };
+          var scene = new SelectScene(GetQText(skill), GetSSI());
+          if (scene.getString == "뒤로 가기") return null;
+          return scene;
+        }
       }
       static public class Monster
       {
