@@ -10,6 +10,7 @@ using Goguma.Game.Object.Skill;
 using System.Linq;
 using static Goguma.Game.Console.ConsoleFunction;
 using Goguma.Game.Object.Inventory.Item;
+using System;
 
 namespace Goguma.Game.Object.Entity.Player
 {
@@ -177,7 +178,7 @@ namespace Goguma.Game.Object.Entity.Player
 
       Npcs.GetTraderByEnum(town.Npcs[s.getIndex]).OnUse();
     }
-    
+
     static private void ViewSkill()
     {
       IPlayer player = InGame.player;
