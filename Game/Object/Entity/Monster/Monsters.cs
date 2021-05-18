@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using Colorify;
-using Gogu_Remaster.Game.Object.Inventory.Item;
 using Goguma.Game.Console;
 using Goguma.Game.Object.Entity.AttSys;
 using Goguma.Game.Object.Inventory.Item;
+using Goguma.Game.Object.Inventory.Item.Drop;
 using Goguma.Game.Object.Skill;
 
 namespace Goguma.Game.Object.Entity.Monster
@@ -55,6 +55,7 @@ namespace Goguma.Game.Object.Entity.Monster
             DroppingItems = new DroppingItems(new List<DroppingItem>()
             {
               new DroppingItem(Items.Get(ItemList.STICKY_LIQUID), 80),
+              new DroppingItem(Items.Get(ItemList.POTION_1), 80),
             })
           };
           resultMonster.AttSystem.Add(Skills.GetMonsterSkill(MSkillList.SLIME_STICKY_ATTACK), new AttCondition(Cond.MonsterHpPer, ">=", 0.7));
@@ -76,7 +77,8 @@ namespace Goguma.Game.Object.Entity.Monster
             DroppingItems = new DroppingItems(new List<DroppingItem>()
             {
               new DroppingItem(Items.Get(ItemList.GOBLINS_SWORD), 35),
-              new DroppingItem(Items.Get(ItemList.GOBLINS_ARMOR), 30)
+              new DroppingItem(Items.Get(ItemList.GOBLINS_ARMOR), 30),
+              new DroppingItem(Items.Get(ItemList.POTION_1), 80),
             })
           };
 
@@ -101,7 +103,8 @@ namespace Goguma.Game.Object.Entity.Monster
               new DroppingItem(Items.Get(ItemList.DIAMOND), 6),
               new DroppingItem(Items.Get(ItemList.RED_DIAMOND), 2),
               new DroppingItem(Items.Get(ItemList.EMERALD), 9),
-              new DroppingItem(Items.Get(ItemList.GOLD_INGOT), 16)
+              new DroppingItem(Items.Get(ItemList.GOLD_INGOT), 16),
+              new DroppingItem(Items.Get(ItemList.POTION_1), 80),
             })
           };
           resultMonster.AttSystem.Add(Skills.GetMonsterSkill(MSkillList.GOLD_GOBLIN_SWORD_SWING), new AttCondition(Cond.MonsterHpPer, ">=", 0.6));

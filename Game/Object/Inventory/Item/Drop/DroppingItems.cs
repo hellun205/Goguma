@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Gogu_Remaster.Game.Object.Inventory.Item;
 
-namespace Goguma.Game.Object.Inventory.Item
+namespace Goguma.Game.Object.Inventory.Item.Drop
 {
   [Serializable]
   public class DroppingItems

@@ -1,54 +1,34 @@
 using System;
 using Colorify;
 using Goguma.Game.Console;
-using Goguma.Game.Object.Entity.Player;
 using static Goguma.Game.Console.ConsoleFunction;
 using static Goguma.Game.Console.StringFunction;
 
-namespace Goguma.Game.Object.Inventory.Item
+namespace Goguma.Game.Object.Inventory.Item.Equipment
 {
   [Serializable]
   class EquipmentItem : Item, IEquipmentItem
   {
-    new public int Count { get => 1; }
-    new public int MaxCount { get => 1; }
+    new public int Count => 1;
+    public override int MaxCount => 1;
     public WearingType EquipmentType { get; set; }
     public ItemIncrease Increase { get; set; }
+    public override HavingType Type => HavingType.Equipment;
+    public EquipmentItem()
+    {
 
-    new static public IEquipmentItem GetAir()
+    }
+    public EquipmentItem(EquipmentItem item) : this()
+    {
+      Name = item.Name;
+    }
+    static public IEquipmentItem GetAir()
     {
       return new EquipmentItem { IsAir = true };
     }
-
-    new public void DescriptionItem()
+    public override void DescriptionItem()
     {
-      if (Increase.MaxHp != 0)
-      {
-        PrintText(CTexts.Make("{\nMAX HP [ }"));
-        PrintText(NumberColor(Increase.MaxHp));
-        PrintText(CTexts.Make("{ ]}"));
-      }
-      if (Increase.MaxEp != 0)
-      {
-        PrintText(CTexts.Make("{  MAX EP [ }"));
-        PrintText(NumberColor(Increase.MaxEp));
-        PrintText(CTexts.Make("{ ]}"));
-      }
-      if (Increase.AttDmg != 0)
-      {
-        PrintText(CTexts.Make("{\nATT [ }"));
-        PrintText(NumberColor(Increase.AttDmg));
-        PrintText(CTexts.Make("{ ]}"));
-      }
-      if (Increase.DefPer != 0)
-      {
-        PrintText(CTexts.Make("{  DEF [ }"));
-        PrintText(NumberColor(Increase.DefPer));
-        PrintText(CTexts.Make("{ % ]}"));
-      }
-    }
-    new public void DescriptionItemAP(IPlayer player)
-    {
+      var player = InGame.player;
       if (Increase.MaxHp != 0)
       {
         PrintText(CTexts.Make($"{{\nMAX HP }} {{{player.MaxHp}, {Colors.txtWarning}}} {{ [ }}"));
@@ -80,9 +60,9 @@ namespace Goguma.Game.Object.Inventory.Item
       }
     }
 
-    new public void UseItem(IPlayer player)
+    public override IItem GetInstance()
     {
-
+      return new EquipmentItem(this);
     }
   }
 }

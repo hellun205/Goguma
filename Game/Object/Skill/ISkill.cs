@@ -8,6 +8,6 @@ namespace Goguma.Game.Object.Skill
     CTexts Text { get; set; }
     SkillType Type { get; }
     double useEp { get; set; }
-    void Information();
+    void Information(bool IsPause = true);
   }
 }

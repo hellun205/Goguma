@@ -16,7 +16,7 @@ namespace Goguma.Game.Object.Skill
 
     private double ignoreDef;
 
-    public override void Information()
+    public override void Information(bool isPause = true)
     {
       PrintText(GetSep(30, base.Name));
       PrintText(CTexts.Make($"{{\n{Skill.GetTypeString(Type)} 스킬,{Colors.txtWarning}}}"));
@@ -31,7 +31,7 @@ namespace Goguma.Game.Object.Skill
       PrintText(NumberColor(IgnoreDef));
       PrintText(CTexts.Make("{ ]\n}"));
       PrintText(GetSep(30));
-      Pause();
+      if (isPause) Pause();
     }
   }
 }

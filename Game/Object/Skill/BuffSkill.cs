@@ -13,7 +13,7 @@ namespace Goguma.Game.Object.Skill
     public Buff buff { get; set; }
     public override SkillType Type { get => SkillType.BuffSkill; }
 
-    public override void Information()
+    public override void Information(bool isPause = true)
     {
       IPlayer player = InGame.player;
       PrintText(GetSep(30, base.Name));
@@ -68,7 +68,7 @@ namespace Goguma.Game.Object.Skill
         PrintText(CTexts.Make("{ %\n}"));
       }
       PrintText(GetSep(30) + "\n");
-      Pause();
+      if (isPause) Pause();
     }
   }
 }

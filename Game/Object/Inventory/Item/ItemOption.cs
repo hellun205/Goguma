@@ -1,7 +1,10 @@
 ﻿using Goguma.Game.Console;
 using System;
 using static Goguma.Game.Console.ConsoleFunction;
+using static Goguma.Game.Console.StringFunction;
 using Colorify;
+using Goguma.Game.Object.Inventory.Item.Consume;
+using Goguma.Game.Object.Inventory.Item.Equipment;
 
 namespace Goguma.Game.Object.Inventory.Item
 {
@@ -138,22 +141,20 @@ namespace Goguma.Game.Object.Inventory.Item
 
     private bool PrintInfo()
     {
-      PrintText(SelectedItem.Name);
-      PrintText(CTexts.Make($"{{ [{SelectedItem.Count}],{Colors.txtInfo}}}"));
-      PrintText(CTexts.Make($"{{ {InvenInfo.HavingInven.GetTypeString(HType)} 아이템\n  , {Colors.txtWarning}}}"));
-      PrintText("\n");
+      PrintText(GetSep(40, $"{SelectedItem.Name.ToString()} [ {SelectedItem.Count} ]"));
+      PrintText(CTexts.Make($"{{\n{InvenInfo.HavingInven.GetTypeString(HType)} 아이템\n, {Colors.txtWarning}}}"));
       PrintText(SelectedItem.Descriptions);
-      PrintText("\n");
-
-      SelectedItem.DescriptionItemAP(MyInventory.Player);
+      PrintText("\n" + GetSep(40));
+      SelectedItem.DescriptionItem();
+      PrintText("\n" + GetSep(40));
       Pause();
       return false;
     }
 
     private bool ConsumeItemUse()
     {
-      var sItem = (ConsumeItem)SelectedItem;
-      sItem.DescriptionItemAP(MyInventory.Player);
+      var sItem = (IConsumeItem)SelectedItem;
+      sItem.DescriptionItem();
       if (ReadYesOrNoScean(CTexts.Make($"{{{sItem.Name.ToString()}, {Colors.txtInfo}}} {{을(를) 사용하시겠습니까?}}")))
       {
         sItem.UseItem(MyInventory.Player);

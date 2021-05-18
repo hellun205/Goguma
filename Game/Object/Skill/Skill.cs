@@ -24,6 +24,6 @@ namespace Goguma.Game.Object.Skill
           return null;
       }
     }
-    public abstract void Information();
+    public abstract void Information(bool IsPause);
   }
 }
