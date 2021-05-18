@@ -11,6 +11,7 @@ namespace Goguma.Game.Object.Inventory.Item.Consume
   class CPotion : ConsumeItem
   {
     public ItemEffect Effect { get; set; }
+    public override string GetString => "포션";
     public CPotion() : base() { }
     public CPotion(CPotion item) : this()
     {

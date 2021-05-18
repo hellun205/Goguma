@@ -10,6 +10,7 @@ using Goguma.Game.Object.Entity.Monster;
 using Goguma.Game.Object.Skill;
 using System.Linq;
 using static Goguma.Game.Console.ConsoleFunction;
+using Goguma.Game.Object.Inventory.Item;
 
 namespace Goguma.Game.Object.Entity.Player
 {
@@ -67,6 +68,7 @@ namespace Goguma.Game.Object.Entity.Player
           resultSSI.Add("{Player Level Up}");
           resultSSI.Add("{Battle with test monster}");
           resultSSI.Add("{Add Test Skill}");
+          resultSSI.Add("{Add Item}");
           resultSSI.Add($"{{뒤로 가기, {Colors.txtMuted}}}");
           return resultSSI;
         };
@@ -253,6 +255,17 @@ namespace Goguma.Game.Object.Entity.Player
               player.Skills.Add(Skills.GetPlayerSkill(SkillList.TestSkill1));
               player.Skills.Add(Skills.GetPlayerSkill(SkillList.TestSkill2));
               player.Skills.Add(Skills.GetPlayerSkill(SkillList.TestBuffSkill1));
+              break;
+            case "Add Item":
+              var ssi = new SelectSceneItems();
+              for (var i = 0; i < Enum.GetValues(typeof(ItemList)).Length; i++)
+                ssi.Add(new SelectSceneItem(Items.Get((ItemList)i).Name));
+              ssi.Add(new SelectSceneItem(CTexts.Make($"{{뒤로 가기,{Colors.txtMuted}}}")));
+              var itemSelectSS = new SelectScene(CTexts.Make("{아이템을 선택하시오.}"), ssi);
+              if (itemSelectSS.getString == "뒤로 가기") return;
+              player.Inventory.GetItem(Items.Get((ItemList)itemSelectSS.getIndex));
+              PrintText($"\n아이템 {Items.Get((ItemList)itemSelectSS.getIndex).Name}(을)를 얻었습니다.\n");
+              Pause();
               break;
             default:
               return;

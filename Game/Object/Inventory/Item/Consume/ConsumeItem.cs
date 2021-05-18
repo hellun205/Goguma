@@ -1,9 +1,5 @@
 using System;
-using Colorify;
-using Goguma.Game.Console;
 using Goguma.Game.Object.Entity.Player;
-using static Goguma.Game.Console.ConsoleFunction;
-using static Goguma.Game.Console.StringFunction;
 
 namespace Goguma.Game.Object.Inventory.Item.Consume
 {
@@ -19,5 +15,6 @@ namespace Goguma.Game.Object.Inventory.Item.Consume
       LoseCount = 1;
     }
     public abstract void UseItem(IPlayer player);
+    public abstract string GetString { get; }
   }
 }

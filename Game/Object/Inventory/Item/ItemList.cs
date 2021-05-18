@@ -16,6 +16,8 @@ namespace Goguma.Game.Object.Inventory.Item
     RED_DIAMOND,
     GOLD_INGOT,
     EMERALD,
-    POTION_1
+    POTION_1,
+    SKILLBOOK_TEST_SKILL1,
+    SKILLBOOK_TEST_SKILL2
   }
 }

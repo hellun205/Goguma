@@ -3,6 +3,7 @@ using Goguma.Game.Console;
 using Goguma.Game.Object.Inventory.Item.Consume;
 using Goguma.Game.Object.Inventory.Item.Equipment;
 using Goguma.Game.Object.Inventory.Item.Other;
+using Goguma.Game.Object.Skill;
 
 namespace Goguma.Game.Object.Inventory.Item
 {
@@ -140,6 +141,24 @@ namespace Goguma.Game.Object.Inventory.Item
             {
               Hp = 10
             },
+            SellPrice = 100,
+            BuyPrice = 150
+          };
+          return resultItem;
+        case ItemList.SKILLBOOK_TEST_SKILL1:
+          resultItem = new CSkillBook()
+          {
+            Name = CTexts.Make($"{{스킬 북: 테스트 스킬1}},{Colors.txtInfo}}}"),
+            SkillToReceive = Skills.GetPlayerSkill(SkillList.TestSkill1),
+            SellPrice = 100,
+            BuyPrice = 150
+          };
+          return resultItem;
+        case ItemList.SKILLBOOK_TEST_SKILL2:
+          resultItem = new CSkillBook()
+          {
+            Name = CTexts.Make($"{{스킬 북: 테스트 스킬2}},{Colors.txtInfo}}}"),
+            SkillToReceive = Skills.GetPlayerSkill(SkillList.TestSkill2),
             SellPrice = 100,
             BuyPrice = 150
           };

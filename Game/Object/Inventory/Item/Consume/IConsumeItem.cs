@@ -6,5 +6,6 @@ namespace Goguma.Game.Object.Inventory.Item.Consume
   {
     int LoseCount { get; set; }
     void UseItem(IPlayer player);
+    string GetString { get; }
   }
 }

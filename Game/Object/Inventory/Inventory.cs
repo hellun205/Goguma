@@ -1,5 +1,4 @@
 ﻿using Goguma.Game.Object.Inventory.Item;
-using static Goguma.Game.Console.ConsoleFunction;
 using System;
 using Goguma.Game.Object.Entity.Player;
 using Goguma.Game.Console;
