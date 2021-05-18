@@ -12,7 +12,7 @@ namespace Goguma.Game.Object.Inventory.Item
     public int Count
     {
       get => count;
-      set => Math.Min(MaxCount, value);
+      set => count = Math.Min(MaxCount, Math.Max(1, value));
     }
     public abstract int MaxCount { get; }
     public abstract HavingType Type { get; }
@@ -31,6 +31,9 @@ namespace Goguma.Game.Object.Inventory.Item
     }
     public abstract void UseItem(IPlayer player);
     public abstract void DescriptionItem();
-    public abstract IItem GetInstance();
+    public IItem GetInstance()
+    {
+      return null;
+    }
   }
 }

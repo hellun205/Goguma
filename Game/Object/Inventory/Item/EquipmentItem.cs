@@ -10,7 +10,7 @@ namespace Goguma.Game.Object.Inventory.Item
   [Serializable]
   class EquipmentItem : Item, IEquipmentItem
   {
-    new public int Count { get => 1; }
+    new public int Count => 1;
     public override int MaxCount => 1;
     public WearingType EquipmentType { get; set; }
     public ItemIncrease Increase { get; set; }
@@ -19,7 +19,7 @@ namespace Goguma.Game.Object.Inventory.Item
     {
 
     }
-    public EquipmentItem(IItem item) : this()
+    public EquipmentItem(EquipmentItem item) : this()
     {
       Name = item.Name;
     }
@@ -61,7 +61,7 @@ namespace Goguma.Game.Object.Inventory.Item
       }
     }
 
-    public override IItem GetInstance()
+    new public IItem GetInstance()
     {
       return new EquipmentItem(this);
     }

@@ -4,14 +4,14 @@ using Goguma.Game.Object.Entity.Player;
 namespace Goguma.Game.Object.Inventory.Item
 {
   [Serializable]
-  class OtherItem : Item, IOtherItem
+  class OtherItem : Item
   {
     public override int MaxCount => 64;
     public OtherItem()
     {
       Count = 1;
     }
-    public OtherItem(IItem item) : this()
+    public OtherItem(OtherItem item) : this()
     {
       Name = item.Name;
       Count = item.Count;
@@ -23,7 +23,7 @@ namespace Goguma.Game.Object.Inventory.Item
     {
     }
 
-    public override IItem GetInstance()
+    new public IItem GetInstance()
     {
       return new OtherItem(this);
     }
