@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using Colorify;
-using Gogu_Remaster.Game.Object.Inventory.Item;
 using Goguma.Game.Console;
 using Goguma.Game.Object.Entity.AttSys;
 using Goguma.Game.Object.Entity.Player;
 using Goguma.Game.Object.Inventory.Item;
+using Goguma.Game.Object.Inventory.Item.Drop;
 using Goguma.Game.Object.Skill;
 using static Goguma.Game.Console.ConsoleFunction;
 using static Goguma.Game.Console.StringFunction;
@@ -33,7 +33,7 @@ namespace Goguma.Game.Object.Entity.Monster
       get => Math.Max(0, defPer + BuffsIncrease.DefPer);
       set => defPer = Math.Max(0, value);
     }
-    public List<Skill.Skill> Skills { get; set; }
+    public List<ISkill> Skills { get; set; }
     public double GivingGold { get; set; }
     public double GivingExp { get; set; }
     public DroppingItems DroppingItems { get; set; }
@@ -61,13 +61,14 @@ namespace Goguma.Game.Object.Entity.Monster
 
     public Monster()
     {
-      Skills = new List<Skill.Skill>();
+      Skills = new List<ISkill>();
       DroppingItems = new DroppingItems();
       AttSystem = new AttackSyss(InGame.player, this);
       Buffs = new List<IBuffSkill>();
     }
-    public void PrintAbout(IPlayer player = null)
+    public void PrintAbout()
     {
+      var player = InGame.player;
       PrintText($"\n{GetSep(40, $"{Name}")}");
       PrintText("\n");
       PrintText(Descriptions);
@@ -104,14 +105,19 @@ namespace Goguma.Game.Object.Entity.Monster
       DroppingItems = new DroppingItems(dropItem);
     }
 
-    public void AttackPlayer(IPlayer player)
-    {
-
-    }
-
-    public Monster GetInstace()
+    public Monster GetInstance()
     {
       return new Monster(this);
+    }
+    public void AddBuff(IBuffSkill skill)
+    {
+      Buffs.Add(skill);
+      if (skill.buff.Hp != 0)
+        Hp += skill.buff.Hp;
+    }
+    public void RemoveBuff(IBuffSkill skill)
+    {
+      Buffs.Remove(skill);
     }
   }
 }

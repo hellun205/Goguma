@@ -1,6 +1,7 @@
 ﻿using System;
 using Colorify;
 using Goguma.Game.Console;
+using Goguma.Game.Object.Inventory.Item.Equipment;
 
 namespace Goguma.Game.Object.Inventory
 {
@@ -103,7 +104,7 @@ namespace Goguma.Game.Object.Inventory
             if (!inven.Items.wearing.GetItem((WearingType)i).IsAir)
               resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{{InvenInfo.WearingInven.GetTypeString((WearingType)i)}, {Colors.txtSuccess}}} {{ : }} {{{inven.Items.wearing.GetItem((WearingType)i).Name.ToString()} , {Colors.txtInfo}}}")));
             else
-              resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{{InvenInfo.WearingInven.GetTypeString((WearingType)i)}, {Colors.txtSuccess}}} {{ : }} {{비어 있음 , {Colors.txtInfo}}}"), false));
+              resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{{InvenInfo.WearingInven.GetTypeString((WearingType)i)}, {Colors.txtSuccess}}} {{ : }} {{비어 있음 , {Colors.txtMuted}}}"), false));
           }
           resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{뒤로 가기, {Colors.txtMuted}}}")));
 
@@ -152,12 +153,12 @@ namespace Goguma.Game.Object.Inventory
             if (!item.IsAir)
             {
               if (hType == HavingType.Equipment)
-                resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{{item.Name.ToString()}}} {{ [{item.Count}], {Colors.txtInfo}}} {{ [{InvenInfo.WearingInven.GetTypeString((WearingType)item.Type)}],{Colors.txtWarning}}}")));
+                resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{{item.Name.ToString()}}} {{ [{item.Count}], {Colors.txtInfo}}} {{ [{InvenInfo.WearingInven.GetTypeString((WearingType)((IEquipmentItem)item).EquipmentType)}],{Colors.txtWarning}}}")));
               else
                 resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{{item.Name.ToString()}}} {{ [{item.Count}], {Colors.txtInfo}}}")));
             }
             else
-              resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{비어 있음}} {{ [{item.Count}], {Colors.txtInfo}}}"), false));
+              resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{비어 있음}} {{ [{item.Count}], {Colors.txtMuted}}}"), false));
           }
 
           resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{뒤로 가기, {Colors.txtMuted}}}")));

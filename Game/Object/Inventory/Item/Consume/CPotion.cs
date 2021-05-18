@@ -5,60 +5,22 @@ using Goguma.Game.Object.Entity.Player;
 using static Goguma.Game.Console.ConsoleFunction;
 using static Goguma.Game.Console.StringFunction;
 
-namespace Goguma.Game.Object.Inventory.Item
+namespace Goguma.Game.Object.Inventory.Item.Consume
 {
   [Serializable]
-  class ConsumeItem : Item, IConsumeItem
+  class CPotion : ConsumeItem
   {
     public ItemEffect Effect { get; set; }
-    public int LoseCount { get; set; }
-
-    new static public ConsumeItem GetAir()
+    public override string GetString => "포션";
+    public CPotion() : base() { }
+    public CPotion(CPotion item) : this()
     {
-      return new ConsumeItem { IsAir = true };
+      Name = item.Name;
+      Count = item.Count;
     }
-    new public void DescriptionItem()
+    public override void DescriptionItem()
     {
-      if (Effect.Hp != 0)
-      {
-        PrintText(CTexts.Make("{\nHP [ }"));
-        PrintText(NumberColor(Effect.Hp));
-        PrintText(CTexts.Make("{ ]}"));
-      }
-      if (Effect.Ep != 0)
-      {
-        PrintText(CTexts.Make("{  EP [ }"));
-        PrintText(NumberColor(Effect.Ep));
-        PrintText(CTexts.Make("{ ]}"));
-      }
-      if (Effect.AttDmg != 0)
-      {
-        PrintText(CTexts.Make("{\nATT [ }"));
-        PrintText(NumberColor(Effect.AttDmg));
-        PrintText(CTexts.Make("{ ]}"));
-      }
-      if (Effect.DefPer != 0)
-      {
-        PrintText(CTexts.Make("{  DEF [ }"));
-        PrintText(NumberColor(Effect.DefPer));
-        PrintText(CTexts.Make("{ % ]}"));
-      }
-      if (Effect.Gold != 0)
-      {
-        PrintText(CTexts.Make("{\nGOLD [ }"));
-        PrintText(NumberColor(Effect.Gold));
-        PrintText(CTexts.Make("{ G ]}"));
-      }
-      if (Effect.Exp != 0)
-      {
-        PrintText(CTexts.Make("{\nEXP [ }"));
-        PrintText(NumberColor(Effect.Exp));
-        PrintText(CTexts.Make("{ ]\n}"));
-      }
-    }
-
-    new public void DescriptionItemAP(IPlayer player)
-    {
+      var player = InGame.player;
       if (Effect.Hp != 0)
       {
         PrintText(CTexts.Make($"{{\nHP }} {{{player.Hp} / {player.MaxHp}, {Colors.txtWarning}}} {{ [ }}"));
@@ -111,7 +73,7 @@ namespace Goguma.Game.Object.Inventory.Item
       }
     }
 
-    new public void UseItem(IPlayer player)
+    public override void UseItem(IPlayer player)
     {
       player.Hp += Effect.Hp;
       player.Ep += Effect.Ep;
@@ -120,7 +82,10 @@ namespace Goguma.Game.Object.Inventory.Item
       player.Gold += Effect.Gold;
       player.Exp += Effect.Exp;
     }
-
+    public override IItem GetInstance()
+    {
+      return new CPotion(this);
+    }
 
   }
 }

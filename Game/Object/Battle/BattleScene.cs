@@ -9,6 +9,7 @@ using System.Linq;
 using static Goguma.Game.Console.ConsoleFunction;
 using static Goguma.Game.Console.StringFunction;
 using System.Collections.Generic;
+using Goguma.Game.Object.Inventory.Item;
 
 namespace Goguma.Game.Object.Battle
 {
@@ -101,7 +102,7 @@ namespace Goguma.Game.Object.Battle
               return CTexts.Make($"{{\n\n「{monster.Name} [Lv. {monster.Level}]」,{ColorByLevel(player.Level, monster.Level)}}} {{{rText} }} {{{damage},{Colors.txtDanger}}} {{의 피해를 입혔습니다.\n    남은 체력: }} {{[ {(int)(monster.Hp - damage)} / {monster.MaxHp} ]\n, {ColorByHp(monster.Hp - damage, monster.MaxHp)}}}");
           };
           PrintText(GetText(new Random().Next(0, 3)));
-          Pause();
+          // Pause();
         }
         static public void SkillAttack(IPlayer player, IMonster monster, IAttackSkill aSkill, double damage)
         {
@@ -150,65 +151,80 @@ namespace Goguma.Game.Object.Battle
           PrintText("\n");
           Pause();
         }
-        static public void Kill(IMonster monster)
+        static public void Kill(IMonster monster, List<IItem> dropItemList)
         {
           PrintText(CTexts.Make($"{{\n\n  {monster.GivingGold} G,{Colors.txtWarning}}}{{를 획득했습니다.\n}}"));
-          Pause();
           PrintText(CTexts.Make($"{{\n\n  {monster.GivingExp} Exp,{Colors.txtSuccess}}}{{를 획득했습니다.\n}}"));
           Pause();
-          foreach (var item in monster.DroppingItems.Drop())
+          foreach (var item in dropItemList)
           {
             PrintText(CTexts.Make($"{{\n\n  {InvenInfo.HavingInven.GetTypeString(item.Type)} 아이템 ,{Colors.txtWarning}}}{{{item.Name},{Colors.txtSuccess}}}{{(을)를 획득했습니다.\n}}"));
           }
-          Pause();
+          // Pause();
         }
-        static public class SelSkill
+
+        static public SelectScene SelSkillType(IPlayer player, out SkillType skType)
         {
-          static public SkillType skType { get; set; }
-          static public SelectScene Scean(IPlayer player)
+          Func<CTexts> GetQText = () =>
           {
-            Func<CTexts> GetQText = () =>
-            {
-              return CTexts.Make($"{{무슨 스킬을 사용하시겠습니까?}}");
-            };
-            Func<SelectSceneItems> GetSSI = () =>
-            {
-              var resultSSI = new SelectSceneItems();
-              for (var i = 0; i < Enum.GetValues(typeof(SkillType)).Length; i++)
-                resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{{Skill.Skill.GetTypeString((SkillType)i)} 스킬}}")));
-              resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{뒤로 가기, {Colors.txtMuted}}}")));
-              return resultSSI;
-            };
-            var skillTypeSc = new SelectScene(GetQText(), GetSSI());
-            if (skillTypeSc.getString == "뒤로 가기") return null;
-            skType = (SkillType)(skillTypeSc.getIndex);
-            var skills = from sk in player.Skills
-                         where sk.Type == skType
-                         select sk;
-            var selIndexSc = Scean(player, skType);
-            return selIndexSc;
-          }
-          static public SelectScene Scean(IPlayer player, SkillType sType)
+            return CTexts.Make($"{{무슨 스킬을 사용하시겠습니까?}}");
+          };
+          Func<SelectSceneItems> GetSSI = () =>
           {
-            Func<SkillType, CTexts> GetQText = (SkillType sType) =>
-             {
-               return CTexts.Make($"{{무슨 스킬을 사용하시겠습니까? }} {{[ {Skill.Skill.GetTypeString(sType)} 스킬 ],{Colors.txtWarning}}}");
-             };
-            Func<SkillType, SelectSceneItems> GetSSI = (SkillType sType) =>
-            {
-              var resultSSI = new SelectSceneItems();
-              var skill = from sk in player.Skills
-                          where sk.Type == sType
-                          select sk;
-              foreach (var sk in skill)
-                resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{{sk.Name}}}")));
-              resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{뒤로 가기, {Colors.txtMuted}}}")));
-              return resultSSI;
-            };
-            var scene = new SelectScene(GetQText(sType), GetSSI(sType));
-            if (scene.getString == "뒤로 가기") return null;
-            return scene;
-          }
+            var resultSSI = new SelectSceneItems();
+            for (var i = 0; i < Enum.GetValues(typeof(SkillType)).Length; i++)
+              resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{{Skill.Skill.GetTypeString((SkillType)i)} 스킬}}")));
+            resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{뒤로 가기, {Colors.txtMuted}}}")));
+            return resultSSI;
+          };
+          skType = (SkillType)0;
+          var skillTypeSc = new SelectScene(GetQText(), GetSSI());
+          if (skillTypeSc.getString == "뒤로 가기") return null;
+          skType = (SkillType)(skillTypeSc.getIndex);
+          var skills = from sk in player.Skills
+                       where sk.Type == (SkillType)(skillTypeSc.getIndex)
+                       select sk;
+          var selIndexSc = SelSkill(player, skType);
+          return selIndexSc;
+        }
+        static public SelectScene SelSkill(IPlayer player, SkillType sType)
+        {
+          Func<SkillType, CTexts> GetQText = (SkillType sType) =>
+           {
+             return CTexts.Make($"{{무슨 스킬을 사용하시겠습니까? }} {{[ {Skill.Skill.GetTypeString(sType)} 스킬 ],{Colors.txtWarning}}}");
+           };
+          Func<SkillType, SelectSceneItems> GetSSI = (SkillType sType) =>
+          {
+            var resultSSI = new SelectSceneItems();
+            var skill = from sk in player.Skills
+                        where sk.Type == sType
+                        select sk;
+            foreach (var sk in skill)
+              resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{{sk.Name}}}")));
+            resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{뒤로 가기, {Colors.txtMuted}}}")));
+            return resultSSI;
+          };
+          var scene = new SelectScene(GetQText(sType), GetSSI(sType));
+          if (scene.getString == "뒤로 가기") return null;
+          return scene;
+        }
+        static public SelectScene SkillAction(ISkill skill)
+        {
+          Func<ISkill, CTexts> GetQText = (ISkill skill) =>
+          {
+            return CTexts.Make($"{{{Skill.Skill.GetTypeString(skill.Type)} 스킬,{Colors.txtWarning}}}{{ 「{skill.Name}」}}");
+          };
+          Func<SelectSceneItems> GetSSI = () =>
+          {
+            var resultSSI = new SelectSceneItems();
+            resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{사용 하기,{Colors.txtSuccess}}}")));
+            resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{정보 보기,{Colors.txtSuccess}}}")));
+            resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{뒤로 가기, {Colors.txtMuted}}}")));
+            return resultSSI;
+          };
+          var scene = new SelectScene(GetQText(skill), GetSSI());
+          if (scene.getString == "뒤로 가기") return null;
+          return scene;
         }
       }
       static public class Monster
@@ -223,7 +239,7 @@ namespace Goguma.Game.Object.Battle
               return CTexts.Make($"{{\n\n「{monster.Name} [Lv. {monster.Level}]」,{ColorByLevel(player.Level, monster.Level)}}} {{(이)가 }} {{당신,{Colors.txtInfo}}} {{에게 }} {{{damage},{Colors.txtDanger}}} {{의 피해를 입혔습니다.\n    남은 체력: }} {{[ {(int)(player.Hp - damage)} / {player.MaxHp} ]\n, {ColorByHp(player.Hp - damage, player.MaxHp)}}}");
           };
           PrintText(GetText());
-          Pause();
+          // Pause();
         }
         static public void SkillAttack(IMonster monster, IPlayer player, IAttackSkill aSkill, double damage)
         {
@@ -242,7 +258,7 @@ namespace Goguma.Game.Object.Battle
           PrintText("\n");
           Pause();
           PrintText(Text());
-          Pause();
+          // Pause();
         }
         static public void BuffSkill(IMonster monster, IPlayer player, IBuffSkill bSkill)
         {
@@ -251,7 +267,7 @@ namespace Goguma.Game.Object.Battle
           PrintText(CTexts.Make($"{{\n\n  {monster.Name},{Colors.txtSuccess}}}{{ : }}"));
           PrintText(bSkill.Text);
           PrintText("\n");
-          Pause();
+          // Pause();
           // PrintBuffEffect();
           // Pause();
         }

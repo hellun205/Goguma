@@ -46,10 +46,11 @@ namespace Goguma.Game.Object.Battle
 
       Action Kill = () =>
       {
-        BattleScene.PvE.Player.Kill(monster);
+        var drop = monster.DroppingItems.Drop();
+        BattleScene.PvE.Player.Kill(monster, drop);
         player.Gold += GoldByLevel(monster.GivingGold, player.Level, monster.Level);
         player.Exp += ExpByLevel(monster.GivingExp, player.Level, monster.Level);
-        foreach (var item in monster.DroppingItems.Drop())
+        foreach (var item in drop)
           player.Inventory.GetItem(item);
       };
       Func<IAttackSkill, bool> UseAttackSkill = (IAttackSkill skill) =>
@@ -82,36 +83,67 @@ namespace Goguma.Game.Object.Battle
         }
         BattleScene.PvE.Player.BuffSkill(player, skill);
         player.Ep -= skill.useEp;
-        buffs.Add(skill);
+        player.AddBuff(skill);
         buffTurns.Add(turn);
         return true;
       };
       Func<bool> SelectAttSkill = () =>
       {
-        var skSc = BattleScene.PvE.Player.SelSkill.Scean(player, SkillType.AttackSkill);
-        if (skSc == null) return false;
-        var skills = from sk in player.Skills
-                     where sk.Type == SkillType.AttackSkill
-                     select sk;
-        var skill = skills.ToList<ISkill>()[skSc.getIndex];
-        return UseAttackSkill((IAttackSkill)skill);
+        while (true)
+        {
+          var skSc = BattleScene.PvE.Player.SelSkill(player, SkillType.AttackSkill);
+          if (skSc == null) return false;
+          var skills = from sk in player.Skills
+                       where sk.Type == SkillType.AttackSkill
+                       select sk;
+          var skill = skills.ToList<ISkill>()[skSc.getIndex];
+          while (true)
+          {
+            var skActSC = BattleScene.PvE.Player.SkillAction(skill);
+            if (skActSC == null) break;
+            switch (skActSC.getString)
+            {
+              case "사용 하기":
+                return UseAttackSkill((IAttackSkill)skill);
+              case "정보 보기":
+                skill.Information();
+                break;
+            }
+          }
+        }
       };
       Func<bool> UseSkill = () =>
       {
-        var skSc = BattleScene.PvE.Player.SelSkill.Scean(player);
-        if (skSc == null) return false;
-        var skills = from sk in player.Skills
-                     where sk.Type == BattleScene.PvE.Player.SelSkill.skType
-                     select sk;
-        var skill = skills.ToList<ISkill>()[skSc.getIndex];
-        switch (skill.Type)
+        while (true)
         {
-          case SkillType.AttackSkill:
-            return UseAttackSkill((IAttackSkill)skill);
-          case SkillType.BuffSkill:
-            return UseBuffSkill((IBuffSkill)skill);
-          default:
-            return false;
+          SkillType skillType;
+          var skSc = BattleScene.PvE.Player.SelSkillType(player, out skillType);
+          if (skSc == null) return false;
+          var skills = from sk in player.Skills
+                       where sk.Type == skillType
+                       select sk;
+          var skill = skills.ToList<ISkill>()[skSc.getIndex];
+          while (true)
+          {
+            var skActSC = BattleScene.PvE.Player.SkillAction(skill);
+            if (skActSC == null) break;
+            switch (skActSC.getString)
+            {
+              case "사용 하기":
+                switch (skill.Type)
+                {
+                  case SkillType.AttackSkill:
+                    return UseAttackSkill((IAttackSkill)skill);
+                  case SkillType.BuffSkill:
+                    return UseBuffSkill((IBuffSkill)skill);
+                  default:
+                    return false;
+                }
+              case "정보 보기":
+                skill.Information();
+                break;
+            }
+          }
         }
       };
       Action<bool> EndBuff = (bool all) =>
@@ -129,7 +161,7 @@ namespace Goguma.Game.Object.Battle
         foreach (var eBf in endBuffs.ToList<IBuffSkill>())
         {
           buffTurns.RemoveAt(buffs.IndexOf(eBf));
-          buffs.Remove(eBf);
+          player.RemoveBuff(eBf);
         }
       };
       Func<bool> GeneralAttack = () =>
@@ -137,15 +169,8 @@ namespace Goguma.Game.Object.Battle
         double damage = DamageByLevel(player.AttDmg, player.Level, monster.Level) * (1 - (monster.DefPer / 100));
         BattleScene.PvE.Player.GeneralAttack(player, monster, damage);
 
-        if (monster.Hp - damage <= 0)
-        {
-          monster.Hp = 0;
-          Kill();
-        }
-        else
-        {
-          monster.Hp -= damage;
-        }
+        monster.Hp = Math.Max(0, monster.Hp - damage);
+
         return true;
       };
       Action<bool> MEndBuff = (bool all) =>
@@ -163,12 +188,12 @@ namespace Goguma.Game.Object.Battle
           foreach (var eBf in endBuffs.ToList<IBuffSkill>())
           {
             mBuffTurns.RemoveAt(monster.Buffs.IndexOf(eBf));
-            monster.Buffs.Remove(eBf);
+            monster.RemoveBuff(eBf);
           }
         };
       Action MonsterTurn = () =>
       {
-        ISkill skill = new Skill.Skill();
+        ISkill skill = null;
         Action Kill = () =>
         {
           // TO DO: Player Warp Town
@@ -192,7 +217,7 @@ namespace Goguma.Game.Object.Battle
           var bSkill = (IBuffSkill)skill;
           if (monster.Buffs.Contains(skill)) return false;
           BattleScene.PvE.Monster.BuffSkill(monster, player, bSkill);
-          monster.Buffs.Add(bSkill);
+          monster.AddBuff(bSkill);
           mBuffTurns.Add(turn);
           return true;
         };
@@ -240,7 +265,7 @@ namespace Goguma.Game.Object.Battle
             monster.PrintAbout();
             break;
           case "인벤토리 열기":
-            skip = player.Inventory.Print();
+            skip = player.Inventory.Open();
             break;
           case "공격 하기":
             var attackScene = BattleScene.PvE.Player.Attack();

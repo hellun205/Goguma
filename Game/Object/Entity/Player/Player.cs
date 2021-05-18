@@ -8,6 +8,7 @@ using Goguma.Game.Object.Inventory;
 using Goguma.Game.Object.Skill;
 using static Goguma.Game.Console.ConsoleFunction;
 using Gogu_Remaster.Game.Object.Map.Town;
+using Goguma.Game.Object.Inventory.Item.Equipment;
 
 namespace Goguma.Game.Object.Entity.Player
 {
@@ -20,21 +21,12 @@ namespace Goguma.Game.Object.Entity.Player
     public double Hp
     {
       get => hp;
-      set
-      {
-        hp = Math.Min(value, MaxHp);
-      }
+      set => hp = Math.Min(value, MaxHp);
     }
     public double Ep
     {
       get => ep;
-      set
-      {
-        if (MaxEp >= value)
-          ep = value;
-        else if (MaxEp < value)
-          ep = MaxEp;
-      }
+      set => Math.Min(value, MaxEp);
     }
     public double MaxHp
     {
@@ -218,6 +210,19 @@ namespace Goguma.Game.Object.Entity.Player
     public double RequiredForLevelUp()
     {
       return MaxExp - Exp;
+    }
+
+    public void AddBuff(IBuffSkill skill)
+    {
+      Buffs.Add(skill);
+      if (skill.buff.Hp != 0)
+        Hp += skill.buff.Hp;
+      if (skill.buff.Ep != 0)
+        Ep += skill.buff.Ep;
+    }
+    public void RemoveBuff(IBuffSkill skill)
+    {
+      Buffs.Remove(skill);
     }
   }
 }

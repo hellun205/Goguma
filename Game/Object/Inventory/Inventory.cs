@@ -1,8 +1,8 @@
 ﻿using Goguma.Game.Object.Inventory.Item;
-using static Goguma.Game.Console.ConsoleFunction;
 using System;
 using Goguma.Game.Object.Entity.Player;
 using Goguma.Game.Console;
+using Goguma.Game.Object.Inventory.Item.Equipment;
 
 namespace Goguma.Game.Object.Inventory
 {
@@ -18,83 +18,80 @@ namespace Goguma.Game.Object.Inventory
       Player = player;
     }
 
-    public bool Print() // Select Inventory (Wearing, Having)
+    public bool Open()
     {
       while (true)
       {
-        var ss = InvenInfo.Scene.SelInvenType.Scene();
+        var select = Select();
+        if (select == null) break;
+        var itemInfo = (ItemInfo)select;
+        SelectScene ss = null;
+        ItemOption io = null;
+        switch (itemInfo.InvenType)
+        {
+          case InvenType.Having:
+            while (true)
+            {
+              ss = InvenInfo.Scene.ItemOption.Having.Scene(this, itemInfo.hType, itemInfo.havingIndex);
+              if (ss.getString == "뒤로 가기") break;
 
-        if (ss.getString == "뒤로 가기")
-          return false;
-        else
-          if (Print((InvenType)ss.getIndex)) return true;
+              io = new ItemOption(this, itemInfo.hType, itemInfo.havingIndex, ss.getString);
+              if (io.Act()) return true;
+            }
+            break;
+          case InvenType.Wearing:
+            while (true)
+            {
+              ss = InvenInfo.Scene.ItemOption.Wearing.Scene(this, itemInfo.wType);
+              if (ss.getString == "뒤로 가기") break;
+
+              io = new ItemOption(this, itemInfo.wType, ss.getString);
+              if (io.Act()) return true;
+            }
+            break;
+        }
       }
+      return false;
     }
-    private bool Print(InvenType invenType)
+    public ItemInfo? Select()
     {
-      switch (invenType)
-      {
-        case InvenType.Wearing: // Select WearingItems
-          while (true)
-          {
-            var ss = InvenInfo.Scene.WearingInven.Scene(this);
-
-            if (ss.getString == "뒤로 가기")
-              return false;
-            else
-              return Select((WearingType)ss.getIndex);
-          }
-        case InvenType.Having: // Select HavingType
-          while (true)
-          {
-            var ss = InvenInfo.Scene.SelHavingInven.Scene();
-
-            if (ss.getString == "뒤로 가기")
-              return false;
-            else
-              return Print((HavingType)ss.getIndex);
-          }
-        default:
-          return false;
-      }
-    }
-
-    private bool Print(HavingType hType) // Select HavingItems
-    {
+      var resultII = new ItemInfo();
       while (true)
       {
-        var ss = InvenInfo.Scene.HavingInven.Scene(this, hType);
-
-        if (ss.getString == "뒤로 가기")
-          return false;
-        else
-          if (Select(hType, ss.getIndex)) return true;
-      }
-    }
-
-    private bool Select(WearingType wType) // Selected WearingItem
-    {
-      var ss = InvenInfo.Scene.ItemOption.Wearing.Scene(this, wType);
-
-      if (ss.getString == "뒤로 가기")
-        return false;
-      else
-      {
-        var io = new ItemOption(this, wType, ss.getString);
-        return io.Act();
-      }
-    }
-
-    private bool Select(HavingType hType, int index) // Selected HavingItem
-    {
-      var ss = InvenInfo.Scene.ItemOption.Having.Scene(this, hType, index);
-
-      if (ss.getString == "뒤로 가기")
-        return false;
-      else
-      {
-        var io = new ItemOption(this, hType, index, ss.getString);
-        return io.Act();
+        var invenTypeSS = InvenInfo.Scene.SelInvenType.Scene(); // Select InvenType
+        if (invenTypeSS.getString == "뒤로 가기") return null;
+        resultII.InvenType = (InvenType)invenTypeSS.getIndex;
+        switch ((InvenType)invenTypeSS.getIndex)
+        {
+          case InvenType.Wearing:
+            while (true)
+            {
+              var wearingTypeSS = InvenInfo.Scene.WearingInven.Scene(this); // Select Wearing Item (Type)
+              if (wearingTypeSS.getString == "뒤로 가기") break;
+              resultII.wType = (WearingType)wearingTypeSS.getIndex;
+              resultII.Item = Items.wearing.Items[wearingTypeSS.getIndex];
+              return resultII;
+            }
+            break;
+          case InvenType.Having:
+            while (true)
+            {
+              var havingTypeSS = InvenInfo.Scene.SelHavingInven.Scene(); // Select Having Type
+              if (havingTypeSS.getString == "뒤로 가기") break;
+              resultII.hType = (HavingType)havingTypeSS.getIndex;
+              while (true)
+              {
+                var havingIndexSS = InvenInfo.Scene.HavingInven.Scene(this, (HavingType)havingTypeSS.getIndex); // Select Having Item
+                if (havingIndexSS.getString == "뒤로 가기") break;
+                resultII.havingIndex = havingIndexSS.getIndex;
+                resultII.Item = Items.having.Items[havingTypeSS.getIndex][havingIndexSS.getIndex];
+                return resultII;
+              }
+            }
+            break;
+          default:
+            return null;
+        }
       }
     }
     public void RemoveItem(WearingType wType, int count) // Wearing Item Remove
