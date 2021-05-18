@@ -2,6 +2,7 @@
 using Colorify;
 using Goguma.Game.Console;
 using Goguma.Game.Object.Inventory.Item;
+using Goguma.Game.Object.Inventory.Item.Equipment;
 
 namespace Goguma.Game.Object.Inventory
 {

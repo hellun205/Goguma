@@ -1,6 +1,8 @@
 using Colorify;
 using Goguma.Game.Console;
-using Goguma.Game.Object.Inventory.Item.ConsumeItem;
+using Goguma.Game.Object.Inventory.Item.Consume;
+using Goguma.Game.Object.Inventory.Item.Equipment;
+using Goguma.Game.Object.Inventory.Item.Other;
 
 namespace Goguma.Game.Object.Inventory.Item
 {

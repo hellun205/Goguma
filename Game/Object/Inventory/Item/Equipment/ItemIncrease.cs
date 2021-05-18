@@ -1,6 +1,6 @@
 using System;
 
-namespace Goguma.Game.Object.Inventory
+namespace Goguma.Game.Object.Inventory.Item.Equipment
 {
   [Serializable]
   public struct ItemIncrease

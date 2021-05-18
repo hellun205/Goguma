@@ -3,7 +3,8 @@ using System;
 using static Goguma.Game.Console.ConsoleFunction;
 using static Goguma.Game.Console.StringFunction;
 using Colorify;
-using Goguma.Game.Object.Inventory.Item.ConsumeItem;
+using Goguma.Game.Object.Inventory.Item.Consume;
+using Goguma.Game.Object.Inventory.Item.Equipment;
 
 namespace Goguma.Game.Object.Inventory.Item
 {

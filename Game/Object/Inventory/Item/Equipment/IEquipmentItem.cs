@@ -1,6 +1,5 @@
-﻿using Goguma.Game.Object.Entity.Player;
-
-namespace Goguma.Game.Object.Inventory.Item
+﻿
+namespace Goguma.Game.Object.Inventory.Item.Equipment
 {
   public interface IEquipmentItem : IItem
   {

@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using Colorify;
-using Gogu_Remaster.Game.Object.Inventory.Item;
 using Goguma.Game.Console;
 using Goguma.Game.Object.Entity.AttSys;
 using Goguma.Game.Object.Entity.Player;
 using Goguma.Game.Object.Inventory.Item;
+using Goguma.Game.Object.Inventory.Item.Drop;
 using Goguma.Game.Object.Skill;
 using static Goguma.Game.Console.ConsoleFunction;
 using static Goguma.Game.Console.StringFunction;

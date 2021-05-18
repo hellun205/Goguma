@@ -1,11 +1,10 @@
 using System;
 using Colorify;
 using Goguma.Game.Console;
-using Goguma.Game.Object.Entity.Player;
 using static Goguma.Game.Console.ConsoleFunction;
 using static Goguma.Game.Console.StringFunction;
 
-namespace Goguma.Game.Object.Inventory.Item
+namespace Goguma.Game.Object.Inventory.Item.Equipment
 {
   [Serializable]
   class EquipmentItem : Item, IEquipmentItem
@@ -61,14 +60,9 @@ namespace Goguma.Game.Object.Inventory.Item
       }
     }
 
-    new public IItem GetInstance()
+    public override IItem GetInstance()
     {
       return new EquipmentItem(this);
-    }
-
-    public override void UseItem(IPlayer player)
-    {
-
     }
   }
 }

@@ -5,12 +5,11 @@ using Goguma.Game.Object.Entity.Player;
 using static Goguma.Game.Console.ConsoleFunction;
 using static Goguma.Game.Console.StringFunction;
 
-namespace Goguma.Game.Object.Inventory.Item.ConsumeItem
+namespace Goguma.Game.Object.Inventory.Item.Consume
 {
   [Serializable]
-  class CPotion : ConsumeItem, IItem
+  class CPotion : ConsumeItem
   {
-
     public ItemEffect Effect { get; set; }
     public CPotion() : base() { }
     public CPotion(CPotion item) : this()
@@ -82,9 +81,10 @@ namespace Goguma.Game.Object.Inventory.Item.ConsumeItem
       player.Gold += Effect.Gold;
       player.Exp += Effect.Exp;
     }
-    new public IItem GetInstance()
+    public override IItem GetInstance()
     {
       return new CPotion(this);
     }
+
   }
 }

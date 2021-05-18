@@ -16,7 +16,6 @@ namespace Goguma.Game.Object.Inventory.Item
     int SellPrice { get; set; }
     HavingType Type { get; }
 
-    void UseItem(IPlayer player);
     void DescriptionItem();
 
     IItem GetInstance();

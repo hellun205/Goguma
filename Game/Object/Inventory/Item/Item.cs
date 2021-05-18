@@ -29,11 +29,8 @@ namespace Goguma.Game.Object.Inventory.Item
       Name = item.Name;
       Count = item.Count;
     }
-    public abstract void UseItem(IPlayer player);
     public abstract void DescriptionItem();
-    public IItem GetInstance()
-    {
-      return null;
-    }
+    public abstract IItem GetInstance();
+
   }
 }

@@ -1,7 +1,6 @@
 using System;
-using Goguma.Game.Object.Entity.Player;
 
-namespace Goguma.Game.Object.Inventory.Item
+namespace Goguma.Game.Object.Inventory.Item.Other
 {
   [Serializable]
   class OtherItem : Item
@@ -23,13 +22,9 @@ namespace Goguma.Game.Object.Inventory.Item
     {
     }
 
-    new public IItem GetInstance()
+    public override IItem GetInstance()
     {
       return new OtherItem(this);
-    }
-
-    public override void UseItem(IPlayer player)
-    {
     }
   }
 }

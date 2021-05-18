@@ -8,6 +8,7 @@ using Goguma.Game.Object.Inventory;
 using Goguma.Game.Object.Skill;
 using static Goguma.Game.Console.ConsoleFunction;
 using Gogu_Remaster.Game.Object.Map.Town;
+using Goguma.Game.Object.Inventory.Item.Equipment;
 
 namespace Goguma.Game.Object.Entity.Player
 {
