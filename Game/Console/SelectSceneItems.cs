@@ -15,19 +15,22 @@ namespace Goguma.Game.Console
       Items = new List<SelectSceneItem>();
     }
 
-    public void Add(SelectSceneItem item)
+    public SelectSceneItems Add(SelectSceneItem item)
     {
       this.Items.Add(item);
+      return this;
     }
 
-    public void Add(CTexts texts)
+    public SelectSceneItems Add(CTexts texts)
     {
       this.Add(new SelectSceneItem(texts));
+      return this;
     }
 
-    public void Add(string text)
+    public SelectSceneItems Add(string text)
     {
       this.Add(CTexts.Make(text));
+      return this;
     }
   }
 }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Gogu_Remaster.Game.Object.Map.Facility;
+using Gogu_Remaster.Game.Object.Npc;
 using Goguma.Game.Console;
 
 namespace Gogu_Remaster.Game.Object.Map.Town
@@ -13,6 +14,7 @@ namespace Gogu_Remaster.Game.Object.Map.Town
       get => true;
     }
     public List<MapList> Adjacents { get; protected set; }
+    public List<NpcList> Npcs { get; protected set; }
 
     public List<IFacility> Facilities { get; }
 

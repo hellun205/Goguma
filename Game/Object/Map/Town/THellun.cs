@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Gogu_Remaster.Game.Object.Map.Road;
+using Gogu_Remaster.Game.Object.Npc;
 
 namespace Gogu_Remaster.Game.Object.Map.Town
 {
@@ -20,7 +21,11 @@ namespace Gogu_Remaster.Game.Object.Map.Town
 
       Adjacents = new List<MapList>()
       {
-        MapList.KRoad
+        MapList.K_ROAD
+      };
+      Npcs = new List<NpcList>()
+      {
+        NpcList.TRADER
       };
     }
   }

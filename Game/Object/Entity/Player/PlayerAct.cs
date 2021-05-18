@@ -1,11 +1,10 @@
-using System;
 using System.Text;
 using Colorify;
 using Gogu_Remaster.Game.Object.Map;
 using Gogu_Remaster.Game.Object.Map.Road;
 using Gogu_Remaster.Game.Object.Map.Town;
+using Gogu_Remaster.Game.Object.Npc;
 using Goguma.Game.Console;
-using Goguma.Game.Object.Battle;
 using Goguma.Game.Object.Entity.Monster;
 using Goguma.Game.Object.Skill;
 using System.Linq;
@@ -44,7 +43,10 @@ namespace Goguma.Game.Object.Entity.Player
           resultSSI.Add($"{{{InGame.player.Loc.Loc} 살펴보기}}");
 
           if (InGame.player.Loc.InTown)
-            resultSSI.Add(new SelectSceneItem(CTexts.Make("{시설 이용하기}")));
+          {
+            resultSSI.Add("{시설 이용하기}");
+            resultSSI.Add("{NPC와 대화하기}");
+          }
           else
             resultSSI.Add("{전투하기}");
 
@@ -142,6 +144,9 @@ namespace Goguma.Game.Object.Entity.Player
         case "시설 이용하기":
           UseFacility();
           break;
+        case "NPC와 대화하기":
+          TalkWithNpc();
+          break;
         case "전투하기":
           StartRoadPvE();
           break;
@@ -155,6 +160,24 @@ namespace Goguma.Game.Object.Entity.Player
       }
     }
 
+    static private void TalkWithNpc()
+    {
+      if (!InGame.player.Loc.InTown) return;
+      var town = (Town)Maps.GetMapByName(InGame.player.Loc.Loc);
+
+      var ssi = new SelectSceneItems();
+
+      if (town.Npcs.Count < 1)
+        ssi.Add("{없음}");
+      else
+        foreach (var n in town.Npcs)
+          ssi.Add($"{{{Npcs.GetTraderByEnum(n).Name}}}");
+
+      var s = new SelectScene(CTexts.Make("{누구와 대화하시겠습니까?}"), ssi);
+
+      Npcs.GetTraderByEnum(town.Npcs[s.getIndex]).OnUse();
+    }
+    
     static private void ViewSkill()
     {
       IPlayer player = InGame.player;

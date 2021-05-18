@@ -27,8 +27,8 @@ namespace Gogu_Remaster.Game.Object.Map.Road
 
       Adjacents = new List<MapList>()
       {
-        MapList.KksTown,
-        MapList.HellunTown
+        MapList.KKS_TOWN,
+        MapList.HELLUN_TOWN
       };
     }
   }
