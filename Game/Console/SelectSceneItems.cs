@@ -21,15 +21,15 @@ namespace Goguma.Game.Console
       return this;
     }
 
-    public SelectSceneItems Add(CTexts texts)
+    public SelectSceneItems Add(CTexts texts, bool isEnabled = true)
     {
-      this.Add(new SelectSceneItem(texts));
+      this.Add(new SelectSceneItem(texts, isEnabled));
       return this;
     }
 
-    public SelectSceneItems Add(string text)
+    public SelectSceneItems Add(string text, bool isEnabled = true)
     {
-      this.Add(CTexts.Make(text));
+      this.Add(CTexts.Make(text), isEnabled);
       return this;
     }
   }

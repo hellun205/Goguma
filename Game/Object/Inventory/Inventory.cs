@@ -125,9 +125,10 @@ namespace Goguma.Game.Object.Inventory
       var inven = Items.having.GetItems(hType);
       inven[index] = item;
     }
-    public void GetItem(IItem item) // Having Item Get
+    public void GetItem(in IItem item, int count = 1) // Having Item Get
     {
       var inven = Items.having.GetItems(item.Type);
+      item.Count = count;
       foreach (var item1 in inven)
       {
         if (item1.Name.ToString() == item.Name.ToString() && (item1.Count + item.Count)! <= item1.MaxCount)

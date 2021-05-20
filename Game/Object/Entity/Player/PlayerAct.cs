@@ -169,7 +169,7 @@ namespace Goguma.Game.Object.Entity.Player
       var ssi = new SelectSceneItems();
 
       if (town.Npcs.Count < 1)
-        ssi.Add("{없음}");
+        ssi.Add("{없음}", false);
       else
         foreach (var n in town.Npcs)
           ssi.Add($"{{{Npcs.GetTraderByEnum(n).Name}}}");
