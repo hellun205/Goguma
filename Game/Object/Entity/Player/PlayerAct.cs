@@ -72,6 +72,7 @@ namespace Goguma.Game.Object.Entity.Player
           resultSSI.Add("{Battle with test monster}");
           resultSSI.Add("{Add Test Skill}");
           resultSSI.Add("{Add Item}");
+          resultSSI.Add("{Add Gold}");
           resultSSI.Add($"{{뒤로 가기, {Colors.txtMuted}}}");
           return resultSSI;
         };
@@ -289,6 +290,13 @@ namespace Goguma.Game.Object.Entity.Player
               if (itemSelectSS.getString == "뒤로 가기") return;
               player.Inventory.GetItem(Items.Get((ItemList)itemSelectSS.getIndex));
               PrintText($"\n아이템 {Items.Get((ItemList)itemSelectSS.getIndex).Name}(을)를 얻었습니다.\n");
+              Pause();
+              break;
+            case "Add Gold":
+              var count = ReadIntScean(CTexts.Make("{수량을 입력하세요.\n  0을 입력하면 취소됩니다.}"), 0);
+              if (count == 0) break;
+              InGame.player.Gold += count;
+              PrintText($"\n{count}G를 얻었습니다.");
               Pause();
               break;
             default:
