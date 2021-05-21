@@ -3,6 +3,7 @@ using System;
 using Goguma.Game.Object.Entity.Player;
 using Goguma.Game.Console;
 using Goguma.Game.Object.Inventory.Item.Equipment;
+using static Goguma.Game.Console.ConsoleFunction;
 
 namespace Goguma.Game.Object.Inventory
 {
@@ -104,6 +105,7 @@ namespace Goguma.Game.Object.Inventory
       else
         sItem.Count -= count;
     }
+
     public void RemoveItem(HavingType hType, int index, int count) // Having Item Remove
     {
       var inven = Items.having.GetItems(hType);
@@ -120,23 +122,62 @@ namespace Goguma.Game.Object.Inventory
       var inven = Items.wearing.Items;
       inven[(int)wType] = item;
     }
+
     public void SetItem(HavingType hType, int index, IEquipmentItem item) // Having Item Set
     {
       var inven = Items.having.GetItems(hType);
       inven[index] = item;
     }
-    public void GetItem(IItem item) // Having Item Get
+
+    public void GetItem(IItem item, int count = 1) // Having Item Get
     {
       var inven = Items.having.GetItems(item.Type);
-      foreach (var item1 in inven)
+      foreach (var it in inven)
       {
-        if (item1.Name.ToString() == item.Name.ToString() && (item1.Count + item.Count)! <= item1.MaxCount)
+        if (it.Name == item.Name)
         {
-          item1.Count += item.Count;
+          it.Count += count;
+          CountTheorem();
           return;
         }
       }
+      item.Count = count;
       inven.Add(item);
+      CountTheorem();
+    }
+
+    private void CountTheorem()
+    {
+      for (var i = 0; i < Enum.GetValues(typeof(HavingType)).Length; i++)
+      {
+        var inven = Items.having.GetItems((HavingType)i);
+        PrintText($"\n{InvenInfo.HavingInven.GetTypeString((HavingType)i)}:{inven.Count}개");
+        Pause();
+        var iCount = inven.Count;
+        for (var j = 0; j < iCount; j++)
+        {
+          var it = inven[j];
+          if (it.Count > it.MaxCount)
+          {
+            var count = it.Count;
+            for (var k = 0; k < (int)(count / it.MaxCount) - 1; k++)
+            {
+              var item = it.GetInstance();
+              item.Count = it.MaxCount;
+              inven.Add(item);
+            }
+            int div;
+            Math.DivRem(count, it.MaxCount, out div);
+            if (div > 0)
+            {
+              var item = it.GetInstance();
+              item.Count = div;
+              inven.Add(item);
+            }
+            it.Count = it.MaxCount;
+          }
+        }
+      }
     }
 
   }

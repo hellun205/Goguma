@@ -9,18 +9,15 @@ namespace Goguma.Game.Object.Inventory.Item.Equipment
   [Serializable]
   class EquipmentItem : Item, IEquipmentItem
   {
-    new public int Count => 1;
+    public override HavingType Type => HavingType.Equipment;
     public override int MaxCount => 1;
     public WearingType EquipmentType { get; set; }
     public ItemIncrease Increase { get; set; }
-    public override HavingType Type => HavingType.Equipment;
-    public EquipmentItem()
+    public EquipmentItem() : base() { }
+    public EquipmentItem(in EquipmentItem item) : base(item)
     {
-
-    }
-    public EquipmentItem(EquipmentItem item) : this()
-    {
-      Name = item.Name;
+      EquipmentType = item.EquipmentType;
+      Increase = item.Increase;
     }
     static public IEquipmentItem GetAir()
     {

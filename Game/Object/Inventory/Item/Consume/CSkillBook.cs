@@ -23,12 +23,14 @@ namespace Goguma.Game.Object.Inventory.Item.Consume
     }
     public override string GetString => "스킬 북";
     public override int MaxCount => 1;
+
     public CSkillBook() : base() { }
-    public CSkillBook(CSkillBook item) : this()
+
+    public CSkillBook(in CSkillBook item) : base(item)
     {
-      Name = item.Name;
-      Count = item.Count;
+      SkillToReceive = item.SkillToReceive;
     }
+
     public override void DescriptionItem()
     {
       var player = InGame.player;
@@ -41,6 +43,7 @@ namespace Goguma.Game.Object.Inventory.Item.Consume
     {
       player.Skills.Add(SkillToReceive);
     }
+
     public override IItem GetInstance()
     {
       return new CSkillBook(this);
