@@ -7,13 +7,8 @@ namespace Goguma.Game.Object.Inventory.Item
   [Serializable]
   abstract class Item : IItem
   {
-    private int count;
     public CTexts Name { get; set; }
-    public int Count
-    {
-      get => count;
-      set => count = Math.Min(MaxCount, Math.Max(1, value));
-    }
+    public int Count { get; set; }
     public abstract int MaxCount { get; }
     public abstract HavingType Type { get; }
     public bool IsAir { get; set; }
@@ -24,10 +19,14 @@ namespace Goguma.Game.Object.Inventory.Item
     {
       Count = 1;
     }
-    public Item(Item item) : this()
+    public Item(in Item item) : this()
     {
       Name = item.Name;
       Count = item.Count;
+      SellPrice = item.SellPrice;
+      BuyPrice = item.BuyPrice;
+      IsAir = item.IsAir;
+      Descriptions = item.Descriptions;
     }
     public abstract void DescriptionItem();
     public abstract IItem GetInstance();

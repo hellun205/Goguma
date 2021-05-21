@@ -61,7 +61,7 @@ namespace Gogu_Remaster.Game.Object.Npc
                   if (count == 0) break;
                   InGame.player.Inventory.GetItem(itemToBuy, count);
                   InGame.player.Gold -= itemToBuy.BuyPrice * count;
-                  PrintText($"{{\n{InvenInfo.HavingInven.GetTypeString(itemToBuy.Type)} 아이템,{Colors.txtWarning}}}{{ {itemToBuy.Name} {count}개를 }}{{{itemToBuy.BuyPrice * count}G,{Colors.txtWarning}}}{{에 구매했습니다.}}");
+                  PrintText(CTexts.Make($"{{\n{InvenInfo.HavingInven.GetTypeString(itemToBuy.Type)} 아이템,{Colors.txtWarning}}}{{ {itemToBuy.Name} {count}개를 }}{{{itemToBuy.BuyPrice * count}G,{Colors.txtWarning}}}{{에 구매했습니다.}}"));
                   Pause();
                   break;
                 case "아이템 정보":
