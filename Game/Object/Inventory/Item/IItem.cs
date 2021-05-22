@@ -19,5 +19,6 @@ namespace Goguma.Game.Object.Inventory.Item
     void DescriptionItem();
 
     IItem GetInstance();
+    void Information(bool showCount = true, bool isPause = true);
   }
 }

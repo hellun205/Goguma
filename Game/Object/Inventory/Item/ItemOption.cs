@@ -141,13 +141,7 @@ namespace Goguma.Game.Object.Inventory.Item
 
     private bool PrintInfo()
     {
-      PrintText(GetSep(40, $"{SelectedItem.Name.ToString()} [ {SelectedItem.Count} ]"));
-      PrintText(CTexts.Make($"{{\n{InvenInfo.HavingInven.GetTypeString(HType)} 아이템\n, {Colors.txtWarning}}}"));
-      PrintText(SelectedItem.Descriptions);
-      PrintText("\n" + GetSep(40));
-      SelectedItem.DescriptionItem();
-      PrintText("\n" + GetSep(40));
-      Pause();
+      SelectedItem.Information();
       return false;
     }
 
