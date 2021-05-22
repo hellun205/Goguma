@@ -15,7 +15,7 @@ namespace Goguma.Game
     {
       while (true)
       {
-        SetPlayerDataScene();
+        SetPlayerData();
         PlayerActScene();
       }
     }
@@ -30,18 +30,18 @@ namespace Goguma.Game
       }
     }
 
-    static public void SetPlayerDataScene()
+    static public void SetPlayerData()
     {
       Player playerData;
       var pc = PlayerSave.GetPlayerList().Count;
 
-      var questionText = CTexts.Make($"{{고구마 게임,{Colors.bgWarning}}}");
+      var qt = CTexts.Make($"{{고구마 게임,{Colors.bgWarning}}}");
 
-      var selectSceneItems = new SelectSceneItems();
-      selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make("{새로 시작}")));
+      var ssi = new SelectSceneItems();
+      ssi.Add("{새로 시작}");
       if (pc > 0)
-        selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make("{이어서 시작}")));
-      selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make("{게임 종료}")));
+        ssi.Add("{이어서 시작}");
+      ssi.Add("{게임 종료}");
 
       Func<bool> keepPlay = () =>
       {
@@ -54,7 +54,7 @@ namespace Goguma.Game
         else return false;
       };
 
-      var ss = new SelectScene(questionText, selectSceneItems);
+      var ss = new SelectScene(qt, ssi);
       switch (ss.getString)
       {
         case "새로 시작":
@@ -76,7 +76,7 @@ namespace Goguma.Game
 
     static public void ExitGame()
     {
-      if (ReadYesOrNoScean(CTexts.Make("{진짜로 종료하시겠습니까?}")))
+      if (ReadYesOrNo(CTexts.Make("{진짜로 종료하시겠습니까?}")))
         Environment.Exit(0);
     }
   }

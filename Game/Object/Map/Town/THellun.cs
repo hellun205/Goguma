@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using Gogu_Remaster.Game.Object.Map.Road;
-using Gogu_Remaster.Game.Object.Npc;
+using Goguma.Game.Object.Map.Road;
+using Goguma.Game.Object.Npc;
 
-namespace Gogu_Remaster.Game.Object.Map.Town
+namespace Goguma.Game.Object.Map.Town
 {
   public class THellun : Town
   {

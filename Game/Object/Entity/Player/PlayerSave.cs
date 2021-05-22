@@ -79,12 +79,12 @@ namespace Goguma.Game.Object.Entity.Player
           return true;
       };
 
-      var name = ReadTextScean(CTexts.Make("{만들 캐릭터의 이름을 입력하세요.}"), checkNull);
+      var name = ReadText("{만들 캐릭터의 이름을 입력하세요.}", checkNull);
       if (name == "" || name == null) return null;
       name = name.Trim();
       if (IsExistUserName(name))
       {
-        if (ReadYesOrNoScean(CTexts.Make("{캐릭터가 이미 존재합니다. 불러오시겠습니까?}")))
+        if (ReadYesOrNo(CTexts.Make("{캐릭터가 이미 존재합니다. 불러오시겠습니까?}")))
           return LoadPlayerData(name);
         else
           return null;

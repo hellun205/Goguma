@@ -9,35 +9,39 @@ namespace Goguma.Game.Console
   {
     public static Format colorify { get; set; }
 
-    static public void PrintText(CTexts printCText)
+    static public void PrintCText(CTexts printCText)
     {
       for (var i = 0; i < printCText.Texts.Count; i++)
       {
         colorify.Write(printCText.Texts[i].Text, printCText.Texts[i].Color);
       }
     }
-    static public void PrintText(string printstring)
+    static public void PrintText(string printString)
     {
-      colorify.Write(printstring, Colors.txtDefault);
+      colorify.Write(printString);
+    }
+    static public void PrintCText(string printString)
+    {
+      PrintCText(CTexts.Make(printString));
     }
 
     static public void Pause(bool isPauseText = true)
     {
       if (isPauseText)
-        PrintText(CTexts.Make($"{{\n계속하려면 아무 키나 누르시오., {Colors.txtMuted} }}"));
+        PrintCText($"{{\n계속하려면 아무 키나 누르시오., {Colors.txtMuted} }}");
 
       ReadKey();
     }
 
-    static private void PrintQuestionText(CTexts questionText, bool air)
+    static private void PrintQuestionText(CTexts questionText, CTexts plusText = null)
     {
-      SelectScene.PrintQuestionText(questionText, air);
+      SelectScene.PrintQuestionText(questionText, plusText);
     }
 
-    static public string ReadTextScean(CTexts questionText, Func<string, bool> check = null)
+    static public string ReadText(CTexts questionText, Func<string, bool> check = null)
     {
-      PrintQuestionText(questionText, true);
-      PrintText("\n'취소'를 입력하시면 입력을 취소합니다.\n");
+      PrintQuestionText(questionText);
+      PrintCText("{'취소'를 입력하시면 입력을 취소합니다.\n}");
       while (true)
       {
         SelectScene.PrintReadText();
@@ -57,9 +61,14 @@ namespace Goguma.Game.Console
       }
     }
 
-    static public bool ReadYesOrNoScean(CTexts questionText)
+    static public string ReadText(string questionText, Func<string, bool> check = null)
     {
-      PrintQuestionText(questionText, true);
+      return ReadText(CTexts.Make(questionText), check);
+    }
+
+    static public bool ReadYesOrNo(CTexts questionText)
+    {
+      PrintQuestionText(questionText);
 
       while (true)
       {
@@ -80,9 +89,13 @@ namespace Goguma.Game.Console
         }
       }
     }
-    static public int ReadIntScean(CTexts questionText, int minValue = Int32.MinValue, int maxValue = Int32.MaxValue, bool air = true)
+    static public bool ReadYesOrNo(string questionText)
     {
-      PrintQuestionText(questionText, air);
+      return ReadYesOrNo(CTexts.Make(questionText));
+    }
+    static public int ReadInt(CTexts questionText, CTexts plusText = null, int minValue = Int32.MinValue, int maxValue = Int32.MaxValue)
+    {
+      PrintQuestionText(questionText, plusText);
       while (true)
       {
         SelectScene.PrintReadText();
@@ -99,6 +112,23 @@ namespace Goguma.Game.Console
           }
         }
       }
+    }
+
+    static public int ReadInt(string questionText, int minValue = Int32.MinValue, int maxValue = Int32.MaxValue)
+    {
+      return ReadInt(CTexts.Make(questionText), null, minValue, maxValue);
+    }
+
+    static public bool ReadInt(CTexts questionText, out int oInt, int condInt = 0, int minValue = Int32.MinValue, int maxValue = Int32.MaxValue)
+    {
+      var pt = CTexts.Make($"{{\n  {condInt}(을)를 입력하면 취소합니다.}}");
+      oInt = ReadInt(questionText, pt, Math.Min(condInt, minValue), maxValue);
+      return (oInt == condInt);
+    }
+
+    static public bool ReadInt(string questionText, out int oInt, int condInt = 0, int minValue = Int32.MinValue, int maxValue = Int32.MaxValue)
+    {
+      return ReadInt(CTexts.Make(questionText), out oInt, condInt, minValue, maxValue);
     }
   }
 }

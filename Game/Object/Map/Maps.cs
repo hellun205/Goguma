@@ -1,7 +1,7 @@
-using Gogu_Remaster.Game.Object.Map.Road;
-using Gogu_Remaster.Game.Object.Map.Town;
+using Goguma.Game.Object.Map.Road;
+using Goguma.Game.Object.Map.Town;
 
-namespace Gogu_Remaster.Game.Object.Map
+namespace Goguma.Game.Object.Map
 {
   public class Maps
   {

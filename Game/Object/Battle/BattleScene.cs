@@ -26,10 +26,10 @@ namespace Goguma.Game.Object.Battle
         Func<SelectSceneItems> GetSSI = () =>
         {
           var resultSSI = new SelectSceneItems();
-          resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{싸우기, {Colors.txtSuccess}}}")));
-          resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{플레이어 정보 보기}}")));
-          resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{몬스터 정보 보기}}")));
-          resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{도망 가기, {Colors.txtDanger}}}")));
+          resultSSI.Add($"{{싸우기, {Colors.txtSuccess}}}");
+          resultSSI.Add($"{{플레이어 정보 보기}}");
+          resultSSI.Add($"{{몬스터 정보 보기}}");
+          resultSSI.Add($"{{도망 가기, {Colors.txtDanger}}}");
           return resultSSI;
         };
         return new SelectScene(GetQText(), GetSSI());
@@ -38,7 +38,7 @@ namespace Goguma.Game.Object.Battle
       {
         static public void Run()
         {
-          PrintText(CTexts.Make($"{{\n싸움에서}} {{ 도망,{Colors.txtDanger}}} {{쳤습니다.\n}}"));
+          PrintCText($"{{\n싸움에서}} {{ 도망,{Colors.txtDanger}}} {{쳤습니다.\n}}");
         }
         static public SelectScene Main(IPlayer player, IMonster monster, bool first = false)
         {
@@ -52,12 +52,12 @@ namespace Goguma.Game.Object.Battle
           Func<SelectSceneItems> GetSSI = () =>
             {
               var resultSSI = new SelectSceneItems();
-              resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{공격 하기, {Colors.txtSuccess}}}")));
-              resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{스킬 사용, {Colors.txtSuccess}}}")));
-              resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{인벤토리 열기}}")));
-              resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{플레이어 정보 보기}}")));
-              resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{몬스터 정보 보기}}")));
-              resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{도망 가기, {Colors.txtDanger}}}")));
+              resultSSI.Add($"{{공격 하기, {Colors.txtSuccess}}}");
+              resultSSI.Add($"{{스킬 사용, {Colors.txtSuccess}}}");
+              resultSSI.Add($"{{인벤토리 열기}}");
+              resultSSI.Add($"{{플레이어 정보 보기}}");
+              resultSSI.Add($"{{몬스터 정보 보기}}");
+              resultSSI.Add($"{{도망 가기, {Colors.txtDanger}}}");
               return resultSSI;
             };
           return new SelectScene(GetQText(first), GetSSI());
@@ -71,9 +71,9 @@ namespace Goguma.Game.Object.Battle
           Func<SelectSceneItems> GetSSI = () =>
           {
             var resultSSI = new SelectSceneItems();
-            resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{일반 공격,{Colors.txtSuccess}}}")));
-            resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{스킬 공격,{Colors.txtSuccess}}}")));
-            resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{뒤로 가기, {Colors.txtMuted}}}")));
+            resultSSI.Add($"{{일반 공격,{Colors.txtSuccess}}}");
+            resultSSI.Add($"{{스킬 공격,{Colors.txtSuccess}}}");
+            resultSSI.Add($"{{뒤로 가기, {Colors.txtMuted}}}");
             return resultSSI;
           };
           return new SelectScene(GetQText(), GetSSI());
@@ -101,7 +101,7 @@ namespace Goguma.Game.Object.Battle
             else
               return CTexts.Make($"{{\n\n「{monster.Name} [Lv. {monster.Level}]」,{ColorByLevel(player.Level, monster.Level)}}} {{{rText} }} {{{Math.Round(damage, 2)},{Colors.txtDanger}}} {{의 피해를 입혔습니다.\n    남은 체력: }} {{[ {Math.Round(monster.Hp - damage, 2)} / {monster.MaxHp} ]\n, {ColorByHp(monster.Hp - damage, monster.MaxHp)}}}");
           };
-          PrintText(GetText(new Random().Next(0, 3)));
+          PrintCText(GetText(new Random().Next(0, 3)));
           // Pause();
         }
         static public void SkillAttack(IPlayer player, IMonster monster, IAttackSkill aSkill, double damage)
@@ -114,21 +114,21 @@ namespace Goguma.Game.Object.Battle
               return CTexts.Make($"{{\n\n「{monster.Name} [Lv. {monster.Level}]」,{ColorByLevel(player.Level, monster.Level)}}} {{(이)가 }}{{{aSkill.Name},{Colors.txtInfo}}}{{(을)를 맞아 }} {{{Math.Round(damage, 2)},{Colors.txtDanger}}} {{의 피해를 입었습니다. \n    남은 체력: }}{{[ {Math.Round(monster.Hp - damage, 2)} / {monster.MaxHp} ]\n, {ColorByHp(monster.Hp - damage, monster.MaxHp)}}}");
           };
 
-          PrintText(CTexts.Make($"{{\n  {Skill.Skill.GetTypeString(aSkill.Type)} 스킬 ,{Colors.txtWarning}}} {{{aSkill.Name},{Colors.txtInfo}}} {{(을)를 사용했습니다.\n    남은 에너지: }}{{[ {player.Ep - aSkill.UseEp} / {player.MaxEp} ], {ColorByHp(player.Ep - aSkill.UseEp, player.MaxEp)}}}{{\n    사용한 에너지: }}{{{aSkill.UseEp}\n, {Colors.txtWarning}}}"));
+          PrintCText($"{{\n  {Skill.Skill.GetTypeString(aSkill.Type)} 스킬 ,{Colors.txtWarning}}} {{{aSkill.Name},{Colors.txtInfo}}} {{(을)를 사용했습니다.\n    남은 에너지: }}{{[ {player.Ep - aSkill.UseEp} / {player.MaxEp} ], {ColorByHp(player.Ep - aSkill.UseEp, player.MaxEp)}}}{{\n    사용한 에너지: }}{{{aSkill.UseEp}\n, {Colors.txtWarning}}}");
           Pause();
-          PrintText(CTexts.Make($"{{\n\n  {player.Name},{Colors.txtSuccess}}}{{ : }}"));
-          PrintText(aSkill.Text);
+          PrintCText($"{{\n\n  {player.Name},{Colors.txtSuccess}}}{{ : }}");
+          PrintCText(aSkill.Text);
           PrintText("\n");
           Pause();
-          PrintText(Text());
+          PrintCText(Text());
           Pause();
         }
         static public void BuffSkill(IPlayer player, IBuffSkill bSkill)
         {
-          PrintText(CTexts.Make($"{{\n  {Skill.Skill.GetTypeString(bSkill.Type)} 스킬 ,{Colors.txtWarning}}} {{{bSkill.Name},{Colors.txtInfo}}} {{(을)를 사용했습니다.\n    남은 에너지: }}{{[ {player.Ep - bSkill.UseEp} / {player.MaxEp} ], {ColorByHp(player.Ep - bSkill.UseEp, player.MaxEp)}}}{{\n    사용한 에너지: }}{{{bSkill.UseEp}\n, {Colors.txtWarning}}}"));
+          PrintCText($"{{\n  {Skill.Skill.GetTypeString(bSkill.Type)} 스킬 ,{Colors.txtWarning}}} {{{bSkill.Name},{Colors.txtInfo}}} {{(을)를 사용했습니다.\n    남은 에너지: }}{{[ {player.Ep - bSkill.UseEp} / {player.MaxEp} ], {ColorByHp(player.Ep - bSkill.UseEp, player.MaxEp)}}}{{\n    사용한 에너지: }}{{{bSkill.UseEp}\n, {Colors.txtWarning}}}");
           Pause();
-          PrintText(CTexts.Make($"{{\n  {player.Name},{Colors.txtSuccess}}}{{ : }}"));
-          PrintText(bSkill.Text);
+          PrintCText($"{{\n  {player.Name},{Colors.txtSuccess}}}{{ : }}");
+          PrintCText(bSkill.Text);
           PrintText("\n\n");
           Pause();
           // PrintBuffEffect();
@@ -136,29 +136,29 @@ namespace Goguma.Game.Object.Battle
         }
         static public void LackOfEP(IPlayer player, ISkill skill)
         {
-          PrintText(CTexts.Make($"{{\n  에너지,{Colors.txtWarning}}}{{가 부족하여 }}{{{skill.Name}, {Colors.txtInfo}}}{{(을)를 사용 할 수 없습니다.\n    남은 에너지: }}{{[ {player.Ep} / {player.MaxEp} ], {ColorByHp(player.Ep, player.MaxEp)}}}{{\n    필요한 에너지: }}{{{skill.UseEp}\n, {Colors.txtWarning}}}"));
+          PrintCText($"{{\n  에너지,{Colors.txtWarning}}}{{가 부족하여 }}{{{skill.Name}, {Colors.txtInfo}}}{{(을)를 사용 할 수 없습니다.\n    남은 에너지: }}{{[ {player.Ep} / {player.MaxEp} ], {ColorByHp(player.Ep, player.MaxEp)}}}{{\n    필요한 에너지: }}{{{skill.UseEp}\n, {Colors.txtWarning}}}");
           Pause();
         }
         static public void AlreadyUsingBuff(IBuffSkill bSkill)
         {
-          PrintText(CTexts.Make($"{{\n이미 }}{{{Skill.Skill.GetTypeString(bSkill.Type)} 스킬 , {Colors.txtWarning}}}{{{bSkill.Name},{Colors.txtInfo}}}{{의 효과를 받고 있습니다.\n}}"));
+          PrintCText($"{{\n이미 }}{{{Skill.Skill.GetTypeString(bSkill.Type)} 스킬 , {Colors.txtWarning}}}{{{bSkill.Name},{Colors.txtInfo}}}{{의 효과를 받고 있습니다.\n}}");
           Pause();
         }
         static public void DeleteBuff(List<IBuffSkill> bSkills)
         {
           foreach (var sk in bSkills)
-            PrintText(CTexts.Make($"{{\n{Skill.Skill.GetTypeString(sk.Type)} 스킬 , {Colors.txtWarning}}}{{{sk.Name},{Colors.txtInfo}}}{{의 지속시간이 끝났습니다.}}"));
+            PrintCText($"{{\n{Skill.Skill.GetTypeString(sk.Type)} 스킬 , {Colors.txtWarning}}}{{{sk.Name},{Colors.txtInfo}}}{{의 지속시간이 끝났습니다.}}");
           PrintText("\n");
           Pause();
         }
         static public void Kill(IMonster monster, List<IItem> dropItemList)
         {
-          PrintText(CTexts.Make($"{{\n\n  {monster.GivingGold} G,{Colors.txtWarning}}}{{를 획득했습니다.\n}}"));
-          PrintText(CTexts.Make($"{{\n\n  {monster.GivingExp} Exp,{Colors.txtSuccess}}}{{를 획득했습니다.\n}}"));
+          PrintCText($"{{\n\n  {monster.GivingGold} G,{Colors.txtWarning}}}{{를 획득했습니다.\n}}");
+          PrintCText($"{{\n\n  {monster.GivingExp} Exp,{Colors.txtSuccess}}}{{를 획득했습니다.\n}}");
           Pause();
           foreach (var item in dropItemList)
           {
-            PrintText(CTexts.Make($"{{\n\n  {InvenInfo.HavingInven.GetTypeString(item.Type)} 아이템 ,{Colors.txtWarning}}}{{{item.Name},{Colors.txtSuccess}}}{{(을)를 획득했습니다.\n}}"));
+            PrintCText($"{{\n\n  {InvenInfo.HavingInven.GetTypeString(item.Type)} 아이템 ,{Colors.txtWarning}}}{{{item.Name},{Colors.txtSuccess}}}{{(을)를 획득했습니다.\n}}");
           }
           // Pause();
         }
@@ -173,8 +173,8 @@ namespace Goguma.Game.Object.Battle
           {
             var resultSSI = new SelectSceneItems();
             for (var i = 0; i < Enum.GetValues(typeof(SkillType)).Length; i++)
-              resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{{Skill.Skill.GetTypeString((SkillType)i)} 스킬}}")));
-            resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{뒤로 가기, {Colors.txtMuted}}}")));
+              resultSSI.Add($"{{{Skill.Skill.GetTypeString((SkillType)i)} 스킬}}");
+            resultSSI.Add($"{{뒤로 가기, {Colors.txtMuted}}}");
             return resultSSI;
           };
           skType = (SkillType)0;
@@ -200,8 +200,8 @@ namespace Goguma.Game.Object.Battle
                         where sk.Type == sType
                         select sk;
             foreach (var sk in skill)
-              resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{{sk.Name}}}")));
-            resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{뒤로 가기, {Colors.txtMuted}}}")));
+              resultSSI.Add($"{{{sk.Name}}}");
+            resultSSI.Add($"{{뒤로 가기, {Colors.txtMuted}}}");
             return resultSSI;
           };
           var scene = new SelectScene(GetQText(sType), GetSSI(sType));
@@ -217,9 +217,9 @@ namespace Goguma.Game.Object.Battle
           Func<SelectSceneItems> GetSSI = () =>
           {
             var resultSSI = new SelectSceneItems();
-            resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{사용 하기,{Colors.txtSuccess}}}")));
-            resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{정보 보기,{Colors.txtSuccess}}}")));
-            resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{뒤로 가기, {Colors.txtMuted}}}")));
+            resultSSI.Add($"{{사용 하기,{Colors.txtSuccess}}}");
+            resultSSI.Add($"{{정보 보기,{Colors.txtSuccess}}}");
+            resultSSI.Add($"{{뒤로 가기, {Colors.txtMuted}}}");
             return resultSSI;
           };
           var scene = new SelectScene(GetQText(skill), GetSSI());
@@ -238,7 +238,7 @@ namespace Goguma.Game.Object.Battle
             else
               return CTexts.Make($"{{\n\n「{monster.Name} [Lv. {monster.Level}]」,{ColorByLevel(player.Level, monster.Level)}}} {{(이)가 }} {{당신,{Colors.txtInfo}}} {{에게 }} {{{Math.Round(damage, 2)},{Colors.txtDanger}}} {{의 피해를 입혔습니다.\n    남은 체력: }} {{[ {Math.Round(player.Hp - damage, 2)} / {player.MaxHp} ]\n, {ColorByHp(player.Hp - damage, player.MaxHp)}}}");
           };
-          PrintText(GetText());
+          PrintCText(GetText());
           // Pause();
         }
         static public void SkillAttack(IMonster monster, IPlayer player, IAttackSkill aSkill, double damage)
@@ -251,21 +251,21 @@ namespace Goguma.Game.Object.Battle
               return CTexts.Make($"{{\n\n당신,{Colors.txtInfo}}} {{이 }}{{{aSkill.Name},{Colors.txtInfo}}}{{(을)를 맞아 }} {{{Math.Round(damage, 2)},{Colors.txtDanger}}} {{의 피해를 입었습니다. \n    남은 체력: }}{{[ {(int)(player.Hp - damage)} / {player.MaxHp} ]\n, {ColorByHp(player.Hp - damage, player.MaxHp)}}}");
           };
 
-          PrintText(CTexts.Make($"{{\n\n「{monster.Name} [Lv. {monster.Level}]」,{ColorByLevel(player.Level, monster.Level)}}} {{(이)가 }}{{당신,{Colors.txtInfo}}} {{에게 }} {{{Skill.Skill.GetTypeString(aSkill.Type)} 스킬 ,{Colors.txtWarning}}} {{{aSkill.Name},{Colors.txtInfo}}} {{(을)를 사용했습니다.\n}}"));
+          PrintCText($"{{\n\n「{monster.Name} [Lv. {monster.Level}]」,{ColorByLevel(player.Level, monster.Level)}}} {{(이)가 }}{{당신,{Colors.txtInfo}}} {{에게 }} {{{Skill.Skill.GetTypeString(aSkill.Type)} 스킬 ,{Colors.txtWarning}}} {{{aSkill.Name},{Colors.txtInfo}}} {{(을)를 사용했습니다.\n}}");
           Pause();
-          PrintText(CTexts.Make($"{{\n\n  {monster.Name},{Colors.txtSuccess}}}{{ : }}"));
-          PrintText(aSkill.Text);
+          PrintCText($"{{\n\n  {monster.Name},{Colors.txtSuccess}}}{{ : }}");
+          PrintCText(aSkill.Text);
           PrintText("\n");
           Pause();
-          PrintText(Text());
+          PrintCText(Text());
           // Pause();
         }
         static public void BuffSkill(IMonster monster, IPlayer player, IBuffSkill bSkill)
         {
-          PrintText(CTexts.Make($"{{\n\n「{monster.Name} [Lv. {monster.Level}]」,{ColorByLevel(player.Level, monster.Level)}}} {{(이)가 }} {{{Skill.Skill.GetTypeString(bSkill.Type)} 스킬 ,{Colors.txtWarning}}} {{{bSkill.Name},{Colors.txtInfo}}} {{(을)를 사용했습니다.\n\n}}"));
+          PrintCText($"{{\n\n「{monster.Name} [Lv. {monster.Level}]」,{ColorByLevel(player.Level, monster.Level)}}} {{(이)가 }} {{{Skill.Skill.GetTypeString(bSkill.Type)} 스킬 ,{Colors.txtWarning}}} {{{bSkill.Name},{Colors.txtInfo}}} {{(을)를 사용했습니다.\n\n}}");
           Pause();
-          PrintText(CTexts.Make($"{{\n\n  {monster.Name},{Colors.txtSuccess}}}{{ : }}"));
-          PrintText(bSkill.Text);
+          PrintCText($"{{\n\n  {monster.Name},{Colors.txtSuccess}}}{{ : }}");
+          PrintCText(bSkill.Text);
           PrintText("\n");
           // Pause();
           // PrintBuffEffect();
@@ -274,7 +274,7 @@ namespace Goguma.Game.Object.Battle
         static public void DeleteBuff(IMonster monster, IPlayer player, List<IBuffSkill> bSkills)
         {
           foreach (var sk in bSkills)
-            PrintText(CTexts.Make($"{{\n\n「{monster.Name} [Lv. {monster.Level}]」,{ColorByLevel(player.Level, monster.Level)}}} {{의 }} {{{Skill.Skill.GetTypeString(sk.Type)} 스킬 , {Colors.txtWarning}}}{{{sk.Name},{Colors.txtInfo}}}{{의 지속시간이 끝났습니다.}}"));
+            PrintCText($"{{\n\n「{monster.Name} [Lv. {monster.Level}]」,{ColorByLevel(player.Level, monster.Level)}}} {{의 }} {{{Skill.Skill.GetTypeString(sk.Type)} 스킬 , {Colors.txtWarning}}}{{{sk.Name},{Colors.txtInfo}}}{{의 지속시간이 끝났습니다.}}");
           PrintText("\n");
           Pause();
         }

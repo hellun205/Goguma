@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Goguma.Game.Object.Entity.Monster;
 
-namespace Gogu_Remaster.Game.Object.Map.Road
+namespace Goguma.Game.Object.Map.Road
 {
   public abstract class Road : IMap
   {

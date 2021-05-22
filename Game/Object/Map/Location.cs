@@ -3,7 +3,7 @@ using Colorify;
 using Goguma.Game;
 using Goguma.Game.Console;
 
-namespace Gogu_Remaster.Game.Object.Map
+namespace Goguma.Game.Object.Map
 {
   [Serializable]
   public class Location

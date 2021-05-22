@@ -19,17 +19,17 @@ namespace Goguma.Game.Object.Skill
     public override void Information(bool isPause = true)
     {
       PrintText(GetSep(30, base.Name));
-      PrintText(CTexts.Make($"{{\n{Skill.GetTypeString(Type)} 스킬,{Colors.txtWarning}}}"));
-      PrintText(CTexts.Make($"{{\n필요 에너지: }}{{{base.UseEp}\n, {Colors.txtWarning}}}"));
+      PrintCText($"{{\n{Skill.GetTypeString(Type)} 스킬,{Colors.txtWarning}}}");
+      PrintCText($"{{\n필요 에너지: }}{{{base.UseEp}\n, {Colors.txtWarning}}}");
       PrintText(GetSep(30) + "\n");
-      PrintText(base.Descriptions);
+      PrintCText(base.Descriptions);
       PrintText("\n" + GetSep(30));
-      PrintText(CTexts.Make("{\n스킬 공격력: [ }"));
-      PrintText(NumberColor(Damage));
-      PrintText(CTexts.Make("{ ]}"));
-      PrintText(CTexts.Make("{\n방어율 무시: [ }"));
-      PrintText(NumberColor(IgnoreDef));
-      PrintText(CTexts.Make("{ ]\n}"));
+      PrintCText("{\n스킬 공격력: [ }");
+      PrintCText(NumberColor(Damage));
+      PrintCText("{ ]}");
+      PrintCText("{\n방어율 무시: [ }");
+      PrintCText(NumberColor(IgnoreDef));
+      PrintCText("{ ]\n}");
       PrintText(GetSep(30));
       if (isPause) Pause();
     }

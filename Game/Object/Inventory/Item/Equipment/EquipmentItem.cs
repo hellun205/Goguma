@@ -28,32 +28,32 @@ namespace Goguma.Game.Object.Inventory.Item.Equipment
       var player = InGame.player;
       if (Increase.MaxHp != 0)
       {
-        PrintText(CTexts.Make($"{{\nMAX HP }} {{{player.MaxHp}, {Colors.txtWarning}}} {{ [ }}"));
-        PrintText(NumberColor(Increase.MaxHp));
-        PrintText(CTexts.Make("{ ] → }"));
-        PrintText(NumberColor(Increase.MaxHp + player.MaxHp));
+        PrintCText($"{{\nMAX HP }} {{{player.MaxHp}, {Colors.txtWarning}}} {{ [ }}");
+        PrintCText(NumberColor(Increase.MaxHp));
+        PrintCText("{ ] → }");
+        PrintCText(NumberColor(Increase.MaxHp + player.MaxHp));
       }
       if (Increase.MaxEp != 0)
       {
-        PrintText(CTexts.Make($"{{\nMAX EP }} {{{player.MaxEp}, {Colors.txtWarning}}} {{ [ }}"));
-        PrintText(NumberColor(Increase.MaxEp));
-        PrintText(CTexts.Make("{ ] → }"));
-        PrintText(NumberColor(Increase.MaxEp + player.MaxEp));
+        PrintCText($"{{\nMAX EP }} {{{player.MaxEp}, {Colors.txtWarning}}} {{ [ }}");
+        PrintCText(NumberColor(Increase.MaxEp));
+        PrintCText("{ ] → }");
+        PrintCText(NumberColor(Increase.MaxEp + player.MaxEp));
       }
       if (Increase.AttDmg != 0)
       {
-        PrintText(CTexts.Make($"{{\nATT }} {{{player.AttDmg}, {Colors.txtWarning}}} {{ [ }}"));
-        PrintText(NumberColor(Increase.AttDmg));
-        PrintText(CTexts.Make("{ ] → }"));
-        PrintText(NumberColor(Increase.AttDmg + player.AttDmg));
+        PrintCText($"{{\nATT }} {{{player.AttDmg}, {Colors.txtWarning}}} {{ [ }}");
+        PrintCText(NumberColor(Increase.AttDmg));
+        PrintCText("{ ] → }");
+        PrintCText(NumberColor(Increase.AttDmg + player.AttDmg));
       }
       if (Increase.DefPer != 0)
       {
-        PrintText(CTexts.Make($"{{\nDEF }} {{{player.DefPer}, {Colors.txtWarning}}} {{ % [ }}"));
-        PrintText(NumberColor(Increase.DefPer));
-        PrintText(CTexts.Make("{ % ] → }"));
-        PrintText(NumberColor(Increase.DefPer + player.DefPer));
-        PrintText(CTexts.Make("{ %}"));
+        PrintCText($"{{\nDEF }} {{{player.DefPer}, {Colors.txtWarning}}} {{ % [ }}");
+        PrintCText(NumberColor(Increase.DefPer));
+        PrintCText("{ % ] → }");
+        PrintCText(NumberColor(Increase.DefPer + player.DefPer));
+        PrintCText("{ %}");
       }
     }
 

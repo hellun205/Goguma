@@ -1,4 +1,4 @@
-namespace Gogu_Remaster.Game.Object.Map.Town
+namespace Goguma.Game.Object.Map.Town
 {
   public class Towns
   {

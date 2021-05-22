@@ -22,53 +22,53 @@ namespace Goguma.Game.Object.Inventory.Item.Consume
       var player = InGame.player;
       if (Effect.Hp != 0)
       {
-        PrintText(CTexts.Make($"{{\nHP }} {{{player.Hp} / {player.MaxHp}, {Colors.txtWarning}}} {{ [ }}"));
-        PrintText(NumberColor(Effect.Hp));
-        PrintText(CTexts.Make("{ ] → }"));
+        PrintCText($"{{\nHP }} {{{player.Hp} / {player.MaxHp}, {Colors.txtWarning}}} {{ [ }}");
+        PrintCText(NumberColor(Effect.Hp));
+        PrintCText("{ ] → }");
         if (Effect.Hp + player.Hp <= player.MaxHp)
-          PrintText(NumberColor(Effect.Hp + player.Hp));
+          PrintCText(NumberColor(Effect.Hp + player.Hp));
         else
-          PrintText(NumberColor(player.MaxHp));
+          PrintCText(NumberColor(player.MaxHp));
       }
       if (Effect.Ep != 0)
       {
-        PrintText(CTexts.Make($"{{\nEP }} {{{player.Ep} / {player.MaxEp}, {Colors.txtWarning}}} {{ [ }}"));
-        PrintText(NumberColor(Effect.Ep));
-        PrintText(CTexts.Make("{ ] → }"));
+        PrintCText($"{{\nEP }} {{{player.Ep} / {player.MaxEp}, {Colors.txtWarning}}} {{ [ }}");
+        PrintCText(NumberColor(Effect.Ep));
+        PrintCText("{ ] → }");
         if (Effect.Ep + player.Ep <= player.MaxEp)
-          PrintText(NumberColor(Effect.Ep + player.Ep));
+          PrintCText(NumberColor(Effect.Ep + player.Ep));
         else
-          PrintText(NumberColor(player.MaxEp));
+          PrintCText(NumberColor(player.MaxEp));
       }
       if (Effect.AttDmg != 0)
       {
-        PrintText(CTexts.Make($"{{\nATT }} {{{player.AttDmg}, {Colors.txtWarning}}} {{ [ }}"));
-        PrintText(NumberColor(Effect.AttDmg));
-        PrintText(CTexts.Make("{ ] → }"));
-        PrintText(NumberColor(Effect.AttDmg + player.AttDmg));
+        PrintCText($"{{\nATT }} {{{player.AttDmg}, {Colors.txtWarning}}} {{ [ }}");
+        PrintCText(NumberColor(Effect.AttDmg));
+        PrintCText("{ ] → }");
+        PrintCText(NumberColor(Effect.AttDmg + player.AttDmg));
       }
       if (Effect.DefPer != 0)
       {
-        PrintText(CTexts.Make($"{{\nDEF }} {{{player.DefPer}, {Colors.txtWarning}}} {{ % [ }}"));
-        PrintText(NumberColor(Effect.DefPer));
-        PrintText(CTexts.Make("{ % ] → }"));
-        PrintText(NumberColor(Effect.DefPer + player.DefPer));
-        PrintText(CTexts.Make("{ %}"));
+        PrintCText($"{{\nDEF }} {{{player.DefPer}, {Colors.txtWarning}}} {{ % [ }}");
+        PrintCText(NumberColor(Effect.DefPer));
+        PrintCText("{ % ] → }");
+        PrintCText(NumberColor(Effect.DefPer + player.DefPer));
+        PrintCText("{ %}");
       }
       if (Effect.Gold != 0)
       {
-        PrintText(CTexts.Make($"{{\nGOLD }} {{{player.Gold}, {Colors.txtWarning}}} {{ G [ }}"));
-        PrintText(NumberColor(Effect.Gold));
-        PrintText(CTexts.Make("{ G ] → }"));
-        PrintText(NumberColor(Effect.Gold + player.Gold));
-        PrintText(CTexts.Make("{ G}"));
+        PrintCText($"{{\nGOLD }} {{{player.Gold}, {Colors.txtWarning}}} {{ G [ }}");
+        PrintCText(NumberColor(Effect.Gold));
+        PrintCText("{ G ] → }");
+        PrintCText(NumberColor(Effect.Gold + player.Gold));
+        PrintCText("{ G}");
       }
       if (Effect.Exp != 0)
       {
-        PrintText(CTexts.Make($"{{\nEXP }} {{{player.Exp} / {player.MaxExp}, {Colors.txtWarning}}} {{ [ }}"));
-        PrintText(NumberColor(Effect.Exp));
-        PrintText(CTexts.Make("{ ] → }"));
-        PrintText(NumberColor(Effect.Exp + player.Exp));
+        PrintCText($"{{\nEXP }} {{{player.Exp} / {player.MaxExp}, {Colors.txtWarning}}} {{ [ }}");
+        PrintCText(NumberColor(Effect.Exp));
+        PrintCText("{ ] → }");
+        PrintCText(NumberColor(Effect.Exp + player.Exp));
       }
     }
 

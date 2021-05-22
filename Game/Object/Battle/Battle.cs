@@ -1,8 +1,5 @@
-using Goguma.Game.Object.Entity.Player;
 using Goguma.Game.Object.Entity.Monster;
-using static Goguma.Game.Console.ConsoleFunction;
 using static Goguma.Game.Console.StringFunction;
-using Colorify;
 using System.Linq;
 using Goguma.Game.Object.Skill;
 using System.Collections.Generic;

@@ -1,4 +1,4 @@
-namespace Gogu_Remaster.Game.Object.Map.Road
+namespace Goguma.Game.Object.Map.Road
 {
   public class Roads
   {

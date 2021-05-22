@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using Gogu_Remaster.Game.Object.Map.Town;
+using Goguma.Game.Object.Map.Town;
 using Goguma.Game.Object.Entity.Monster;
 
-namespace Gogu_Remaster.Game.Object.Map.Road
+namespace Goguma.Game.Object.Map.Road
 {
   public class RKRoad : Road
   {

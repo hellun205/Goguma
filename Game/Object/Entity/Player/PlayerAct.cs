@@ -1,9 +1,9 @@
 using System.Text;
 using Colorify;
-using Gogu_Remaster.Game.Object.Map;
-using Gogu_Remaster.Game.Object.Map.Road;
-using Gogu_Remaster.Game.Object.Map.Town;
-using Gogu_Remaster.Game.Object.Npc;
+using Goguma.Game.Object.Map;
+using Goguma.Game.Object.Map.Road;
+using Goguma.Game.Object.Map.Town;
+using Goguma.Game.Object.Npc;
 using Goguma.Game.Console;
 using Goguma.Game.Object.Entity.Monster;
 using Goguma.Game.Object.Skill;
@@ -293,8 +293,8 @@ namespace Goguma.Game.Object.Entity.Player
               Pause();
               break;
             case "Add Gold":
-              var count = ReadIntScean(CTexts.Make("{수량을 입력하세요.\n  0을 입력하면 취소됩니다.}"), 0);
-              if (count == 0) break;
+              int count;
+              if (ReadInt("{수량을 입력하세요.}", out count, 0, 0)) break;
               InGame.player.Gold += count;
               PrintText($"\n{count}G를 얻었습니다.");
               Pause();
@@ -302,11 +302,10 @@ namespace Goguma.Game.Object.Entity.Player
             default:
               return;
           }
-          PrintText(CTexts.Make($"{{\nSuccess : {ss.getString}, {Colors.txtSuccess}}}"));
+          PrintCText($"{{\nSuccess : {ss.getString}, {Colors.txtSuccess}}}");
           Pause();
         }
       }
     }
-
   }
 }

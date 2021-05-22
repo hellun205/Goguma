@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using Gogu_Remaster.Game.Object.Map;
-using Goguma.Game.Object.Skill;
+﻿using Goguma.Game.Object.Map;
 
 namespace Goguma.Game.Object.Entity.Player
 {

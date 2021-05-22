@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Gogu_Remaster.Game.Object.Map
+namespace Goguma.Game.Object.Map
 {
   public interface IMap
   {

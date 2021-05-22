@@ -2,8 +2,6 @@ using System.Collections.Generic;
 using Goguma.Game.Object.Skill;
 using System.Linq;
 using System;
-using Goguma.Game.Object.Entity.Monster;
-using Goguma.Game.Object.Entity.Player;
 
 namespace Goguma.Game.Object.Entity.AttSys
 {

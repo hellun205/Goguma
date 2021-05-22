@@ -37,8 +37,8 @@ namespace Goguma.Game.Object.Inventory.Item
     {
       if (showCount) PrintText(GetSep(40, $"{Name.ToString()} [ {Count} ]"));
       else PrintText(GetSep(40, $"{Name.ToString()}"));
-      PrintText(CTexts.Make($"{{\n{InvenInfo.HavingInven.GetTypeString(Type)} 아이템\n, {Colors.txtWarning}}}"));
-      PrintText(Descriptions);
+      PrintCText($"{{\n{InvenInfo.HavingInven.GetTypeString(Type)} 아이템\n, {Colors.txtWarning}}}");
+      PrintCText(Descriptions);
       PrintText("\n" + GetSep(40));
       DescriptionItem();
       PrintText("\n" + GetSep(40));

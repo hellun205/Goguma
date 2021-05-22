@@ -1,13 +1,12 @@
 using System;
-using System.Collections.Generic;
 using System.Text;
 using Colorify;
-using Gogu_Remaster.Game.Object.Map;
+using Goguma.Game.Object.Map;
 using Goguma.Game.Console;
-using Goguma.Game.Object.Inventory;
 using Goguma.Game.Object.Skill;
 using static Goguma.Game.Console.ConsoleFunction;
-using Gogu_Remaster.Game.Object.Map.Town;
+using static Goguma.Game.Console.StringFunction;
+using Goguma.Game.Object.Map.Town;
 using Goguma.Game.Object.Inventory.Item.Equipment;
 
 namespace Goguma.Game.Object.Entity.Player
@@ -60,7 +59,7 @@ namespace Goguma.Game.Object.Entity.Player
           Hp = MaxHp;
           Ep = MaxEp;
           MaxExp += IncreaseMaxExp;
-          PrintText(CTexts.Make($"{{\nLevel UP! Lv. }} {{{Level}\n, {Colors.txtInfo}}}"));
+          PrintCText($"{{\nLevel UP! Lv. }} {{{Level}\n, {Colors.txtInfo}}}");
           Exp = Math.Max(0, value - MaxExp);
           Pause();
         }
@@ -157,18 +156,18 @@ namespace Goguma.Game.Object.Entity.Player
 
     public override string ToString()
     {
-      return new StringBuilder($"\n{StringFunction.GetSep(30, $"{Name}")}")
+      return new StringBuilder($"\n{GetSep(30, $"{Name}")}")
         .Append(CTexts.Make($"{{\nLv. : }} {{{Level}, {Colors.txtWarning}}}"))
         .Append(CTexts.Make($"{{\nExp : }} {{{Exp} / {MaxExp}, {Colors.txtWarning}}}"))
         .Append(CTexts.Make($"{{\nGOLD : }} {{{Gold}, {Colors.txtWarning}}}"))
-        .Append(($"\n{StringFunction.GetSep(30)}"))
+        .Append(($"\n{GetSep(30)}"))
         .Append(CTexts.Make($"{{\nHP : }} {{{Hp} / {MaxHp}, {Colors.txtWarning}}}"))
         .Append(CTexts.Make($"{{\nEP : }} {{{Ep} / {MaxEp}, {Colors.txtWarning}}}"))
         .Append(CTexts.Make($"{{\nATT : }} {{{AttDmg}, {Colors.txtWarning}}}"))
         .Append(CTexts.Make($"{{\nDEF : }} {{{defPer} %, {Colors.txtWarning}}}"))
-        .Append($"\n{StringFunction.GetSep(30)}")
+        .Append($"\n{GetSep(30)}")
         .Append($"\n위치 : {Loc.Loc}")
-        .Append($"\n{StringFunction.GetSep(30)}")
+        .Append($"\n{GetSep(30)}")
         .ToString();
     }
 

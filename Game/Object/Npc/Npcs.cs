@@ -1,4 +1,4 @@
-namespace Gogu_Remaster.Game.Object.Npc
+namespace Goguma.Game.Object.Npc
 {
   public class Npcs
   {

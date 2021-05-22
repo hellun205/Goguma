@@ -10,15 +10,15 @@ namespace Goguma.Game.Console
     public int getIndex;
     public string getString;
 
-    public SelectScene(CTexts questionText, SelectSceneItems answerItems, bool air = true)
+    public SelectScene(CTexts questionText, SelectSceneItems answerItems)
     {
-      PrintQuestionText(questionText, air);
+      PrintQuestionText(questionText);
 
       for (int i = 1; i <= answerItems.Items.Count; i++)
       {
         var enabledColor = answerItems.Items[i - 1].Enabled ? Colors.txtDefault : Colors.txtMuted;
-        PrintText(CTexts.Make($"{{{i}. , {enabledColor}}}"));
-        PrintText(answerItems.Items[i - 1].Texts);
+        PrintCText($"{{{i}. , {enabledColor}}}");
+        PrintCText(answerItems.Items[i - 1].Texts);
         PrintText("\n");
       }
 
@@ -44,18 +44,20 @@ namespace Goguma.Game.Console
         }
       }
     }
-    static public void PrintQuestionText(CTexts questionText, bool air)
+
+    public SelectScene(string questionText, SelectSceneItems answerItems) : this(CTexts.Make(questionText), answerItems) { }
+
+    static public void PrintQuestionText(CTexts questionText, CTexts plusText = null)
     {
-      if (air)
-        PrintText("\n");
-      PrintText("\nQ. ");
-      PrintText(questionText);
+      PrintText("\n\nQ. ");
+      PrintCText(questionText);
+      if (plusText != null) PrintCText(plusText);
       PrintText("\n\n");
     }
 
     static public void PrintReadText()
     {
-      PrintText(CTexts.Make($"{{\n>> , {Colors.txtInfo}}}"));
+      PrintCText($"{{\n>> , {Colors.txtInfo}}}");
     }
   }
 }

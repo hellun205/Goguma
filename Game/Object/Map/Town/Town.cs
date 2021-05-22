@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using Gogu_Remaster.Game.Object.Map.Facility;
-using Gogu_Remaster.Game.Object.Npc;
+using Goguma.Game.Object.Map.Facility;
+using Goguma.Game.Object.Npc;
 using Goguma.Game.Console;
 
-namespace Gogu_Remaster.Game.Object.Map.Town
+namespace Goguma.Game.Object.Map.Town
 {
   public abstract class Town : IMap
   {

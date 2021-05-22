@@ -5,7 +5,7 @@ using Goguma.Game.Console;
 using Colorify.UI;
 using Goguma.Game.Object.Entity.Player;
 
-namespace Gogu_Remaster
+namespace Goguma
 {
   class Program
   {
