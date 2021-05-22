@@ -151,8 +151,6 @@ namespace Goguma.Game.Object.Inventory
       for (var i = 0; i < Enum.GetValues(typeof(HavingType)).Length; i++)
       {
         var inven = Items.having.GetItems((HavingType)i);
-        PrintText($"\n{InvenInfo.HavingInven.GetTypeString((HavingType)i)}:{inven.Count}개");
-        Pause();
         var iCount = inven.Count;
         for (var j = 0; j < iCount; j++)
         {
