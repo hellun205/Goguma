@@ -18,7 +18,7 @@ namespace Goguma.Game.Object.Skill
       IPlayer player = InGame.player;
       PrintText(GetSep(30, base.Name));
       PrintText(CTexts.Make($"{{\n{Skill.GetTypeString(Type)} 스킬,{Colors.txtWarning}}}"));
-      PrintText(CTexts.Make($"{{\n필요 에너지: }}{{{base.useEp}\n, {Colors.txtWarning}}}"));
+      PrintText(CTexts.Make($"{{\n필요 에너지: }}{{{base.UseEp}\n, {Colors.txtWarning}}}"));
       PrintText(GetSep(30) + "\n");
       PrintText(base.Descriptions);
       PrintText("\n" + GetSep(30));

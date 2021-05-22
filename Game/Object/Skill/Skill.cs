@@ -10,7 +10,7 @@ namespace Goguma.Game.Object.Skill
     public CTexts Text { get; set; }
     public CTexts Descriptions { get; set; }
     public abstract SkillType Type { get; }
-    public double useEp { get; set; }
+    public double UseEp { get; set; }
 
     static public string GetTypeString(SkillType sType)
     {

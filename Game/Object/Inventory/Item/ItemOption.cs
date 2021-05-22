@@ -155,7 +155,7 @@ namespace Goguma.Game.Object.Inventory.Item
         Lose(sItem.LoseCount);
         PrintText(sItem.Name);
         PrintText("(을)를 사용하였습니다.");
-        MyInventory.Player.PrintAbout();
+        MyInventory.Player.Information();
         return true;
       }
       else return false;

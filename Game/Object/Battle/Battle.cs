@@ -21,10 +21,10 @@ namespace Goguma.Game.Object.Battle
         switch (scene.getString)
         {
           case "플레이어 정보 보기":
-            player.PrintAbout();
+            player.Information();
             break;
           case "몬스터 정보 보기":
-            monster.PrintAbout();
+            monster.Information();
             break;
           case "싸우기":
             PvEStart(monster);
@@ -55,14 +55,14 @@ namespace Goguma.Game.Object.Battle
       };
       Func<IAttackSkill, bool> UseAttackSkill = (IAttackSkill skill) =>
       {
-        if (player.Ep < skill.useEp)
+        if (player.Ep < skill.UseEp)
         {
           BattleScene.PvE.Player.LackOfEP(player, (ISkill)skill);
           return false;
         }
-        double damage = DamageByLevel((player.AttDmg + skill.Damage), player.Level, monster.Level) * (1 - ((monster.DefPer / 100) - (skill.IgnoreDef / 100))); // TO DO
+        double damage = Math.Round(DamageByLevel((player.AttDmg + skill.Damage), player.Level, monster.Level) * (1 - ((monster.DefPer / 100) - (skill.IgnoreDef / 100))), 2);
         BattleScene.PvE.Player.SkillAttack(player, monster, skill, damage);
-        player.Ep -= skill.useEp;
+        player.Ep -= skill.UseEp;
         if (monster.Hp - damage <= 0)
           monster.Hp = 0;
         else
@@ -71,7 +71,7 @@ namespace Goguma.Game.Object.Battle
       };
       Func<IBuffSkill, bool> UseBuffSkill = (IBuffSkill skill) =>
       {
-        if (player.Ep < skill.useEp)
+        if (player.Ep < skill.UseEp)
         {
           BattleScene.PvE.Player.LackOfEP(player, (ISkill)skill);
           return false;
@@ -82,7 +82,7 @@ namespace Goguma.Game.Object.Battle
           return false;
         }
         BattleScene.PvE.Player.BuffSkill(player, skill);
-        player.Ep -= skill.useEp;
+        player.Ep -= skill.UseEp;
         player.AddBuff(skill);
         buffTurns.Add(turn);
         return true;
@@ -166,7 +166,7 @@ namespace Goguma.Game.Object.Battle
       };
       Func<bool> GeneralAttack = () =>
       {
-        double damage = DamageByLevel(player.AttDmg, player.Level, monster.Level) * (1 - (monster.DefPer / 100));
+        double damage = Math.Round(DamageByLevel(player.AttDmg, player.Level, monster.Level) * (1 - (monster.DefPer / 100)), 2);
         BattleScene.PvE.Player.GeneralAttack(player, monster, damage);
 
         monster.Hp = Math.Max(0, monster.Hp - damage);
@@ -259,10 +259,10 @@ namespace Goguma.Game.Object.Battle
         switch (scene.getString)
         {
           case "플레이어 정보 보기":
-            player.PrintAbout();
+            player.Information();
             break;
           case "몬스터 정보 보기":
-            monster.PrintAbout();
+            monster.Information();
             break;
           case "인벤토리 열기":
             skip = player.Inventory.Open();

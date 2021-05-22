@@ -13,33 +13,36 @@ using Goguma.Game.Object.Inventory.Item.Equipment;
 namespace Goguma.Game.Object.Entity.Player
 {
   [Serializable]
-  public class Player : IPlayer
+  public class Player : Entity, IPlayer
   {
-    public string Name { get; set; }
     public Inventory.Inventory Inventory { get; set; }
     public Location Loc { get; set; }
-    public double Hp
-    {
-      get => hp;
-      set => hp = Math.Min(value, MaxHp);
-    }
+
     public double Ep
     {
-      get => ep;
-      set => Math.Min(value, MaxEp);
-    }
-    public double MaxHp
-    {
-      get => maxHp + ItemsIncrease.MaxHp + BuffsIncrease.MaxHp;
-      set => maxHp = value;
+      get => Math.Round(ep, 2);
+      set => ep = Math.Min(value, MaxEp);
     }
     public double MaxEp
     {
-      get => maxEp + ItemsIncrease.MaxEp + BuffsIncrease.MaxEp;
-      set => maxEp = value;
+      get => Math.Round(maxEp + ItemsIncrease.MaxEp + BuffsIncrease.MaxEp, 2);
+      set => maxEp = Math.Max(0, value);
     }
-
-    public int Level { get; set; }
+    new public double MaxHp
+    {
+      get => Math.Round(maxHp + ItemsIncrease.MaxHp + BuffsIncrease.MaxHp, 2);
+      set => maxHp = Math.Max(0, value);
+    }
+    new public double AttDmg
+    {
+      get => Math.Round(attDmg + ItemsIncrease.AttDmg + BuffsIncrease.AttDmg, 2);
+      set => attDmg = Math.Max(1, value);
+    }
+    new public double DefPer
+    {
+      get => Math.Round(defPer + ItemsIncrease.DefPer + BuffsIncrease.DefPer, 2);
+      set => defPer = Math.Max(1, value);
+    }
 
     public double Exp
     {
@@ -58,7 +61,7 @@ namespace Goguma.Game.Object.Entity.Player
           Ep = MaxEp;
           MaxExp += IncreaseMaxExp;
           PrintText(CTexts.Make($"{{\nLevel UP! Lv. }} {{{Level}\n, {Colors.txtInfo}}}"));
-          Exp = value - MaxExp;
+          Exp = Math.Max(0, value - MaxExp);
           Pause();
         }
       }
@@ -97,67 +100,20 @@ namespace Goguma.Game.Object.Entity.Player
     }
     public double Gold { get; set; }
 
-    public double AttDmg
-    {
-      get => attDmg + ItemsIncrease.AttDmg + BuffsIncrease.AttDmg;
-      set
-      {
-        if (value > 0)
-          attDmg = value;
-        else
-          attDmg = 0;
-      }
-    }
-
-    public double DefPer
-    {
-      get => defPer + ItemsIncrease.DefPer + BuffsIncrease.DefPer;
-      set
-      {
-        if (value > 0)
-          defPer = value;
-        else
-          defPer = 0;
-      }
-    }
-    private double attDmg { get; set; }
-    private double defPer { get; set; }
-
-    private ItemIncrease ItemsIncrease { get => Inventory.Items.wearing.Increase; }
-    private Buff BuffsIncrease
-    {
-      get
-      {
-        var resultBuff = new Buff();
-        foreach (var bf in Buffs)
-        {
-          resultBuff.MaxHp += bf.buff.MaxHp;
-          resultBuff.MaxEp += bf.buff.MaxEp;
-          resultBuff.AttDmg += bf.buff.AttDmg;
-          resultBuff.DefPer += bf.buff.DefPer;
-        }
-        return resultBuff;
-      }
-    }
+    private ItemIncrease ItemsIncrease => Inventory.Items.wearing.Increase;
     private double increaseMaxExp;
     private double increaseAttDmg;
     //private int increaseDefPer;
     private double increaseMaxHp;
     private double increaseMaxEp;
     private double IncreaseMul(double i) { return i * (Level * 0.1); }
-    private double hp;
     private double ep;
     private double exp;
-    private double maxHp;
     private double maxEp;
-    public List<ISkill> Skills { get; set; }
-    public List<IBuffSkill> Buffs { get; set; }
 
-    public Player()
+    public Player() : base()
     {
       Inventory = new Inventory.Inventory(this);
-      Skills = new List<ISkill>();
-      Buffs = new List<IBuffSkill>();
       Loc = new Location(Towns.kks.Name, true);
       MaxHp = 50;
       MaxEp = 30;
@@ -184,10 +140,19 @@ namespace Goguma.Game.Object.Entity.Player
       Hp = Hp + heal;
     }
 
-    public void PrintAbout()
+    public override void Information()
     {
       PrintText(this.ToString());
       Pause();
+    }
+
+    new public void AddBuff(IBuffSkill skill)
+    {
+      Buffs.Add(skill);
+      if (skill.buff.Hp != 0)
+        Hp += skill.buff.Hp;
+      if (skill.buff.Ep != 0)
+        Ep += skill.buff.Ep;
     }
 
     public override string ToString()
@@ -212,17 +177,6 @@ namespace Goguma.Game.Object.Entity.Player
       return MaxExp - Exp;
     }
 
-    public void AddBuff(IBuffSkill skill)
-    {
-      Buffs.Add(skill);
-      if (skill.buff.Hp != 0)
-        Hp += skill.buff.Hp;
-      if (skill.buff.Ep != 0)
-        Ep += skill.buff.Ep;
-    }
-    public void RemoveBuff(IBuffSkill skill)
-    {
-      Buffs.Remove(skill);
-    }
+
   }
 }

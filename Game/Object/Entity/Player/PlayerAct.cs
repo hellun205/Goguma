@@ -129,7 +129,7 @@ namespace Goguma.Game.Object.Entity.Player
       switch (actText)
       {
         case "캐릭터 정보 보기":
-          InGame.player.PrintAbout();
+          InGame.player.Information();
           break;
         case "ADMIN":
           AdminOption(InGame.player, true);

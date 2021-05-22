@@ -17,7 +17,7 @@ namespace Goguma.Game.Object.Entity
     double DefPer { get; set; }
     List<ISkill> Skills { get; set; }
     List<IBuffSkill> Buffs { get; set; }
-    void PrintAbout();
+    void Information();
     void AddBuff(IBuffSkill skill);
     void RemoveBuff(IBuffSkill skill);
   }

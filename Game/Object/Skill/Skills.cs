@@ -15,7 +15,7 @@ namespace Goguma.Game.Object.Skill
             Name = "테스트 스킬1",
             Text = CTexts.Make("{테스테스트!}"),
             Descriptions = CTexts.Make("{그냥 테스트용으로 쓰이는 스킬이다.}"),
-            useEp = 2,
+            UseEp = 2,
             Damage = 5,
             IgnoreDef = 0
           };
@@ -26,7 +26,7 @@ namespace Goguma.Game.Object.Skill
             Name = "테스트 스킬2",
             Text = CTexts.Make("{테스테스테스트!}"),
             Descriptions = CTexts.Make("{그냥 테스트용으로 쓰이는 스킬이다.}"),
-            useEp = 4,
+            UseEp = 4,
             Damage = 7,
             IgnoreDef = 0
           };
@@ -37,7 +37,7 @@ namespace Goguma.Game.Object.Skill
             Name = "테스트 버프 스킬1",
             Text = CTexts.Make("{테스트 버프 !!!!!!!}"),
             Descriptions = CTexts.Make("{그냥 테스트용으로 쓰이는 스킬이다.}"),
-            useEp = 10,
+            UseEp = 10,
             buff = new Buff()
             {
               MaxHp = 20,
