@@ -65,7 +65,7 @@ namespace Gogu_Remaster.Game.Object.Npc
                   Pause();
                   break;
                 case "아이템 정보":
-                  itemToBuy.DescriptionItem();
+                  itemToBuy.Information(false);
                   break;
               }
             }
@@ -109,7 +109,6 @@ namespace Gogu_Remaster.Game.Object.Npc
         ssi.Add($"{{대화 종료, {Colors.txtMuted}}}");
         var ss = new SelectScene(CTexts.Make($"{{{Name}(와)과 대화 중 입니다. 무엇을 하시겠습니까?}}"), ssi);
 
-        if (ss.getString == "대화 종료") return;
         switch (ss.getString)
         {
           case "아이템 구매":
@@ -118,6 +117,8 @@ namespace Gogu_Remaster.Game.Object.Npc
           case "아이템 판매":
             SellItem();
             break;
+          case "대화 종료":
+            return;
         }
       }
     }

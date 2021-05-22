@@ -1,6 +1,9 @@
 ﻿using Goguma.Game.Object.Entity.Player;
 using Goguma.Game.Console;
 using System;
+using static Goguma.Game.Console.ConsoleFunction;
+using static Goguma.Game.Console.StringFunction;
+using Colorify;
 
 namespace Goguma.Game.Object.Inventory.Item
 {
@@ -30,6 +33,17 @@ namespace Goguma.Game.Object.Inventory.Item
     }
     public abstract void DescriptionItem();
     public abstract IItem GetInstance();
+    public void Information(bool showCount = true, bool isPause = true)
+    {
+      if (showCount) PrintText(GetSep(40, $"{Name.ToString()} [ {Count} ]"));
+      else PrintText(GetSep(40, $"{Name.ToString()}"));
+      PrintText(CTexts.Make($"{{\n{InvenInfo.HavingInven.GetTypeString(Type)} 아이템\n, {Colors.txtWarning}}}"));
+      PrintText(Descriptions);
+      PrintText("\n" + GetSep(40));
+      DescriptionItem();
+      PrintText("\n" + GetSep(40));
+      if (isPause) Pause();
+    }
 
   }
 }
