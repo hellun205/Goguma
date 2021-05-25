@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Goguma.Game.Object.Inventory.Item;
 using Goguma.Game.Object.Inventory.Item.Equipment;
+using System.Linq;
 
 namespace Goguma.Game.Object.Inventory
 {
@@ -16,25 +17,45 @@ namespace Goguma.Game.Object.Inventory
       {
         Items = new List<IEquipmentItem>();
         for (var i = 0; i < Enum.GetValues(typeof(WearingType)).Length; i++)
-          Items.Add(EquipmentItem.GetAir());
+          Items.Add(null);
       }
       public IEquipmentItem GetItem(WearingType wType)
       {
         return Items[(int)wType];
       }
-      public ItemIncrease Increase
+      public EquipEffect GetEquipEffect
       {
         get
         {
-          var resultIncrease = new ItemIncrease();
-          foreach (var item in Items)
+          var resultEffect = new EquipEffect();
+          var equipItems = from item in Items
+                           where item.EquipmentType == WearingType.Head || item.EquipmentType == WearingType.Chestplate || item.EquipmentType == WearingType.Leggings || item.EquipmentType == WearingType.Boots
+                           select item;
+          foreach (var item in equipItems.ToList<IEquipmentItem>())
           {
-            resultIncrease.MaxHp += item.Increase.MaxHp;
-            resultIncrease.MaxEp += item.Increase.MaxEp;
-            resultIncrease.AttDmg += item.Increase.AttDmg;
-            resultIncrease.DefPer += item.Increase.DefPer;
+            resultEffect.MaxHp += ((EEquip)item).Effect.MaxHp;
+            resultEffect.MaxEp += ((EEquip)item).Effect.MaxEp;
+            resultEffect.DefPer += ((EEquip)item).Effect.DefPer;
           }
-          return resultIncrease;
+          return resultEffect;
+        }
+      }
+      public WeaponEffect GetWeaponEffect
+      {
+        get
+        {
+          var resultEffect = new WeaponEffect();
+          var weaponItems = from item in Items
+                            where item.EquipmentType == WearingType.Weapon
+                            select item;
+          foreach (var item in weaponItems.ToList<IEquipmentItem>())
+          {
+            resultEffect.AttDmg += ((EWeapon)item).Effect.AttDmg;
+            resultEffect.CriticalDmg += ((EWeapon)item).Effect.CriticalDmg;
+            resultEffect.CriticalPer += ((EWeapon)item).Effect.CriticalPer;
+            resultEffect.IgnoreDef += ((EWeapon)item).Effect.IgnoreDef;
+          }
+          return resultEffect;
         }
       }
     }

@@ -11,9 +11,8 @@ namespace Goguma.Game.Object.Inventory.Item.Consume
     public int LoseCount { get; set; }
     public abstract string GetString { get; }
 
-    public ConsumeItem()
+    public ConsumeItem() : base()
     {
-      Count = 1;
       LoseCount = 1;
     }
 

@@ -99,7 +99,7 @@ namespace Goguma.Game.Object.Entity.Player
     }
     public double Gold { get; set; }
 
-    private ItemIncrease ItemsIncrease => Inventory.Items.wearing.Increase;
+    private EquipEffect ItemsIncrease => Inventory.Items.wearing.Increase;
     private double increaseMaxExp;
     private double increaseAttDmg;
     //private int increaseDefPer;

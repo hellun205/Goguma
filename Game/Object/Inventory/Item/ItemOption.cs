@@ -165,7 +165,7 @@ namespace Goguma.Game.Object.Inventory.Item
       var em = MyInventory.Items.wearing;
       // sItem.DescriptionItemAP(MyInventory.Player);
 
-      if (em.GetItem(wType).IsAir)
+      if (em.GetItem(wType) == null)
       {
         if (ReadYesOrNo(CTexts.Make($"{{{InvenInfo.WearingInven.GetTypeString(wType)},{Colors.txtSuccess}}} {{에 }} {{{sItem.Name.ToString()}, {Colors.txtInfo}}} {{을(를) 착용하시겠습니까?}}")))
         {

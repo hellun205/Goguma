@@ -101,7 +101,7 @@ namespace Goguma.Game.Object.Inventory
       var sItem = Items.wearing.GetItem(wType);
 
       if (count == sItem.Count)
-        inven[(int)wType] = EquipmentItem.GetAir();
+        inven[(int)wType] = null;
       else
         sItem.Count -= count;
     }

@@ -101,7 +101,7 @@ namespace Goguma.Game.Object.Inventory
 
           for (var i = 0; i < Enum.GetValues(typeof(WearingType)).Length; i++)
           {
-            if (!inven.Items.wearing.GetItem((WearingType)i).IsAir)
+            if (inven.Items.wearing.GetItem((WearingType)i) != null)
               resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{{InvenInfo.WearingInven.GetTypeString((WearingType)i)}, {Colors.txtSuccess}}} {{ : }} {{{inven.Items.wearing.GetItem((WearingType)i).Name.ToString()} , {Colors.txtInfo}}}")));
             else
               resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{{InvenInfo.WearingInven.GetTypeString((WearingType)i)}, {Colors.txtSuccess}}} {{ : }} {{비어 있음 , {Colors.txtMuted}}}"), false));
@@ -150,7 +150,7 @@ namespace Goguma.Game.Object.Inventory
           var resultSSI = new SelectSceneItems();
           foreach (var item in inven.Items.having.GetItems(hType))
           {
-            if (!item.IsAir)
+            if (item != null)
             {
               if (hType == HavingType.Equipment)
                 resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{{item.Name.ToString()}}} {{ [{item.Count}], {Colors.txtInfo}}} {{ [{InvenInfo.WearingInven.GetTypeString((WearingType)((IEquipmentItem)item).EquipmentType)}],{Colors.txtWarning}}}")));
