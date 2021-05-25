@@ -28,14 +28,17 @@ namespace Goguma.Game.Object.Inventory
         get
         {
           var resultEffect = new EquipEffect();
-          var equipItems = from item in Items
-                           where item.EquipmentType == WearingType.Head || item.EquipmentType == WearingType.Chestplate || item.EquipmentType == WearingType.Leggings || item.EquipmentType == WearingType.Boots
-                           select item;
-          foreach (var item in equipItems.ToList<IEquipmentItem>())
+          foreach (var item in Items)
           {
-            resultEffect.MaxHp += ((EEquip)item).Effect.MaxHp;
-            resultEffect.MaxEp += ((EEquip)item).Effect.MaxEp;
-            resultEffect.DefPer += ((EEquip)item).Effect.DefPer;
+            if (item != null)
+            {
+              if (item.EquipmentType == WearingType.Head || item.EquipmentType == WearingType.Chestplate || item.EquipmentType == WearingType.Leggings || item.EquipmentType == WearingType.Boots)
+              {
+                resultEffect.MaxHp += ((EEquip)item).Effect.MaxHp;
+                resultEffect.MaxEp += ((EEquip)item).Effect.MaxEp;
+                resultEffect.DefPer += ((EEquip)item).Effect.DefPer;
+              }
+            }
           }
           return resultEffect;
         }
@@ -45,15 +48,18 @@ namespace Goguma.Game.Object.Inventory
         get
         {
           var resultEffect = new WeaponEffect();
-          var weaponItems = from item in Items
-                            where item.EquipmentType == WearingType.Weapon
-                            select item;
-          foreach (var item in weaponItems.ToList<IEquipmentItem>())
+          foreach (var item in Items)
           {
-            resultEffect.AttDmg += ((EWeapon)item).Effect.AttDmg;
-            resultEffect.CriticalDmg += ((EWeapon)item).Effect.CriticalDmg;
-            resultEffect.CriticalPer += ((EWeapon)item).Effect.CriticalPer;
-            resultEffect.IgnoreDef += ((EWeapon)item).Effect.IgnoreDef;
+            if (item != null)
+            {
+              if (item.EquipmentType == WearingType.Weapon)
+              {
+                resultEffect.AttDmg += ((EWeapon)item).Effect.AttDmg;
+                resultEffect.CritDmg += ((EWeapon)item).Effect.CritDmg;
+                resultEffect.CritPer += ((EWeapon)item).Effect.CritPer;
+                resultEffect.IgnoreDef += ((EWeapon)item).Effect.IgnoreDef;
+              }
+            }
           }
           return resultEffect;
         }

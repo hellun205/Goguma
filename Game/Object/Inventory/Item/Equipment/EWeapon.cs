@@ -14,8 +14,8 @@ namespace Goguma.Game.Object.Inventory.Item.Equipment
       Effect = new WeaponEffect()
       {
         AttDmg = 0,
-        CriticalDmg = 0,
-        CriticalPer = 0,
+        CritDmg = 0,
+        CritPer = 0,
         IgnoreDef = 0
       };
     }
@@ -47,19 +47,19 @@ namespace Goguma.Game.Object.Inventory.Item.Equipment
         PrintCText("{ ] → }");
         PrintCText(NumberColor(Effect.IgnoreDef + player.IgnoreDef));
       }
-      if (Effect.CriticalDmg != 0)
+      if (Effect.CritDmg != 0)
       {
-        PrintCText($"{{\n크리티컬 데미지: }} {{{player.CriticalDmg}, {Colors.txtWarning}}} {{ % [ }}");
-        PrintCText(NumberColor(Effect.CriticalDmg));
+        PrintCText($"{{\n크리티컬 데미지: }} {{{player.CritDmg}, {Colors.txtWarning}}} {{ % [ }}");
+        PrintCText(NumberColor(Effect.CritDmg));
         PrintCText("{ ] → }");
-        PrintCText(NumberColor(Effect.CriticalDmg + player.CriticalDmg));
+        PrintCText(NumberColor(Effect.CritDmg + player.CritDmg));
       }
-      if (Effect.CriticalPer != 0)
+      if (Effect.CritPer != 0)
       {
-        PrintCText($"{{\n크리티컬 확률: }} {{{player.CriticalPer}, {Colors.txtWarning}}} {{ % [ }}");
-        PrintCText(NumberColor(Effect.CriticalPer));
+        PrintCText($"{{\n크리티컬 확률: }} {{{player.CritPer}, {Colors.txtWarning}}} {{ % [ }}");
+        PrintCText(NumberColor(Effect.CritPer));
         PrintCText("{ ] → }");
-        PrintCText(NumberColor(Effect.CriticalPer + player.CriticalPer));
+        PrintCText(NumberColor(Effect.CritPer + player.CritPer));
       }
     }
   }

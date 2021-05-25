@@ -7,7 +7,7 @@ namespace Goguma.Game.Object.Inventory.Item.Equipment
   {
     public double AttDmg { get; set; }
     public double IgnoreDef { get; set; }
-    public double CriticalPer { get; set; }
-    public double CriticalDmg { get; set; }
+    public double CritPer { get; set; }
+    public double CritDmg { get; set; }
   }
 }

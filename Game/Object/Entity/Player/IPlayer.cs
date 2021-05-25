@@ -1,4 +1,5 @@
-﻿using Goguma.Game.Object.Map;
+﻿using Goguma.Game.Console;
+using Goguma.Game.Object.Map;
 
 namespace Goguma.Game.Object.Entity.Player
 {
@@ -16,5 +17,7 @@ namespace Goguma.Game.Object.Entity.Player
     double IncreaseMaxEp { get; set; }
     double IncreaseAttDmg { get; set; }
     double Gold { get; set; }
+    CTexts GetEpBar(bool withPercentage = true);
+    CTexts GetExpBar(bool withPercentage = true);
   }
 }

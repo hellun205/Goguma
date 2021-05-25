@@ -12,5 +12,8 @@ namespace Goguma.Game.Object.Skill
     public double DefPer { get; set; }
     public double Hp { get; set; }
     public double Ep { get; set; }
+    public double CritDmg { get; set; }
+    public double CritPer { get; set; }
+    public double IgnoreDef { get; set; }
   }
 }

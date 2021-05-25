@@ -14,6 +14,7 @@ namespace Goguma.Game.Object.Entity.Player
   [Serializable]
   public class Player : Entity, IPlayer
   {
+    public override EntityType Type => EntityType.PLAYER;
     public Inventory.Inventory Inventory { get; set; }
     public Location Loc { get; set; }
 
@@ -24,23 +25,23 @@ namespace Goguma.Game.Object.Entity.Player
     }
     public double MaxEp
     {
-      get => Math.Round(maxEp + ItemsIncrease.MaxEp + BuffsIncrease.MaxEp, 2);
+      get => Math.Round(maxEp + GetEquipEffect.MaxEp + BuffsIncrease.MaxEp, 2);
       set => maxEp = Math.Max(0, value);
     }
     new public double MaxHp
     {
-      get => Math.Round(maxHp + ItemsIncrease.MaxHp + BuffsIncrease.MaxHp, 2);
+      get => Math.Round(maxHp + GetEquipEffect.MaxHp + BuffsIncrease.MaxHp, 2);
       set => maxHp = Math.Max(0, value);
-    }
-    new public double AttDmg
-    {
-      get => Math.Round(attDmg + ItemsIncrease.AttDmg + BuffsIncrease.AttDmg, 2);
-      set => attDmg = Math.Max(1, value);
     }
     new public double DefPer
     {
-      get => Math.Round(defPer + ItemsIncrease.DefPer + BuffsIncrease.DefPer, 2);
+      get => Math.Round(defPer + GetEquipEffect.DefPer + BuffsIncrease.DefPer, 2);
       set => defPer = Math.Max(1, value);
+    }
+    new public double AttDmg
+    {
+      get => Math.Round(attDmg + GetWeaponEffect.AttDmg + BuffsIncrease.AttDmg, 2);
+      set => attDmg = Math.Max(1, value);
     }
 
     public double Exp
@@ -65,10 +66,7 @@ namespace Goguma.Game.Object.Entity.Player
         }
       }
     }
-    public bool IsDead
-    {
-      get => Hp <= 0;
-    }
+
 
     public double MaxExp { get; set; }
 
@@ -99,7 +97,8 @@ namespace Goguma.Game.Object.Entity.Player
     }
     public double Gold { get; set; }
 
-    private EquipEffect ItemsIncrease => Inventory.Items.wearing.Increase;
+    private EquipEffect GetEquipEffect => Inventory.Items.wearing.GetEquipEffect;
+    private WeaponEffect GetWeaponEffect => Inventory.Items.wearing.GetWeaponEffect;
     private double increaseMaxExp;
     private double increaseAttDmg;
     //private int increaseDefPer;
@@ -141,7 +140,25 @@ namespace Goguma.Game.Object.Entity.Player
 
     public override void Information()
     {
-      PrintText(this.ToString());
+      // PrintText(this.ToString());
+      PrintText($"\n{GetSep(40, $"{Name} [ Lv. {Level} ]")}");
+      PrintText("\n경험치 : ");
+      PrintCText(GetExpBar());
+      PrintCText($"{{\n골드 : }}{{{Gold} G,{Colors.txtWarning}}}");
+      PrintCText($"{{\n위치 : }}{{{Loc.Loc},{Colors.txtInfo}}}");
+      PrintText($"\n{GetSep(40)}");
+      PrintText("\n체력 : ");
+      PrintCText(GetHpBar());
+      PrintText("\n에너지 : ");
+      PrintCText(GetEpBar());
+      PrintCText($"{{ [ }}{{{Ep} / {MaxEp},{ColorByHp(Ep, MaxEp)}}}{{ ]}}");
+      PrintCText($"{{\n공격력 : }}{{{AttDmg},{Colors.txtDanger}}}");
+      PrintCText($"{{\n크리티컬 데미지 : }}{{{CritDmg} %,{Colors.txtDanger}}}");
+      PrintCText($"{{\n크리티컬 확률 : }}{{{CritPer} %,{Colors.txtDanger}}}");
+      PrintCText($"{{\n방어율 무시 : }}{{{IgnoreDef} %,{Colors.txtDanger}}}");
+      PrintCText($"{{\n방어율 : }}{{{DefPer} %,{Colors.txtInfo}}}");
+      PrintText($"\n{GetSep(40)}");
+
       Pause();
     }
 
@@ -176,6 +193,22 @@ namespace Goguma.Game.Object.Entity.Player
       return MaxExp - Exp;
     }
 
+    public CTexts GetEpBar(bool withPercentage = true)
+    {
+      var bar = GetPerStr(Ep, MaxEp, ColorByHp(Ep, MaxEp));
+      if (withPercentage)
+        return bar.Combine(CTexts.Make($"{{ [ }}{{{Ep} / {MaxEp},{ColorByHp(Ep, MaxEp)}}}{{ ]}}"));
+      else
+        return bar;
+    }
 
+    public CTexts GetExpBar(bool withPercentage = true)
+    {
+      var bar = GetPerStr(Exp, MaxExp);
+      if (withPercentage)
+        return bar.Combine(CTexts.Make($"{{ [ }}{{{Exp} / {MaxExp},{Colors.txtWarning}}}{{ ]}}"));
+      else
+        return bar;
+    }
   }
 }

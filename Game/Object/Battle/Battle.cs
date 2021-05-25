@@ -57,13 +57,15 @@ namespace Goguma.Game.Object.Battle
           BattleScene.PvE.Player.LackOfEP(player, (ISkill)skill);
           return false;
         }
-        double damage = Math.Round(DamageByLevel((player.AttDmg + skill.Damage), player.Level, monster.Level) * (1 - ((monster.DefPer / 100) - (skill.IgnoreDef / 100))), 2);
-        BattleScene.PvE.Player.SkillAttack(player, monster, skill, damage);
+        bool isCrit;
+        double damage = player.CalAttDmg(skill, monster, out isCrit);
         player.Ep -= skill.UseEp;
         if (monster.Hp - damage <= 0)
           monster.Hp = 0;
         else
           monster.Hp -= damage;
+
+        BattleScene.PvE.SkillAttack(player, monster, skill, damage);
         return true;
       };
       Func<IBuffSkill, bool> UseBuffSkill = (IBuffSkill skill) =>
@@ -78,7 +80,7 @@ namespace Goguma.Game.Object.Battle
           BattleScene.PvE.Player.AlreadyUsingBuff(skill);
           return false;
         }
-        BattleScene.PvE.Player.BuffSkill(player, skill);
+        BattleScene.PvE.BuffSkill(player, skill);
         player.Ep -= skill.UseEp;
         player.AddBuff(skill);
         buffTurns.Add(turn);
@@ -154,7 +156,7 @@ namespace Goguma.Game.Object.Battle
           endBuffs = from bf in buffs
                      select bf;
 
-        BattleScene.PvE.Player.DeleteBuff(endBuffs.ToList<IBuffSkill>());
+        BattleScene.PvE.DeleteBuff(player, endBuffs.ToList<IBuffSkill>());
         foreach (var eBf in endBuffs.ToList<IBuffSkill>())
         {
           buffTurns.RemoveAt(buffs.IndexOf(eBf));
@@ -163,11 +165,11 @@ namespace Goguma.Game.Object.Battle
       };
       Func<bool> GeneralAttack = () =>
       {
-        double damage = Math.Round(DamageByLevel(player.AttDmg, player.Level, monster.Level) * (1 - (monster.DefPer / 100)), 2);
-        BattleScene.PvE.Player.GeneralAttack(player, monster, damage);
-
+        bool isCrit;
+        double damage = player.CalAttDmg(monster, out isCrit);
         monster.Hp = Math.Max(0, monster.Hp - damage);
 
+        BattleScene.PvE.GeneralAttack(player, monster, damage);
         return true;
       };
       Action<bool> MEndBuff = (bool all) =>
@@ -181,7 +183,7 @@ namespace Goguma.Game.Object.Battle
             endBuffs = from bf in monster.Buffs
                        select bf;
 
-          BattleScene.PvE.Monster.DeleteBuff(monster, player, endBuffs.ToList<IBuffSkill>());
+          BattleScene.PvE.DeleteBuff(monster, endBuffs.ToList<IBuffSkill>());
           foreach (var eBf in endBuffs.ToList<IBuffSkill>())
           {
             mBuffTurns.RemoveAt(monster.Buffs.IndexOf(eBf));
@@ -197,23 +199,27 @@ namespace Goguma.Game.Object.Battle
         };
         Action GeneralAttack = () =>
         {
-          double damage = DamageByLevel(monster.AttDmg, monster.Level, player.Level) * (1 - (player.DefPer / 100));
-          BattleScene.PvE.Monster.GeneralAttack(monster, player, damage);
+          bool isCrit;
+          double damage = monster.CalAttDmg(player, out isCrit);
           player.Hp -= damage;
+
+          BattleScene.PvE.GeneralAttack(monster, player, damage);
         };
         Func<bool> SkillAttack = () =>
         {
           var aSkill = (IAttackSkill)skill;
-          double damage = DamageByLevel((monster.AttDmg + aSkill.Damage), monster.Level, player.Level) * (1 - ((player.DefPer / 100) - (aSkill.IgnoreDef / 100))); // TO DO
-          BattleScene.PvE.Monster.SkillAttack(monster, player, aSkill, damage);
+          bool isCrit;
+          double damage = monster.CalAttDmg(aSkill, player, out isCrit);
           player.Hp -= damage;
+
+          BattleScene.PvE.SkillAttack(monster, player, aSkill, damage);
           return true;
         };
         Func<bool> BuffSkill = () =>
         {
           var bSkill = (IBuffSkill)skill;
           if (monster.Buffs.Contains(skill)) return false;
-          BattleScene.PvE.Monster.BuffSkill(monster, player, bSkill);
+          BattleScene.PvE.BuffSkill(monster, bSkill);
           monster.AddBuff(bSkill);
           mBuffTurns.Add(turn);
           return true;

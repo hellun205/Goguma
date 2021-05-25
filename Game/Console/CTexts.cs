@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
+using Colorify;
 using static Goguma.Game.Console.StringFunction;
 
 namespace Goguma.Game.Console
@@ -13,22 +15,60 @@ namespace Goguma.Game.Console
       Texts = new List<CText>();
     }
 
-    // public CTexts Combine(CTexts TextsB)
-    // {
-    //   var resultCTexts = new CTexts{Texts = Texts};
-    //   for (var i = 0; i < TextsB.Texts.Count ; i++)
-    //     resultCTexts.Texts.Add(TextsB.Texts[i]);
+    public CTexts(CTexts ct) : this()
+    {
+      Texts = ct.Texts;
+    }
 
-    //   return resultCTexts;
-    // }
+    public CTexts Combine(CTexts TextsB)
+    {
+      var resultCTexts = GetInstance();
+      var B = TextsB.GetInstance();
+      for (var i = 0; i < B.Texts.Count; i++)
+        resultCTexts.Texts.Add(B.Texts[i]);
+
+      return resultCTexts;
+    }
+
+    public CTexts Append(CTexts TextsB)
+    {
+      var B = TextsB.GetInstance();
+      for (var i = 0; i < B.Texts.Count; i++)
+        this.Texts.Add(B.Texts[i]);
+      return this;
+    }
+
+    public CTexts Combine(string TextsB)
+    {
+      return Combine(CTexts.Make(TextsB));
+    }
+
+    public CTexts Append(string TextsB)
+    {
+      return Append(CTexts.Make(TextsB));
+    }
+    public CTexts GetInstance()
+    {
+      return new CTexts(this);
+    }
 
     public override string ToString()
     {
-      var resultStr = "";
+      var sb = new StringBuilder();
       for (var i = 0; i < Texts.Count; i++)
-        resultStr = resultStr + Texts[i].Text;
+        sb.Append(Texts[i].Text);
 
-      return resultStr;
+      return sb.ToString();
+    }
+
+    public void Add(string txt, string color = Colors.txtDefault)
+    {
+      Texts.Add(new CText(txt, color));
+    }
+
+    public void Add(CText cT)
+    {
+      Texts.Add(cT);
     }
 
     static public CTexts Make(string cText)
