@@ -6,6 +6,7 @@ using Goguma.Game.Object.Skill;
 using static Goguma.Game.Console.StringFunction;
 using static Goguma.Game.Console.ConsoleFunction;
 using Colorify;
+using Goguma.Game.Object.Inventory.Item.Equipment;
 
 namespace Goguma.Game.Object.Entity
 {
@@ -133,16 +134,32 @@ namespace Goguma.Game.Object.Entity
         .Append($"{{\n{GetSep(40)}}}");
     }
 
-    public double CalAttDmg(IAttackSkill attackSkill, IEntity entity, out bool isCrit)
+    public double CalAttDmg(IAttackSkill aSkill, IEntity entity, out bool isCrit)
     {
-      var dmg = DamageByLevel((AttDmg + attackSkill.Damage), Level, entity.Level) * (1 - ((entity.DefPer / 100) - ((IgnoreDef + attackSkill.IgnoreDef) / 100)));
-      return CalCritDmg(dmg, out isCrit);
+      var dmg = DamageByLevel((AttDmg + aSkill.Effect.AttDmg), Level, entity.Level) * (1 - ((entity.DefPer / 100) - ((IgnoreDef + aSkill.Effect.IgnoreDef) / 100)));
+      return CalCritDmg(dmg, out isCrit, aSkill.Effect);
     }
 
     public double CalAttDmg(IEntity entity, out bool isCrit)
     {
       var dmg = DamageByLevel(AttDmg, Level, entity.Level) * (1 - ((entity.DefPer / 100) - ((IgnoreDef) / 100)));
       return CalCritDmg(dmg, out isCrit);
+    }
+
+    protected double CalCritDmg(double dmg, out bool isCrit, WeaponEffect wEffect)
+    {
+      var rand = new Random().Next(0, 101);
+      var critPer = Math.Round(CritPer + wEffect.CritPer, 2);
+      if (critPer >= rand)
+      {
+        isCrit = true;
+        return Math.Round(dmg * (1 + ((CritDmg + wEffect.CritDmg) / 100)), 2);
+      }
+      else
+      {
+        isCrit = false;
+        return Math.Round(dmg, 2);
+      }
     }
 
     protected double CalCritDmg(double dmg, out bool isCrit)

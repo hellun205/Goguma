@@ -148,6 +148,7 @@ namespace Goguma.Game.Object.Battle
       Action<bool> EndBuff = (bool all) =>
       {
         IEnumerable<IBuffSkill> endBuffs;
+        if (buffs.Count == 0) return;
         if (!all)
           endBuffs = from bf in buffs
                      where (bf.buff.turn + buffTurns[buffs.IndexOf(bf)]) == turn

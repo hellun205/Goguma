@@ -150,12 +150,12 @@ namespace Goguma.Game.Object.Battle
           if (skill.buff.Hp != 0)
           {
             isBuff = true;
-            resCT.Append(GetText($"{{체력을 }}{{{skill.buff.Hp} %,{Colors.txtInfo}}}", true));
+            resCT.Append(GetText($"{{체력을 }}{{{skill.buff.Hp},{Colors.txtInfo}}}", true));
           }
           if (skill.buff.Ep != 0 && caster.Type == EntityType.PLAYER)
           {
             isBuff = true;
-            resCT.Append(GetText($"{{에너지를 }}{{{skill.buff.Ep} %,{Colors.txtInfo}}}", true));
+            resCT.Append(GetText($"{{에너지를 }}{{{skill.buff.Ep},{Colors.txtInfo}}}", true));
           }
           if (!isBuff)
             resCT.Append(CTexts.Make("{아무런 효과가 없었습니다.}"));

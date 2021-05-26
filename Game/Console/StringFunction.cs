@@ -30,7 +30,7 @@ namespace Goguma.Game.Console
       return stringA;
     }
 
-    static public CTexts NumberColor(double number, string minusColor = Colors.txtDanger, string plusColor = Colors.txtInfo, string zeroColor = Colors.txtMuted)
+    static public CTexts NumberColor(double number, string unit = "", string minusColor = Colors.txtDanger, string plusColor = Colors.txtInfo, string zeroColor = Colors.txtMuted)
     {
       CTexts resultCT = new CTexts();
       var resultColor = Colors.txtDefault;
@@ -46,8 +46,8 @@ namespace Goguma.Game.Console
       else if (number < 0)
         resultColor = minusColor;
 
-
       resultCT.Texts[0].Color = resultColor;
+      if (unit != "") resultCT.Add($" {unit}", resultColor);
 
       return resultCT;
     }

@@ -9,5 +9,6 @@ namespace Goguma.Game.Object.Skill
     SkillType Type { get; }
     double UseEp { get; set; }
     void Information(bool IsPause = true);
+    CTexts Info();
   }
 }
