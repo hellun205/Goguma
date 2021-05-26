@@ -248,7 +248,7 @@ namespace Goguma.Game.Object.Battle
 
         static public void LackOfEP(IPlayer player, ISkill skill)
         {
-          PrintCText(CTexts.Make($"{{\n  에너지가 부족하여 }}").Combine(SkillText(skill)).Combine($"{{(을)를 사용 할 수 없습니다.\n    남은 에너지: }}").Combine(player.GetEpBar()).Combine($"{{\n    사용한 에너지: }}{{{skill.UseEp}\n, {Colors.txtWarning}}}"));
+          PrintCText(CTexts.Make($"{{\n  에너지가 부족하여 }}").Combine(SkillText(skill)).Combine($"{{(을)를 사용 할 수 없습니다.\n    남은 에너지: }}").Combine(player.GetEpBar()).Combine($"{{\n    필요한 에너지: }}{{{skill.UseEp}\n, {Colors.txtWarning}}}"));
           Pause();
         }
         static public void AlreadyUsingBuff(IBuffSkill skill)

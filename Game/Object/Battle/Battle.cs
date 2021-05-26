@@ -80,8 +80,8 @@ namespace Goguma.Game.Object.Battle
           BattleScene.PvE.Player.AlreadyUsingBuff(skill);
           return false;
         }
-        BattleScene.PvE.BuffSkill(player, skill);
         player.Ep -= skill.UseEp;
+        BattleScene.PvE.BuffSkill(player, skill);
         player.AddBuff(skill);
         buffTurns.Add(turn);
         return true;
