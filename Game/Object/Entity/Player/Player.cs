@@ -1,5 +1,4 @@
 using System;
-using System.Text;
 using Colorify;
 using Goguma.Game.Object.Map;
 using Goguma.Game.Console;
@@ -138,30 +137,6 @@ namespace Goguma.Game.Object.Entity.Player
       Hp = Hp + heal;
     }
 
-    public override void Information()
-    {
-      // PrintText(this.ToString());
-      PrintText($"\n{GetSep(40, $"{Name} [ Lv. {Level} ]")}");
-      PrintText("\n경험치 : ");
-      PrintCText(GetExpBar());
-      PrintCText($"{{\n골드 : }}{{{Gold} G,{Colors.txtWarning}}}");
-      PrintCText($"{{\n위치 : }}{{{Loc.Loc},{Colors.txtInfo}}}");
-      PrintText($"\n{GetSep(40)}");
-      PrintText("\n체력 : ");
-      PrintCText(GetHpBar());
-      PrintText("\n에너지 : ");
-      PrintCText(GetEpBar());
-      PrintCText($"{{ [ }}{{{Ep} / {MaxEp},{ColorByHp(Ep, MaxEp)}}}{{ ]}}");
-      PrintCText($"{{\n공격력 : }}{{{AttDmg},{Colors.txtDanger}}}");
-      PrintCText($"{{\n크리티컬 데미지 : }}{{{CritDmg} %,{Colors.txtDanger}}}");
-      PrintCText($"{{\n크리티컬 확률 : }}{{{CritPer} %,{Colors.txtDanger}}}");
-      PrintCText($"{{\n방어율 무시 : }}{{{IgnoreDef} %,{Colors.txtDanger}}}");
-      PrintCText($"{{\n방어율 : }}{{{DefPer} %,{Colors.txtInfo}}}");
-      PrintText($"\n{GetSep(40)}");
-
-      Pause();
-    }
-
     new public void AddBuff(IBuffSkill skill)
     {
       Buffs.Add(skill);
@@ -171,21 +146,31 @@ namespace Goguma.Game.Object.Entity.Player
         Ep += skill.buff.Ep;
     }
 
-    public override string ToString()
+    new public void Information()
     {
-      return new StringBuilder($"\n{GetSep(30, $"{Name}")}")
-        .Append(CTexts.Make($"{{\nLv. : }} {{{Level}, {Colors.txtWarning}}}"))
-        .Append(CTexts.Make($"{{\nExp : }} {{{Exp} / {MaxExp}, {Colors.txtWarning}}}"))
-        .Append(CTexts.Make($"{{\nGOLD : }} {{{Gold}, {Colors.txtWarning}}}"))
-        .Append(($"\n{GetSep(30)}"))
-        .Append(CTexts.Make($"{{\nHP : }} {{{Hp} / {MaxHp}, {Colors.txtWarning}}}"))
-        .Append(CTexts.Make($"{{\nEP : }} {{{Ep} / {MaxEp}, {Colors.txtWarning}}}"))
-        .Append(CTexts.Make($"{{\nATT : }} {{{AttDmg}, {Colors.txtWarning}}}"))
-        .Append(CTexts.Make($"{{\nDEF : }} {{{defPer} %, {Colors.txtWarning}}}"))
-        .Append($"\n{GetSep(30)}")
-        .Append($"\n위치 : {Loc.Loc}")
-        .Append($"\n{GetSep(30)}")
-        .ToString();
+      PrintCText(Info());
+      Pause();
+    }
+
+    new protected CTexts Info()
+    {
+      return new CTexts()
+      .Append($"{{\n{GetSep(40, $"{Name} [ Lv. {Level} ]")}}}")
+      .Append("{\n경험치 : }")
+      .Append(GetExpBar())
+      .Append($"{{\n골드 : }}{{{Gold} G,{Colors.txtWarning}}}")
+      .Append($"{{\n위치 : }}{{{Loc.Loc},{Colors.txtInfo}}}")
+      .Append($"{{\n{GetSep(40)}}}")
+      .Append("{\n체력 : }")
+      .Append(GetHpBar())
+      .Append("{\n에너지 : }")
+      .Append(GetEpBar())
+      .Append($"{{\n공격력 : }}{{{AttDmg},{Colors.txtDanger}}}")
+      .Append($"{{\n크리티컬 데미지 : }}{{{CritDmg} %,{Colors.txtDanger}}}")
+      .Append($"{{\n크리티컬 확률 : }}{{{CritPer} %,{Colors.txtDanger}}}")
+      .Append($"{{\n방어율 무시 : }}{{{IgnoreDef} %,{Colors.txtDanger}}}")
+      .Append($"{{\n방어율 : }}{{{DefPer} %,{Colors.txtInfo}}}")
+      .Append($"{{\n{GetSep(40)}}}");
     }
 
     public double RequiredForLevelUp()
@@ -193,20 +178,25 @@ namespace Goguma.Game.Object.Entity.Player
       return MaxExp - Exp;
     }
 
-    public CTexts GetEpBar(bool withPercentage = true)
+    public override string ToString()
     {
-      var bar = GetPerStr(Ep, MaxEp, ColorByHp(Ep, MaxEp));
+      return base.ToString();
+    }
+
+    public CTexts GetEpBar(bool withPercentage = true, double plus = 0)
+    {
+      var bar = GetPerStr(Ep + plus, MaxEp, ColorByHp(Ep + plus, MaxEp));
       if (withPercentage)
-        return bar.Combine(CTexts.Make($"{{ [ }}{{{Ep} / {MaxEp},{ColorByHp(Ep, MaxEp)}}}{{ ]}}"));
+        return bar.Combine(CTexts.Make($"{{ [ }}{{{Ep + plus} / {MaxEp},{ColorByHp(Ep + plus, MaxEp)}}}{{ ]}}"));
       else
         return bar;
     }
 
-    public CTexts GetExpBar(bool withPercentage = true)
+    public CTexts GetExpBar(bool withPercentage = true, double plus = 0)
     {
-      var bar = GetPerStr(Exp, MaxExp);
+      var bar = GetPerStr(Exp + plus, MaxExp);
       if (withPercentage)
-        return bar.Combine(CTexts.Make($"{{ [ }}{{{Exp} / {MaxExp},{Colors.txtWarning}}}{{ ]}}"));
+        return bar.Combine(CTexts.Make($"{{ [ }}{{{Exp + plus} / {MaxExp},{Colors.txtWarning}}}{{ ]}}"));
       else
         return bar;
     }

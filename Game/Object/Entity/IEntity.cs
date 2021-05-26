@@ -26,7 +26,7 @@ namespace Goguma.Game.Object.Entity
     void RemoveBuff(IBuffSkill skill);
     double CalAttDmg(IEntity entity, out bool isCrit);
     double CalAttDmg(IAttackSkill attackSkill, IEntity entity, out bool isCrit);
-    CTexts GetHpBar(bool withPercentage = true);
+    CTexts GetHpBar(bool withPercentage = true, double plus = 0);
     bool IsDead { get; }
   }
 }

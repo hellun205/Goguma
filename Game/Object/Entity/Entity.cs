@@ -4,6 +4,8 @@ using Goguma.Game.Console;
 using Goguma.Game.Object.Entity.Monster;
 using Goguma.Game.Object.Skill;
 using static Goguma.Game.Console.StringFunction;
+using static Goguma.Game.Console.ConsoleFunction;
+using Colorify;
 
 namespace Goguma.Game.Object.Entity
 {
@@ -26,13 +28,13 @@ namespace Goguma.Game.Object.Entity
     public double AttDmg
     {
       get => Math.Round(attDmg + BuffsIncrease.AttDmg, 2);
-      set => attDmg = Math.Max(1, value);
+      set => attDmg = value;
     }
 
     public double DefPer
     {
       get => Math.Round(defPer + BuffsIncrease.DefPer, 2);
-      set => defPer = Math.Max(0, value);
+      set => defPer = value;
     }
     public double IgnoreDef
     {
@@ -42,12 +44,12 @@ namespace Goguma.Game.Object.Entity
     public double CritDmg
     {
       get => Math.Round(critDmg + BuffsIncrease.CritDmg, 2);
-      set => critDmg = Math.Max(1, value);
+      set => critDmg = Math.Max(0, value);
     }
     public double CritPer
     {
       get => Math.Floor(critPer + BuffsIncrease.CritPer);
-      set => critPer = Math.Max(1, value);
+      set => critPer = Math.Max(0, value);
     }
     public List<ISkill> Skills { get; set; }
     public List<IBuffSkill> Buffs { get; set; }
@@ -65,13 +67,13 @@ namespace Goguma.Game.Object.Entity
         var resultBuff = new Buff();
         foreach (var bf in Buffs)
         {
-          resultBuff.MaxHp += Math.Max(0, bf.buff.MaxHp);
-          resultBuff.MaxEp += Math.Max(0, bf.buff.MaxEp);
-          resultBuff.AttDmg += Math.Max(0, bf.buff.AttDmg);
-          resultBuff.DefPer += Math.Max(0, bf.buff.DefPer);
-          resultBuff.CritPer += Math.Max(0, bf.buff.CritPer);
-          resultBuff.CritDmg += Math.Max(0, bf.buff.CritDmg);
-          resultBuff.IgnoreDef += Math.Max(0, bf.buff.IgnoreDef);
+          resultBuff.MaxHp += bf.buff.MaxHp;
+          resultBuff.MaxEp += bf.buff.MaxEp;
+          resultBuff.AttDmg += bf.buff.AttDmg;
+          resultBuff.DefPer += bf.buff.DefPer;
+          resultBuff.CritPer += bf.buff.CritPer;
+          resultBuff.CritDmg += bf.buff.CritDmg;
+          resultBuff.IgnoreDef += bf.buff.IgnoreDef;
         }
         return resultBuff;
       }
@@ -80,6 +82,18 @@ namespace Goguma.Game.Object.Entity
     {
       Skills = new List<ISkill>();
       Buffs = new List<IBuffSkill>();
+    }
+
+    public Entity(IEntity entity) : this()
+    {
+      Level = entity.Level;
+      Hp = entity.Hp;
+      AttDmg = entity.AttDmg;
+      DefPer = entity.DefPer;
+      CritDmg = entity.CritDmg;
+      CritPer = entity.CritPer;
+      IgnoreDef = entity.IgnoreDef;
+      MaxHp = entity.MaxHp;
     }
 
     public void AddBuff(IBuffSkill skill)
@@ -94,7 +108,31 @@ namespace Goguma.Game.Object.Entity
       Buffs.Remove(skill);
     }
 
-    public abstract void Information();
+    public void Information()
+    {
+      PrintCText(Info());
+      Pause();
+    }
+
+    public override string ToString()
+    {
+      return Info().ToString();
+    }
+
+    protected CTexts Info()
+    {
+      return new CTexts()
+        .Append($"{{\n{GetSep(40, $"{Name} [ Lv. {Level} ]")}}}")
+        .Append($"{{\n{GetSep(40)}}}")
+        .Append("{\n체력 : }")
+        .Append(GetHpBar())
+        .Append($"{{\n공격력 : }}{{{AttDmg},{Colors.txtDanger}}}")
+        .Append($"{{\n크리티컬 데미지 : }}{{{CritDmg} %,{Colors.txtDanger}}}")
+        .Append($"{{\n크리티컬 확률 : }}{{{CritPer} %,{Colors.txtDanger}}}")
+        .Append($"{{\n방어율 무시 : }}{{{IgnoreDef} %,{Colors.txtDanger}}}")
+        .Append($"{{\n방어율 : }}{{{DefPer} %,{Colors.txtInfo}}}")
+        .Append($"{{\n{GetSep(40)}}}");
+    }
 
     public double CalAttDmg(IAttackSkill attackSkill, IEntity entity, out bool isCrit)
     {
@@ -124,11 +162,11 @@ namespace Goguma.Game.Object.Entity
       }
     }
 
-    public CTexts GetHpBar(bool withPercentage = true)
+    public CTexts GetHpBar(bool withPercentage = true, double plus = 0)
     {
-      var bar = GetPerStr(Hp, MaxHp, ColorByHp(Hp, MaxHp));
+      var bar = GetPerStr(Hp + plus, MaxHp, ColorByHp(Hp + plus, MaxHp));
       if (withPercentage)
-        return bar.Combine(CTexts.Make($"{{ [ }}{{{Hp} / {MaxHp},{ColorByHp(Hp, MaxHp)}}}{{ ]}}"));
+        return bar.Combine(CTexts.Make($"{{ [ }}{{{Hp + plus} / {MaxHp},{ColorByHp(Hp + plus, MaxHp)}}}{{ ]}}"));
       else
         return bar;
     }

@@ -71,6 +71,18 @@ namespace Goguma.Game.Console
       Texts.Add(cT);
     }
 
+    public void RemoveAt(int index)
+    {
+      Texts.RemoveAt(index);
+    }
+
+    public void Remove(CText item)
+    {
+      Texts.Remove(item);
+    }
+
+    public int Count => Texts.Count;
+
     static public CTexts Make(string cText)
     {
       // var textInfo = new CultureInfo("en-US", false).TextInfo;
