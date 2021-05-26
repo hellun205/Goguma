@@ -147,8 +147,8 @@ namespace Goguma.Game.Object.Entity
 
     protected double CalCritDmg(double dmg, out bool isCrit)
     {
-      var rand = Math.Round(new Random().NextDouble(), 2);
-      var crtiPer = Math.Round(CritPer / 100, 2);
+      var rand = new Random().Next(0, 101);
+      var critPer = Math.Round(CritPer, 2);
       if (critPer >= rand)
       {
         isCrit = true;

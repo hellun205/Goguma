@@ -65,7 +65,7 @@ namespace Goguma.Game.Object.Battle
         else
           monster.Hp -= damage;
 
-        BattleScene.PvE.SkillAttack(player, monster, skill, damage);
+        BattleScene.PvE.SkillAttack(player, monster, skill, damage, isCrit);
         return true;
       };
       Func<IBuffSkill, bool> UseBuffSkill = (IBuffSkill skill) =>
@@ -169,7 +169,7 @@ namespace Goguma.Game.Object.Battle
         double damage = player.CalAttDmg(monster, out isCrit);
         monster.Hp = Math.Max(0, monster.Hp - damage);
 
-        BattleScene.PvE.GeneralAttack(player, monster, damage);
+        BattleScene.PvE.GeneralAttack(player, monster, damage, isCrit);
         return true;
       };
       Action<bool> MEndBuff = (bool all) =>
@@ -203,7 +203,7 @@ namespace Goguma.Game.Object.Battle
           double damage = monster.CalAttDmg(player, out isCrit);
           player.Hp -= damage;
 
-          BattleScene.PvE.GeneralAttack(monster, player, damage);
+          BattleScene.PvE.GeneralAttack(monster, player, damage, isCrit);
         };
         Func<bool> SkillAttack = () =>
         {
@@ -212,7 +212,7 @@ namespace Goguma.Game.Object.Battle
           double damage = monster.CalAttDmg(aSkill, player, out isCrit);
           player.Hp -= damage;
 
-          BattleScene.PvE.SkillAttack(monster, player, aSkill, damage);
+          BattleScene.PvE.SkillAttack(monster, player, aSkill, damage, isCrit);
           return true;
         };
         Func<bool> BuffSkill = () =>

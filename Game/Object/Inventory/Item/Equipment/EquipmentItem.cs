@@ -1,8 +1,4 @@
 using System;
-using Colorify;
-using Goguma.Game.Console;
-using static Goguma.Game.Console.ConsoleFunction;
-using static Goguma.Game.Console.StringFunction;
 
 namespace Goguma.Game.Object.Inventory.Item.Equipment
 {

@@ -61,10 +61,15 @@ namespace Goguma.Game.Object.Battle
         return caster.Type == EntityType.PLAYER ? CTexts.Make($"{{당신,{Colors.txtInfo}}}") : MonsterText(InGame.player, (IMonster)caster);
       }
 
+      static private CTexts ItemText(IItem item)
+      {
+        return CTexts.Make($"{{{InvenInfo.HavingInven.GetTypeString(item.Type)} 아이템 ,{Colors.txtWarning}}}{{{item.Name},{Colors.txtSuccess}}}");
+      }
+
       static private void UseSkillText(IEntity caster, ISkill skill)
       {
 
-        var ct = CTexts.Make($"{{\n  }}").Combine(CasterText(caster)).Combine("{(이)가 }").Combine(SkillText(skill)).Combine($"{{(을)를 사용했습니다.");
+        var ct = CTexts.Make($"{{\n  }}").Combine(CasterText(caster)).Combine("{(이)가 }").Combine(SkillText(skill)).Combine($"{{(을)를 사용했습니다.}}");
         if (caster.Type == EntityType.PLAYER)
           PrintCText(ct.Combine($"{{\n    남은 에너지: }}").Combine(((IPlayer)caster).GetEpBar()).Combine($"{{\n    사용한 에너지: }}{{{skill.UseEp}\n, {Colors.txtWarning}}}"));
         else PrintCText(ct);
@@ -85,7 +90,7 @@ namespace Goguma.Game.Object.Battle
           else
             dText = CTexts.Make($"{{{(isCrit ? "의 치명타 피해를 입었습니다" : "의 피해를 입었습니다")}.\n    }}").Combine(CasterText(target)).Combine($"{{의 체력: }}").Combine(target.GetHpBar()).Combine($"{{.\n}}");
 
-          return CasterText(target).Combine($"{{(이)가 }}").Combine(CasterText(caster)).Combine($"{{(이)가 사용 한}}").Combine(SkillText(skill)).Combine($"{{(을)를 맞아 }}{{{Math.Round(damage, 2)},{Colors.txtDanger}}}").Combine($"{dText}");
+          return CasterText(target).Combine($"{{(이)가 }}").Combine(CasterText(caster)).Combine($"{{(이)가 사용 한 }}").Combine(SkillText(skill)).Combine($"{{(을)를 맞아 }}{{{Math.Round(damage, 2)},{Colors.txtDanger}}}").Combine(dText);
         };
 
         UseSkillText(caster, skill);
@@ -255,12 +260,11 @@ namespace Goguma.Game.Object.Battle
         static public void Kill(IMonster monster, List<IItem> dropItemList)
         {
           PrintCText($"{{\n\n  {monster.GivingGold} G,{Colors.txtWarning}}}{{를 획득했습니다.\n}}");
-          PrintCText($"{{\n\n  {monster.GivingExp} Exp,{Colors.txtSuccess}}}{{를 획득했습니다.\n}}");
+          PrintCText($"{{\n  {monster.GivingExp} Exp,{Colors.txtSuccess}}}{{를 획득했습니다.\n}}");
           Pause();
           foreach (var item in dropItemList)
           {
-            var iName = CTexts.Make($"{InvenInfo.HavingInven.GetTypeString(item.Type)} 아이템 ,{Colors.txtWarning}}}{{{item.Name},{Colors.txtSuccess}}}");
-            PrintCText(CTexts.Make($"{{\n  }}").Combine(iName).Combine($"{{(을)를 획득했습니다.}}"));
+            PrintCText(CTexts.Make($"{{\n\n  }}").Combine(ItemText(item)).Combine($"{{(을)를 획득했습니다.}}"));
           }
           // Pause();
         }

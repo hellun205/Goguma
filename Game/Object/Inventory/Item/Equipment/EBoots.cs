@@ -1,5 +1,8 @@
+using System;
+
 namespace Goguma.Game.Object.Inventory.Item.Equipment
 {
+  [Serializable]
   class EBoots : EEquip
   {
     public override WearingType EquipmentType => WearingType.Boots;

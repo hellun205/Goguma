@@ -35,12 +35,27 @@ namespace Goguma.Game.Object.Entity.Player
     new public double DefPer
     {
       get => Math.Round(defPer + GetEquipEffect.DefPer + BuffsIncrease.DefPer, 2);
-      set => defPer = Math.Max(1, value);
+      set => defPer = value;
     }
     new public double AttDmg
     {
       get => Math.Round(attDmg + GetWeaponEffect.AttDmg + BuffsIncrease.AttDmg, 2);
-      set => attDmg = Math.Max(1, value);
+      set => attDmg = value;
+    }
+    new public double CritDmg
+    {
+      get => Math.Round(critDmg + GetWeaponEffect.CritDmg + BuffsIncrease.CritDmg, 2);
+      set => critDmg = Math.Max(0, value);
+    }
+    new public double CritPer
+    {
+      get => Math.Round(critPer + GetWeaponEffect.CritPer + BuffsIncrease.CritPer, 2);
+      set => critPer = Math.Max(0, value);
+    }
+    new public double IgnoreDef
+    {
+      get => Math.Round(ignoreDef + GetWeaponEffect.IgnoreDef + BuffsIncrease.IgnoreDef, 2);
+      set => ignoreDef = Math.Max(0, value);
     }
 
     public double Exp
@@ -199,6 +214,34 @@ namespace Goguma.Game.Object.Entity.Player
         return bar.Combine(CTexts.Make($"{{ [ }}{{{Exp + plus} / {MaxExp},{Colors.txtWarning}}}{{ ]}}"));
       else
         return bar;
+    }
+
+    new public double CalAttDmg(IAttackSkill attackSkill, IEntity entity, out bool isCrit)
+    {
+      var dmg = DamageByLevel((AttDmg + attackSkill.Damage), Level, entity.Level) * (1 - ((entity.DefPer / 100) - ((IgnoreDef + attackSkill.IgnoreDef) / 100)));
+      return CalCritDmg(dmg, out isCrit);
+    }
+
+    new public double CalAttDmg(IEntity entity, out bool isCrit)
+    {
+      var dmg = DamageByLevel(AttDmg, Level, entity.Level) * (1 - ((entity.DefPer / 100) - ((IgnoreDef) / 100)));
+      return CalCritDmg(dmg, out isCrit);
+    }
+
+    new protected double CalCritDmg(double dmg, out bool isCrit)
+    {
+      var rand = new Random().Next(0, 101);
+      var critPer = Math.Round(CritPer, 2);
+      if (critPer >= rand)
+      {
+        isCrit = true;
+        return Math.Round(dmg * (1 + (CritDmg / 100)), 2);
+      }
+      else
+      {
+        isCrit = false;
+        return Math.Round(dmg, 2);
+      }
     }
   }
 }

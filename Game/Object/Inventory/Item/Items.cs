@@ -15,10 +15,17 @@ namespace Goguma.Game.Object.Inventory.Item
       switch (item)
       {
         case ItemList.TEST_ITEM1:
-          resultItem = new OtherItem()
+          resultItem = new EWeapon()
           {
-            Name = CTexts.Make("{테스트용 아이템 A}"),
+            Name = CTexts.Make("{테스트 무기}"),
             Descriptions = CTexts.Make("{테스트용으로 사용되는 아이템이다.}"),
+            Effect = new WeaponEffect()
+            {
+              AttDmg = 1,
+              CritDmg = 10,
+              CritPer = 50,
+              IgnoreDef = 0.5
+            }
           };
           return resultItem;
         case ItemList.TEST_ITEM2:
