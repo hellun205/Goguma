@@ -7,10 +7,12 @@ namespace Goguma.Game.Object.Inventory.Item.Drop
   {
     public IItem Item { get; set; }
     public int DropChance { get; set; }
-    public DroppingItem(IItem item, int dropChance)
+    public bool Visible { get; set; }
+    public DroppingItem(IItem item, int dropChance, bool visible = true)
     {
       Item = item;
       DropChance = dropChance;
+      Visible = visible;
     }
   }
 }

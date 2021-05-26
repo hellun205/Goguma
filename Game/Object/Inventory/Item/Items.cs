@@ -15,19 +15,25 @@ namespace Goguma.Game.Object.Inventory.Item
       switch (item)
       {
         case ItemList.TEST_ITEM1:
-          resultItem = new OtherItem()
+          resultItem = new EWeapon()
           {
-            Name = CTexts.Make("{테스트용 아이템 A}"),
+            Name = CTexts.Make("{테스트 무기}"),
             Descriptions = CTexts.Make("{테스트용으로 사용되는 아이템이다.}"),
+            Effect = new WeaponEffect()
+            {
+              AttDmg = 1,
+              CritDmg = 10,
+              CritPer = 50,
+              IgnoreDef = 0.5
+            }
           };
           return resultItem;
         case ItemList.TEST_ITEM2:
-          resultItem = new EquipmentItem()
+          resultItem = new EHead()
           {
             Name = CTexts.Make("{테스트용 모자 B}"),
             Descriptions = CTexts.Make("{테스트용으로 사용되는 아이템이다.}"),
-            EquipmentType = WearingType.Head,
-            Increase = new ItemIncrease()
+            Effect = new EquipEffect()
             {
               MaxHp = 20,
               DefPer = 0.2,
@@ -44,28 +50,26 @@ namespace Goguma.Game.Object.Inventory.Item
           };
           return resultItem;
         case ItemList.GOBLINS_SWORD:
-          resultItem = new EquipmentItem()
+          resultItem = new EWeapon()
           {
             Name = CTexts.Make($"{{고블린,{Colors.txtInfo}}}{{의 검}}"),
             Descriptions = CTexts.Make($"{{고블린,{Colors.txtInfo}}}{{들이 주로 사용하는 검이다.}}"),
             SellPrice = 500,
             BuyPrice = 1000,
-            EquipmentType = WearingType.Weapon,
-            Increase = new ItemIncrease()
+            Effect = new WeaponEffect()
             {
               AttDmg = 3
             }
           };
           return resultItem;
         case ItemList.GOBLINS_ARMOR:
-          resultItem = new EquipmentItem()
+          resultItem = new EChestplate()
           {
             Name = CTexts.Make($"{{고블린,{Colors.txtInfo}}}{{의 갑옷}}"),
             Descriptions = CTexts.Make($"{{고블린,{Colors.txtInfo}}}{{들이 주로 착용하는 갑옷이다.}}"),
             SellPrice = 500,
             BuyPrice = 1000,
-            EquipmentType = WearingType.Chestplate,
-            Increase = new ItemIncrease()
+            Effect = new EquipEffect()
             {
               MaxHp = 5,
               DefPer = 0.5
@@ -82,17 +86,15 @@ namespace Goguma.Game.Object.Inventory.Item
           };
           return resultItem;
         case ItemList.GOLD_GOBLINS_SWORD:
-          resultItem = new EquipmentItem()
+          resultItem = new EWeapon()
           {
             Name = CTexts.Make("{황금 고블린의 검}"),
             Descriptions = CTexts.Make("{황금 고블린들이 사용하는 검이다.}"),
             SellPrice = 1500,
             BuyPrice = 3000,
-            EquipmentType = WearingType.Chestplate,
-            Increase = new ItemIncrease()
+            Effect = new WeaponEffect()
             {
-              AttDmg = 10,
-              DefPer = 2
+              AttDmg = 10
             }
           };
           return resultItem;

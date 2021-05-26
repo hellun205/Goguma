@@ -1,4 +1,5 @@
 using Goguma.Game.Console;
+using Goguma.Game.Object.Inventory.Item.Equipment;
 
 namespace Goguma.Game.Object.Skill
 {
@@ -16,8 +17,13 @@ namespace Goguma.Game.Object.Skill
             Text = CTexts.Make("{테스테스트!}"),
             Descriptions = CTexts.Make("{그냥 테스트용으로 쓰이는 스킬이다.}"),
             UseEp = 2,
-            Damage = 5,
-            IgnoreDef = 0
+            Effect = new WeaponEffect()
+            {
+              AttDmg = 5,
+              CritDmg = 0,
+              CritPer = 0,
+              IgnoreDef = 0,
+            }
           };
           break;
         case SkillList.TestSkill2:
@@ -27,8 +33,13 @@ namespace Goguma.Game.Object.Skill
             Text = CTexts.Make("{테스테스테스트!}"),
             Descriptions = CTexts.Make("{그냥 테스트용으로 쓰이는 스킬이다.}"),
             UseEp = 4,
-            Damage = 7,
-            IgnoreDef = 0
+            Effect = new WeaponEffect()
+            {
+              AttDmg = 7,
+              CritDmg = 0,
+              CritPer = 0,
+              IgnoreDef = 0,
+            }
           };
           break;
         case SkillList.TestBuffSkill1:
@@ -44,7 +55,8 @@ namespace Goguma.Game.Object.Skill
               MaxEp = 0,
               AttDmg = 5,
               DefPer = 0.4,
-              turn = 5
+              turn = 5,
+              Hp = 20
             }
           };
           break;
@@ -64,8 +76,13 @@ namespace Goguma.Game.Object.Skill
             Name = "테스트 펀치",
             Text = CTexts.Make("{테스 펀치!}"),
             Descriptions = CTexts.Make("{테스트 몬스터가 사용하는 테스트 스킬이다.}"),
-            Damage = 1,
-            IgnoreDef = 1
+            Effect = new WeaponEffect()
+            {
+              AttDmg = 1,
+              IgnoreDef = 1,
+              CritDmg = 0,
+              CritPer = 0
+            }
           };
           break;
         case MSkillList.TestMonster_TestFireBall:
@@ -74,8 +91,13 @@ namespace Goguma.Game.Object.Skill
             Name = "파이어 볼",
             Text = CTexts.Make("{파이아  뽈 !}}"),
             Descriptions = CTexts.Make("{테스트 몬스터가 사용하는 테스트 스킬이다.}"),
-            Damage = 3,
-            IgnoreDef = 0
+            Effect = new WeaponEffect()
+            {
+              AttDmg = 3,
+              IgnoreDef = 0,
+              CritDmg = 0,
+              CritPer = 0
+            }
           };
           break;
         case MSkillList.TestMonster_TestAttackSkill:
@@ -84,8 +106,13 @@ namespace Goguma.Game.Object.Skill
             Name = "그냥 공격",
             Text = CTexts.Make("{으아아앙락ㅇ}}"),
             Descriptions = CTexts.Make("{테스트 몬스터가 사용하느 테스트 스킬이다.}"),
-            Damage = 2,
-            IgnoreDef = 0
+            Effect = new WeaponEffect()
+            {
+              AttDmg = 2,
+              IgnoreDef = 0,
+              CritDmg = 0,
+              CritPer = 0
+            }
           };
           break;
         case MSkillList.TestMonster_DefensivePosture:
@@ -110,8 +137,13 @@ namespace Goguma.Game.Object.Skill
             Name = "끈적끈적 공격",
             Text = CTexts.Make("{(폴짝폴짝)}"),
             Descriptions = CTexts.Make("{슬라임의 역겨운 공격이다.}"),
-            Damage = 2,
-            IgnoreDef = 0
+            Effect = new WeaponEffect()
+            {
+              AttDmg = 2,
+              IgnoreDef = 0,
+              CritDmg = 0,
+              CritPer = 0
+            }
           };
           break;
         case MSkillList.SLIME_SPOUT_STICKY_LIQUID:
@@ -120,8 +152,13 @@ namespace Goguma.Game.Object.Skill
             Name = "끈적 액체 내뿜기",
             Text = CTexts.Make("{(쮸르륵쭈욱..)}"),
             Descriptions = CTexts.Make("{슬라임의 역겨운 공격2}"),
-            Damage = 2.7,
-            IgnoreDef = 0.3
+            Effect = new WeaponEffect()
+            {
+              AttDmg = 2.7,
+              IgnoreDef = 0.3,
+              CritDmg = 0,
+              CritPer = 0
+            }
           };
           break;
         case MSkillList.GOLD_GOBLIN_SWORD_SWING:
@@ -130,8 +167,13 @@ namespace Goguma.Game.Object.Skill
             Name = "검 휘두르기",
             Text = CTexts.Make("{...}"),
             Descriptions = CTexts.Make("{황금 고블린이 적에게 검을 휘두른다.}"),
-            Damage = 3.2,
-            IgnoreDef = 0.2
+            Effect = new WeaponEffect()
+            {
+              AttDmg = 3.2,
+              IgnoreDef = 0.2,
+              CritDmg = 15,
+              CritPer = 10
+            }
           };
           break;
         case MSkillList.GOLD_GOBLIN_SWORD_STING:
@@ -139,9 +181,14 @@ namespace Goguma.Game.Object.Skill
           {
             Name = "찌르기",
             Text = CTexts.Make("{...}"),
-            Descriptions = CTexts.Make("{황금 고블린이 적을 찌른다.}"),
-            Damage = 2.6,
-            IgnoreDef = 1.5
+            Descriptions = CTexts.Make("{황금 고블린이 적의 급소를 정확히 찌른다.}"),
+            Effect = new WeaponEffect()
+            {
+              AttDmg = 2.5,
+              IgnoreDef = 0,
+              CritDmg = 50,
+              CritPer = 40
+            }
           };
           break;
         case MSkillList.GOLD_GOBLIN_ANGER:

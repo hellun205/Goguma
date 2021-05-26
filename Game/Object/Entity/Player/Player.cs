@@ -1,5 +1,4 @@
 using System;
-using System.Text;
 using Colorify;
 using Goguma.Game.Object.Map;
 using Goguma.Game.Console;
@@ -14,6 +13,7 @@ namespace Goguma.Game.Object.Entity.Player
   [Serializable]
   public class Player : Entity, IPlayer
   {
+    public override EntityType Type => EntityType.PLAYER;
     public Inventory.Inventory Inventory { get; set; }
     public Location Loc { get; set; }
 
@@ -24,23 +24,38 @@ namespace Goguma.Game.Object.Entity.Player
     }
     public double MaxEp
     {
-      get => Math.Round(maxEp + ItemsIncrease.MaxEp + BuffsIncrease.MaxEp, 2);
+      get => Math.Round(maxEp + GetEquipEffect.MaxEp + BuffsIncrease.MaxEp, 2);
       set => maxEp = Math.Max(0, value);
     }
     new public double MaxHp
     {
-      get => Math.Round(maxHp + ItemsIncrease.MaxHp + BuffsIncrease.MaxHp, 2);
+      get => Math.Round(maxHp + GetEquipEffect.MaxHp + BuffsIncrease.MaxHp, 2);
       set => maxHp = Math.Max(0, value);
-    }
-    new public double AttDmg
-    {
-      get => Math.Round(attDmg + ItemsIncrease.AttDmg + BuffsIncrease.AttDmg, 2);
-      set => attDmg = Math.Max(1, value);
     }
     new public double DefPer
     {
-      get => Math.Round(defPer + ItemsIncrease.DefPer + BuffsIncrease.DefPer, 2);
-      set => defPer = Math.Max(1, value);
+      get => Math.Round(defPer + GetEquipEffect.DefPer + BuffsIncrease.DefPer, 2);
+      set => defPer = value;
+    }
+    new public double AttDmg
+    {
+      get => Math.Round(attDmg + GetWeaponEffect.AttDmg + BuffsIncrease.AttDmg, 2);
+      set => attDmg = value;
+    }
+    new public double CritDmg
+    {
+      get => Math.Round(critDmg + GetWeaponEffect.CritDmg + BuffsIncrease.CritDmg, 2);
+      set => critDmg = Math.Max(0, value);
+    }
+    new public double CritPer
+    {
+      get => Math.Round(critPer + GetWeaponEffect.CritPer + BuffsIncrease.CritPer, 2);
+      set => critPer = Math.Max(0, value);
+    }
+    new public double IgnoreDef
+    {
+      get => Math.Round(ignoreDef + GetWeaponEffect.IgnoreDef + BuffsIncrease.IgnoreDef, 2);
+      set => ignoreDef = Math.Max(0, value);
     }
 
     public double Exp
@@ -65,10 +80,7 @@ namespace Goguma.Game.Object.Entity.Player
         }
       }
     }
-    public bool IsDead
-    {
-      get => Hp <= 0;
-    }
+
 
     public double MaxExp { get; set; }
 
@@ -99,7 +111,8 @@ namespace Goguma.Game.Object.Entity.Player
     }
     public double Gold { get; set; }
 
-    private ItemIncrease ItemsIncrease => Inventory.Items.wearing.Increase;
+    private EquipEffect GetEquipEffect => Inventory.Items.wearing.GetEquipEffect;
+    private WeaponEffect GetWeaponEffect => Inventory.Items.wearing.GetWeaponEffect;
     private double increaseMaxExp;
     private double increaseAttDmg;
     //private int increaseDefPer;
@@ -139,12 +152,6 @@ namespace Goguma.Game.Object.Entity.Player
       Hp = Hp + heal;
     }
 
-    public override void Information()
-    {
-      PrintText(this.ToString());
-      Pause();
-    }
-
     new public void AddBuff(IBuffSkill skill)
     {
       Buffs.Add(skill);
@@ -154,21 +161,31 @@ namespace Goguma.Game.Object.Entity.Player
         Ep += skill.buff.Ep;
     }
 
-    public override string ToString()
+    new public void Information()
     {
-      return new StringBuilder($"\n{GetSep(30, $"{Name}")}")
-        .Append(CTexts.Make($"{{\nLv. : }} {{{Level}, {Colors.txtWarning}}}"))
-        .Append(CTexts.Make($"{{\nExp : }} {{{Exp} / {MaxExp}, {Colors.txtWarning}}}"))
-        .Append(CTexts.Make($"{{\nGOLD : }} {{{Gold}, {Colors.txtWarning}}}"))
-        .Append(($"\n{GetSep(30)}"))
-        .Append(CTexts.Make($"{{\nHP : }} {{{Hp} / {MaxHp}, {Colors.txtWarning}}}"))
-        .Append(CTexts.Make($"{{\nEP : }} {{{Ep} / {MaxEp}, {Colors.txtWarning}}}"))
-        .Append(CTexts.Make($"{{\nATT : }} {{{AttDmg}, {Colors.txtWarning}}}"))
-        .Append(CTexts.Make($"{{\nDEF : }} {{{defPer} %, {Colors.txtWarning}}}"))
-        .Append($"\n{GetSep(30)}")
-        .Append($"\n위치 : {Loc.Loc}")
-        .Append($"\n{GetSep(30)}")
-        .ToString();
+      PrintCText(Info());
+      Pause();
+    }
+
+    new protected CTexts Info()
+    {
+      return new CTexts()
+      .Append($"{{\n{GetSep(40, $"{Name} [ Lv. {Level} ]")}}}")
+      .Append("{\n경험치 : }")
+      .Append(GetExpBar())
+      .Append($"{{\n골드 : }}{{{Gold} G,{Colors.txtWarning}}}")
+      .Append($"{{\n위치 : }}{{{Loc.Loc},{Colors.txtInfo}}}")
+      .Append($"{{\n{GetSep(40)}}}")
+      .Append("{\n체력 : }")
+      .Append(GetHpBar())
+      .Append("{\n에너지 : }")
+      .Append(GetEpBar())
+      .Append($"{{\n공격력 : }}{{{AttDmg},{Colors.txtDanger}}}")
+      .Append($"{{\n크리티컬 데미지 : }}{{{CritDmg} %,{Colors.txtDanger}}}")
+      .Append($"{{\n크리티컬 확률 : }}{{{CritPer} %,{Colors.txtDanger}}}")
+      .Append($"{{\n방어율 무시 : }}{{{IgnoreDef} %,{Colors.txtDanger}}}")
+      .Append($"{{\n방어율 : }}{{{DefPer} %,{Colors.txtInfo}}}")
+      .Append($"{{\n{GetSep(40)}}}");
     }
 
     public double RequiredForLevelUp()
@@ -176,6 +193,71 @@ namespace Goguma.Game.Object.Entity.Player
       return MaxExp - Exp;
     }
 
+    public override string ToString()
+    {
+      return base.ToString();
+    }
 
+    public CTexts GetEpBar(bool withPercentage = true, double plus = 0)
+    {
+      var bar = GetPerStr(Ep + plus, MaxEp, ColorByHp(Ep + plus, MaxEp));
+      if (withPercentage)
+        return bar.Combine(CTexts.Make($"{{ [ }}{{{Ep + plus} / {MaxEp},{ColorByHp(Ep + plus, MaxEp)}}}{{ ]}}"));
+      else
+        return bar;
+    }
+
+    public CTexts GetExpBar(bool withPercentage = true, double plus = 0)
+    {
+      var bar = GetPerStr(Exp + plus, MaxExp);
+      if (withPercentage)
+        return bar.Combine(CTexts.Make($"{{ [ }}{{{Exp + plus} / {MaxExp},{Colors.txtWarning}}}{{ ]}}"));
+      else
+        return bar;
+    }
+
+    new public double CalAttDmg(IAttackSkill aSkill, IEntity entity, out bool isCrit)
+    {
+      var dmg = DamageByLevel((AttDmg + aSkill.Effect.AttDmg), Level, entity.Level) * (1 - ((entity.DefPer / 100) - ((IgnoreDef + aSkill.Effect.IgnoreDef) / 100)));
+      return CalCritDmg(dmg, out isCrit, aSkill.Effect);
+    }
+
+    new public double CalAttDmg(IEntity entity, out bool isCrit)
+    {
+      var dmg = DamageByLevel(AttDmg, Level, entity.Level) * (1 - ((entity.DefPer / 100) - ((IgnoreDef) / 100)));
+      return CalCritDmg(dmg, out isCrit);
+    }
+
+    new protected double CalCritDmg(double dmg, out bool isCrit, WeaponEffect wEffect)
+    {
+      var rand = new Random().Next(0, 101);
+      var critPer = Math.Round(CritPer + wEffect.CritPer, 2);
+      if (critPer >= rand)
+      {
+        isCrit = true;
+        return Math.Round(dmg * (1 + ((CritDmg + wEffect.CritDmg) / 100)), 2);
+      }
+      else
+      {
+        isCrit = false;
+        return Math.Round(dmg, 2);
+      }
+    }
+
+    new protected double CalCritDmg(double dmg, out bool isCrit)
+    {
+      var rand = new Random().Next(0, 101);
+      var critPer = Math.Round(CritPer, 2);
+      if (critPer >= rand)
+      {
+        isCrit = true;
+        return Math.Round(dmg * (1 + (CritDmg / 100)), 2);
+      }
+      else
+      {
+        isCrit = false;
+        return Math.Round(dmg, 2);
+      }
+    }
   }
 }

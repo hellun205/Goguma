@@ -22,7 +22,7 @@ namespace Goguma.Game.Object.Inventory.Item.Consume
       var player = InGame.player;
       if (Effect.Hp != 0)
       {
-        PrintCText($"{{\nHP }} {{{player.Hp} / {player.MaxHp}, {Colors.txtWarning}}} {{ [ }}");
+        PrintCText($"{{\n체력 회복 : }}  {{ [ }}");
         PrintCText(NumberColor(Effect.Hp));
         PrintCText("{ ] → }");
         if (Effect.Hp + player.Hp <= player.MaxHp)

@@ -30,7 +30,7 @@ namespace Goguma.Game.Console
       return stringA;
     }
 
-    static public CTexts NumberColor(double number, string minusColor = Colors.txtDanger, string plusColor = Colors.txtInfo, string zeroColor = Colors.txtMuted)
+    static public CTexts NumberColor(double number, string unit = "", string minusColor = Colors.txtDanger, string plusColor = Colors.txtInfo, string zeroColor = Colors.txtMuted)
     {
       CTexts resultCT = new CTexts();
       var resultColor = Colors.txtDefault;
@@ -46,8 +46,8 @@ namespace Goguma.Game.Console
       else if (number < 0)
         resultColor = minusColor;
 
-
       resultCT.Texts[0].Color = resultColor;
+      if (unit != "") resultCT.Add($" {unit}", resultColor);
 
       return resultCT;
     }
@@ -77,6 +77,7 @@ namespace Goguma.Game.Console
 
       return sb.ToString();
     }
+
     static public string ColorByHp(double hp, double maxHp)
     {
       if (hp >= (maxHp * 0.6))
@@ -86,6 +87,7 @@ namespace Goguma.Game.Console
       else
         return Colors.txtDanger;
     }
+
     static public string ColorByLevel(int playerLevel, int monsterLevel)
     {
       if (playerLevel < monsterLevel && monsterLevel - playerLevel > 10)
@@ -101,6 +103,7 @@ namespace Goguma.Game.Console
       else
         return Colors.txtDefault;
     }
+
     static public double DamageByLevel(double damage, int playerLevel, int monsterLevel)
     {
       if (playerLevel < monsterLevel && monsterLevel - playerLevel > 10)
@@ -116,6 +119,7 @@ namespace Goguma.Game.Console
       else
         return damage;
     }
+
     static public int ExpByLevel(double exp, int playerLevel, int monsterLevel)
     {
       if (playerLevel < monsterLevel && monsterLevel - playerLevel > 10)
@@ -131,6 +135,7 @@ namespace Goguma.Game.Console
       else
         return (int)exp;
     }
+
     static public int GoldByLevel(double gold, int playerLevel, int monsterLevel)
     {
       if (playerLevel < monsterLevel && monsterLevel - playerLevel > 10)
@@ -145,6 +150,22 @@ namespace Goguma.Game.Console
         return (int)(gold * 0.1);
       else
         return (int)gold;
+    }
+
+    static public CTexts GetPerStr(double inte, double maxinte, string filledColor = Colors.txtDefault, string emptiedColor = Colors.txtMuted, string chr = "|")
+    {
+      var resCT = new CTexts();
+      var perc = (int)(inte / maxinte * 10);
+      var fillSB = new StringBuilder();
+      var emptySB = new StringBuilder();
+      for (var i = 0; i < perc; i++)
+        fillSB.Append(chr);
+      for (var i = 0; i < 10 - perc; i++)
+        emptySB.Append(chr);
+
+      resCT.Add(fillSB.ToString(), filledColor);
+      resCT.Add(emptySB.ToString(), emptiedColor);
+      return resCT;
     }
   }
 }

@@ -1,5 +1,8 @@
 using System;
+using Colorify;
 using Goguma.Game.Console;
+using static Goguma.Game.Console.ConsoleFunction;
+using static Goguma.Game.Console.StringFunction;
 
 namespace Goguma.Game.Object.Skill
 {
@@ -24,6 +27,24 @@ namespace Goguma.Game.Object.Skill
           return null;
       }
     }
-    public abstract void Information(bool IsPause);
+    public void Information(bool IsPause)
+    {
+      PrintCText(Info());
+      if (IsPause) Pause();
+    }
+
+    public override string ToString()
+    {
+      return Info().ToString();
+    }
+
+    public CTexts Info()
+    {
+      return new CTexts()
+        .Append($"{{\n{GetSep(40, $"{Name}")}}}")
+        .Append($"{{\n{GetTypeString(Type)} 스킬,{Colors.txtWarning}}} {{  {UseEp} 에너지 소모\n,{Colors.txtInfo}}}")
+        .Append(Descriptions)
+        .Append($"{{\n{GetSep(40)}}}");
+    }
   }
 }

@@ -11,7 +11,6 @@ namespace Goguma.Game.Object.Inventory.Item
     CTexts Descriptions { get; set; }
     int Count { get; set; }
     int MaxCount { get; }
-    bool IsAir { get; set; }
     int BuyPrice { get; set; }
     int SellPrice { get; set; }
     HavingType Type { get; }
