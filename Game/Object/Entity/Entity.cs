@@ -123,7 +123,6 @@ namespace Goguma.Game.Object.Entity
     {
       return new CTexts()
         .Append($"{{\n{GetSep(40, $"{Name} [ Lv. {Level} ]")}}}")
-        .Append($"{{\n{GetSep(40)}}}")
         .Append("{\n체력 : }")
         .Append(GetHpBar())
         .Append($"{{\n공격력 : }}{{{AttDmg},{Colors.txtDanger}}}")

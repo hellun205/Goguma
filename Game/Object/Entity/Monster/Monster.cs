@@ -78,14 +78,19 @@ namespace Goguma.Game.Object.Entity.Monster
       var b = false;
       foreach (var drItem in drItems.ToList<DroppingItem>())
       {
-        var mi = (b ? 1 : 2);
-        PrintText((i == mi ? "\n" : ""));
-        i = (i == mi ? 0 : i + 1);
+        var mi = (b ? 2 : 1);
+        if (i == mi)
+        {
+          resCT.Append("{\n}");
+          i = 0;
+          b = true;
+        }
+        i++;
         resCT.Append(drItem.Item.Name);
         resCT.Append("{，}");
       }
 
-      resCT.RemoveAt(resCT.Count - 1);
+      resCT.Append("{등}");
       resCT.Append($"{{\n{GetSep(40)}}}");
       return resCT;
     }
