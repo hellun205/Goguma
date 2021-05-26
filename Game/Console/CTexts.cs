@@ -20,7 +20,7 @@ namespace Goguma.Game.Console
       Texts = ct.Texts;
     }
 
-    public CTexts Combine(CTexts TextsB)
+    public CTexts Combine(in CTexts TextsB)
     {
       var resultCTexts = GetInstance();
       var B = TextsB.GetInstance();
@@ -30,7 +30,7 @@ namespace Goguma.Game.Console
       return resultCTexts;
     }
 
-    public CTexts Append(CTexts TextsB)
+    public CTexts Append(in CTexts TextsB)
     {
       var B = TextsB.GetInstance();
       for (var i = 0; i < B.Texts.Count; i++)

@@ -63,8 +63,8 @@ namespace Goguma.Game.Object.Battle
 
       static private void UseSkillText(IEntity caster, ISkill skill)
       {
-        var cName = CasterText(caster);
-        var ct = CTexts.Make($"{{\n  }}").Combine(cName).Combine("{(이)가 }").Combine(SkillText(skill)).Combine($"{{(을)를 사용했습니다.");
+
+        var ct = CTexts.Make($"{{\n  }}").Combine(CasterText(caster)).Combine("{(이)가 }").Combine(SkillText(skill)).Combine($"{{(을)를 사용했습니다.");
         if (caster.Type == EntityType.PLAYER)
           PrintCText(ct.Combine($"{{\n    남은 에너지: }}").Combine(((IPlayer)caster).GetEpBar()).Combine($"{{\n    사용한 에너지: }}{{{skill.UseEp}\n, {Colors.txtWarning}}}"));
         else PrintCText(ct);
@@ -75,18 +75,17 @@ namespace Goguma.Game.Object.Battle
 
       static public void SkillAttack(IEntity caster, IEntity target, IAttackSkill skill, double damage, bool isCrit = false)
       {
-        var cName = CasterText(caster);
-        var tName = CasterText(target);
-        var sName = SkillText(skill);
+
+
         Func<CTexts> GetText = () =>
         {
           var dText = new CTexts();
           if (target.IsDead)
             dText = CTexts.Make($"{{{(isCrit ? "의 치명타 피해를 입고" : "의 피해를 입고")} }}{{죽었습니다,{Colors.txtDanger}}}{{.\n}}");
           else
-            dText = CTexts.Make($"{{{(isCrit ? "의 치명타 피해를 입었습니다" : "의 피해를 입었습니다")}.\n    }}").Combine(tName).Combine($"{{의 체력: }}").Combine(target.GetHpBar()).Combine($"{{.\n}}");
+            dText = CTexts.Make($"{{{(isCrit ? "의 치명타 피해를 입었습니다" : "의 피해를 입었습니다")}.\n    }}").Combine(CasterText(target)).Combine($"{{의 체력: }}").Combine(target.GetHpBar()).Combine($"{{.\n}}");
 
-          return tName.Combine($"{{(이)가 }}").Combine(cName).Combine($"{{(이)가 사용 한}}").Combine(sName).Combine($"{{(을)를 맞아 }}{{{Math.Round(damage, 2)},{Colors.txtDanger}}}").Combine($"{dText}");
+          return CasterText(target).Combine($"{{(이)가 }}").Combine(CasterText(caster)).Combine($"{{(이)가 사용 한}}").Combine(SkillText(skill)).Combine($"{{(을)를 맞아 }}{{{Math.Round(damage, 2)},{Colors.txtDanger}}}").Combine($"{dText}");
         };
 
         UseSkillText(caster, skill);
@@ -99,10 +98,10 @@ namespace Goguma.Game.Object.Battle
         Func<CTexts> GetBfEftTxt = () =>
         {
           var resCT = new CTexts();
-          var cName = CasterText(caster);
+
           Func<string, bool, CTexts> GetText = (string str, bool isHeal) =>
             {
-              var firstCT = CTexts.Make("{\n  }").Combine(cName).Combine("{의 }");
+              var firstCT = CTexts.Make("{\n  }").Combine(CasterText(caster)).Combine("{의 }");
               var lastCT = isHeal ? CTexts.Make("{만큼 회복했습니다.}") : CTexts.Make("{만큼 증가했습니다.}");
               return firstCT.Combine(CTexts.Make(str)).Combine(lastCT);
             };
@@ -165,13 +164,12 @@ namespace Goguma.Game.Object.Battle
         // Pause();
       }
 
-      static public void DeleteBuff(IEntity caster, List<IBuffSkill> bSkills)
+      static public void DeleteBuff(IEntity caster, List<IBuffSkill> skill)
       {
-        var cName = CasterText(caster);
-        foreach (var sk in bSkills)
+
+        foreach (var sk in skill)
         {
-          var sName = SkillText(sk);
-          PrintCText(CTexts.Make("{\n}").Combine(cName).Combine("{의 }").Combine(sName).Combine($"{{의 지속시간이 끝났습니다.}}"));
+          PrintCText(CTexts.Make("{\n}").Combine(CasterText(caster)).Combine("{의 }").Combine(SkillText(sk)).Combine($"{{의 지속시간이 끝났습니다.}}"));
         }
         PrintText("\n");
         Pause();
@@ -179,17 +177,17 @@ namespace Goguma.Game.Object.Battle
 
       static public void GeneralAttack(IEntity caster, IEntity target, double damage, bool isCrit = false)
       {
-        var cName = CasterText(caster);
-        var tName = CasterText(target);
+
+
         Func<CTexts> GetText = () =>
         {
           var dText = new CTexts();
           if (target.IsDead)
             dText = CTexts.Make($"{{{(isCrit ? "의 치명타 피해를 입고" : "의 피해를 입고")} }}{{죽었습니다,{Colors.txtDanger}}}{{.\n}}");
           else
-            dText = CTexts.Make($"{{{(isCrit ? "의 치명타 피해를 입혔습니다." : "의 피해를 입혔습니다.")}\n    }}").Combine(tName).Combine($"{{의 체력: }}").Combine(target.GetHpBar()).Combine($"{{.\n}}");
+            dText = CTexts.Make($"{{{(isCrit ? "의 치명타 피해를 입혔습니다." : "의 피해를 입혔습니다.")}\n    }}").Combine(CasterText(target)).Combine($"{{의 체력: }}").Combine(target.GetHpBar()).Combine($"{{.\n}}");
 
-          return cName.Combine($"{{(이)가 }}").Combine(tName).Combine($"{{(을)를 공격해서 }}{{{Math.Round(damage, 2)},{Colors.txtDanger}}}").Combine($"{dText}");
+          return CasterText(caster).Combine($"{{(이)가 }}").Combine(CasterText(target)).Combine($"{{(을)를 공격해서 }}{{{Math.Round(damage, 2)},{Colors.txtDanger}}}").Combine(dText);
         };
         PrintCText(GetText());
         // Pause();
@@ -205,14 +203,12 @@ namespace Goguma.Game.Object.Battle
         {
           Func<bool, CTexts> GetQText = (bool first) =>
            {
-             var mName = CTexts.Make($"{{「{monster.Name} [Lv. {monster.Level}]」,{ColorByLevel(player.Level, monster.Level)}}}");
              string txt;
              if (first)
                txt = "{(이)랑 싸우기 시작했다! 무엇을 하시겠습니까?\n    }";
              else
                txt = "{(이)랑 싸우고 있다. 무엇을 하시겠습니까?\n    }";
-
-             return mName.Combine($"{txt}").Combine(mName.Combine("{의 체력: }").Combine(monster.GetHpBar()).Combine("\n"));
+             return MonsterText(player, monster).Combine($"{txt}").Combine(MonsterText(player, monster)).Combine("{의 체력: }").Combine(monster.GetHpBar()).Combine("\n");
            };
           Func<SelectSceneItems> GetSSI = () =>
             {
@@ -247,14 +243,12 @@ namespace Goguma.Game.Object.Battle
 
         static public void LackOfEP(IPlayer player, ISkill skill)
         {
-          var sName = SkillText(skill);
-          PrintCText(CTexts.Make($"{{\n  에너지가 부족하여 }}").Combine(sName).Combine($"{{(을)를 사용 할 수 없습니다.\n    남은 에너지: }}").Combine(player.GetEpBar()).Combine($"{{\n    사용한 에너지: }}{{{skill.UseEp}\n, {Colors.txtWarning}}}"));
+          PrintCText(CTexts.Make($"{{\n  에너지가 부족하여 }}").Combine(SkillText(skill)).Combine($"{{(을)를 사용 할 수 없습니다.\n    남은 에너지: }}").Combine(player.GetEpBar()).Combine($"{{\n    사용한 에너지: }}{{{skill.UseEp}\n, {Colors.txtWarning}}}"));
           Pause();
         }
         static public void AlreadyUsingBuff(IBuffSkill skill)
         {
-          var sName = SkillText(skill);
-          PrintCText(CTexts.Make($"{{\n이미 }}").Combine(sName).Combine(CTexts.Make($"{{의 효과를 받고 있습니다.\n}}")));
+          PrintCText(CTexts.Make($"{{\n이미 }}").Combine(SkillText(skill)).Combine(CTexts.Make($"{{의 효과를 받고 있습니다.\n}}")));
           Pause();
         }
 
