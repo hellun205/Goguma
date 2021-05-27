@@ -78,5 +78,10 @@ namespace Goguma.Game.Object.Inventory.Item.Consume
       return new CPotion(this);
     }
 
+    public override CTexts UsedText()
+    {
+      return EffectInfo()
+      .Combine("{\n위 능력치들이 증가하였습니다.}");
+    }
   }
 }

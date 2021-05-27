@@ -32,7 +32,7 @@ namespace Goguma.Game.Object.Inventory.Item.Consume
     public override CTexts EffectInfo()
     {
       return new CTexts()
-      .Append(SkillToReceive.Info())
+      .Append(SkillToReceive.Info(35))
       .Append($"{{\n사용 시 위 스킬을 획득합니다.}}");
     }
 
@@ -46,5 +46,11 @@ namespace Goguma.Game.Object.Inventory.Item.Consume
       return new CSkillBook(this);
     }
 
+    public override CTexts UsedText()
+    {
+      return new CTexts()
+      .Append(SkillToReceive.Info(35))
+      .Append($"{{\n위 스킬을 획득하였습니다.}}");
+    }
   }
 }

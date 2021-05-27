@@ -35,12 +35,12 @@ namespace Goguma.Game.Object.Entity.Player
     new public double DefPer
     {
       get => Math.Round(defPer + GetEquipEffect.DefPer + BuffsIncrease.DefPer, 2);
-      set => defPer = value;
+      set => defPer = Math.Max(0, value);
     }
     new public double AttDmg
     {
       get => Math.Round(attDmg + GetWeaponEffect.AttDmg + BuffsIncrease.AttDmg, 2);
-      set => attDmg = value;
+      set => attDmg = Math.Max(0, value);
     }
     new public double CritDmg
     {

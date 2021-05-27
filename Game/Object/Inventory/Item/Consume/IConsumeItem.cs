@@ -9,5 +9,6 @@ namespace Goguma.Game.Object.Inventory.Item.Consume
     void UseItem(IPlayer player);
     string GetString { get; }
     CTexts EffectInfo();
+    CTexts UsedText();
   }
 }

@@ -30,15 +30,16 @@ namespace Goguma.Game.Object.Inventory.Item.Consume
     {
       var player = InGame.player;
       var resCT = new CTexts();
-      resCT.Append($"{{\n{GetSep(40, $"〔 {Name.ToString()}{(showCount ? $" [ {Count}개 ]" : "")} 〕")}}}")
-      .Append($"{{\n  {InvenInfo.GetTypeString(Type)} 아이템,{Colors.txtWarning}}}{{ {GetString},{Colors.bgSuccess}}}")
+      resCT.Append($"{{\n{GetSep(45, $"{Name.ToString()}{(showCount ? $" [ {Count}개 ]" : "")}")}}}")
+      .Append($"{{\n  {InvenInfo.GetTypeString(Type)} 아이템,{Colors.txtWarning}}}{{ {GetString}\n,{Colors.txtSuccess}}}")
       .Append(Descriptions)
-      .Append($"{{\n{GetSep(40)}}}")
+      .Append($"{{\n{GetSep(45)}}}")
       .Append(EffectInfo());
-      resCT.Append($"{{\n{GetSep(40)}}}");
+      resCT.Append($"{{\n{GetSep(45)}}}");
       return resCT;
     }
 
     public abstract CTexts EffectInfo();
+    public abstract CTexts UsedText();
   }
 }

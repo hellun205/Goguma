@@ -29,13 +29,13 @@ namespace Goguma.Game.Object.Entity
     public double AttDmg
     {
       get => Math.Round(attDmg + BuffsIncrease.AttDmg, 2);
-      set => attDmg = value;
+      set => attDmg = Math.Max(0, value);
     }
 
     public double DefPer
     {
       get => Math.Round(defPer + BuffsIncrease.DefPer, 2);
-      set => defPer = value;
+      set => defPer = Math.Max(0, value);
     }
     public double IgnoreDef
     {

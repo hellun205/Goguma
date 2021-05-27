@@ -36,18 +36,18 @@ namespace Goguma.Game.Object.Inventory.Item.Equipment
       return base.ToString();
     }
 
-    public override CTexts EffectInfo()
+    public override CTexts EffectInfo(bool isMinus = false)
     {
       var player = InGame.player;
       var resCT = new CTexts();
 
-      if (Effect.AttDmg != 0) resCT.Append($"{{\n공격력 증가 : }}").Append(NumberColor(Effect.AttDmg)).Append($"{{ ( {player.AttDmg} }}").Append(NumberColor(Effect.AttDmg)).Append("{ → }").Append(NumberColor(player.MaxHp + Effect.AttDmg)).Append("{ )}");
+      if (Effect.AttDmg != 0) resCT.Append($"{{\n공격력 {SMP(isMinus)} : }}").Append(NumberColor(DMP(Effect.AttDmg, isMinus))).Append($"{{ ( {player.AttDmg} }}").Append(NumberColor(DMP(Effect.AttDmg, isMinus))).Append("{ → }").Append(NumberColor(player.AttDmg + DMP(Effect.AttDmg, isMinus))).Append("{ )}");
 
-      if (Effect.IgnoreDef != 0) resCT.Append($"{{\n방어율 무시 증가 : }}").Append(NumberColor(Effect.IgnoreDef, "%")).Append($"{{ ( {player.IgnoreDef} % }}").Append(NumberColor(Effect.IgnoreDef, "%")).Append("{ → }").Append(NumberColor(player.DefPer + Effect.IgnoreDef, "%")).Append("{ )}");
+      if (Effect.IgnoreDef != 0) resCT.Append($"{{\n방어율 무시 {SMP(isMinus)} : }}").Append(NumberColor(DMP(Effect.IgnoreDef, isMinus), "%")).Append($"{{ ( {player.IgnoreDef} % }}").Append(NumberColor(DMP(Effect.IgnoreDef, isMinus), "%")).Append("{ → }").Append(NumberColor(player.IgnoreDef + DMP(Effect.IgnoreDef, isMinus), "%")).Append("{ )}");
 
-      if (Effect.CritDmg != 0) resCT.Append($"{{\n크리티컬 데미지 증가 : }}").Append(NumberColor(Effect.CritDmg, "%")).Append($"{{ ( {player.CritDmg} % }}").Append(NumberColor(Effect.CritDmg, "%")).Append("{ → }").Append(NumberColor(player.CritDmg + Effect.CritDmg, "%")).Append("{ )}");
+      if (Effect.CritDmg != 0) resCT.Append($"{{\n크리티컬 데미지 {SMP(isMinus)} : }}").Append(NumberColor(DMP(Effect.CritDmg, isMinus), "%")).Append($"{{ ( {player.CritDmg} % }}").Append(NumberColor(DMP(Effect.CritDmg, isMinus), "%")).Append("{ → }").Append(NumberColor(player.CritDmg + DMP(Effect.CritDmg, isMinus), "%")).Append("{ )}");
 
-      if (Effect.CritPer != 0) resCT.Append($"{{\n크리티컬 확률 증가 : }}").Append(NumberColor(Effect.CritPer, "%")).Append($"{{ ( {player.CritPer} % }}").Append(NumberColor(Effect.CritPer, "%")).Append("{ → }").Append(NumberColor(player.CritPer + Effect.CritPer, "%")).Append("{ )}");
+      if (Effect.CritPer != 0) resCT.Append($"{{\n크리티컬 확률 {SMP(isMinus)} : }}").Append(NumberColor(DMP(Effect.CritPer, isMinus), "%")).Append($"{{ ( {player.CritPer} % }}").Append(NumberColor(DMP(Effect.CritPer, isMinus), "%")).Append("{ → }").Append(NumberColor(player.CritPer + DMP(Effect.CritPer, isMinus), "%")).Append("{ )}");
 
       return resCT;
     }

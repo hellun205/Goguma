@@ -23,10 +23,10 @@ namespace Goguma.Game.Object.Inventory.Item.Other
 
     public override CTexts Info(bool showCount = true)
     {
-      return new CTexts().Append($"{{\n{GetSep(40, $"〔 {Name.ToString()}{(showCount ? $" [ {Count}개 ]" : "")} 〕")}}}")
+      return new CTexts().Append($"{{\n{GetSep(45, $"{Name.ToString()}{(showCount ? $" [ {Count}개 ]" : "")}")}}}")
       .Append($"{{\n  {InvenInfo.GetTypeString(Type)} 아이템\n,{Colors.txtWarning}}}")
       .Append(Descriptions)
-      .Append($"{{\n{GetSep(40)}}}");
+      .Append($"{{\n{GetSep(45)}}}");
     }
 
     public override string ToString()

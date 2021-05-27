@@ -195,7 +195,7 @@ namespace Goguma.Game.Object.Battle
           return CasterText(caster).Combine($"{{(이)가 }}").Combine(CasterText(target)).Combine($"{{(을)를 공격해서 }}{{{Math.Round(damage, 2)},{Colors.txtDanger}}}").Combine(dText);
         };
         PrintCText(GetText());
-        // Pause();
+        Pause();
       }
 
       static public class Player
@@ -266,7 +266,7 @@ namespace Goguma.Game.Object.Battle
           {
             PrintCText(CTexts.Make($"{{\n\n  }}").Combine(ItemText(item)).Combine($"{{(을)를 획득했습니다.}}"));
           }
-          // Pause();
+          Pause();
         }
 
         static public SelectScene SelSkillType(IPlayer player, out SkillType skType)
