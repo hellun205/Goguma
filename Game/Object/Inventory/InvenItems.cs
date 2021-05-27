@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Goguma.Game.Object.Inventory.Item;
 using Goguma.Game.Object.Inventory.Item.Equipment;
-using System.Linq;
 
 namespace Goguma.Game.Object.Inventory
 {
@@ -86,6 +85,18 @@ namespace Goguma.Game.Object.Inventory
     {
       wearing = new Wearing();
       having = new Having();
+    }
+    static public string GetTypeString(InvenType iType)
+    {
+      switch (iType)
+      {
+        case InvenType.Wearing:
+          return "착용";
+        case InvenType.Having:
+          return "소지";
+        default:
+          return null;
+      }
     }
   }
 }

@@ -8,6 +8,7 @@ namespace Goguma.Game.Object.Inventory.Item
   public interface IItem
   {
     CTexts Name { get; set; }
+    CTexts DisplayName { get; }
     CTexts Descriptions { get; set; }
     int Count { get; set; }
     int MaxCount { get; }

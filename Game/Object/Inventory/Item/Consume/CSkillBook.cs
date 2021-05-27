@@ -19,7 +19,7 @@ namespace Goguma.Game.Object.Inventory.Item.Consume
         base.Descriptions = CTexts.Make($"{{사용 하면 다음 스킬을 획득할 수 있다.\n  }}{{▶ ,{Colors.txtInfo}}}{{[ {Skill.Skill.GetTypeString(SkillToReceive.Type)} 스킬 ],{Colors.txtWarning}}}{{ {SkillToReceive.Name.ToString()},{Colors.txtInfo}}}");
       }
     }
-    public override string GetString => "스킬 북";
+    public override ConsumeItemType CType => ConsumeItemType.SKILL_BOOK;
     public override int MaxCount => 1;
 
     public CSkillBook() : base() { }
@@ -50,7 +50,7 @@ namespace Goguma.Game.Object.Inventory.Item.Consume
     {
       return new CTexts()
       .Append(SkillToReceive.Info(35))
-      .Append($"{{\n위 스킬을 획득하였습니다.}}");
+      .Append($"{{\n스킬 북을 사용하여 스킬을 획득하였습니다.}}");
     }
   }
 }

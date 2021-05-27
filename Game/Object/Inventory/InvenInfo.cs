@@ -8,51 +8,8 @@ namespace Goguma.Game.Object.Inventory
   [Serializable]
   static class InvenInfo
   {
-    static public string GetTypeString(InvenType iType)
-    {
-      switch (iType)
-      {
-        case InvenType.Wearing:
-          return "착용";
-        case InvenType.Having:
-          return "소지";
-        default:
-          return null;
-      }
-    }
-    static public string GetTypeString(WearingType wType)
-    {
-      switch (wType)
-      {
-        case WearingType.Head:
-          return "머리";
-        case WearingType.Chestplate:
-          return "상체";
-        case WearingType.Leggings:
-          return "하체";
-        case WearingType.Boots:
-          return "신발";
-        case WearingType.Weapon:
-          return "무기";
-        default:
-          return null;
-      }
-    }
 
-    static public string GetTypeString(HavingType hType)
-    {
-      switch (hType)
-      {
-        case HavingType.Equipment:
-          return "장비";
-        case HavingType.Consume:
-          return "소비";
-        case HavingType.Other:
-          return "기타";
-        default:
-          return null;
-      }
-    }
+
 
     static public class Scene
     {
@@ -67,7 +24,7 @@ namespace Goguma.Game.Object.Inventory
         {
           var resultSSI = new SelectSceneItems();
           for (var i = 0; i < Enum.GetValues(typeof(InvenType)).Length; i++)
-            resultSSI.Add($"{{[ }} {{{InvenInfo.GetTypeString((InvenType)i)}, {Colors.txtSuccess}}} {{ ] 인벤토리}}");
+            resultSSI.Add($"{{[ }} {{{InvenItems.GetTypeString((InvenType)i)}, {Colors.txtSuccess}}} {{ ] 인벤토리}}");
 
           return resultSSI;
         };
@@ -79,7 +36,7 @@ namespace Goguma.Game.Object.Inventory
         InvenType iType = InvenType.Wearing;
         Func<CTexts> GetQText = () =>
         {
-          return CTexts.Make($"{{인벤토리를 열었습니다. }} {{아이템, {Colors.txtInfo}}} {{을 선택하세요.\n    위치 : }} {{{InvenInfo.GetTypeString(iType)}, {Colors.txtSuccess}}}");
+          return CTexts.Make($"{{인벤토리를 열었습니다. }} {{아이템, {Colors.txtInfo}}} {{을 선택하세요.\n    위치 : }} {{{InvenItems.GetTypeString(iType)}, {Colors.txtSuccess}}}");
         };
         Func<Inventory, SelectSceneItems> GetSSI = (Inventory inven) =>
         {
@@ -88,9 +45,9 @@ namespace Goguma.Game.Object.Inventory
           for (var i = 0; i < Enum.GetValues(typeof(WearingType)).Length; i++)
           {
             if (inven.Items.wearing.GetItem((WearingType)i) != null)
-              resultSSI.Add(CTexts.Make($"{{{InvenInfo.GetTypeString((WearingType)i)}, {Colors.txtSuccess}}} {{ : }} ").Combine(inven.Items.wearing.GetItem((WearingType)i).Name));
+              resultSSI.Add(CTexts.Make($"{{{EquipmentItem.GetETypeString((WearingType)i)}, {Colors.txtSuccess}}} {{ : }} ").Combine(inven.Items.wearing.GetItem((WearingType)i).Name));
             else
-              resultSSI.Add($"{{{InvenInfo.GetTypeString((WearingType)i)}, {Colors.txtSuccess}}} {{ : }} {{비어 있음 , {Colors.txtMuted}}}", false);
+              resultSSI.Add($"{{{EquipmentItem.GetETypeString((WearingType)i)}, {Colors.txtSuccess}}} {{ : }} {{비어 있음 , {Colors.txtMuted}}}", false);
           }
 
           return resultSSI;
@@ -103,14 +60,14 @@ namespace Goguma.Game.Object.Inventory
         InvenType iType = InvenType.Having;
         Func<CTexts> GetQText = () =>
         {
-          return CTexts.Make($"{{어떤 인벤토리를 열으시겠습니까?\n    위치 : }} {{{InvenInfo.GetTypeString(iType)}, {Colors.txtSuccess}}}");
+          return CTexts.Make($"{{어떤 인벤토리를 열으시겠습니까?\n    위치 : }} {{{InvenItems.GetTypeString(iType)}, {Colors.txtSuccess}}}");
         };
 
         Func<SelectSceneItems> GetSSI = () =>
         {
           var resultSSI = new SelectSceneItems();
           for (var i = 0; i < Enum.GetValues(typeof(HavingType)).Length; i++)
-            resultSSI.Add($"{{{InvenInfo.GetTypeString(iType)}, {Colors.txtSuccess}}} {{ : }} {{{InvenInfo.GetTypeString((HavingType)i)} , {Colors.txtSuccess}}}");
+            resultSSI.Add($"{{{InvenItems.GetTypeString(iType)}, {Colors.txtSuccess}}} {{ : }} {{{Item.Item.GetTypeString((HavingType)i)} , {Colors.txtSuccess}}}");
 
           return resultSSI;
         };
@@ -123,7 +80,7 @@ namespace Goguma.Game.Object.Inventory
 
         Func<HavingType, CTexts> GetQText = (HavingType hType) =>
         {
-          return CTexts.Make($"{{인벤토리를 열었습니다. }} {{아이템,{Colors.txtInfo}}} {{을 선택하세요.\n    위치 : }} {{{InvenInfo.GetTypeString(iType)}, {Colors.txtSuccess}}} {{.}} {{{InvenInfo.GetTypeString(hType)},{Colors.txtSuccess}}}");
+          return CTexts.Make($"{{인벤토리를 열었습니다. }} {{아이템,{Colors.txtInfo}}} {{을 선택하세요.\n    위치 : }} {{{InvenItems.GetTypeString(iType)}, {Colors.txtSuccess}}} {{.}} {{{Item.Item.GetTypeString(hType)},{Colors.txtSuccess}}}");
         };
         Func<Inventory, HavingType, SelectSceneItems> GetSSI = (Inventory inven, HavingType hType) =>
         {
@@ -133,9 +90,9 @@ namespace Goguma.Game.Object.Inventory
             if (item != null)
             {
               if (hType == HavingType.Equipment)
-                resultSSI.Add(item.Name.Combine($"{{ [{item.Count}], {Colors.txtInfo}}} {{ [{InvenInfo.GetTypeString((WearingType)((IEquipmentItem)item).EType)}],{Colors.txtWarning}}}"));
+                resultSSI.Add(item.DisplayName.Combine($"{{ [{item.Count}], {Colors.txtInfo}}} {{ [{EquipmentItem.GetETypeString((WearingType)((IEquipmentItem)item).EType)}],{Colors.txtWarning}}}"));
               else
-                resultSSI.Add($"{{{item.Name.ToString()}}} {{ [{item.Count}], {Colors.txtInfo}}}");
+                resultSSI.Add($"{{{item.DisplayName.ToString()}}} {{ [{item.Count}], {Colors.txtInfo}}}");
             }
             else
               resultSSI.Add($"{{비어 있음}} {{ [{item.Count}], {Colors.txtMuted}}}", false);
@@ -152,7 +109,7 @@ namespace Goguma.Game.Object.Inventory
         Func<Inventory, WearingType, CTexts> GetQText = (Inventory inven, WearingType wType) =>
         {
           var sItem = inven.Items.wearing.GetItem(wType);
-          return CTexts.Make($"{{무슨 작업을 하시겠습니까?\n    }} {{\n    선택 : }} {{{sItem.Name.ToString()}}} {{ [{sItem.Count}], {Colors.txtInfo}}} {{\n    위치 : }} {{{InvenInfo.GetTypeString(iType)}, {Colors.txtSuccess}}} {{.}} {{{InvenInfo.GetTypeString(wType)},{Colors.txtSuccess}}}");
+          return CTexts.Make($"{{무슨 작업을 하시겠습니까?\n    }} {{\n    선택 : }} {{{sItem.Name.ToString()}}} {{ [{sItem.Count}], {Colors.txtInfo}}} {{\n    위치 : }} {{{InvenItems.GetTypeString(iType)}, {Colors.txtSuccess}}} {{.}} {{{EquipmentItem.GetETypeString(wType)},{Colors.txtSuccess}}}");
         };
         Func<WearingType, SelectSceneItems> GetSSI = (WearingType wType) =>
         {
@@ -172,7 +129,7 @@ namespace Goguma.Game.Object.Inventory
         Func<Inventory, HavingType, int, CTexts> GetQText = (Inventory inven, HavingType hType, int sIndex) =>
         {
           var sItem = inven.Items.having.GetItems(hType)[sIndex];
-          return CTexts.Make($"{{무슨 작업을 하시겠습니까?\n    }} {{\n    선택 : }} {{{sItem.Name.ToString()}}} {{ [{sItem.Count}], {Colors.txtInfo}}} {{\n    위치 : }}  {{{InvenInfo.GetTypeString(iType)}, {Colors.txtSuccess}}} {{.}} {{{InvenInfo.GetTypeString(hType)},{Colors.txtSuccess}}} {{.}} {{{sIndex + 1},{Colors.txtSuccess}}}");
+          return CTexts.Make($"{{무슨 작업을 하시겠습니까?\n    }} {{\n    선택 : }} {{{sItem.Name.ToString()}}} {{ [{sItem.Count}], {Colors.txtInfo}}} {{\n    위치 : }}  {{{InvenItems.GetTypeString(iType)}, {Colors.txtSuccess}}} {{.}} {{{Item.Item.GetTypeString(hType)},{Colors.txtSuccess}}} {{.}} {{{sIndex + 1},{Colors.txtSuccess}}}");
         };
         Func<HavingType, int, SelectSceneItems> GetSSI = (HavingType hType, int sIndex) =>
         {

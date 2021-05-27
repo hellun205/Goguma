@@ -8,10 +8,11 @@ namespace Goguma.Game.Object.Inventory.Item.Equipment
   [Serializable]
   abstract class EquipmentItem : Item, IEquipmentItem
   {
+    public override CTexts DisplayName => Name.Combine($"{{ ( {ETypeString},{Colors.txtSuccess} )}}");
     public override HavingType Type => HavingType.Equipment;
     public override int MaxCount => 1;
     public abstract WearingType EType { get; }
-    public string ETypeString => InvenInfo.GetTypeString(EType);
+    public string ETypeString => GetETypeString(EType);
 
     public EquipmentItem() : base() { }
 
@@ -22,7 +23,7 @@ namespace Goguma.Game.Object.Inventory.Item.Equipment
       var player = InGame.player;
       var resCT = new CTexts();
       resCT.Append($"{{\n{GetSep(45, $"{Name.ToString()}{(showCount ? $" [ {Count}개 ]" : "")}")}}}")
-      .Append($"{{\n  {InvenInfo.GetTypeString(Type)} 아이템,{Colors.txtWarning}}}{{ {InvenInfo.GetTypeString(EType)}\n,{Colors.txtSuccess}}}")
+      .Append($"{{\n  {TypeString} 아이템,{Colors.txtWarning}}}{{ {ETypeString}\n,{Colors.txtSuccess}}}")
       .Append(Descriptions)
       .Append($"{{\n{GetSep(45)}}}")
       .Append(EffectInfo());
@@ -57,6 +58,25 @@ namespace Goguma.Game.Object.Inventory.Item.Equipment
     protected string SMP(bool isMinus, string minusStr = "감소", string plusStr = "증가")
     {
       return (isMinus ? minusStr : plusStr);
+    }
+
+    static public string GetETypeString(WearingType wType)
+    {
+      switch (wType)
+      {
+        case WearingType.Head:
+          return "머리";
+        case WearingType.Chestplate:
+          return "상체";
+        case WearingType.Leggings:
+          return "하체";
+        case WearingType.Boots:
+          return "신발";
+        case WearingType.Weapon:
+          return "무기";
+        default:
+          return null;
+      }
     }
   }
 }

@@ -8,10 +8,11 @@ namespace Goguma.Game.Object.Inventory.Item
   abstract class Item : IItem
   {
     public CTexts Name { get; set; }
+    public abstract CTexts DisplayName { get; }
     public int Count { get; set; }
     public abstract int MaxCount { get; }
     public abstract HavingType Type { get; }
-    public string TypeString => InvenInfo.GetTypeString(Type);
+    public string TypeString => GetTypeString(Type);
     public int SalePrice { get; set; }
     public int PurchasePrice { get; set; }
     public bool IsSalable { get; set; }
@@ -49,5 +50,19 @@ namespace Goguma.Game.Object.Inventory.Item
 
     public abstract CTexts Info(bool showCount = true);
 
+    static public string GetTypeString(HavingType hType)
+    {
+      switch (hType)
+      {
+        case HavingType.Equipment:
+          return "장비";
+        case HavingType.Consume:
+          return "소비";
+        case HavingType.Other:
+          return "기타";
+        default:
+          return null;
+      }
+    }
   }
 }
