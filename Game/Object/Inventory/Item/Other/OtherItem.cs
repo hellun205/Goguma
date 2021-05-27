@@ -28,5 +28,10 @@ namespace Goguma.Game.Object.Inventory.Item.Other
       .Append(Descriptions)
       .Append($"{{\n{GetSep(40)}}}");
     }
+
+    public override string ToString()
+    {
+      return base.ToString();
+    }
   }
 }

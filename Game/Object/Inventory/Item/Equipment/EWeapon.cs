@@ -31,6 +31,11 @@ namespace Goguma.Game.Object.Inventory.Item.Equipment
       return new EWeapon(this);
     }
 
+    public override string ToString()
+    {
+      return base.ToString();
+    }
+
     public override CTexts EffectInfo()
     {
       var player = InGame.player;

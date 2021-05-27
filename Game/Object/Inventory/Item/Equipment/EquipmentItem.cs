@@ -29,6 +29,11 @@ namespace Goguma.Game.Object.Inventory.Item.Equipment
       return resCT;
     }
 
+    public override string ToString()
+    {
+      return base.ToString();
+    }
+
     public abstract CTexts EffectInfo();
   }
 }
