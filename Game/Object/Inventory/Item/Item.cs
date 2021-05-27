@@ -29,19 +29,19 @@ namespace Goguma.Game.Object.Inventory.Item
       BuyPrice = item.BuyPrice;
       Descriptions = item.Descriptions;
     }
-    public abstract void DescriptionItem();
     public abstract IItem GetInstance();
     public void Information(bool showCount = true, bool isPause = true)
     {
-      if (showCount) PrintText(GetSep(40, $"{Name.ToString()} [ {Count} ]"));
-      else PrintText(GetSep(40, $"{Name.ToString()}"));
-      PrintCText($"{{\n{InvenInfo.HavingInven.GetTypeString(Type)} 아이템\n, {Colors.txtWarning}}}");
-      PrintCText(Descriptions);
-      PrintText("\n" + GetSep(40));
-      DescriptionItem();
-      PrintText("\n" + GetSep(40));
+      PrintCText(Info());
       if (isPause) Pause();
     }
+
+    public override string ToString()
+    {
+      return Info(false).ToString();
+    }
+
+    public abstract CTexts Info(bool showCount = true);
 
   }
 }

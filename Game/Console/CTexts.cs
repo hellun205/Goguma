@@ -17,24 +17,24 @@ namespace Goguma.Game.Console
 
     public CTexts(CTexts ct) : this()
     {
-      Texts = ct.Texts;
+      for (var i = 0; i < ct.Texts.Count; i++)
+        Texts.Add(ct.Texts[i]);
     }
 
-    public CTexts Combine(in CTexts TextsB)
+    public CTexts Combine(CTexts TextsB)
     {
       var resultCTexts = GetInstance();
-      var B = TextsB.GetInstance();
-      for (var i = 0; i < B.Texts.Count; i++)
-        resultCTexts.Texts.Add(B.Texts[i]);
+
+      for (var i = 0; i < TextsB.Texts.Count; i++)
+        resultCTexts.Texts.Add(TextsB.Texts[i]);
 
       return resultCTexts;
     }
 
-    public CTexts Append(in CTexts TextsB)
+    public CTexts Append(CTexts TextsB)
     {
-      var B = TextsB.GetInstance();
-      for (var i = 0; i < B.Texts.Count; i++)
-        this.Texts.Add(B.Texts[i]);
+      for (var i = 0; i < TextsB.Texts.Count; i++)
+        this.Texts.Add(TextsB.Texts[i]);
       return this;
     }
 
@@ -47,10 +47,6 @@ namespace Goguma.Game.Console
     {
       return Append(CTexts.Make(TextsB));
     }
-    public CTexts GetInstance()
-    {
-      return new CTexts(this);
-    }
 
     public override string ToString()
     {
@@ -59,6 +55,11 @@ namespace Goguma.Game.Console
         sb.Append(Texts[i].Text);
 
       return sb.ToString();
+    }
+
+    public CTexts GetInstance()
+    {
+      return new CTexts(this);
     }
 
     public void Add(string txt, string color = Colors.txtDefault)

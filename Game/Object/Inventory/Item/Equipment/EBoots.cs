@@ -13,5 +13,10 @@ namespace Goguma.Game.Object.Inventory.Item.Equipment
     {
       return new EBoots(this);
     }
+
+    public override string ToString()
+    {
+      return base.ToString();
+    }
   }
 }

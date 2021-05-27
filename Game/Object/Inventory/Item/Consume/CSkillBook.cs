@@ -3,8 +3,6 @@ using Colorify;
 using Goguma.Game.Console;
 using Goguma.Game.Object.Entity.Player;
 using Goguma.Game.Object.Skill;
-using static Goguma.Game.Console.ConsoleFunction;
-using static Goguma.Game.Console.StringFunction;
 
 namespace Goguma.Game.Object.Inventory.Item.Consume
 {
@@ -31,12 +29,11 @@ namespace Goguma.Game.Object.Inventory.Item.Consume
       SkillToReceive = item.SkillToReceive;
     }
 
-    public override void DescriptionItem()
+    public override CTexts EffectInfo()
     {
-      var player = InGame.player;
-      PrintText("\n");
-      SkillToReceive.Information(false);
-      PrintText("\n 사용 시 위 스킬을 획득합니다.");
+      return new CTexts()
+      .Append(SkillToReceive.Info(35))
+      .Append($"{{\n사용 시 위 스킬을 획득합니다.}}");
     }
 
     public override void UseItem(IPlayer player)
@@ -49,5 +46,11 @@ namespace Goguma.Game.Object.Inventory.Item.Consume
       return new CSkillBook(this);
     }
 
+    public override CTexts UsedText()
+    {
+      return new CTexts()
+      .Append(SkillToReceive.Info(35))
+      .Append($"{{\n위 스킬을 획득하였습니다.}}");
+    }
   }
 }
