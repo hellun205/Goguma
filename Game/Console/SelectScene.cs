@@ -9,10 +9,12 @@ namespace Goguma.Game.Console
   {
     public int getIndex;
     public string getString;
-
-    public SelectScene(CTexts questionText, SelectSceneItems answerItems)
+    public bool isCancelled = false;
+    public SelectScene(CTexts questionText, SelectSceneItems answerItems, bool isCancel = false, CTexts cancelText = null)
     {
       PrintQuestionText(questionText);
+      cancelText = (cancelText == null ? CTexts.Make($"{{뒤로 가기,{Colors.txtMuted}}}") : cancelText);
+      if (isCancel) answerItems.Add(new SelectSceneItem(cancelText, true));
 
       for (int i = 1; i <= answerItems.Items.Count; i++)
       {
@@ -39,13 +41,14 @@ namespace Goguma.Game.Console
             {
               getIndex = readInt - 1;
               getString = answerItems.Items[readInt - 1].Texts.ToString();
+              if (getString == cancelText.ToString()) isCancelled = true;
               return;
             }
         }
       }
     }
 
-    public SelectScene(string questionText, SelectSceneItems answerItems) : this(CTexts.Make(questionText), answerItems) { }
+    public SelectScene(string questionText, SelectSceneItems answerItems, bool isCancel = false, CTexts cancelText = null) : this(CTexts.Make(questionText), answerItems, isCancel, cancelText) { }
 
     static public void PrintQuestionText(CTexts questionText, CTexts plusText = null)
     {

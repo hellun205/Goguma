@@ -49,7 +49,7 @@ namespace Goguma.Game.Object.Battle
 
       static private CTexts SkillText(ISkill skill)
       {
-        return CTexts.Make($"{{{Skill.Skill.GetTypeString(skill.Type)} 스킬 , {Colors.txtWarning}}}{{{skill.Name},{Colors.txtInfo}}}");
+        return CTexts.Make($"{{{skill.TypeString} 스킬 , {Colors.txtWarning}}}{{{skill.Name},{Colors.txtInfo}}}");
       }
 
       static private CTexts MonsterText(IPlayer player, IMonster monster)
@@ -63,7 +63,7 @@ namespace Goguma.Game.Object.Battle
 
       static private CTexts ItemText(IItem item)
       {
-        return CTexts.Make($"{{{InvenInfo.GetTypeString(item.Type)} 아이템 ,{Colors.txtWarning}}}{{{item.Name},{Colors.txtSuccess}}}");
+        return CTexts.Make($"{{{item.TypeString} 아이템 ,{Colors.txtWarning}}}{{{item.Name},{Colors.txtSuccess}}}");
       }
 
       static private void UseSkillText(IEntity caster, ISkill skill)
@@ -240,10 +240,9 @@ namespace Goguma.Game.Object.Battle
             var resultSSI = new SelectSceneItems();
             resultSSI.Add($"{{일반 공격,{Colors.txtSuccess}}}");
             resultSSI.Add($"{{스킬 공격,{Colors.txtSuccess}}}");
-            resultSSI.Add($"{{뒤로 가기, {Colors.txtMuted}}}");
             return resultSSI;
           };
-          return new SelectScene(GetQText(), GetSSI());
+          return new SelectScene(GetQText(), GetSSI(), true);
         }
 
         static public void LackOfEP(IPlayer player, ISkill skill)
@@ -280,12 +279,11 @@ namespace Goguma.Game.Object.Battle
             var resultSSI = new SelectSceneItems();
             for (var i = 0; i < Enum.GetValues(typeof(SkillType)).Length; i++)
               resultSSI.Add($"{{{Skill.Skill.GetTypeString((SkillType)i)} 스킬}}");
-            resultSSI.Add($"{{뒤로 가기, {Colors.txtMuted}}}");
             return resultSSI;
           };
           skType = (SkillType)0;
-          var skillTypeSc = new SelectScene(GetQText(), GetSSI());
-          if (skillTypeSc.getString == "뒤로 가기") return null;
+          var skillTypeSc = new SelectScene(GetQText(), GetSSI(), true);
+          if (skillTypeSc.isCancelled) return null;
           skType = (SkillType)(skillTypeSc.getIndex);
           var skills = from sk in player.Skills
                        where sk.Type == (SkillType)(skillTypeSc.getIndex)
@@ -307,29 +305,27 @@ namespace Goguma.Game.Object.Battle
                         select sk;
             foreach (var sk in skill)
               resultSSI.Add($"{{{sk.Name}}}");
-            resultSSI.Add($"{{뒤로 가기, {Colors.txtMuted}}}");
             return resultSSI;
           };
-          var scene = new SelectScene(GetQText(sType), GetSSI(sType));
-          if (scene.getString == "뒤로 가기") return null;
+          var scene = new SelectScene(GetQText(sType), GetSSI(sType), true);
+          if (scene.isCancelled) return null;
           return scene;
         }
         static public SelectScene SkillAction(ISkill skill)
         {
           Func<ISkill, CTexts> GetQText = (ISkill skill) =>
           {
-            return CTexts.Make($"{{{Skill.Skill.GetTypeString(skill.Type)} 스킬,{Colors.txtWarning}}}{{ 「{skill.Name}」}}");
+            return CTexts.Make($"{{{skill.TypeString} 스킬,{Colors.txtWarning}}}{{ 「{skill.Name}」}}");
           };
           Func<SelectSceneItems> GetSSI = () =>
           {
             var resultSSI = new SelectSceneItems();
             resultSSI.Add($"{{사용 하기,{Colors.txtSuccess}}}");
             resultSSI.Add($"{{정보 보기,{Colors.txtSuccess}}}");
-            resultSSI.Add($"{{뒤로 가기, {Colors.txtMuted}}}");
             return resultSSI;
           };
-          var scene = new SelectScene(GetQText(skill), GetSSI());
-          if (scene.getString == "뒤로 가기") return null;
+          var scene = new SelectScene(GetQText(skill), GetSSI(), true);
+          if (scene.isCancelled) return null;
           return scene;
         }
       }

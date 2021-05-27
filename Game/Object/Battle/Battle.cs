@@ -281,8 +281,6 @@ namespace Goguma.Game.Object.Battle
               case "스킬 공격":
                 skip = SelectAttSkill();
                 break;
-              case "뒤로 가기":
-                break;
             }
             break;
           case "스킬 사용":

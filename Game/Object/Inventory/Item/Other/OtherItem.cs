@@ -8,6 +8,7 @@ namespace Goguma.Game.Object.Inventory.Item.Other
   [Serializable]
   class OtherItem : Item, IOtherItem
   {
+    public override CTexts DisplayName => Name;
     public override HavingType Type => HavingType.Other;
     public override int MaxCount => 64;
     public OtherItem() : base() { }
@@ -24,7 +25,7 @@ namespace Goguma.Game.Object.Inventory.Item.Other
     public override CTexts Info(bool showCount = true)
     {
       return new CTexts().Append($"{{\n{GetSep(45, $"{Name.ToString()}{(showCount ? $" [ {Count}개 ]" : "")}")}}}")
-      .Append($"{{\n  {InvenInfo.GetTypeString(Type)} 아이템\n,{Colors.txtWarning}}}")
+      .Append($"{{\n  {TypeString} 아이템\n,{Colors.txtWarning}}}")
       .Append(Descriptions)
       .Append($"{{\n{GetSep(45)}}}");
     }

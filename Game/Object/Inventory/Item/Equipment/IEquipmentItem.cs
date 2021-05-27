@@ -5,7 +5,8 @@ namespace Goguma.Game.Object.Inventory.Item.Equipment
 {
   public interface IEquipmentItem : IItem
   {
-    WearingType EquipmentType { get; }
+    WearingType EType { get; }
+    string ETypeString { get; }
     CTexts EffectInfo(bool isMinus = false);
     CTexts EquipedText();
     CTexts UnEquipedText();

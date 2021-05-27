@@ -1,7 +1,6 @@
 ﻿using Goguma.Game.Console;
 using System;
 using static Goguma.Game.Console.ConsoleFunction;
-using static Goguma.Game.Console.StringFunction;
 using Colorify;
 using Goguma.Game.Object.Inventory.Item.Consume;
 using Goguma.Game.Object.Inventory.Item.Equipment;
@@ -29,7 +28,7 @@ namespace Goguma.Game.Object.Inventory.Item
       HType = hType;
 
       SelectedItem = inventory.Items.having.GetItems(hType)[selectedItemIndex];
-      SText = CTexts.Make($"{{\n    선택 : }} {{{SelectedItem.Name.ToString()}}} {{ [{SelectedItem.Count}], {Colors.txtInfo}}} {{\n    위치 : }} {{{InvenInfo.GetTypeString(iType)},{Colors.txtSuccess}}} {{.}} {{{InvenInfo.GetTypeString(hType)},{Colors.txtSuccess}}} {{.}} {{{SIIndex + 1},{Colors.txtSuccess}}}");
+      SText = CTexts.Make($"{{\n    선택 : }} {{{SelectedItem.Name.ToString()}}} {{ [{SelectedItem.Count}], {Colors.txtInfo}}} {{\n    위치 : }} {{{InvenItems.GetTypeString(iType)},{Colors.txtSuccess}}} {{.}} {{{Item.GetTypeString(hType)},{Colors.txtSuccess}}} {{.}} {{{SIIndex + 1},{Colors.txtSuccess}}}");
     }
 
     public ItemOption(Inventory inventory, WearingType wType, string optionText, InvenType iType = InvenType.Wearing) // Wearing Item
@@ -40,7 +39,7 @@ namespace Goguma.Game.Object.Inventory.Item
       WType = wType;
 
       SelectedItem = inventory.Items.wearing.GetItem(wType);
-      SText = CTexts.Make($"{{\n    선택 : }} {{{SelectedItem.Name.ToString()}}} {{ [{SelectedItem.Count}], {Colors.txtInfo}}} {{\n    위치 : }} {{{InvenInfo.GetTypeString(iType)},{Colors.txtSuccess}}} {{.}} {{{InvenInfo.GetTypeString(wType)},{Colors.txtSuccess}}}");
+      SText = CTexts.Make($"{{\n    선택 : }} {{{SelectedItem.Name.ToString()}}} {{ [{SelectedItem.Count}], {Colors.txtInfo}}} {{\n    위치 : }} {{{InvenItems.GetTypeString(iType)},{Colors.txtSuccess}}} {{.}} {{{EquipmentItem.GetETypeString(wType)},{Colors.txtSuccess}}}");
     }
 
     public bool Act()
@@ -138,7 +137,6 @@ namespace Goguma.Game.Object.Inventory.Item
     private bool ConsumeItemUse()
     {
       var sItem = (IConsumeItem)SelectedItem;
-      Pause();
       if (ReadYesOrNo(sItem.Name.Combine("{을(를) 사용하시겠습니까?\n}").Combine(sItem.EffectInfo()).Combine("{\n}")))
       {
         PrintCText(sItem.Name.Combine("{(을)를 사용하였습니다.\n}"));
@@ -156,42 +154,41 @@ namespace Goguma.Game.Object.Inventory.Item
     private bool EquipItem()
     {
       var sItem = (EquipmentItem)SelectedItem;
-      var wType = sItem.EquipmentType;
       var em = MyInventory.Items.wearing;
       // sItem.DescriptionItemAP(MyInventory.Player);
 
-      if (em.GetItem(wType) == null)
+      if (em.GetItem(sItem.EType) == null)
       {
-        if (ReadYesOrNo(CTexts.Make($"{{{InvenInfo.GetTypeString(wType)},{Colors.txtSuccess}}} {{에 }}").Combine(sItem.Name).Combine("{을(를) 착용하시겠습니까?\n}").Combine(sItem.EffectInfo())))
+        if (ReadYesOrNo(CTexts.Make($"{{{sItem.ETypeString},{Colors.txtSuccess}}} {{에 }}").Combine(sItem.Name).Combine("{을(를) 착용하시겠습니까?\n}").Combine(sItem.EffectInfo())))
         {
-          PrintCText(CTexts.Make($"{{{InvenInfo.GetTypeString(wType)},{Colors.txtSuccess}}} {{에 }} ").Combine(sItem.Name).Combine("{(을)를 착용하였습니다.}"));
+          PrintCText(CTexts.Make($"{{{sItem.ETypeString},{Colors.txtSuccess}}} {{에 }} ").Combine(sItem.Name).Combine("{(을)를 착용하였습니다.}"));
           Pause();
           PrintCText(sItem.EquipedText());
           Pause();
 
           Lose();
-          MyInventory.SetItem(wType, sItem);
+          MyInventory.SetItem(sItem.EType, sItem);
           return true;
         }
         else return false;
       }
       else
       {
-        if (em.GetItem(wType).Name.ToString() == sItem.Name.ToString()/* && item1.Lore == item.Lore && item1.Description == item.Description*/)
+        if (em.GetItem(sItem.EType).Name.ToString() == sItem.Name.ToString()/* && item1.Lore == item.Lore && item1.Description == item.Description*/)
         {
-          PrintCText(CTexts.Make($"{{{InvenInfo.GetTypeString(wType)},{Colors.txtSuccess}}} {{에 이미 }} ").Combine(em.GetItem(wType).Name).Combine("{(을)를 착용하고 있습니다.}"));
+          PrintCText(CTexts.Make($"{{{sItem.ETypeString},{Colors.txtSuccess}}} {{에 이미 }} ").Combine(em.GetItem(sItem.EType).Name).Combine("{(을)를 착용하고 있습니다.}"));
           return false;
         }
-        if (ReadYesOrNo(CTexts.Make($"{{{InvenInfo.GetTypeString(wType)},{Colors.txtSuccess}}} {{에 }}").Combine(em.GetItem(wType).Name).Combine("{(이)가 이미 존재합니다. }").Combine(sItem.Name).Combine("{을(를) 착용하시겠습니까?\n}").Combine(sItem.EffectInfo())))
+        if (ReadYesOrNo(CTexts.Make($"{{{sItem.ETypeString},{Colors.txtSuccess}}} {{에 }}").Combine(em.GetItem(sItem.EType).Name).Combine("{(이)가 이미 존재합니다. }").Combine(sItem.Name).Combine("{을(를) 착용하시겠습니까?\n}").Combine(sItem.EffectInfo())))
         {
-          PrintCText(CTexts.Make($"{{{InvenInfo.GetTypeString(wType)},{Colors.txtSuccess}}} {{에 이미 착용하고 있는 }} ").Combine(em.GetItem(wType).Name).Combine("{(을)를 벗고，}").Combine(sItem.Name).Combine("{(을)를 착용하였습니다.}"));
+          PrintCText(CTexts.Make($"{{{sItem.ETypeString},{Colors.txtSuccess}}} {{에 이미 착용하고 있는 }} ").Combine(em.GetItem(sItem.EType).Name).Combine("{(을)를 벗고，}").Combine(sItem.Name).Combine("{(을)를 착용하였습니다.}"));
           Pause();
           PrintCText(sItem.EquipedText());
           Pause();
 
           Lose();
-          Get(em.GetItem(wType));
-          MyInventory.SetItem(wType, sItem);
+          Get(em.GetItem(sItem.EType));
+          MyInventory.SetItem(sItem.EType, sItem);
           return true;
         }
         else return false;
@@ -200,7 +197,6 @@ namespace Goguma.Game.Object.Inventory.Item
     private bool UnEquipItem()
     {
       var sItem = (EquipmentItem)SelectedItem;
-      var hType = sItem.Type;
       var em = MyInventory.Items.wearing;
       // sItem.DescriptionItemAP(MyInventory.Player);
 

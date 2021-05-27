@@ -1,9 +1,6 @@
-﻿using Goguma.Game.Object.Entity.Player;
-using Goguma.Game.Console;
+﻿using Goguma.Game.Console;
 using System;
 using static Goguma.Game.Console.ConsoleFunction;
-using static Goguma.Game.Console.StringFunction;
-using Colorify;
 
 namespace Goguma.Game.Object.Inventory.Item
 {
@@ -11,23 +8,33 @@ namespace Goguma.Game.Object.Inventory.Item
   abstract class Item : IItem
   {
     public CTexts Name { get; set; }
+    public abstract CTexts DisplayName { get; }
     public int Count { get; set; }
     public abstract int MaxCount { get; }
     public abstract HavingType Type { get; }
-    public int SellPrice { get; set; }
-    public int BuyPrice { get; set; }
+    public string TypeString => GetTypeString(Type);
+    public int SalePrice { get; set; }
+    public int PurchasePrice { get; set; }
+    public bool IsSalable { get; set; }
+    public bool IsPurchasable { get; set; }
     public CTexts Descriptions { get; set; }
     public Item()
     {
       Count = 1;
+      SalePrice = 0;
+      PurchasePrice = 0;
+      IsSalable = false;
+      IsPurchasable = false;
     }
     public Item(in Item item) : this()
     {
       Name = item.Name;
       Count = item.Count;
-      SellPrice = item.SellPrice;
-      BuyPrice = item.BuyPrice;
+      SalePrice = item.SalePrice;
+      PurchasePrice = item.PurchasePrice;
       Descriptions = item.Descriptions;
+      IsSalable = item.IsSalable;
+      IsPurchasable = item.IsPurchasable;
     }
     public abstract IItem GetInstance();
     public void Information(bool showCount = true, bool isPause = true)
@@ -43,5 +50,19 @@ namespace Goguma.Game.Object.Inventory.Item
 
     public abstract CTexts Info(bool showCount = true);
 
+    static public string GetTypeString(HavingType hType)
+    {
+      switch (hType)
+      {
+        case HavingType.Equipment:
+          return "장비";
+        case HavingType.Consume:
+          return "소비";
+        case HavingType.Other:
+          return "기타";
+        default:
+          return null;
+      }
+    }
   }
 }

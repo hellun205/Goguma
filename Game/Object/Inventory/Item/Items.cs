@@ -45,8 +45,9 @@ namespace Goguma.Game.Object.Inventory.Item
           {
             Name = CTexts.Make("{끈적끈적한 액체}"),
             Descriptions = CTexts.Make("{만지기 싫은 아이템이다. 주로 슬라임을 잡으면 드랍한다.}"),
-            SellPrice = 300,
-            BuyPrice = 6
+            SalePrice = 3,
+            IsSalable = true,
+            PurchasePrice = 6
           };
           return resultItem;
         case ItemList.GOBLINS_SWORD:
@@ -54,8 +55,8 @@ namespace Goguma.Game.Object.Inventory.Item
           {
             Name = CTexts.Make($"{{고블린,{Colors.txtInfo}}}{{의 검}}"),
             Descriptions = CTexts.Make($"{{고블린,{Colors.txtInfo}}}{{들이 주로 사용하는 검이다.}}"),
-            SellPrice = 500,
-            BuyPrice = 1000,
+            SalePrice = 7,
+            IsSalable = true,
             Effect = new WeaponEffect()
             {
               AttDmg = 3
@@ -67,8 +68,8 @@ namespace Goguma.Game.Object.Inventory.Item
           {
             Name = CTexts.Make($"{{고블린,{Colors.txtInfo}}}{{의 갑옷}}"),
             Descriptions = CTexts.Make($"{{고블린,{Colors.txtInfo}}}{{들이 주로 착용하는 갑옷이다.}}"),
-            SellPrice = 500,
-            BuyPrice = 1000,
+            SalePrice = 5,
+            IsSalable = true,
             Effect = new EquipEffect()
             {
               MaxHp = 5,
@@ -81,8 +82,8 @@ namespace Goguma.Game.Object.Inventory.Item
           {
             Name = CTexts.Make($"{{황금 고블린 코인,{Colors.txtWarning}}}"),
             Descriptions = CTexts.Make("{헉! 황금 고블린을 잡으면 나오는 코인이다.}"),
-            SellPrice = 50000,
-            BuyPrice = 100000
+            SalePrice = 5000,
+            IsSalable = true,
           };
           return resultItem;
         case ItemList.GOLD_GOBLINS_SWORD:
@@ -90,11 +91,13 @@ namespace Goguma.Game.Object.Inventory.Item
           {
             Name = CTexts.Make("{황금 고블린의 검}"),
             Descriptions = CTexts.Make("{황금 고블린들이 사용하는 검이다.}"),
-            SellPrice = 1500,
-            BuyPrice = 3000,
+            SalePrice = 1500,
+            IsSalable = true,
             Effect = new WeaponEffect()
             {
-              AttDmg = 10
+              AttDmg = 9,
+              CritDmg = 10,
+              CritPer = 10
             }
           };
           return resultItem;
@@ -103,8 +106,10 @@ namespace Goguma.Game.Object.Inventory.Item
           {
             Name = CTexts.Make($"{{다이아몬드,{Colors.txtInfo}}}"),
             Descriptions = CTexts.Make("{보석이다. 매우 희귀하다.}}"),
-            SellPrice = 75000,
-            BuyPrice = 100000
+            SalePrice = 75000,
+            PurchasePrice = 100000,
+            IsSalable = true,
+            IsPurchasable = true
           };
           return resultItem;
         case ItemList.RED_DIAMOND:
@@ -112,8 +117,10 @@ namespace Goguma.Game.Object.Inventory.Item
           {
             Name = CTexts.Make($"{{레드 다이아몬드,{Colors.txtInfo}}}"),
             Descriptions = CTexts.Make("{보석이다. 다이아몬드보다 비싸고 희귀하다.}}"),
-            SellPrice = 375000,
-            BuyPrice = 500000
+            SalePrice = 375000,
+            PurchasePrice = 500000,
+            IsSalable = true,
+            IsPurchasable = true
           };
           return resultItem;
         case ItemList.EMERALD:
@@ -121,8 +128,10 @@ namespace Goguma.Game.Object.Inventory.Item
           {
             Name = CTexts.Make($"{{에메랄드,{Colors.txtInfo}}}"),
             Descriptions = CTexts.Make("{보석이다.}"),
-            SellPrice = 50000,
-            BuyPrice = 75000
+            SalePrice = 50000,
+            PurchasePrice = 75000,
+            IsSalable = true,
+            IsPurchasable = true
           };
           return resultItem;
         case ItemList.GOLD_INGOT:
@@ -130,8 +139,10 @@ namespace Goguma.Game.Object.Inventory.Item
           {
             Name = CTexts.Make($"{{금괴}},{Colors.txtInfo}}}"),
             Descriptions = CTexts.Make("{말 그대로 금괴.}"),
-            SellPrice = 10000,
-            BuyPrice = 12500
+            SalePrice = 10000,
+            PurchasePrice = 12500,
+            IsSalable = true,
+            IsPurchasable = true
           };
           return resultItem;
         case ItemList.POTION_1:
@@ -143,8 +154,10 @@ namespace Goguma.Game.Object.Inventory.Item
             {
               HealHp = 10
             },
-            SellPrice = 100,
-            BuyPrice = 150
+            SalePrice = 10,
+            PurchasePrice = 15,
+            IsSalable = true,
+            IsPurchasable = true
           };
           return resultItem;
         case ItemList.SKILLBOOK_TEST_SKILL1:
@@ -152,8 +165,10 @@ namespace Goguma.Game.Object.Inventory.Item
           {
             Name = CTexts.Make($"{{스킬 북: 테스트 스킬1}},{Colors.txtInfo}}}"),
             SkillToReceive = Skills.GetPlayerSkill(SkillList.TestSkill1),
-            SellPrice = 100,
-            BuyPrice = 150
+            SalePrice = 100,
+            PurchasePrice = 150,
+            IsSalable = true,
+            IsPurchasable = true
           };
           return resultItem;
         case ItemList.SKILLBOOK_TEST_SKILL2:
@@ -161,8 +176,10 @@ namespace Goguma.Game.Object.Inventory.Item
           {
             Name = CTexts.Make($"{{스킬 북: 테스트 스킬2}},{Colors.txtInfo}}}"),
             SkillToReceive = Skills.GetPlayerSkill(SkillList.TestSkill2),
-            SellPrice = 100,
-            BuyPrice = 150
+            SalePrice = 100,
+            PurchasePrice = 150,
+            IsSalable = true,
+            IsPurchasable = true
           };
           return resultItem;
         default:

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Goguma.Game.Object.Inventory.Item;
 using Goguma.Game.Object.Inventory.Item.Equipment;
-using System.Linq;
 
 namespace Goguma.Game.Object.Inventory
 {
@@ -32,7 +31,7 @@ namespace Goguma.Game.Object.Inventory
           {
             if (item != null)
             {
-              if (item.EquipmentType == WearingType.Head || item.EquipmentType == WearingType.Chestplate || item.EquipmentType == WearingType.Leggings || item.EquipmentType == WearingType.Boots)
+              if (item.EType == WearingType.Head || item.EType == WearingType.Chestplate || item.EType == WearingType.Leggings || item.EType == WearingType.Boots)
               {
                 resultEffect.MaxHp += ((EEquip)item).Effect.MaxHp;
                 resultEffect.MaxEp += ((EEquip)item).Effect.MaxEp;
@@ -52,7 +51,7 @@ namespace Goguma.Game.Object.Inventory
           {
             if (item != null)
             {
-              if (item.EquipmentType == WearingType.Weapon)
+              if (item.EType == WearingType.Weapon)
               {
                 resultEffect.AttDmg += ((EWeapon)item).Effect.AttDmg;
                 resultEffect.CritDmg += ((EWeapon)item).Effect.CritDmg;
@@ -86,6 +85,18 @@ namespace Goguma.Game.Object.Inventory
     {
       wearing = new Wearing();
       having = new Having();
+    }
+    static public string GetTypeString(InvenType iType)
+    {
+      switch (iType)
+      {
+        case InvenType.Wearing:
+          return "착용";
+        case InvenType.Having:
+          return "소지";
+        default:
+          return null;
+      }
     }
   }
 }

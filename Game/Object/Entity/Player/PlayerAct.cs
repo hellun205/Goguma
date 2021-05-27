@@ -73,7 +73,6 @@ namespace Goguma.Game.Object.Entity.Player
           resultSSI.Add("{Add Test Skill}");
           resultSSI.Add("{Add Item}");
           resultSSI.Add("{Add Gold}");
-          resultSSI.Add($"{{뒤로 가기, {Colors.txtMuted}}}");
           return resultSSI;
         };
         return new SelectScene(GetQText(), GetSSI());
@@ -88,13 +87,12 @@ namespace Goguma.Game.Object.Entity.Player
         {
           var resultSSI = new SelectSceneItems();
           for (var i = 0; i < Enum.GetValues(typeof(SkillType)).Length; i++)
-            resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{{Skill.Skill.GetTypeString((SkillType)i)} 스킬}}")));
-          resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{뒤로 가기, {Colors.txtMuted}}}")));
+            resultSSI.Add($"{{{Skill.Skill.GetTypeString((SkillType)i)} 스킬}}");
           return resultSSI;
         };
         skType = (SkillType)0;
-        var skillTypeSc = new SelectScene(GetQText(), GetSSI());
-        if (skillTypeSc.getString == "뒤로 가기") return null;
+        var skillTypeSc = new SelectScene(GetQText(), GetSSI(), true);
+        if (skillTypeSc.isCancelled) return null;
         skType = (SkillType)(skillTypeSc.getIndex);
         var skills = from sk in player.Skills
                      where sk.Type == (SkillType)(skillTypeSc.getIndex)
@@ -115,12 +113,11 @@ namespace Goguma.Game.Object.Entity.Player
                       where sk.Type == sType
                       select sk;
           foreach (var sk in skill)
-            resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{{sk.Name}}}")));
-          resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{뒤로 가기, {Colors.txtMuted}}}")));
+            resultSSI.Add($"{{{sk.Name}}}");
           return resultSSI;
         };
-        var scene = new SelectScene(GetQText(sType), GetSSI(sType));
-        if (scene.getString == "뒤로 가기") return null;
+        var scene = new SelectScene(GetQText(sType), GetSSI(sType), true);
+        if (scene.isCancelled) return null;
         return scene;
       }
     }
@@ -175,7 +172,8 @@ namespace Goguma.Game.Object.Entity.Player
         foreach (var n in town.Npcs)
           ssi.Add($"{{{Npcs.GetTraderByEnum(n).Name}}}");
 
-      var s = new SelectScene(CTexts.Make("{누구와 대화하시겠습니까?}"), ssi);
+      var s = new SelectScene(CTexts.Make("{누구와 대화하시겠습니까?}"), ssi, true);
+      if (s.isCancelled) return;
 
       Npcs.GetTraderByEnum(town.Npcs[s.getIndex]).OnUse();
     }
@@ -240,10 +238,9 @@ namespace Goguma.Game.Object.Entity.Player
 
       foreach (var f in town.Facilities)
         ssi.Add($"{{{f.Name} - {f.Fee}원 필요}}");
-      ssi.Add($"{{뒤로 가기, {Colors.txtMuted}}}");
 
-      var select = new SelectScene(CTexts.Make("{무엇을 하시겠습니까}"), ssi);
-      if (select.getString == "뒤로 가기") return;
+      var select = new SelectScene("{무엇을 하시겠습니까}", ssi, true);
+      if (select.isCancelled) return;
       town.Facilities[select.getIndex].OnUse();
     }
 
@@ -284,12 +281,13 @@ namespace Goguma.Game.Object.Entity.Player
             case "Add Item":
               var ssi = new SelectSceneItems();
               for (var i = 0; i < Enum.GetValues(typeof(ItemList)).Length; i++)
-                ssi.Add(new SelectSceneItem(Items.Get((ItemList)i).Name));
-              ssi.Add(new SelectSceneItem(CTexts.Make($"{{뒤로 가기,{Colors.txtMuted}}}")));
-              var itemSelectSS = new SelectScene(CTexts.Make("{아이템을 선택하시오.}"), ssi);
-              if (itemSelectSS.getString == "뒤로 가기") return;
-              player.Inventory.GetItem(Items.Get((ItemList)itemSelectSS.getIndex));
-              PrintText($"\n아이템 {Items.Get((ItemList)itemSelectSS.getIndex).Name}(을)를 얻었습니다.\n");
+                ssi.Add(Items.Get((ItemList)i).Name);
+              var itemSelectSS = new SelectScene(CTexts.Make("{아이템을 선택하시오.}"), ssi, true);
+              if (itemSelectSS.isCancelled) return;
+              int rCount;
+              if (ReadInt("{수량을 입력하세요.}", out rCount, 0, 0)) break;
+              player.Inventory.GetItem(Items.Get((ItemList)itemSelectSS.getIndex), rCount);
+              PrintText($"\n아이템 {Items.Get((ItemList)itemSelectSS.getIndex).Name} {rCount}개를 얻었습니다.\n");
               Pause();
               break;
             case "Add Gold":

@@ -3,7 +3,6 @@ using System;
 using Goguma.Game.Object.Entity.Player;
 using Goguma.Game.Console;
 using Goguma.Game.Object.Inventory.Item.Equipment;
-using static Goguma.Game.Console.ConsoleFunction;
 
 namespace Goguma.Game.Object.Inventory
 {
@@ -33,8 +32,8 @@ namespace Goguma.Game.Object.Inventory
           case InvenType.Having:
             while (true)
             {
-              ss = InvenInfo.Scene.ItemOption.Having.Scene(this, itemInfo.hType, itemInfo.havingIndex);
-              if (ss.getString == "뒤로 가기") break;
+              ss = InvenInfo.Scene.ItemOption(this, itemInfo.hType, itemInfo.havingIndex);
+              if (ss.isCancelled) break;
 
               io = new ItemOption(this, itemInfo.hType, itemInfo.havingIndex, ss.getString);
               if (io.Act()) return true;
@@ -43,8 +42,8 @@ namespace Goguma.Game.Object.Inventory
           case InvenType.Wearing:
             while (true)
             {
-              ss = InvenInfo.Scene.ItemOption.Wearing.Scene(this, itemInfo.wType);
-              if (ss.getString == "뒤로 가기") break;
+              ss = InvenInfo.Scene.ItemOption(this, itemInfo.wType);
+              if (ss.isCancelled) break;
 
               io = new ItemOption(this, itemInfo.wType, ss.getString);
               if (io.Act()) return true;
@@ -59,16 +58,16 @@ namespace Goguma.Game.Object.Inventory
       var resultII = new ItemInfo();
       while (true)
       {
-        var invenTypeSS = InvenInfo.Scene.SelInvenType.Scene(); // Select InvenType
-        if (invenTypeSS.getString == "뒤로 가기") return null;
+        var invenTypeSS = InvenInfo.Scene.SelInvenType(); // Select InvenType
+        if (invenTypeSS.isCancelled) return null;
         resultII.InvenType = (InvenType)invenTypeSS.getIndex;
         switch ((InvenType)invenTypeSS.getIndex)
         {
           case InvenType.Wearing:
             while (true)
             {
-              var wearingTypeSS = InvenInfo.Scene.WearingInven.Scene(this); // Select Wearing Item (Type)
-              if (wearingTypeSS.getString == "뒤로 가기") break;
+              var wearingTypeSS = InvenInfo.Scene.WearingInven(this); // Select Wearing Item (Type)
+              if (wearingTypeSS.isCancelled) break;
               resultII.wType = (WearingType)wearingTypeSS.getIndex;
               resultII.Item = Items.wearing.Items[wearingTypeSS.getIndex];
               return resultII;
@@ -77,13 +76,13 @@ namespace Goguma.Game.Object.Inventory
           case InvenType.Having:
             while (true)
             {
-              var havingTypeSS = InvenInfo.Scene.SelHavingInven.Scene(); // Select Having Type
-              if (havingTypeSS.getString == "뒤로 가기") break;
+              var havingTypeSS = InvenInfo.Scene.SelHavingInven(); // Select Having Type
+              if (havingTypeSS.isCancelled) break;
               resultII.hType = (HavingType)havingTypeSS.getIndex;
               while (true)
               {
-                var havingIndexSS = InvenInfo.Scene.HavingInven.Scene(this, (HavingType)havingTypeSS.getIndex); // Select Having Item
-                if (havingIndexSS.getString == "뒤로 가기") break;
+                var havingIndexSS = InvenInfo.Scene.HavingInven(this, (HavingType)havingTypeSS.getIndex); // Select Having Item
+                if (havingIndexSS.isCancelled) break;
                 resultII.havingIndex = havingIndexSS.getIndex;
                 resultII.Item = Items.having.Items[havingTypeSS.getIndex][havingIndexSS.getIndex];
                 return resultII;
@@ -134,7 +133,7 @@ namespace Goguma.Game.Object.Inventory
       var inven = Items.having.GetItems(item.Type);
       foreach (var it in inven)
       {
-        if (it.Name == item.Name)
+        if (it.Name.ToString() == item.Name.ToString())
         {
           it.Count += count;
           CountTheorem();

@@ -10,7 +10,7 @@ namespace Goguma.Game.Object.Inventory.Item.Consume
   class CPotion : ConsumeItem
   {
     public PotionEffect Effect { get; set; }
-    public override string GetString => "포션";
+    public override ConsumeItemType CType => ConsumeItemType.POTION;
     public CPotion() : base() { }
     public CPotion(in CPotion item) : base(item)
     {
@@ -81,7 +81,7 @@ namespace Goguma.Game.Object.Inventory.Item.Consume
     public override CTexts UsedText()
     {
       return EffectInfo()
-      .Combine("{\n위 능력치들이 증가하였습니다.}");
+      .Combine("{\n포션을 사용하여 능력치가 증가했습니다.}");
     }
   }
 }

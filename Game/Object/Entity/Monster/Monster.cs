@@ -86,7 +86,7 @@ namespace Goguma.Game.Object.Entity.Monster
           b = true;
         }
         i++;
-        resCT.Append(drItem.Item.Name);
+        resCT.Append(drItem.Item.Name.GetInstance());
         resCT.Append("{，}");
       }
 
