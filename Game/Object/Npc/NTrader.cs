@@ -12,14 +12,23 @@ namespace Goguma.Game.Object.Npc
 {
   public class NTrader : Npc
   {
-    public List<IItem> ItemsForSale = new List<IItem>()
-    {
-      Items.Get(ItemList.POTION_1)
-    };
+    public List<IItem> ItemsForSale { get; protected set; }
 
-    public override string Name
+    public override NpcType Type => NpcType.TRADER;
+
+    public NTrader()
     {
-      get => "상인";
+      ItemsForSale = new List<IItem>();
+    }
+
+    public NTrader(NpcList npcName) : this()
+    {
+      switch (npcName)
+      {
+        case NpcList.TRADER_K:
+          Name = "K";
+          break;
+      }
     }
 
     public override void OnUse()

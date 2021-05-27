@@ -1,8 +1,11 @@
+using System;
+
 namespace Goguma.Game.Object.Npc
 {
   public class Npcs
   {
     public static NTrader trader = new NTrader();
+    public static NTrader tK = new NTrader();
 
     public static NTrader GetTraderByName(string name)
     {
@@ -14,8 +17,17 @@ namespace Goguma.Game.Object.Npc
     {
       switch (npc)
       {
-        case NpcList.TRADER: return trader;
+        case NpcList.TRADER_K: return tK;
         default: return null;
+      }
+    }
+
+    public static string GetNpcTypeToString(NpcType type)
+    {
+      switch (type)
+      {
+        case NpcType.TRADER: return "상인";
+        default: throw new NotImplementedException();
       }
     }
   }

@@ -24,7 +24,7 @@ namespace Goguma.Game.Object.Map.Town
       };
       Npcs = new List<NpcList>()
       {
-        NpcList.TRADER
+        NpcList.TRADER_K
       };
     }
   }
