@@ -11,16 +11,12 @@ namespace Goguma.Game.Object.Skill
   class BuffSkill : Skill, IBuffSkill
   {
     public Buff buff { get; set; }
-    public override SkillType Type { get => SkillType.BuffSkill; }
+    public override SkillType Type => SkillType.BuffSkill;
 
-    new public CTexts Info()
+    public override CTexts EffectInfo()
     {
       var player = InGame.player;
-      var resCT = new CTexts()
-        .Append($"{{\n{GetSep(40, $"{Name}")}}}")
-        .Append($"{{\n{GetTypeString(Type)} 스킬,{Colors.txtWarning}}} {{  {UseEp} 에너지 소모\n,{Colors.txtInfo}}}")
-        .Append(Descriptions)
-        .Append($"{{\n{GetSep(40)}}}");
+      var resCT = new CTexts();
 
       if (buff.MaxHp != 0) resCT.Append($"{{\n최대 체력 증가 : }}").Append(NumberColor(buff.MaxHp)).Append($"{{ ( {player.MaxHp} }}").Append(NumberColor(buff.MaxHp)).Append("{ → }").Append(NumberColor(player.MaxHp + buff.MaxHp)).Append("{ )}");
 
@@ -40,19 +36,12 @@ namespace Goguma.Game.Object.Skill
 
       if (buff.Ep != 0) resCT.Append($"{{\n에너지 회복 : }}").Append(NumberColor(buff.Ep)).Append($"{{ ( {player.Ep} }}").Append(NumberColor(buff.Ep)).Append("{ → }").Append(NumberColor(player.Ep + buff.Ep)).Append("{ )}");
 
-
-      resCT.Append($"{{\n{GetSep(40)}}}");
       return resCT;
-    }
-    new public void Information(bool IsPause)
-    {
-      PrintCText(Info());
-      if (IsPause) Pause();
     }
 
     public override string ToString()
     {
-      return Info().ToString();
+      return base.ToString();
     }
   }
 }

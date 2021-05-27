@@ -1,5 +1,8 @@
 using System;
+using Colorify;
+using Goguma.Game.Console;
 using Goguma.Game.Object.Entity.Player;
+using static Goguma.Game.Console.StringFunction;
 
 namespace Goguma.Game.Object.Inventory.Item.Consume
 {
@@ -22,5 +25,20 @@ namespace Goguma.Game.Object.Inventory.Item.Consume
     }
 
     public abstract void UseItem(IPlayer player);
+
+    public override CTexts Info(bool showCount = true)
+    {
+      var player = InGame.player;
+      var resCT = new CTexts();
+      resCT.Append($"{{\n{GetSep(40, $"〔 {Name.ToString()}{(showCount ? $" [ {Count}개 ]" : "")} 〕")}}}")
+      .Append($"{{\n  {InvenInfo.GetTypeString(Type)} 아이템,{Colors.txtWarning}}}{{ {GetString},{Colors.bgSuccess}}}")
+      .Append(Descriptions)
+      .Append($"{{\n{GetSep(40)}}}")
+      .Append(EffectInfo());
+      resCT.Append($"{{\n{GetSep(40)}}}");
+      return resCT;
+    }
+
+    public abstract CTexts EffectInfo();
   }
 }

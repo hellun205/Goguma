@@ -63,7 +63,7 @@ namespace Goguma.Game.Object.Battle
 
       static private CTexts ItemText(IItem item)
       {
-        return CTexts.Make($"{{{InvenInfo.HavingInven.GetTypeString(item.Type)} 아이템 ,{Colors.txtWarning}}}{{{item.Name},{Colors.txtSuccess}}}");
+        return CTexts.Make($"{{{InvenInfo.GetTypeString(item.Type)} 아이템 ,{Colors.txtWarning}}}{{{item.Name},{Colors.txtSuccess}}}");
       }
 
       static private void UseSkillText(IEntity caster, ISkill skill)

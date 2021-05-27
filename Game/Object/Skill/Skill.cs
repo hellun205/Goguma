@@ -12,21 +12,23 @@ namespace Goguma.Game.Object.Skill
     public string Name { get; set; }
     public CTexts Text { get; set; }
     public CTexts Descriptions { get; set; }
+    public string TypeString => Skill.GetTypeString(Type);
     public abstract SkillType Type { get; }
     public double UseEp { get; set; }
 
-    static public string GetTypeString(SkillType sType)
+    public static string GetTypeString(SkillType type)
     {
-      switch (sType)
+      switch (type)
       {
         case SkillType.AttackSkill:
           return "공격";
         case SkillType.BuffSkill:
           return "버프";
         default:
-          return null;
+          throw new NotImplementedException();
       }
     }
+
     public void Information(bool IsPause)
     {
       PrintCText(Info());
@@ -38,13 +40,17 @@ namespace Goguma.Game.Object.Skill
       return Info().ToString();
     }
 
-    public CTexts Info()
+    public CTexts Info(int sepLen = 40)
     {
       return new CTexts()
-        .Append($"{{\n{GetSep(40, $"{Name}")}}}")
-        .Append($"{{\n{GetTypeString(Type)} 스킬,{Colors.txtWarning}}} {{  {UseEp} 에너지 소모\n,{Colors.txtInfo}}}")
+        .Append($"{{\n{GetSep(sepLen, $"{Name}")}}}")
+        .Append($"{{\n{TypeString} 스킬,{Colors.txtWarning}}} {{  {UseEp} 에너지 소모\n,{Colors.txtInfo}}}")
         .Append(Descriptions)
-        .Append($"{{\n{GetSep(40)}}}");
+        .Append($"{{\n{GetSep(sepLen)}}}")
+        .Append(EffectInfo())
+        .Append($"{{\n{GetSep(sepLen)}}}");
     }
+
+    public abstract CTexts EffectInfo();
   }
 }

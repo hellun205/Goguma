@@ -139,9 +139,9 @@ namespace Goguma.Game.Object.Inventory.Item
           {
             Name = CTexts.Make($"{{포션1}},{Colors.txtInfo}}}"),
             Descriptions = CTexts.Make("{체력을 회복시켜준다.}"),
-            Effect = new ItemEffect()
+            Effect = new PotionEffect()
             {
-              Hp = 10
+              HealHp = 10
             },
             SellPrice = 100,
             BuyPrice = 150

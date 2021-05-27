@@ -15,9 +15,8 @@ namespace Goguma.Game.Object.Inventory.Item
     int SellPrice { get; set; }
     HavingType Type { get; }
 
-    void DescriptionItem();
-
     IItem GetInstance();
     void Information(bool showCount = true, bool isPause = true);
+    CTexts Info(bool showCount = true);
   }
 }

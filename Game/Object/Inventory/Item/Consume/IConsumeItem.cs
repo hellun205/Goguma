@@ -1,4 +1,5 @@
-﻿using Goguma.Game.Object.Entity.Player;
+﻿using Goguma.Game.Console;
+using Goguma.Game.Object.Entity.Player;
 
 namespace Goguma.Game.Object.Inventory.Item.Consume
 {
@@ -7,5 +8,6 @@ namespace Goguma.Game.Object.Inventory.Item.Consume
     int LoseCount { get; set; }
     void UseItem(IPlayer player);
     string GetString { get; }
+    CTexts EffectInfo();
   }
 }
