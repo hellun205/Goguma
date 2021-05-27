@@ -111,19 +111,18 @@ namespace Goguma.Game.Object.Entity.Player
     {
       CreateDirectory();
 
-      var questionText = CTexts.Make("{불러올 캐릭터를 선택하세요.}");
-      var selectSceneItems = new SelectSceneItems();
+      var qt = CTexts.Make("{불러올 캐릭터를 선택하세요.}");
+      var ssi = new SelectSceneItems();
 
       var di = new DirectoryInfo("datas");
 
       foreach (var item in di.GetDirectories())
-        selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make($"{{{item.Name}}}")));
-      selectSceneItems.Items.Add(new SelectSceneItem(CTexts.Make($"{{뒤로 가기, {Colors.txtMuted}}}")));
+        ssi.Add($"{{{item.Name}}}");
 
-      var ss = new SelectScene(questionText, selectSceneItems);
+      var ss = new SelectScene(qt, ssi, true);
       var name = ss.getString.Trim();
       Player player;
-      if (name == "" || name == null || name == "뒤로 가기") return null;
+      if (name == "" || name == null || ss.isCancelled) return null;
       player = LoadPlayerData(name);
 
       if (player == null)

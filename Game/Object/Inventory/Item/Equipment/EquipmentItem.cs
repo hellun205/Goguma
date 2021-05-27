@@ -10,7 +10,8 @@ namespace Goguma.Game.Object.Inventory.Item.Equipment
   {
     public override HavingType Type => HavingType.Equipment;
     public override int MaxCount => 1;
-    public abstract WearingType EquipmentType { get; }
+    public abstract WearingType EType { get; }
+    public string ETypeString => InvenInfo.GetTypeString(EType);
 
     public EquipmentItem() : base() { }
 
@@ -21,7 +22,7 @@ namespace Goguma.Game.Object.Inventory.Item.Equipment
       var player = InGame.player;
       var resCT = new CTexts();
       resCT.Append($"{{\n{GetSep(45, $"{Name.ToString()}{(showCount ? $" [ {Count}개 ]" : "")}")}}}")
-      .Append($"{{\n  {InvenInfo.GetTypeString(Type)} 아이템,{Colors.txtWarning}}}{{ {InvenInfo.GetTypeString(EquipmentType)}\n,{Colors.txtSuccess}}}")
+      .Append($"{{\n  {InvenInfo.GetTypeString(Type)} 아이템,{Colors.txtWarning}}}{{ {InvenInfo.GetTypeString(EType)}\n,{Colors.txtSuccess}}}")
       .Append(Descriptions)
       .Append($"{{\n{GetSep(45)}}}")
       .Append(EffectInfo());

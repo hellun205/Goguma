@@ -7,7 +7,7 @@ namespace Goguma.Game.Object.Inventory.Item.Equipment
   [Serializable]
   class EWeapon : EquipmentItem
   {
-    public override WearingType EquipmentType => WearingType.Weapon;
+    public override WearingType EType => WearingType.Weapon;
     public WeaponEffect Effect { get; set; }
 
     public EWeapon() : base()

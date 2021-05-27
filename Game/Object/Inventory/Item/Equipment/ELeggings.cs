@@ -5,7 +5,7 @@ namespace Goguma.Game.Object.Inventory.Item.Equipment
   [Serializable]
   class ELeggings : EEquip
   {
-    public override WearingType EquipmentType => WearingType.Leggings;
+    public override WearingType EType => WearingType.Leggings;
     public ELeggings() : base() { }
     public ELeggings(ELeggings item) : base(item) { }
 

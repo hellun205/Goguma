@@ -5,7 +5,7 @@ namespace Goguma.Game.Object.Inventory.Item.Equipment
   [Serializable]
   class EBoots : EEquip
   {
-    public override WearingType EquipmentType => WearingType.Boots;
+    public override WearingType EType => WearingType.Boots;
     public EBoots() : base() { }
     public EBoots(EBoots item) : base(item) { }
 

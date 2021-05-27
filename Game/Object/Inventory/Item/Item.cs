@@ -11,6 +11,7 @@ namespace Goguma.Game.Object.Inventory.Item
     public int Count { get; set; }
     public abstract int MaxCount { get; }
     public abstract HavingType Type { get; }
+    public string TypeString => InvenInfo.GetTypeString(Type);
     public int SalePrice { get; set; }
     public int PurchasePrice { get; set; }
     public bool IsSalable { get; set; }

@@ -53,91 +53,79 @@ namespace Goguma.Game.Object.Inventory
           return null;
       }
     }
+
     static public class Scene
     {
-      static public class SelInvenType
+      static public SelectScene SelInvenType()
       {
-        static public SelectScene Scene()
-        {
-          return new SelectScene(GetQText(), GetSSI());
-        }
-        static public CTexts GetQText()
+        Func<CTexts> GetQText = () =>
         {
           return CTexts.Make("{어떤 인벤토리를 열으시겠습니까?}");
-        }
+        };
 
-        static public SelectSceneItems GetSSI()
+        Func<SelectSceneItems> GetSSI = () =>
         {
           var resultSSI = new SelectSceneItems();
           for (var i = 0; i < Enum.GetValues(typeof(InvenType)).Length; i++)
-            resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{[ }} {{{InvenInfo.GetTypeString((InvenType)i)}, {Colors.txtSuccess}}} {{ ] 인벤토리}}")));
-          resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{뒤로 가기, {Colors.txtMuted}}}")));
+            resultSSI.Add($"{{[ }} {{{InvenInfo.GetTypeString((InvenType)i)}, {Colors.txtSuccess}}} {{ ] 인벤토리}}");
 
           return resultSSI;
-        }
+        };
+        return new SelectScene(GetQText(), GetSSI(), true);
       }
-      static public class WearingInven
+
+      static public SelectScene WearingInven(Inventory inven)
       {
-        static private readonly InvenType iType = InvenType.Wearing;
-        static public SelectScene Scene(Inventory inven)
-        {
-          return new SelectScene(GetQText(), GetSSI(inven));
-        }
-        static public CTexts GetQText()
+        InvenType iType = InvenType.Wearing;
+        Func<CTexts> GetQText = () =>
         {
           return CTexts.Make($"{{인벤토리를 열었습니다. }} {{아이템, {Colors.txtInfo}}} {{을 선택하세요.\n    위치 : }} {{{InvenInfo.GetTypeString(iType)}, {Colors.txtSuccess}}}");
-        }
-        static public SelectSceneItems GetSSI(Inventory inven)
+        };
+        Func<Inventory, SelectSceneItems> GetSSI = (Inventory inven) =>
         {
           var resultSSI = new SelectSceneItems();
 
           for (var i = 0; i < Enum.GetValues(typeof(WearingType)).Length; i++)
           {
             if (inven.Items.wearing.GetItem((WearingType)i) != null)
-              resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{{InvenInfo.GetTypeString((WearingType)i)}, {Colors.txtSuccess}}} {{ : }} {{{inven.Items.wearing.GetItem((WearingType)i).Name.ToString()} , {Colors.txtInfo}}}")));
+              resultSSI.Add(CTexts.Make($"{{{InvenInfo.GetTypeString((WearingType)i)}, {Colors.txtSuccess}}} {{ : }} ").Combine(inven.Items.wearing.GetItem((WearingType)i).Name));
             else
-              resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{{InvenInfo.GetTypeString((WearingType)i)}, {Colors.txtSuccess}}} {{ : }} {{비어 있음 , {Colors.txtMuted}}}"), false));
+              resultSSI.Add($"{{{InvenInfo.GetTypeString((WearingType)i)}, {Colors.txtSuccess}}} {{ : }} {{비어 있음 , {Colors.txtMuted}}}", false);
           }
-          resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{뒤로 가기, {Colors.txtMuted}}}")));
 
           return resultSSI;
-        }
+        };
+        return new SelectScene(GetQText(), GetSSI(inven), true);
       }
-      static public class SelHavingInven
-      {
-        static public SelectScene Scene()
-        {
-          return new SelectScene(GetQText(), GetSSI());
-        }
-        static private readonly InvenType iType = InvenType.Having;
 
-        static public CTexts GetQText()
+      static public SelectScene SelHavingInven()
+      {
+        InvenType iType = InvenType.Having;
+        Func<CTexts> GetQText = () =>
         {
           return CTexts.Make($"{{어떤 인벤토리를 열으시겠습니까?\n    위치 : }} {{{InvenInfo.GetTypeString(iType)}, {Colors.txtSuccess}}}");
-        }
+        };
 
-        static public SelectSceneItems GetSSI()
+        Func<SelectSceneItems> GetSSI = () =>
         {
           var resultSSI = new SelectSceneItems();
           for (var i = 0; i < Enum.GetValues(typeof(HavingType)).Length; i++)
-            resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{{InvenInfo.GetTypeString(iType)}, {Colors.txtSuccess}}} {{ : }} {{{InvenInfo.GetTypeString((HavingType)i)} , {Colors.txtSuccess}}}")));
-          resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{뒤로 가기, {Colors.txtMuted}}}")));
+            resultSSI.Add($"{{{InvenInfo.GetTypeString(iType)}, {Colors.txtSuccess}}} {{ : }} {{{InvenInfo.GetTypeString((HavingType)i)} , {Colors.txtSuccess}}}");
 
           return resultSSI;
-        }
+        };
+        return new SelectScene(GetQText(), GetSSI(), true);
       }
-      static public class HavingInven
+
+      static public SelectScene HavingInven(Inventory inven, HavingType hType)
       {
-        static private readonly InvenType iType = InvenType.Having;
-        static public SelectScene Scene(Inventory inven, HavingType hType)
-        {
-          return new SelectScene(GetQText(hType), GetSSI(inven, hType));
-        }
-        static public CTexts GetQText(HavingType hType)
+        InvenType iType = InvenType.Having;
+
+        Func<HavingType, CTexts> GetQText = (HavingType hType) =>
         {
           return CTexts.Make($"{{인벤토리를 열었습니다. }} {{아이템,{Colors.txtInfo}}} {{을 선택하세요.\n    위치 : }} {{{InvenInfo.GetTypeString(iType)}, {Colors.txtSuccess}}} {{.}} {{{InvenInfo.GetTypeString(hType)},{Colors.txtSuccess}}}");
-        }
-        static public SelectSceneItems GetSSI(Inventory inven, HavingType hType)
+        };
+        Func<Inventory, HavingType, SelectSceneItems> GetSSI = (Inventory inven, HavingType hType) =>
         {
           var resultSSI = new SelectSceneItems();
           foreach (var item in inven.Items.having.GetItems(hType))
@@ -145,83 +133,70 @@ namespace Goguma.Game.Object.Inventory
             if (item != null)
             {
               if (hType == HavingType.Equipment)
-                resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{{item.Name.ToString()}}} {{ [{item.Count}], {Colors.txtInfo}}} {{ [{InvenInfo.GetTypeString((WearingType)((IEquipmentItem)item).EquipmentType)}],{Colors.txtWarning}}}")));
+                resultSSI.Add(item.Name.Combine($"{{ [{item.Count}], {Colors.txtInfo}}} {{ [{InvenInfo.GetTypeString((WearingType)((IEquipmentItem)item).EType)}],{Colors.txtWarning}}}"));
               else
-                resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{{item.Name.ToString()}}} {{ [{item.Count}], {Colors.txtInfo}}}")));
+                resultSSI.Add($"{{{item.Name.ToString()}}} {{ [{item.Count}], {Colors.txtInfo}}}");
             }
             else
-              resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{비어 있음}} {{ [{item.Count}], {Colors.txtMuted}}}"), false));
+              resultSSI.Add($"{{비어 있음}} {{ [{item.Count}], {Colors.txtMuted}}}", false);
           }
-
-          resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{뒤로 가기, {Colors.txtMuted}}}")));
           return resultSSI;
-        }
+        };
+
+        return new SelectScene(GetQText(hType), GetSSI(inven, hType), true);
       }
-      static public class ItemOption
+
+      static public SelectScene ItemOption(Inventory inven, WearingType wType) // Wearing
       {
-        static public class Wearing
+        InvenType iType = InvenType.Wearing;
+        Func<Inventory, WearingType, CTexts> GetQText = (Inventory inven, WearingType wType) =>
         {
-          static private readonly InvenType iType = InvenType.Wearing;
-
-          static public SelectScene Scene(Inventory inven, WearingType wType)
-          {
-            return new SelectScene(GetQText(inven, wType), GetSSI(wType));
-          }
-          static public CTexts GetQText(Inventory inven, WearingType wType)
-          {
-            var sItem = inven.Items.wearing.GetItem(wType);
-            return CTexts.Make($"{{무슨 작업을 하시겠습니까?\n    }} {{\n    선택 : }} {{{sItem.Name.ToString()}}} {{ [{sItem.Count}], {Colors.txtInfo}}} {{\n    위치 : }} {{{InvenInfo.GetTypeString(iType)}, {Colors.txtSuccess}}} {{.}} {{{InvenInfo.GetTypeString(wType)},{Colors.txtSuccess}}}");
-          }
-          static public SelectSceneItems GetSSI(WearingType wType)
-          {
-            var resultSSI = new SelectSceneItems();
-
-            resultSSI.Items.Add(new SelectSceneItem(CTexts.Make("{아이템 정보 보기}")));
-
-            resultSSI.Items.Add(new SelectSceneItem(CTexts.Make("{착용 해제}")));
-            resultSSI.Items.Add(new SelectSceneItem(CTexts.Make("{버리기}")));
-            resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{뒤로 가기, {Colors.txtMuted}}}")));
-            return resultSSI;
-          }
-        }
-        static public class Having
+          var sItem = inven.Items.wearing.GetItem(wType);
+          return CTexts.Make($"{{무슨 작업을 하시겠습니까?\n    }} {{\n    선택 : }} {{{sItem.Name.ToString()}}} {{ [{sItem.Count}], {Colors.txtInfo}}} {{\n    위치 : }} {{{InvenInfo.GetTypeString(iType)}, {Colors.txtSuccess}}} {{.}} {{{InvenInfo.GetTypeString(wType)},{Colors.txtSuccess}}}");
+        };
+        Func<WearingType, SelectSceneItems> GetSSI = (WearingType wType) =>
         {
-          static private readonly InvenType iType = InvenType.Having;
-          static public SelectScene Scene(Inventory inven, HavingType hType, int sIndex)
-          {
-            return new SelectScene(GetQText(inven, hType, sIndex), GetSSI(hType, sIndex));
-          }
-          static public CTexts GetQText(Inventory inven, HavingType hType, int sIndex)
-          {
-            var sItem = inven.Items.having.GetItems(hType)[sIndex];
-            return CTexts.Make($"{{무슨 작업을 하시겠습니까?\n    }} {{\n    선택 : }} {{{sItem.Name.ToString()}}} {{ [{sItem.Count}], {Colors.txtInfo}}} {{\n    위치 : }}  {{{InvenInfo.GetTypeString(iType)}, {Colors.txtSuccess}}} {{.}} {{{InvenInfo.GetTypeString(hType)},{Colors.txtSuccess}}} {{.}} {{{sIndex + 1},{Colors.txtSuccess}}}");
-          }
-          static public SelectSceneItems GetSSI(HavingType hType, int sIndex)
-          {
-            var resultSSI = new SelectSceneItems();
+          var resultSSI = new SelectSceneItems();
 
-            resultSSI.Items.Add(new SelectSceneItem(CTexts.Make("{아이템 정보 보기}")));
-
-            switch (hType)
-            {
-              case HavingType.Equipment:
-                resultSSI.Items.Add(new SelectSceneItem(CTexts.Make("{착용}")));
-                break;
-              case HavingType.Consume:
-                resultSSI.Items.Add(new SelectSceneItem(CTexts.Make("{사용}}")));
-                break;
-              case HavingType.Other:
-                // TO DO
-                break;
-            }
-            resultSSI.Items.Add(new SelectSceneItem(CTexts.Make("{버리기}")));
-            resultSSI.Items.Add(new SelectSceneItem(CTexts.Make($"{{뒤로 가기, {Colors.txtMuted}}}")));
-            return resultSSI;
-          }
-          // TO DO
-        }
+          resultSSI.Add("{아이템 정보 보기}");
+          resultSSI.Add("{착용 해제}");
+          resultSSI.Add("{버리기}");
+          return resultSSI;
+        };
+        return new SelectScene(GetQText(inven, wType), GetSSI(wType), true);
       }
 
+      static public SelectScene ItemOption(Inventory inven, HavingType hType, int sIndex) // Having
+      {
+        InvenType iType = InvenType.Having;
+        Func<Inventory, HavingType, int, CTexts> GetQText = (Inventory inven, HavingType hType, int sIndex) =>
+        {
+          var sItem = inven.Items.having.GetItems(hType)[sIndex];
+          return CTexts.Make($"{{무슨 작업을 하시겠습니까?\n    }} {{\n    선택 : }} {{{sItem.Name.ToString()}}} {{ [{sItem.Count}], {Colors.txtInfo}}} {{\n    위치 : }}  {{{InvenInfo.GetTypeString(iType)}, {Colors.txtSuccess}}} {{.}} {{{InvenInfo.GetTypeString(hType)},{Colors.txtSuccess}}} {{.}} {{{sIndex + 1},{Colors.txtSuccess}}}");
+        };
+        Func<HavingType, int, SelectSceneItems> GetSSI = (HavingType hType, int sIndex) =>
+        {
+          var resultSSI = new SelectSceneItems();
+
+          resultSSI.Items.Add(new SelectSceneItem(CTexts.Make("{아이템 정보 보기}")));
+
+          switch (hType)
+          {
+            case HavingType.Equipment:
+              resultSSI.Add("{착용}");
+              break;
+            case HavingType.Consume:
+              resultSSI.Add("{사용}}");
+              break;
+            case HavingType.Other:
+              // TO DO
+              break;
+          }
+          resultSSI.Add("{버리기}");
+          return resultSSI;
+        };
+        return new SelectScene(GetQText(inven, hType, sIndex), GetSSI(hType, sIndex), true);
+      }
     }
   }
 }

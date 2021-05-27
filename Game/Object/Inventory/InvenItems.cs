@@ -32,7 +32,7 @@ namespace Goguma.Game.Object.Inventory
           {
             if (item != null)
             {
-              if (item.EquipmentType == WearingType.Head || item.EquipmentType == WearingType.Chestplate || item.EquipmentType == WearingType.Leggings || item.EquipmentType == WearingType.Boots)
+              if (item.EType == WearingType.Head || item.EType == WearingType.Chestplate || item.EType == WearingType.Leggings || item.EType == WearingType.Boots)
               {
                 resultEffect.MaxHp += ((EEquip)item).Effect.MaxHp;
                 resultEffect.MaxEp += ((EEquip)item).Effect.MaxEp;
@@ -52,7 +52,7 @@ namespace Goguma.Game.Object.Inventory
           {
             if (item != null)
             {
-              if (item.EquipmentType == WearingType.Weapon)
+              if (item.EType == WearingType.Weapon)
               {
                 resultEffect.AttDmg += ((EWeapon)item).Effect.AttDmg;
                 resultEffect.CritDmg += ((EWeapon)item).Effect.CritDmg;

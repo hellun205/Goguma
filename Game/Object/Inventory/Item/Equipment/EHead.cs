@@ -5,7 +5,7 @@ namespace Goguma.Game.Object.Inventory.Item.Equipment
   [Serializable]
   class EHead : EEquip
   {
-    public override WearingType EquipmentType => WearingType.Head;
+    public override WearingType EType => WearingType.Head;
     public EHead() : base() { }
     public EHead(EHead item) : base(item) { }
 

@@ -31,9 +31,8 @@ namespace Goguma.Game.Object.Npc
           var htSSI = new SelectSceneItems();
           for (var i = 0; i < Enum.GetValues(typeof(HavingType)).Length; i++)
             htSSI.Add($"{{{InvenInfo.GetTypeString((HavingType)i)} 아이템}}");
-          htSSI.Add($"{{뒤로 가기, {Colors.txtMuted}}}");
-          var htSS = new SelectScene(CTexts.Make("{구매 할 아이템 종류를 선택 하세요.}"), htSSI);
-          if (htSS.getString == "뒤로 가기") return;
+          var htSS = new SelectScene(CTexts.Make("{구매 할 아이템 종류를 선택 하세요.}"), htSSI, true);
+          if (htSS.isCancelled) return;
           while (true)
           {
             var itemSSI = new SelectSceneItems();
@@ -42,9 +41,8 @@ namespace Goguma.Game.Object.Npc
                         select it;
             foreach (var item in items.ToList<IItem>())
               itemSSI.Add($"{{{item.Name} }} {{[ {item.PurchasePrice}G ],{Colors.txtWarning}}}");
-            itemSSI.Add($"{{뒤로 가기, {Colors.txtMuted}}}");
-            var sItem = new SelectScene(CTexts.Make($"{{구매 할 아이템을 선택 하세요. 현재 보유한 GOLD: {InGame.player.Gold}}}"), itemSSI);
-            if (sItem.getString == "뒤로 가기") break;
+            var sItem = new SelectScene(CTexts.Make($"{{구매 할 아이템을 선택 하세요. 현재 보유한 GOLD: {InGame.player.Gold}}}"), itemSSI, true);
+            if (sItem.isCancelled) break;
 
             var itemToBuy = items.ToList<IItem>()[sItem.getIndex];
             if (InGame.player.Gold >= itemToBuy.PurchasePrice)
@@ -52,8 +50,7 @@ namespace Goguma.Game.Object.Npc
               var sItemSSI = new SelectSceneItems();
               sItemSSI.Add("{구매}");
               sItemSSI.Add("{아이템 정보}");
-              sItemSSI.Add($"{{아니오,{Colors.txtMuted}}}");
-              var sItemSS = new SelectScene(CTexts.Make($"{{{itemToBuy.Name},{Colors.txtInfo}}}{{(을)를 구매하시겠습니까?}}"), sItemSSI);
+              var sItemSS = new SelectScene(CTexts.Make($"{{{itemToBuy.Name},{Colors.txtInfo}}}{{(을)를 구매하시겠습니까?}}"), sItemSSI, true, CTexts.Make($"{{아니오,{Colors.txtMuted}}}"));
               switch (sItemSS.getString)
               {
                 case "구매":
@@ -106,9 +103,8 @@ namespace Goguma.Game.Object.Npc
         var ssi = new SelectSceneItems();
         ssi.Add("{아이템 구매}");
         ssi.Add("{아이템 판매}");
-        ssi.Add($"{{대화 종료, {Colors.txtMuted}}}");
-        var ss = new SelectScene($"{{{Name}(와)과 대화 중 입니다. 무엇을 하시겠습니까?}}", ssi);
-
+        var ss = new SelectScene($"{{{Name}(와)과 대화 중 입니다. 무엇을 하시겠습니까?}}", ssi, true, CTexts.Make($"{{대화 종료,{Colors.txtMuted}}}"));
+        if (ss.isCancelled) return;
         switch (ss.getString)
         {
           case "아이템 구매":
@@ -117,8 +113,6 @@ namespace Goguma.Game.Object.Npc
           case "아이템 판매":
             SellItem();
             break;
-          case "대화 종료":
-            return;
         }
       }
     }
