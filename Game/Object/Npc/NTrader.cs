@@ -41,13 +41,13 @@ namespace Goguma.Game.Object.Npc
                         where it.Type == (HavingType)htSS.getIndex
                         select it;
             foreach (var item in items.ToList<IItem>())
-              itemSSI.Add($"{{{item.Name} }} {{[ {item.BuyPrice}G ],{Colors.txtWarning}}}");
+              itemSSI.Add($"{{{item.Name} }} {{[ {item.PurchasePrice}G ],{Colors.txtWarning}}}");
             itemSSI.Add($"{{뒤로 가기, {Colors.txtMuted}}}");
             var sItem = new SelectScene(CTexts.Make($"{{구매 할 아이템을 선택 하세요. 현재 보유한 GOLD: {InGame.player.Gold}}}"), itemSSI);
             if (sItem.getString == "뒤로 가기") break;
 
             var itemToBuy = items.ToList<IItem>()[sItem.getIndex];
-            if (InGame.player.Gold >= itemToBuy.BuyPrice)
+            if (InGame.player.Gold >= itemToBuy.PurchasePrice)
             {
               var sItemSSI = new SelectSceneItems();
               sItemSSI.Add("{구매}");
@@ -58,10 +58,10 @@ namespace Goguma.Game.Object.Npc
               {
                 case "구매":
                   int count;
-                  if (ReadInt(CTexts.Make($"{{{itemToBuy.Name},{Colors.txtInfo}}}{{(을)를 몇개 구매하시겠습니까? }}{{[ {(int)(InGame.player.Gold / itemToBuy.BuyPrice)}개 구매 가능 ],{Colors.txtSuccess}}}"), out count, 0, 0, (int)(InGame.player.Gold / itemToBuy.BuyPrice))) break;
+                  if (ReadInt(CTexts.Make($"{{{itemToBuy.Name},{Colors.txtInfo}}}{{(을)를 몇개 구매하시겠습니까? }}{{[ {(int)(InGame.player.Gold / itemToBuy.PurchasePrice)}개 구매 가능 ],{Colors.txtSuccess}}}"), out count, 0, 0, (int)(InGame.player.Gold / itemToBuy.PurchasePrice))) break;
                   InGame.player.Inventory.GetItem(itemToBuy, count);
-                  InGame.player.Gold -= itemToBuy.BuyPrice * count;
-                  PrintCText($"{{\n{InvenInfo.GetTypeString(itemToBuy.Type)} 아이템,{Colors.txtWarning}}}{{ {itemToBuy.Name} {count}개를 }}{{{itemToBuy.BuyPrice * count}G,{Colors.txtWarning}}}{{에 구매했습니다.}}");
+                  InGame.player.Gold -= itemToBuy.PurchasePrice * count;
+                  PrintCText($"{{\n{InvenInfo.GetTypeString(itemToBuy.Type)} 아이템,{Colors.txtWarning}}}{{ {itemToBuy.Name} {count}개를 }}{{{itemToBuy.PurchasePrice * count}G,{Colors.txtWarning}}}{{에 구매했습니다.}}");
                   Pause();
                   break;
                 case "아이템 정보":
@@ -83,16 +83,16 @@ namespace Goguma.Game.Object.Npc
         if (itemInfo == null) return;
         var iInfo = (ItemInfo)itemInfo;
         int count;
-        if (ReadInt($"{{아이템 {iInfo.Item.Name}(이)가 총 {iInfo.Item.Count}개 있습니다. 몇개를 판매하시겠습니까?\n 판매 가격: {iInfo.Item.SellPrice}}}", out count, 0, 0, iInfo.Item.Count)) return;
-        var sell = ReadYesOrNo($"{{아이템 }}{{{iInfo.Item.Name},{Colors.txtInfo}}}{{ {count}개,{Colors.txtSuccess}}}{{를 }}{{{iInfo.Item.SellPrice * count}G,{Colors.txtWarning}}}{{에 판매하시겠습니까?}}");
+        if (ReadInt($"{{아이템 {iInfo.Item.Name}(이)가 총 {iInfo.Item.Count}개 있습니다. 몇개를 판매하시겠습니까?\n 판매 가격: {iInfo.Item.SalePrice}}}", out count, 0, 0, iInfo.Item.Count)) return;
+        var sell = ReadYesOrNo($"{{아이템 }}{{{iInfo.Item.Name},{Colors.txtInfo}}}{{ {count}개,{Colors.txtSuccess}}}{{를 }}{{{iInfo.Item.SalePrice * count}G,{Colors.txtWarning}}}{{에 판매하시겠습니까?}}");
         if (sell)
         {
           if (iInfo.InvenType == InvenType.Having)
             InGame.player.Inventory.RemoveItem(iInfo.hType, iInfo.havingIndex, count);
           else
             InGame.player.Inventory.RemoveItem(iInfo.wType, count);
-          InGame.player.Gold += iInfo.Item.SellPrice * count;
-          PrintCText($"{{\n아이템 }}{{{iInfo.Item.Name},{Colors.txtInfo}}}{{ {count}개,{Colors.txtSuccess}}}{{를 판매하여 }}{{{iInfo.Item.SellPrice * count}G,{Colors.txtWarning}}}{{를 얻었습니다.}}");
+          InGame.player.Gold += iInfo.Item.SalePrice * count;
+          PrintCText($"{{\n아이템 }}{{{iInfo.Item.Name},{Colors.txtInfo}}}{{ {count}개,{Colors.txtSuccess}}}{{를 판매하여 }}{{{iInfo.Item.SalePrice * count}G,{Colors.txtWarning}}}{{를 얻었습니다.}}");
           Pause();
         }
         else

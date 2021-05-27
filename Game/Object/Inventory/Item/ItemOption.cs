@@ -138,7 +138,6 @@ namespace Goguma.Game.Object.Inventory.Item
     private bool ConsumeItemUse()
     {
       var sItem = (IConsumeItem)SelectedItem;
-      Pause();
       if (ReadYesOrNo(sItem.Name.Combine("{을(를) 사용하시겠습니까?\n}").Combine(sItem.EffectInfo()).Combine("{\n}")))
       {
         PrintCText(sItem.Name.Combine("{(을)를 사용하였습니다.\n}"));

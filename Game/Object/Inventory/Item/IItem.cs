@@ -11,8 +11,10 @@ namespace Goguma.Game.Object.Inventory.Item
     CTexts Descriptions { get; set; }
     int Count { get; set; }
     int MaxCount { get; }
-    int BuyPrice { get; set; }
-    int SellPrice { get; set; }
+    int PurchasePrice { get; set; }
+    int SalePrice { get; set; }
+    bool IsSalable { get; set; }
+    bool IsPurchasable { get; set; }
     HavingType Type { get; }
 
     IItem GetInstance();
