@@ -2,7 +2,7 @@ using System;
 
 namespace Goguma.Game.Object.Quest
 {
-  struct RequireLevel
+  public struct RequireLevel
   {
     public int Min { get; set; }
     public int Max { get; set; }

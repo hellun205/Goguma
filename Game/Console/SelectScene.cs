@@ -10,9 +10,9 @@ namespace Goguma.Game.Console
     public int getIndex;
     public string getString;
     public bool isCancelled = false;
-    public SelectScene(CTexts questionText, SelectSceneItems answerItems, bool isCancel = false, CTexts cancelText = null)
+    public SelectScene(CTexts questionText, SelectSceneItems answerItems, bool isCancel = false, CTexts cancelText = null, bool isQueTxt = true)
     {
-      PrintCText(PrintQuestionText(questionText));
+      if (isQueTxt) PrintCText(PrintQuestionText(questionText));
       cancelText = (cancelText == null ? CTexts.Make($"{{뒤로 가기,{Colors.txtMuted}}}") : cancelText);
       if (isCancel) answerItems.Add(new SelectSceneItem(cancelText, true));
 
