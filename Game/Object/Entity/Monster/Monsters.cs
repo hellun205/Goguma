@@ -21,6 +21,7 @@ namespace Goguma.Game.Object.Entity.Monster
           {
             Name = "강력한 테스트용 몬스터",
             Descriptions = CTexts.Make("{테스트용으로 사용되는 몬스터이다.}"),
+            MType = monster,
             Level = 10,
             MaxHp = 100,
             Hp = 100,
@@ -45,6 +46,7 @@ namespace Goguma.Game.Object.Entity.Monster
           {
             Name = "슬라임",
             Descriptions = CTexts.Make("{끈적끈적하니 기분이 더럽다.}"),
+            MType = monster,
             Level = 2,
             MaxHp = 5,
             Hp = 5,
@@ -67,6 +69,7 @@ namespace Goguma.Game.Object.Entity.Monster
           {
             Name = "고블린",
             Descriptions = CTexts.Make("{못생겼다.}"),
+            MType = monster,
             Level = 3,
             MaxHp = 7,
             Hp = 7,
@@ -88,6 +91,7 @@ namespace Goguma.Game.Object.Entity.Monster
           {
             Name = "황금 고블린",
             Descriptions = CTexts.Make($"{{와! 황금색 고블린이다. 죽이면 }}{{보물,{Colors.txtWarning}}}{{을 줄지도 모른다.}}"),
+            MType = monster,
             Level = 17,
             MaxHp = 80,
             Hp = 80,

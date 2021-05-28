@@ -1,7 +1,8 @@
+
 namespace Goguma.Game.Object.Quest
 {
-  interface IQuest
+  public enum QuestList
   {
-
+    TEST_QUEST
   }
 }

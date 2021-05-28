@@ -1,6 +1,6 @@
 namespace Goguma.Game.Object.Quest
 {
-  enum DialogType
+  public enum DialogType
   {
     NPC_SAY,
     PLAYER_SAY,

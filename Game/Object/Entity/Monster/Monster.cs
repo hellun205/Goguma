@@ -12,6 +12,7 @@ namespace Goguma.Game.Object.Entity.Monster
   public class Monster : Entity, IMonster
   {
     public override EntityType Type => EntityType.MONSTER;
+    public MonsterList MType { get; set; }
     public CTexts Descriptions { get; set; }
     public double GivingGold { get; set; }
     public double GivingExp { get; set; }

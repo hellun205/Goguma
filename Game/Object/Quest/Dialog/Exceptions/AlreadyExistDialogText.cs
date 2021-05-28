@@ -1,4 +1,4 @@
-namespace Goguma.Game.Object.Quest.Dialog.Exception
+namespace Goguma.Game.Object.Quest.Dialog.Exceptions
 {
   public class AlreadyExistDialogText : System.Exception
   {

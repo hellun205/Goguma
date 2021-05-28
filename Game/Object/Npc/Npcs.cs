@@ -5,7 +5,7 @@ namespace Goguma.Game.Object.Npc
   public class Npcs
   {
     public static NTrader trader = new NTrader();
-    public static NTrader tK = new NTrader();
+    public static NTrader tK = new NTrader(NpcList.TRADER_K);
 
     public static NTrader GetTraderByName(string name)
     {

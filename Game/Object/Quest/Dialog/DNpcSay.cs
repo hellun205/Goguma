@@ -6,10 +6,15 @@ using static Goguma.Game.Console.ConsoleFunction;
 
 namespace Goguma.Game.Object.Quest.Dialog
 {
-  class DNpcSay : Dialog
+  public class DNpcSay : Dialog
   {
     public string PlayerSay { get; set; }
     public override DialogType Type => DialogType.NPC_SAY;
+
+    public DNpcSay(NpcList npc, CTexts text, string playerText = "다음") : base(npc, new DialogText(text))
+    {
+      PlayerSay = playerText;
+    }
 
     public DNpcSay(NpcList npc, DialogText text, string playerText = "다음") : base(npc, text)
     {

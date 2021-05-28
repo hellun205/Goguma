@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using Goguma.Game.Console;
-using Goguma.Game.Object.Quest.Dialog.Exception;
+using Goguma.Game.Object.Quest.Dialog.Exceptions;
 
 namespace Goguma.Game.Object.Quest.Dialog
 {
-  class DialogText
+  public class DialogText
   {
     public List<CTexts> Texts { get; protected set; }
     public List<string> PAns { get; protected set; }
@@ -27,11 +27,12 @@ namespace Goguma.Game.Object.Quest.Dialog
 
     public CTexts Get(string playerAns)
     {
-      foreach (var item in PAns)
-      {
-        if (item == playerAns)
-          return Texts[PAns.IndexOf(item)];
-      }
+      if (PAns.Count != 0)
+        foreach (var item in PAns)
+        {
+          if (item == playerAns)
+            return Texts[PAns.IndexOf(item)];
+        }
       return Get();
     }
 

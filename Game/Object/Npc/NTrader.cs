@@ -16,7 +16,7 @@ namespace Goguma.Game.Object.Npc
 
     public override NpcType Type => NpcType.TRADER;
 
-    public NTrader()
+    public NTrader() : base()
     {
       ItemsForSale = new List<IItem>();
     }

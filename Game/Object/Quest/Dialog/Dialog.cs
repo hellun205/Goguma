@@ -5,11 +5,11 @@ using Goguma.Game.Object.Npc;
 
 namespace Goguma.Game.Object.Quest.Dialog
 {
-  abstract class Dialog : IDialog
+  public abstract class Dialog : IDialog
   {
     public Npc.Npc Npc { get; set; }
     public DialogText Text { get; set; }
-    public bool isCancelled { get; protected set; }
+    public bool isCancelled { get; set; }
 
     public Dialog(NpcList npc, DialogText text)
     {
@@ -26,17 +26,23 @@ namespace Goguma.Game.Object.Quest.Dialog
       return new CTexts().Append($"{{  {Npc.TypeString} ,{Colors.txtWarning}}}{{{Npc.Name},{Colors.txtInfo}}}{{ : }}").Append(Text.Get(pan));
     }
 
-    public static void ShowDialogs(List<IDialog> dialogs)
+    public static void ShowDialogs(List<IDialog> dialogs, DNpcSay cancelledDialog)
     {
+      string ans = "";
       foreach (var dialog in dialogs)
       {
-        dialog.Show();
+        ans = dialog.Show(ans);
+        if (dialog.isCancelled)
+        {
+          cancelledDialog.Show();
+          break;
+        }
       }
     }
 
-    public static bool ShowDialogs(List<IDialog> dialogs, DAsk askDialog)
+    public static bool ShowDialogs(List<IDialog> dialogs, DAsk askDialog, DNpcSay cancelledDialog)
     {
-      ShowDialogs(dialogs);
+      ShowDialogs(dialogs, cancelledDialog);
       return askDialog.ShowAsk();
     }
   }
