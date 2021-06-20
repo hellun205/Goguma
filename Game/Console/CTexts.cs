@@ -117,5 +117,7 @@ namespace Goguma.Game.Console
       }
       return result;
     }
+
+    public static CTexts Empty => new CTexts();
   }
 }

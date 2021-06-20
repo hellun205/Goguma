@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Goguma.Game.Console;
 using Goguma.Game.Object.Quest;
@@ -19,7 +20,7 @@ namespace Goguma.Game.Object.Npc
       var ssi = new SelectSceneItems();
       ssi.Add("{대화 하기}");
       ssi.Add("{}");
-      var ss = new SelectScene(Meet.Text.Get(), ssi, true);
+      var ss = new SelectScene(Meet.Text[String.Empty], ssi, true);
     }
 
     public Npc()

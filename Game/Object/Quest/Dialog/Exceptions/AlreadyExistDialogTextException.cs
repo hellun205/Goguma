@@ -1,6 +1,6 @@
 namespace Goguma.Game.Object.Quest.Dialog.Exceptions
 {
-  public class AlreadyExistDialogText : System.Exception
+  public class AlreadyExistDialogTextException : System.Exception
   {
     public override string ToString()
     {

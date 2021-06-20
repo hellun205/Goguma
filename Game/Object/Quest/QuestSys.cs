@@ -6,7 +6,7 @@ using static Goguma.Game.Console.ConsoleFunction;
 
 namespace Goguma.Game.Object.Quest
 {
-  class QuestSys
+  public class QuestSys
   {
     public List<IQuest> Quests { get; set; }
 

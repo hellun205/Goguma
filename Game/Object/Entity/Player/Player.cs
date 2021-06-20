@@ -7,6 +7,7 @@ using static Goguma.Game.Console.ConsoleFunction;
 using static Goguma.Game.Console.StringFunction;
 using Goguma.Game.Object.Map.Town;
 using Goguma.Game.Object.Inventory.Item.Equipment;
+using Goguma.Game.Object.Quest;
 
 namespace Goguma.Game.Object.Entity.Player
 {
@@ -15,6 +16,7 @@ namespace Goguma.Game.Object.Entity.Player
   {
     public override EntityType Type => EntityType.PLAYER;
     public Inventory.Inventory Inventory { get; set; }
+    public QuestSys Quest { get; set; }
     public Location Loc { get; set; }
 
     public double Ep

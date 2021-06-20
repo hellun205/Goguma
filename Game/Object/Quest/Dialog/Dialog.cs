@@ -23,7 +23,7 @@ namespace Goguma.Game.Object.Quest.Dialog
 
     protected CTexts NpcText(string pan)
     {
-      return new CTexts().Append($"{{  {Npc.TypeString} ,{Colors.txtWarning}}}{{{Npc.Name},{Colors.txtInfo}}}{{ : }}").Append(Text.Get(pan));
+      return new CTexts().Append($"{{  {Npc.TypeString} ,{Colors.txtWarning}}}{{{Npc.Name},{Colors.txtInfo}}}{{ : }}").Append(Text[pan]);
     }
 
     public static void ShowDialogs(List<IDialog> dialogs, DNpcSay cancelledDialog)
