@@ -1,11 +1,13 @@
 ﻿using Goguma.Game.Console;
 using Goguma.Game.Object.Map;
+using Goguma.Game.Object.Quest;
 
 namespace Goguma.Game.Object.Entity.Player
 {
   public interface IPlayer : IEntity
   {
     Inventory.Inventory Inventory { get; set; }
+    QuestSys Quest { get; set; }
     Location Loc { get; }
     double Ep { get; set; }
     double MaxEp { get; set; }

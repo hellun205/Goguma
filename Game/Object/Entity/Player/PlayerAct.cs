@@ -175,7 +175,7 @@ namespace Goguma.Game.Object.Entity.Player
       var s = new SelectScene(CTexts.Make("{누구와 대화하시겠습니까?}"), ssi, true);
       if (s.isCancelled) return;
 
-      Npcs.GetTraderByEnum(town.Npcs[s.getIndex]).OnUse();
+      Npcs.GetTraderByEnum(town.Npcs[s.getIndex]).OnDialogOpen();
     }
 
     static private void ViewSkill()

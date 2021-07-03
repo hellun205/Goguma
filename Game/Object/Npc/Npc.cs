@@ -11,23 +11,59 @@ namespace Goguma.Game.Object.Npc
     public string Name { get; protected set; }
     public DNpcSay Meet { get; set; }
     public DNpcSay Conversation { get; set; }
-    public List<QuestList> Quests { get; set; }
+    public List<IQuest> Quests { get; set; }
     public string TypeString => Npcs.GetNpcTypeToString(Type);
     public abstract NpcType Type { get; }
 
-    public void OnDialogOpen()
+    public virtual void OnDialogOpen()
     {
-      var ssi = new SelectSceneItems();
-      ssi.Add("{대화 하기}");
-      ssi.Add("{}");
-      var ss = new SelectScene(Meet.Text[String.Empty], ssi, true);
+      while (true)
+      {
+        var ssi = new SelectSceneItems();
+        foreach (var quest in InGame.player.Quest.Quests)
+          if (quest.IsCompleted)
+          {
+            ssi.Add("{퀘스트 완료}");
+            break;
+          }
+        foreach (var quest in Quests)
+          if (quest.MeetTheRequirements)
+          {
+            ssi.Add("{퀘스트 받기}");
+            break;
+          }
+        ssi.Add("{대화 하기}");
+        var ss = new SelectScene(Meet.Text[String.Empty], ssi, true);
+        if (ss.isCancelled) return;
+
+        switch (ss.getString)
+        {
+          case "퀘스트 완료":
+            CompleteQuest();
+            break;
+          case "퀘스트 받기":
+            ReceiveQuest();
+            break;
+          case "대화 하기":
+            Conversation.Show();
+            break;
+        }
+      }
     }
 
     public Npc()
     {
-      Quests = new List<QuestList>();
+      Quests = new();
     }
 
-    public abstract void OnUse();
+    public void CompleteQuest()
+    {
+
+    }
+
+    public void ReceiveQuest()
+    {
+
+    }
   }
 }

@@ -40,7 +40,7 @@ namespace Goguma.Game.Object.Quest.Dialog
       }
     }
 
-    public static bool ShowDialogs(List<IDialog> dialogs, DAsk askDialog, DNpcSay cancelledDialog)
+    public static bool ShowDialogs(List<IDialog> dialogs, DNpcAsk askDialog, DNpcSay cancelledDialog)
     {
       ShowDialogs(dialogs, cancelledDialog);
       return askDialog.ShowAsk();

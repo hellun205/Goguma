@@ -4,13 +4,13 @@ using static Goguma.Game.Console.ConsoleFunction;
 
 namespace Goguma.Game.Object.Quest.Dialog
 {
-  public class DAsk : Dialog
+  public class DNpcAsk : Dialog
   {
     public bool Answer { get; protected set; }
-    public override DialogType Type => DialogType.ASK;
+    public override DialogType Type => DialogType.NPC_ASK;
 
-    public DAsk(NpcList npc, DialogText text) : base(npc, text) { }
-    public DAsk(NpcList npc, CTexts text) : base(npc, new DialogText(text)) { }
+    public DNpcAsk(NpcList npc, DialogText text) : base(npc, text) { }
+    public DNpcAsk(NpcList npc, CTexts text) : base(npc, new DialogText(text)) { }
 
     public override string Show(string playerAns = "")
     {

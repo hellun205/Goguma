@@ -38,11 +38,14 @@ namespace Goguma.Game.Object.Quest
       throw new EntityNotInEntityList();
     }
 
-    public override bool CheckCompleted()
+    public override bool IsCompleted
     {
-      foreach (var c in Counts)
-        if (c != KilledCounts[Counts.IndexOf(c)]) return false;
-      return true;
+      get
+      {
+        foreach (var c in Counts)
+          if (c != KilledCounts[Counts.IndexOf(c)]) return false;
+        return true;
+      }
     }
 
     protected override CTexts InfoDetails()

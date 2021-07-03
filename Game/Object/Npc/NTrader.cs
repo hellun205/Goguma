@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 using Colorify;
-using Goguma.Game;
 using Goguma.Game.Console;
 using Goguma.Game.Object.Inventory;
 using Goguma.Game.Object.Inventory.Item;
 using System.Linq;
 using static Goguma.Game.Console.ConsoleFunction;
+using Goguma.Game.Object.Quest;
 
 namespace Goguma.Game.Object.Npc
 {
@@ -28,12 +28,55 @@ namespace Goguma.Game.Object.Npc
         case NpcList.TRADER_K:
           Name = "K";
           break;
+        default:
+          Name = "상인";
+          break;
       }
     }
 
-    public override void OnUse()
+    public override void OnDialogOpen()
     {
-      Action BuyItem = () =>
+      while (true)
+      {
+        var ssi = new SelectSceneItems();
+        foreach (var quest in InGame.player.Quest.Quests)
+          if (quest.IsCompleted)
+          {
+            ssi.Add("{퀘스트 완료}");
+            break;
+          }
+        foreach (var quest in Quests)
+          if (quest.MeetTheRequirements)
+          {
+            ssi.Add("{퀘스트 받기}");
+            break;
+          }
+        ssi.Add("{상점 열기}");
+        ssi.Add("{대화 하기}");
+        var ss = new SelectScene(Meet.Text[String.Empty], ssi, true);
+        if (ss.isCancelled) return;
+
+        switch (ss.getString)
+        {
+          case "퀘스트 완료":
+            CompleteQuest();
+            break;
+          case "퀘스트 받기":
+            ReceiveQuest();
+            break;
+          case "대화 하기":
+            Conversation.Show();
+            break;
+          case "상점 열기":
+            OpenShop();
+            break;
+        }
+      }
+    }
+
+    public void OpenShop()
+    {
+      void BuyItem()
       {
         while (true)
         {
@@ -83,7 +126,7 @@ namespace Goguma.Game.Object.Npc
           }
         }
       };
-      Action SellItem = () =>
+      void SellItem()
       {
         var itemInfo = InGame.player.Inventory.Select();
         if (itemInfo == null) return;

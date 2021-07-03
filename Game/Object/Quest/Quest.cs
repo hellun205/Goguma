@@ -14,20 +14,20 @@ namespace Goguma.Game.Object.Quest
   abstract class Quest : IQuest
   {
     public List<IDialog> Dialogs { get; set; }
-    public DAsk AskDialog { get; set; }
+    public DNpcAsk AskDialog { get; set; }
     public DNpcSay CancelledDialog { get; set; }
     public DNpcSay AcceptDialog { get; set; }
     public DNpcSay DeclineDialog { get; set; }
     public string Name { get; set; }
     public NpcList Npc { get; set; }
-    public RequireLevel RequireLv { get; set; }
-    public bool IsCompleted { get; set; }
+    public QuestRequirements QRequirements { get; set; }
+    public bool MeetTheRequirements => (QRequirements.Check(InGame.player));
+    public abstract bool IsCompleted { get; }
     public double GivingExp { get; set; }
     public double GivingGold { get; set; }
     public List<IItem> GivingItems { get; set; }
     public List<int> GivingItemCounts { get; set; }
 
-    public abstract bool CheckCompleted();
     protected abstract CTexts InfoDetails();
 
     public CTexts Information()
@@ -35,7 +35,7 @@ namespace Goguma.Game.Object.Quest
       var info = new CTexts()
       .Append($"{{\n{GetSep(40, $"{Name}")}}}")
       .Append($"{{\nNPC : }}{{{Npcs.GetTraderByEnum(Npc).TypeString} ,{Colors.txtWarning}}}{{{Npcs.GetTraderByEnum(Npc).Name},{Colors.txtInfo}}}")
-      .Append($"{{\n필요 레벨 : {RequireLv.Min} ~ {(RequireLv.Max == Int32.MaxValue ? "" : $"{RequireLv.Max}")}}}")
+      .Append($"{{\n필요 레벨 : {QRequirements.Min} ~ {(QRequirements.Max == Int32.MaxValue ? "" : $"{QRequirements.Max}")}}}")
       .Append($"{{\n완료 시 받는 골드 : }}{{{GivingGold} G, {Colors.txtWarning}}}")
       .Append($"{{\n완료 시 받는 경험치 : }}{{{GivingExp} , {Colors.txtWarning}}}")
       .Append($"{{\n완료 시 받는 아이템 : }}");
@@ -73,7 +73,10 @@ namespace Goguma.Game.Object.Quest
     public void Exe(IPlayer player)
     {
       var ask = ShowDialog();
-
+      if (ask)
+      {
+        player.Quest.Add(this);
+      }
     }
 
     public void OnCompleted()

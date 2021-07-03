@@ -4,6 +4,6 @@ namespace Goguma.Game.Object.Quest
   {
     NPC_SAY,
     PLAYER_SAY,
-    ASK
+    NPC_ASK
   }
 }
