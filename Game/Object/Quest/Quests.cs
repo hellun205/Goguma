@@ -17,7 +17,11 @@ namespace Goguma.Game.Object.Quest
           var npc = NpcList.TRADER_K;
 
           resQus.Name = "테스트 퀘스트";
-          resQus.QRequirements = new QuestRequirements(1);
+          resQus.QRequirements = new QuestRequirements()
+          {
+            MinLv = 0
+          };
+
           resQus.Dialogs.Add(new DNpcSay(npc, CTexts.Make("{슬라임이 잡고싶군}"), "음 그렇네요.."));
           resQus.Dialogs.Add(new DNpcSay(npc, CTexts.Make("{기분나쁜 슬라임을 퇴치해줄 용사는 어디없나?}"), "음..."));
           resQus.Dialogs.Add(new DNpcSay(npc, CTexts.Make("{오 혹시 자네 용사인 것인가??}"), "ㄴ  ㅔ 그렇죠뭐"));
@@ -28,6 +32,7 @@ namespace Goguma.Game.Object.Quest
           resQus.CancelledDialog = new DNpcSay(npc, CTexts.Make("{알겠다네..}"), "...");
 
           resQus.GivingExp = 20;
+          resQus.GivingGold = 10;
 
           resQus.Add(MonsterList.SLIME, 5);
           return resQus;

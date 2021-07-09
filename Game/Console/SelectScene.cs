@@ -15,6 +15,7 @@ namespace Goguma.Game.Console
       if (isQueTxt) PrintCText(PrintQuestionText(questionText));
       cancelText = (cancelText == null ? CTexts.Make($"{{뒤로 가기,{Colors.txtMuted}}}") : cancelText);
       if (isCancel) answerItems.Add(new SelectSceneItem(cancelText, true));
+      PrintText("\n\n");
 
       for (int i = 1; i <= answerItems.Items.Count; i++)
       {

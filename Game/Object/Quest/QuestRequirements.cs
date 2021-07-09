@@ -1,21 +1,33 @@
 using System;
+using System.Collections.Generic;
 using Goguma.Game.Object.Entity.Player;
 
 namespace Goguma.Game.Object.Quest
 {
-  public struct QuestRequirements
+  public class QuestRequirements
   {
-    public int Min { get; set; }
-    public int Max { get; set; }
+    public int MinLv { get; set; }
+    public int MaxLv { get; set; }
+    public List<QuestList> CompletedQuests { get; set; }
 
-    public QuestRequirements(int min, int max = Int32.MaxValue)
+    public QuestRequirements()
     {
-      Min = min;
-      Max = max;
+      MinLv = 0;
+      MaxLv = Int32.MaxValue;
+      CompletedQuests = new();
     }
-    public bool Check(IPlayer player)
+    public bool Check()
     {
-      return (Min <= player.Level && player.Level <= Max);
+      var player = InGame.player;
+      var cq = true;
+      foreach (var cqs in CompletedQuests)
+        if (!player.CompletedQuests.Contains(cqs))
+        {
+          cq = false;
+          break;
+        }
+
+      return (MinLv <= player.Level && player.Level <= MaxLv && cq);
     }
   }
 }

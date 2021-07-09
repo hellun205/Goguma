@@ -7,6 +7,7 @@ using Goguma.Game.Object.Inventory.Item;
 using System.Linq;
 using static Goguma.Game.Console.ConsoleFunction;
 using Goguma.Game.Object.Quest;
+using Goguma.Game.Object.Quest.Dialog;
 
 namespace Goguma.Game.Object.Npc
 {
@@ -23,15 +24,23 @@ namespace Goguma.Game.Object.Npc
 
     public NTrader(NpcList npcName) : this()
     {
+      var text = String.Empty;
+      var prefix = new List<string> { "NPC", "상인" };
+      var prefixColor = new List<string> { Colors.txtSuccess, Colors.txtWarning };
       switch (npcName)
       {
         case NpcList.TRADER_K:
           Name = "K";
+          Quests.Add(Quest.Quests.GetNewQuest(QuestList.TEST_QUEST));
+
+          text = "{어서 옵셔~}";
           break;
         default:
           Name = "상인";
+          text = "{어서오시오}";
           break;
       }
+      Meet = new(NpcList.TRADER_K, new DialogText(CTexts.Make(text), prefix.ToArray(), Name, prefixColor.ToArray(), Colors.txtInfo));
     }
 
     public override void OnDialogOpen()
@@ -53,7 +62,7 @@ namespace Goguma.Game.Object.Npc
           }
         ssi.Add("{상점 열기}");
         ssi.Add("{대화 하기}");
-        var ss = new SelectScene(Meet.Text[String.Empty], ssi, true);
+        var ss = new SelectScene(Meet.Text.DisplayText(String.Empty), ssi, true, CTexts.Make($"{{대화 종료,{Colors.txtMuted}}}"));
         if (ss.isCancelled) return;
 
         switch (ss.getString)
@@ -155,7 +164,7 @@ namespace Goguma.Game.Object.Npc
         var ssi = new SelectSceneItems();
         ssi.Add("{아이템 구매}");
         ssi.Add("{아이템 판매}");
-        var ss = new SelectScene($"{{{Name}(와)과 대화 중 입니다. 무엇을 하시겠습니까?}}", ssi, true, CTexts.Make($"{{대화 종료,{Colors.txtMuted}}}"));
+        var ss = new SelectScene($"{{{Name}(와)과 대화 중 입니다. 무엇을 하시겠습니까?}}", ssi, true);
         if (ss.isCancelled) return;
         switch (ss.getString)
         {

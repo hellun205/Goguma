@@ -21,7 +21,7 @@ namespace Goguma.Game.Object.Quest
     public string Name { get; set; }
     public NpcList Npc { get; set; }
     public QuestRequirements QRequirements { get; set; }
-    public bool MeetTheRequirements => (QRequirements.Check(InGame.player));
+    public bool MeetTheRequirements => (QRequirements.Check());
     public abstract bool IsCompleted { get; }
     public double GivingExp { get; set; }
     public double GivingGold { get; set; }
@@ -35,7 +35,7 @@ namespace Goguma.Game.Object.Quest
       var info = new CTexts()
       .Append($"{{\n{GetSep(40, $"{Name}")}}}")
       .Append($"{{\nNPC : }}{{{Npcs.GetTraderByEnum(Npc).TypeString} ,{Colors.txtWarning}}}{{{Npcs.GetTraderByEnum(Npc).Name},{Colors.txtInfo}}}")
-      .Append($"{{\n필요 레벨 : {QRequirements.Min} ~ {(QRequirements.Max == Int32.MaxValue ? "" : $"{QRequirements.Max}")}}}")
+      .Append($"{{\n필요 레벨 : {QRequirements.MinLv} ~ {(QRequirements.MaxLv == Int32.MaxValue ? "" : $"{QRequirements.MaxLv}")}}}")
       .Append($"{{\n완료 시 받는 골드 : }}{{{GivingGold} G, {Colors.txtWarning}}}")
       .Append($"{{\n완료 시 받는 경험치 : }}{{{GivingExp} , {Colors.txtWarning}}}")
       .Append($"{{\n완료 시 받는 아이템 : }}");

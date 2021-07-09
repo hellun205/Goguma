@@ -8,6 +8,7 @@ using static Goguma.Game.Console.StringFunction;
 using Goguma.Game.Object.Map.Town;
 using Goguma.Game.Object.Inventory.Item.Equipment;
 using Goguma.Game.Object.Quest;
+using System.Collections.Generic;
 
 namespace Goguma.Game.Object.Entity.Player
 {
@@ -17,6 +18,7 @@ namespace Goguma.Game.Object.Entity.Player
     public override EntityType Type => EntityType.PLAYER;
     public Inventory.Inventory Inventory { get; set; }
     public QuestSys Quest { get; set; }
+    public List<QuestList> CompletedQuests { get; set; }
     public Location Loc { get; set; }
 
     public double Ep
@@ -129,6 +131,8 @@ namespace Goguma.Game.Object.Entity.Player
     {
       Inventory = new Inventory.Inventory(this);
       Loc = new Location(Towns.kks.Name, true);
+      Quest = new();
+      CompletedQuests = new();
       MaxHp = 50;
       MaxEp = 30;
       Hp = MaxHp;

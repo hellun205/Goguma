@@ -4,9 +4,11 @@ using Goguma.Game.Console;
 using Goguma.Game.Object.Npc;
 using System.Linq;
 using static Goguma.Game.Console.ConsoleFunction;
+using System;
 
 namespace Goguma.Game.Object.Quest
 {
+  [Serializable]
   public class QuestSys
   {
     public List<IQuest> Quests { get; set; }

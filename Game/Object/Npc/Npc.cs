@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Colorify;
 using Goguma.Game.Console;
 using Goguma.Game.Object.Quest;
 using Goguma.Game.Object.Quest.Dialog;
@@ -33,7 +34,7 @@ namespace Goguma.Game.Object.Npc
             break;
           }
         ssi.Add("{대화 하기}");
-        var ss = new SelectScene(Meet.Text[String.Empty], ssi, true);
+        var ss = new SelectScene(Meet.Text[String.Empty], ssi, true, CTexts.Make($"{{대화 종료,{Colors.txtMuted}}}"));
         if (ss.isCancelled) return;
 
         switch (ss.getString)

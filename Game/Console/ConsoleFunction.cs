@@ -41,6 +41,7 @@ namespace Goguma.Game.Console
     static public string ReadText(CTexts questionText, Func<string, bool> check = null)
     {
       PrintQuestionText(questionText);
+      PrintText("\n\n");
       PrintCText("{'취소'를 입력하시면 입력을 취소합니다.\n}");
       while (true)
       {
@@ -69,6 +70,7 @@ namespace Goguma.Game.Console
     static public bool ReadYesOrNo(CTexts questionText, string yesText = "예", string noText = "아니오")
     {
       PrintQuestionText(questionText);
+      PrintText("\n\n");
 
       while (true)
       {
