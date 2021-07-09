@@ -3,7 +3,7 @@ using System;
 namespace Goguma.Game.Object.Inventory.Item
 {
   [Serializable]
-  enum ItemList
+  public enum ItemList
   {
     TEST_ITEM1,
     TEST_ITEM2,

@@ -4,6 +4,7 @@ using Colorify;
 using Goguma.Game.Console;
 using Goguma.Game.Object.Quest;
 using Goguma.Game.Object.Quest.Dialog;
+using System.Linq;
 
 namespace Goguma.Game.Object.Npc
 {
@@ -15,7 +16,7 @@ namespace Goguma.Game.Object.Npc
     public List<string> PrefixColors { get; protected set; }
     public DNpcSay Meet { get; set; }
     public DNpcSay Conversation { get; set; }
-    public List<IQuest> Quests { get; set; }
+    public List<QuestList> Quests { get; set; }
     public string TypeString => Npcs.GetNpcTypeToString(Type);
     public abstract NpcType Type { get; }
     public CTexts DisplayName
@@ -42,7 +43,7 @@ namespace Goguma.Game.Object.Npc
             break;
           }
         foreach (var quest in Quests)
-          if (quest.MeetTheRequirements)
+          if (Questss.GetQuestInstance(quest).MeetTheRequirements)
           {
             ssi.Add("{퀘스트 받기}");
             break;
@@ -81,7 +82,15 @@ namespace Goguma.Game.Object.Npc
 
     public void ReceiveQuest()
     {
-      // TO DO
+      var ssi = new SelectSceneItems();
+      var quests = (from qst in Quests
+                    where Questss.GetQuestInstance(qst).MeetTheRequirements
+                    select qst).ToList();
+      foreach (var quest in quests)
+      {
+        ssi.Add($"{{[ Lv. {Questss.GetQuestInstance(quest).QRequirements.MinLv} ] ,{Colors.txtWarning}}}{{{Questss.GetQuestInstance(quest).Name}}}");
+      }
+
     }
   }
 }

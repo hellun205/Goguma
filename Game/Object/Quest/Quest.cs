@@ -13,20 +13,20 @@ namespace Goguma.Game.Object.Quest
 {
   abstract class Quest : IQuest
   {
-    public List<IDialog> Dialogs { get; set; }
-    public DNpcAsk AskDialog { get; set; }
-    public DNpcSay CancelledDialog { get; set; }
-    public DNpcSay AcceptDialog { get; set; }
-    public DNpcSay DeclineDialog { get; set; }
-    public string Name { get; set; }
-    public NpcList Npc { get; set; }
-    public QuestRequirements QRequirements { get; set; }
+    public abstract string Name { get; }
+    public abstract NpcList Npc { get; }
+    public abstract List<IDialog> Dialogs { get; set; }
+    public abstract QuestList QuestEnum { get; }
+    public abstract DNpcAsk AskDialog { get; }
+    public abstract DNpcSay CancelledDialog { get; }
+    public abstract DNpcSay AcceptDialog { get; }
+    public abstract DNpcSay DeclineDialog { get; }
+    public abstract QuestRequirements QRequirements { get; }
     public bool MeetTheRequirements => (QRequirements.Check());
     public abstract bool IsCompleted { get; }
-    public double GivingExp { get; set; }
-    public double GivingGold { get; set; }
-    public List<IItem> GivingItems { get; set; }
-    public List<int> GivingItemCounts { get; set; }
+    public abstract double GivingExp { get; }
+    public abstract double GivingGold { get; }
+    public abstract List<GivingItem> GivingItems { get; }
 
     protected abstract CTexts InfoDetails();
 
@@ -39,12 +39,12 @@ namespace Goguma.Game.Object.Quest
       .Append($"{{\n완료 시 받는 골드 : }}{{{GivingGold} G, {Colors.txtWarning}}}")
       .Append($"{{\n완료 시 받는 경험치 : }}{{{GivingExp} , {Colors.txtWarning}}}")
       .Append($"{{\n완료 시 받는 아이템 : }}");
-      foreach (var item in GivingItems)
-      {
-        info.Append("{\n    }")
-        .Append(item.DisplayName)
-        .Append($"{{ {GivingItemCounts[GivingItems.IndexOf(item)]} 개}}");
-      }
+      // foreach (var item in GivingItems)
+      // {
+      //   info.Append("{\n    }")
+      //   .Append(item.Item)
+      //   .Append($"{{ {GivingItemCounts[GivingItems.IndexOf(item)]} 개}}");
+      // } TO DO
       info.Append($"{{\n{GetSep(40, "내용")}\n}}")
       .Append(InfoDetails())
       .Append($"{{\n{GetSep(40)}\n}}");
@@ -55,8 +55,6 @@ namespace Goguma.Game.Object.Quest
     public Quest()
     {
       Dialogs = new List<IDialog>();
-      GivingItems = new List<IItem>();
-      GivingItemCounts = new List<int>();
     }
 
     public bool ShowDialog()
@@ -83,8 +81,8 @@ namespace Goguma.Game.Object.Quest
     {
       InGame.player.Gold += GivingGold;
       InGame.player.Exp += GivingExp;
-      foreach (var item in GivingItems)
-        InGame.player.Inventory.GetItem(item.GetInstance(), GivingItemCounts[GivingItems.IndexOf(item)]);
+      // foreach (var item in GivingItems)
+      //   InGame.player.Inventory.GetItem(item.GetInstance(), GivingItemCounts[GivingItems.IndexOf(item)]); TO DO
 
     }
   }

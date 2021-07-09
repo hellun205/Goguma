@@ -32,7 +32,7 @@ namespace Goguma.Game.Object.Npc
       {
         case NpcList.TRADER_K:
           Name = "K";
-          Quests.Add(Quest.Quests.GetNewQuest(QuestList.TEST_QUEST));
+          Quests.Add(QuestList.TEST_QUEST);
 
           text = "{어서 옵셔~}";
           Conversation = new(NpcList.TRADER_K, new DialogText(CTexts.Make("{어이쿠 손님 안녕하신가~}"), DisplayName));
@@ -59,7 +59,7 @@ namespace Goguma.Game.Object.Npc
             break;
           }
         foreach (var quest in Quests)
-          if (quest.MeetTheRequirements)
+          if (Questss.GetQuestInstance(quest).MeetTheRequirements)
           {
             ssi.Add("{퀘스트 받기}");
             break;

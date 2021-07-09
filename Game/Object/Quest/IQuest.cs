@@ -10,19 +10,19 @@ namespace Goguma.Game.Object.Quest
   public interface IQuest
   {
     List<IDialog> Dialogs { get; set; }
-    DNpcAsk AskDialog { get; set; }
-    DNpcSay CancelledDialog { get; set; }
-    DNpcSay AcceptDialog { get; set; }
-    DNpcSay DeclineDialog { get; set; }
-    string Name { get; set; }
-    NpcList Npc { get; set; }
-    QuestRequirements QRequirements { get; set; }
+    QuestList QuestEnum { get; }
+    DNpcAsk AskDialog { get; }
+    DNpcSay CancelledDialog { get; }
+    DNpcSay AcceptDialog { get; }
+    DNpcSay DeclineDialog { get; }
+    string Name { get; }
+    NpcList Npc { get; }
+    QuestRequirements QRequirements { get; }
     bool MeetTheRequirements { get; }
     bool IsCompleted { get; }
-    double GivingExp { get; set; }
-    double GivingGold { get; set; }
-    List<IItem> GivingItems { get; set; }
-    List<int> GivingItemCounts { get; set; }
+    double GivingExp { get; }
+    double GivingGold { get; }
+    List<GivingItem> GivingItems { get; }
     bool ShowDialog();
     void Exe(IPlayer player);
     void OnCompleted();
