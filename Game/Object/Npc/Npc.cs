@@ -10,11 +10,25 @@ namespace Goguma.Game.Object.Npc
   public abstract class Npc
   {
     public string Name { get; protected set; }
+    public string NameColor { get; protected set; }
+    public List<string> Prefixs { get; protected set; }
+    public List<string> PrefixColors { get; protected set; }
     public DNpcSay Meet { get; set; }
     public DNpcSay Conversation { get; set; }
     public List<IQuest> Quests { get; set; }
     public string TypeString => Npcs.GetNpcTypeToString(Type);
     public abstract NpcType Type { get; }
+    public CTexts DisplayName
+    {
+      get
+      {
+        var resCT = new CTexts();
+        for (var i = 0; i < Prefixs.Count; i++)
+          resCT.Append($"{{[ {Prefixs[i]} ],{PrefixColors[i]}}}");
+        resCT.Append($"{{ {Name},{NameColor}}}");
+        return resCT;
+      }
+    }
 
     public virtual void OnDialogOpen()
     {
@@ -55,16 +69,19 @@ namespace Goguma.Game.Object.Npc
     public Npc()
     {
       Quests = new();
+      Prefixs = new List<string> { "NPC" };
+      PrefixColors = new List<string> { Colors.txtSuccess };
+      NameColor = Colors.txtInfo;
     }
 
     public void CompleteQuest()
     {
-
+      // TO DO
     }
 
     public void ReceiveQuest()
     {
-
+      // TO DO
     }
   }
 }

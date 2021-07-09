@@ -14,7 +14,7 @@ namespace Goguma.Game.Object.Quest.Dialog
 
     public override string Show(string playerAns = "")
     {
-      Answer = ReadYesOrNo(NpcText(playerAns), "수락", "거절");
+      Answer = ReadYesOrNo(Text.DisplayText(playerAns), "수락", "거절");
       return (Answer ? "수락" : "거절");
     }
     public bool ShowAsk()

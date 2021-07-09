@@ -22,7 +22,8 @@ namespace Goguma.Game.Object.Quest.Dialog
     }
     public override string Show(string playerAns = "")
     {
-      PrintCText(SelectScene.PrintQuestionText(NpcText(playerAns)));
+      PrintCText(SelectScene.PrintQuestionText(Text.DisplayText(playerAns)));
+      PrintText("\n");
       PrintCText(SelectScene.PrintReadText().Combine($"{{{PlayerSay}}}"));
 
       PrintCText($"{{\nESC. 대화 종료,{Colors.txtMuted}}}");

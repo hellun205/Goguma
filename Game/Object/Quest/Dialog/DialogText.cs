@@ -13,10 +13,7 @@ namespace Goguma.Game.Object.Quest.Dialog
     public List<string> PAns { get; set; }
     public CTexts GeneralText { get; set; }
     public bool HasPrefix { get; private set; }
-    public string Name { get; private set; }
-    public string[] Prefix { get; private set; }
-    public string NameColor { get; private set; }
-    public string[] PrefixColor { get; private set; }
+    public CTexts Prefix { get; private set; }
 
     public DialogText(CTexts genText)
     {
@@ -26,12 +23,9 @@ namespace Goguma.Game.Object.Quest.Dialog
       HasPrefix = false;
     }
 
-    public DialogText(CTexts genText, string[] prefix, string name, string[] prefixColor, string nameColor = Colors.txtDefault) : this(genText)
+    public DialogText(CTexts genText, CTexts prefix) : this(genText)
     {
-      Name = name;
       Prefix = prefix;
-      PrefixColor = prefixColor;
-      NameColor = nameColor;
       HasPrefix = true;
     }
 
@@ -96,10 +90,8 @@ namespace Goguma.Game.Object.Quest.Dialog
       // return (HasPrefix ? CTexts.Make($"{{[ {Prefix} ] ,{PrefixColor}}}{{{Name},{NameColor}}}{{ : }}").Combine(this[playerAnswer]) : this[playerAnswer]);
       var resCT = new CTexts();
       if (HasPrefix)
-        for (var i = 0; i < Prefix.Length; i++)
-          resCT.Append($"{{[ {Prefix[i]} ],{PrefixColor[i]}}}");
-      resCT.Append($"{{ {Name},{NameColor}}}{{ : }}")
-      .Append(this[playerAnswer]);
+        resCT.Append(Prefix).Append("{ : }");
+      resCT.Append(this[playerAnswer]);
 
       return resCT;
     }

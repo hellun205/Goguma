@@ -26,7 +26,7 @@ namespace Goguma.Game.Object.Quest.Dialog
       foreach (var str in PlayerSays)
         ssi.Add($"{{{str}}}");
 
-      var ss = new SelectScene(NpcText(playerAns), ssi, true, CTexts.Make($"{{대화 종료, {Colors.txtMuted}}}"));
+      var ss = new SelectScene(Text.DisplayText(playerAns), ssi, true, CTexts.Make($"{{대화 종료, {Colors.txtMuted}}}"));
       isCancelled = ss.isCancelled;
 
       return ss.getString;

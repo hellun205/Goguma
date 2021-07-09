@@ -13,7 +13,14 @@ namespace Goguma.Game.Console
     {
       for (var i = 0; i < printCText.Texts.Count; i++)
       {
-        colorify.Write(printCText.Texts[i].Text, printCText.Texts[i].Color);
+        try
+        {
+          colorify.Write(printCText.Texts[i].Text, printCText.Texts[i].Color);
+        }
+        catch
+        {
+          colorify.Write(printCText.Texts[i].Text, Colors.txtDefault);
+        }
       }
     }
     static public void PrintText(string printString)

@@ -25,8 +25,9 @@ namespace Goguma.Game.Object.Npc
     public NTrader(NpcList npcName) : this()
     {
       var text = String.Empty;
-      var prefix = new List<string> { "NPC", "상인" };
-      var prefixColor = new List<string> { Colors.txtSuccess, Colors.txtWarning };
+      Prefixs.Add("상인");
+      PrefixColors.Add(Colors.txtWarning);
+
       switch (npcName)
       {
         case NpcList.TRADER_K:
@@ -34,13 +35,16 @@ namespace Goguma.Game.Object.Npc
           Quests.Add(Quest.Quests.GetNewQuest(QuestList.TEST_QUEST));
 
           text = "{어서 옵셔~}";
+          Conversation = new(NpcList.TRADER_K, new DialogText(CTexts.Make("{어이쿠 손님 안녕하신가~}"), DisplayName));
           break;
         default:
           Name = "상인";
+
           text = "{어서오시오}";
+          Conversation = new(NpcList.TRADER_K, new DialogText(CTexts.Make("{안녕하시오.}"), DisplayName));
           break;
       }
-      Meet = new(NpcList.TRADER_K, new DialogText(CTexts.Make(text), prefix.ToArray(), Name, prefixColor.ToArray(), Colors.txtInfo));
+      Meet = new(NpcList.TRADER_K, new DialogText(CTexts.Make(text), DisplayName));
     }
 
     public override void OnDialogOpen()
@@ -102,7 +106,7 @@ namespace Goguma.Game.Object.Npc
                         select it;
             foreach (var item in items.ToList<IItem>())
               itemSSI.Add($"{{{item.Name} }} {{[ {item.PurchasePrice}G ],{Colors.txtWarning}}}");
-            var sItem = new SelectScene(CTexts.Make($"{{구매 할 아이템을 선택 하세요. 현재 보유한 GOLD: {InGame.player.Gold}}}"), itemSSI, true);
+            var sItem = new SelectScene(CTexts.Make($"{{구매 할 아이템을 선택 하세요. 현재 }}{{{InGame.player.Gold} G,{Colors.txtWarning}}}{{를 보유하고 있습니다.}}"), itemSSI, true);
             if (sItem.isCancelled) break;
 
             var itemToBuy = items.ToList<IItem>()[sItem.getIndex];
@@ -164,7 +168,7 @@ namespace Goguma.Game.Object.Npc
         var ssi = new SelectSceneItems();
         ssi.Add("{아이템 구매}");
         ssi.Add("{아이템 판매}");
-        var ss = new SelectScene($"{{{Name}(와)과 대화 중 입니다. 무엇을 하시겠습니까?}}", ssi, true);
+        var ss = new SelectScene("{무엇을 하시겠습니까?}", ssi, true);
         if (ss.isCancelled) return;
         switch (ss.getString)
         {
