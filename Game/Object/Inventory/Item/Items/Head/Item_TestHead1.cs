@@ -1,8 +1,10 @@
+using System;
 using Goguma.Game.Console;
 using Goguma.Game.Object.Inventory.Item.Equipment;
 
 namespace Goguma.Game.Object.Inventory.Item.Items
 {
+  [Serializable]
   public class Item_TestHead1 : EHead
   {
     public override ItemList Material => ItemList.TEST_ITEM2;

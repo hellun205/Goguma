@@ -1,9 +1,11 @@
+using System;
 using Colorify;
 using Goguma.Game.Console;
 using Goguma.Game.Object.Inventory.Item.Other;
 
 namespace Goguma.Game.Object.Inventory.Item.Items
 {
+  [Serializable]
   public class Item_GoldIngot : OtherItem
   {
     public override ItemList Material => ItemList.GOLD_INGOT;

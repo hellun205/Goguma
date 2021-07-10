@@ -1,8 +1,10 @@
+using System;
 using Goguma.Game.Console;
 using Goguma.Game.Object.Inventory.Item.Other;
 
 namespace Goguma.Game.Object.Inventory.Item.Items
 {
+  [Serializable]
   public class Item_StickyLiquid : OtherItem
   {
     public override ItemList Material => ItemList.STICKY_LIQUID;

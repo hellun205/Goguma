@@ -1,8 +1,10 @@
+using System;
 using Goguma.Game.Console;
 using Goguma.Game.Object.Inventory.Item.Equipment;
 
 namespace Goguma.Game.Object.Skill.Skills.Mob.Slime
 {
+  [Serializable]
   public class SpoutStickyLiquid : AttackSkill
   {
     public override string Name => "끈적한 액체 내뿜기";

@@ -1,7 +1,9 @@
+using System;
 using Goguma.Game.Console;
 
 namespace Goguma.Game.Object.Skill.Skills.Mob.TestMonster
 {
+  [Serializable]
   public class DefensivePosture : BuffSkill
   {
     public override string Name => "방어 태세";

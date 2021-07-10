@@ -1,7 +1,9 @@
+using System;
 using Goguma.Game.Console;
 
 namespace Goguma.Game.Object.Skill.Skills.Player.Buf
 {
+  [Serializable]
   public class TestBFSkill1 : BuffSkill
   {
     public override string Name => "조금 강력한 테스트 공격 스킬";

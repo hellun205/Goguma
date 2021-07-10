@@ -1,8 +1,10 @@
+using System;
 using Goguma.Game.Console;
 using Goguma.Game.Object.Inventory.Item.Consume;
 
 namespace Goguma.Game.Object.Inventory.Item.Items
 {
+  [Serializable]
   public class Item_TestPotion : CPotion
   {
     public override ItemList Material => ItemList.POTION_1;

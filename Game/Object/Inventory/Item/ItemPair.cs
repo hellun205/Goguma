@@ -1,5 +1,8 @@
+using System;
+
 namespace Goguma.Game.Object.Inventory.Item
 {
+  [Serializable]
   public struct ItemPair
   {
     public ItemList Item { get; set; }

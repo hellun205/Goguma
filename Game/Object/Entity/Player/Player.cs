@@ -342,7 +342,7 @@ namespace Goguma.Game.Object.Entity.Player
       else
       {
         CompletedQuests.Add(quest);
-        PrintCText($"{{  {Questss.GetQuestInstance(quest).Name},{Colors.txtInfo}}}{{퀘스트를 완료하셨습니다.\n}}");
+        PrintCText($"{{  {Questss.GetQuestInstance(quest).Name},{Colors.txtInfo}}}{{(을)를 완료하셨습니다.\n}}");
         Pause();
       }
       Quest.Remove(quest);

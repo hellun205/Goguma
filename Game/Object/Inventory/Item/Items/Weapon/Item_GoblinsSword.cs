@@ -1,8 +1,10 @@
+using System;
 using Goguma.Game.Console;
 using Goguma.Game.Object.Inventory.Item.Equipment;
 
 namespace Goguma.Game.Object.Inventory.Item.Items
 {
+  [Serializable]
   public class Item_GoblinsSword : EWeapon
   {
     public override ItemList Material => ItemList.GOBLINS_SWORD;

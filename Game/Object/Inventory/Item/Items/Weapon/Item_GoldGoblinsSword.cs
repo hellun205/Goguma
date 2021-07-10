@@ -1,9 +1,11 @@
+using System;
 using Colorify;
 using Goguma.Game.Console;
 using Goguma.Game.Object.Inventory.Item.Equipment;
 
 namespace Goguma.Game.Object.Inventory.Item.Items
 {
+  [Serializable]
   public class Item_GoldGoblinsSword : EWeapon
   {
     public override ItemList Material => ItemList.GOLD_GOBLINS_SWORD;

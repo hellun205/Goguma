@@ -49,7 +49,7 @@ namespace Goguma.Game.Object.Quest
             {
               PrintText("\n퀘스트를 포기했습니다.");
               Pause();
-              Quests.RemoveAt(ss.getIndex);
+              Remove(qst.Material);
             }
             break;
 

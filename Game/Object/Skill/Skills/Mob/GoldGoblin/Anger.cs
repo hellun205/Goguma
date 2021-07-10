@@ -1,7 +1,9 @@
+using System;
 using Goguma.Game.Console;
 
 namespace Goguma.Game.Object.Skill.Skills.Mob.GoldGoblin
 {
+  [Serializable]
   public class Anger : BuffSkill
   {
     public override string Name => "분노";

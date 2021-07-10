@@ -1,8 +1,10 @@
+using System;
 using Goguma.Game.Console;
 using Goguma.Game.Object.Inventory.Item.Equipment;
 
 namespace Goguma.Game.Object.Skill.Skills.Mob.GoldGoblin
 {
+  [Serializable]
   public class StingSword : AttackSkill
   {
     public override string Name => "스팅";

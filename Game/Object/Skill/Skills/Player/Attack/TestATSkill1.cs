@@ -1,8 +1,10 @@
+using System;
 using Goguma.Game.Console;
 using Goguma.Game.Object.Inventory.Item.Equipment;
 
 namespace Goguma.Game.Object.Skill.Skills.Player.Attack
 {
+  [Serializable]
   public class TestATSkill1 : AttackSkill
   {
     public override string Name => "테스트 공격 스킬1";
