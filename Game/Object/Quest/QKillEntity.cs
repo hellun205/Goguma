@@ -4,19 +4,20 @@ using Colorify;
 using Goguma.Game.Console;
 using Goguma.Game.Object.Entity.Monster;
 using Goguma.Game.Object.Quest.Exceptions;
+using static Goguma.Game.Console.ConsoleFunction;
 
 namespace Goguma.Game.Object.Quest
 {
   [Serializable]
   public abstract class QKillEntity : Quest
   {
-    public abstract List<Entitys> Entitys { get; }
+    public List<Entitys> Entitys { get; set; }
 
     public override QuestType Type => QuestType.KILL_ENTITY;
 
     public QKillEntity() : base()
     {
-      // Entitys = new List<Entitys>();
+      Entitys = new List<Entitys>();
     }
 
     public void OnKillEntity(MonsterList entity)
@@ -25,10 +26,14 @@ namespace Goguma.Game.Object.Quest
         if (Entitys[i].Mob == entity)
         {
           Entitys[i].Kill();
-          System.Console.Write($"{Entitys[i].KilledCount}");
           // return;
         }
       // throw new EntityNotInEntityList();
+      if (IsCompleted)
+      {
+        PrintCText($"{{\n퀘스트 : }}{{{Name},{Colors.txtInfo}}}{{(을)를 완료할 수 있습니다.\n}}");
+        Pause();
+      }
     }
 
     public override bool IsCompleted

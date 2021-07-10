@@ -32,15 +32,14 @@ namespace Goguma.Game.Object.Quest.Quests
     public override QuestRequirements QRequirements => new QuestRequirements(Material) { MinLv = 0 };
     public override double GivingExp => 20;
     public override double GivingGold => 10;
-    public override List<Entitys> Entitys => new()
-    {
-      new Entitys(Entity.Monster.MonsterList.SLIME, 10)
-    };
     public override List<GivingItem> GivingItems => new() { };
 
-    public Qst_TestQuest()
+    public Qst_TestQuest() : base()
     {
-
+      Entitys = new()
+      {
+        new(Entity.Monster.MonsterList.SLIME, 10)
+      };
     }
   }
 }

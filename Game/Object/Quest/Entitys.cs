@@ -20,7 +20,6 @@ namespace Goguma.Game.Object.Quest
     public void Kill()
     {
       KilledCount += 1;
-      System.Console.Write($"{KilledCount}");
     }
   }
 }
