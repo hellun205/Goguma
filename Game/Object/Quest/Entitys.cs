@@ -5,7 +5,7 @@ using Goguma.Game.Object.Entity.Monster;
 namespace Goguma.Game.Object.Quest
 {
   [Serializable]
-  public struct Entitys
+  public class Entitys
   {
     public MonsterList Mob { get; private set; }
     public int Count { get; private set; }
@@ -15,11 +15,12 @@ namespace Goguma.Game.Object.Quest
     {
       Mob = mob;
       Count = count;
-      KilledCount = 0;
+      // KilledCount = 0;
     }
     public void Kill()
     {
       KilledCount += 1;
+      System.Console.Write($"{KilledCount}");
     }
   }
 }

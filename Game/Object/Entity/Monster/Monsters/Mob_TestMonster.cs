@@ -11,7 +11,7 @@ namespace Goguma.Game.Object.Entity.Monster.Monsters
   public class Mob_TestMonster : Mob
   {
     public override string Name => "테스트 몬스터";
-    public override MonsterList MType => MonsterList.TEST_MONSTER;
+    public override MonsterList Material => MonsterList.TEST_MONSTER;
 
     public override CTexts Descriptions => CTexts.Make("{테스트용으로 사용되는 몬스터이다.}");
 

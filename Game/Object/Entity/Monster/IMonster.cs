@@ -11,5 +11,6 @@ namespace Goguma.Game.Object.Entity.Monster
     double GivingExp { get; }
     DroppingItems DroppingItems { get; }
     AttackSyss AttSystem { get; }
+    MonsterList Material { get; }
   }
 }

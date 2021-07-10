@@ -23,13 +23,13 @@ namespace Goguma.Game.Object.Quest.Quests
       };
     }
 
-    public override QuestList QType => QuestList.TEST_QUEST;
+    public override QuestList Material => QuestList.TEST_QUEST;
 
     public override DNpcAsk AskDialog => new DNpcAsk(Npc, "{오! 슬라임좀 잡아줄 수 있겠나 ?}");
     public override DNpcSay CancelledDialog => new DNpcSay(Npc, "{그려 잘가시게}", "넵");
     public override DNpcSay AcceptDialog => new DNpcSay(Npc, "{고맙네!! 그럼 부탁하네}", "네");
     public override DNpcSay DeclineDialog => new DNpcSay(Npc, "{알겠네.. 슬라임이 잡고 싶다 생각하면 찾아오게나}", "알겠수다");
-    public override QuestRequirements QRequirements => new QuestRequirements(QType) { MinLv = 0 };
+    public override QuestRequirements QRequirements => new QuestRequirements(Material) { MinLv = 0 };
     public override double GivingExp => 20;
     public override double GivingGold => 10;
     public override List<Entitys> Entitys => new()

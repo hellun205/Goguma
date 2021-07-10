@@ -11,7 +11,7 @@ namespace Goguma.Game.Object.Entity.Monster.Monsters
   public class Mob_GoldGoblin : Mob
   {
     public override string Name => "황금 고블린";
-    public override MonsterList MType => MonsterList.GOLD_GOBLIN;
+    public override MonsterList Material => MonsterList.GOLD_GOBLIN;
 
     public override CTexts Descriptions => CTexts.Make("{황금색 고블린이다. 죽이면 고가의 아이템을 얻을 수 있을지도 모른다.}");
 

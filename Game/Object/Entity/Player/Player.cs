@@ -9,6 +9,8 @@ using Goguma.Game.Object.Map.Town;
 using Goguma.Game.Object.Inventory.Item.Equipment;
 using Goguma.Game.Object.Quest;
 using System.Collections.Generic;
+using Goguma.Game.Object.Entity.Monster;
+using System.Linq;
 
 namespace Goguma.Game.Object.Entity.Player
 {
@@ -20,6 +22,8 @@ namespace Goguma.Game.Object.Entity.Player
     public QuestSys Quest { get; set; }
     public List<QuestList> CompletedQuests { get; set; }
     public Location Loc { get; set; }
+
+    public List<Entitys> KilledMobs { get; set; }
 
     public double Ep
     {
@@ -133,6 +137,7 @@ namespace Goguma.Game.Object.Entity.Player
       Loc = new Location(Towns.kks.Name, true);
       Quest = new();
       CompletedQuests = new();
+      KilledMobs = new();
       MaxHp = 50;
       MaxEp = 30;
       Hp = MaxHp;
@@ -257,6 +262,40 @@ namespace Goguma.Game.Object.Entity.Player
       {
         isCrit = false;
         return Math.Round(dmg, 2);
+      }
+    }
+
+    public void KillMob(MonsterList monster)
+    {
+      int containsIndex = 0;
+      var contains = false;
+      for (var i = 0; i < KilledMobs.Count; i++)
+      {
+        if (KilledMobs[i].Mob == monster)
+        {
+          containsIndex = i;
+          contains = true;
+          break;
+        }
+      }
+
+      if (contains)
+      {
+        KilledMobs[containsIndex].Kill();
+      }
+      else
+      {
+        KilledMobs.Add(new(monster, 0));
+        KilledMobs[^1].Kill();
+      }
+
+      var killEntityQuests = (from qst in Quest.Quests
+                              where (qst.Type == QuestType.KILL_ENTITY)
+                              select qst).Cast<QKillEntity>().ToList();
+
+      foreach (var qst in killEntityQuests)
+      {
+        qst.OnKillEntity(monster);
       }
     }
   }

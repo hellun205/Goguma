@@ -8,12 +8,14 @@ using static Goguma.Game.Console.StringFunction;
 
 namespace Goguma.Game.Object.Quest
 {
+  [Serializable]
   public abstract class Quest : IQuest
   {
     public abstract string Name { get; }
+    public abstract QuestType Type { get; }
     public abstract Npc.Npc Npc { get; }
     public abstract List<IDialog> Dialogs { get; }
-    public abstract QuestList QType { get; }
+    public abstract QuestList Material { get; }
     public abstract DNpcAsk AskDialog { get; }
     public abstract DNpcSay CancelledDialog { get; }
     public abstract DNpcSay AcceptDialog { get; }
@@ -69,7 +71,7 @@ namespace Goguma.Game.Object.Quest
       var ask = ShowDialog();
       if (ask)
       {
-        player.Quest.Add(QType);
+        player.Quest.Add(Material);
       }
     }
 

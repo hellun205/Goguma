@@ -9,7 +9,7 @@ namespace Goguma.Game.Object.Entity.Monster.Monsters
   public class Mob_Goblin : Mob
   {
     public override string Name => "고블린";
-    public override MonsterList MType => MonsterList.GOBLIN;
+    public override MonsterList Material => MonsterList.GOBLIN;
 
     public override CTexts Descriptions => CTexts.Make("{못생겼다.}");
 

@@ -11,7 +11,7 @@ namespace Goguma.Game.Object.Entity.Monster.Monsters
   public class Mob_Slime : Mob
   {
     public override string Name => "슬라임";
-    public override MonsterList MType => MonsterList.SLIME;
+    public override MonsterList Material => MonsterList.SLIME;
 
     public override CTexts Descriptions => CTexts.Make("{끈적끈적하니 기분이 더럽다.}");
 

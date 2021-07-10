@@ -49,6 +49,7 @@ namespace Goguma.Game.Object.Battle
         player.Exp += ExpByLevel(monster.GivingExp, player.Level, monster.Level);
         foreach (var item in drop)
           player.Inventory.GetItem(item);
+        player.KillMob(monster.Material);
       };
       Func<IAttackSkill, bool> UseAttackSkill = (IAttackSkill skill) =>
       {

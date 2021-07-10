@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using Goguma.Game.Console;
 using Goguma.Game.Object.Entity.Player;
-using Goguma.Game.Object.Inventory.Item;
-using Goguma.Game.Object.Npc;
 using Goguma.Game.Object.Quest.Dialog;
 
 namespace Goguma.Game.Object.Quest
@@ -10,7 +8,8 @@ namespace Goguma.Game.Object.Quest
   public interface IQuest
   {
     List<IDialog> Dialogs { get; }
-    QuestList QType { get; }
+    QuestType Type { get; }
+    QuestList Material { get; }
     DNpcAsk AskDialog { get; }
     DNpcSay CancelledDialog { get; }
     DNpcSay AcceptDialog { get; }

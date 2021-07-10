@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Colorify;
 using Goguma.Game.Console;
@@ -6,9 +7,12 @@ using Goguma.Game.Object.Quest.Exceptions;
 
 namespace Goguma.Game.Object.Quest
 {
+  [Serializable]
   public abstract class QKillEntity : Quest
   {
     public abstract List<Entitys> Entitys { get; }
+
+    public override QuestType Type => QuestType.KILL_ENTITY;
 
     public QKillEntity() : base()
     {
@@ -17,13 +21,14 @@ namespace Goguma.Game.Object.Quest
 
     public void OnKillEntity(MonsterList entity)
     {
-      foreach (var item in Entitys)
-        if (item.Mob == entity)
+      for (var i = 0; i < Entitys.Count; i++)
+        if (Entitys[i].Mob == entity)
         {
-          Entitys[Entitys.IndexOf(item)].Kill();
-          return;
+          Entitys[i].Kill();
+          System.Console.Write($"{Entitys[i].KilledCount}");
+          // return;
         }
-      throw new EntityNotInEntityList();
+      // throw new EntityNotInEntityList();
     }
 
     public override bool IsCompleted
@@ -41,10 +46,8 @@ namespace Goguma.Game.Object.Quest
       var resCT = new CTexts();
       foreach (var entity in Entitys)
       {
-        var ent = Monster.GetNew(entity.Mob);
-        var index = Entitys.IndexOf(entity);
-        resCT.Append(ent.Name)
-        .Append($"{{ {Entitys[index].Count} 마리 처치 - ( {Entitys[index].KilledCount} / {Entitys[index].Count} )\n,{(Entitys[index].KilledCount >= Entitys[index].Count ? Colors.txtSuccess : Colors.txtDefault)}}}");
+        var ent = Monster.GetInstance(entity.Mob);
+        resCT.Append($"{{{ent.Name},{Colors.txtInfo}}}{{ {entity.Count} 마리 처치 - ( {entity.KilledCount} / {entity.Count} )\n,{(entity.KilledCount >= entity.Count ? Colors.txtSuccess : Colors.txtDefault)}}}");
       }
       return resCT;
     }
