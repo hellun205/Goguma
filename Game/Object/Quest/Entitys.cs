@@ -1,8 +1,10 @@
 
+using System;
 using Goguma.Game.Object.Entity.Monster;
 
 namespace Goguma.Game.Object.Quest
 {
+  [Serializable]
   public struct Entitys
   {
     public MonsterList Mob { get; private set; }

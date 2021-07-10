@@ -3,7 +3,7 @@ namespace Goguma.Game.Object.Entity.AttSys
   public class AttCondition
   {
     public Player.Player player;
-    public Monster.Monster monster;
+    public Monster.Mob monster;
     public Cond cond1;
     public double cond2;
     public string cond;

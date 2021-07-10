@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Colorify;
-using Colorify.UI;
 using Goguma.Game.Console;
 using Goguma.Game.Object.Quest.Dialog.Exceptions;
 

@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using Colorify;
 using Goguma.Game.Console;
-using Goguma.Game.Object.Npc;
 using static Goguma.Game.Console.ConsoleFunction;
 
 namespace Goguma.Game.Object.Quest.Dialog
@@ -33,6 +31,7 @@ namespace Goguma.Game.Object.Quest.Dialog
       foreach (var dialog in dialogs)
       {
         ans = dialog.Show(ans);
+        PrintText("\n\n");
         if (dialog.isCancelled)
         {
           cancelledDialog.Show();

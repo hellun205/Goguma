@@ -10,7 +10,7 @@ namespace Goguma.Game.Object.Inventory.Item.Drop
     public List<DroppingItem> Items { get; set; }
     public DroppingItems()
     {
-      Items = new List<DroppingItem>();
+      Items = new();
     }
     public DroppingItems(List<DroppingItem> items)
     {
@@ -28,7 +28,7 @@ namespace Goguma.Game.Object.Inventory.Item.Drop
                  where it.DropChance >= (int)new Random().Next(1, 101)
                  select it;
       foreach (var it in item)
-        dItems.Add(it.Item);
+        dItems.Add(Goguma.Game.Object.Inventory.Item.Items.Get(it.Item));
       return dItems;
     }
   }

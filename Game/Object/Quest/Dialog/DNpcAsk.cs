@@ -1,5 +1,4 @@
 using Goguma.Game.Console;
-using Goguma.Game.Object.Npc;
 using static Goguma.Game.Console.ConsoleFunction;
 
 namespace Goguma.Game.Object.Quest.Dialog

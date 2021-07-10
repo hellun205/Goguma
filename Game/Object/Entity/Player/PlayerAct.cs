@@ -40,6 +40,7 @@ namespace Goguma.Game.Object.Entity.Player
           resultSSI.Add("{캐릭터 정보 보기}");
           resultSSI.Add("{인벤토리 열기}");
           resultSSI.Add("{스킬 보기}");
+          resultSSI.Add("{퀘스트 보기}");
           resultSSI.Add("{이동하기}");
           resultSSI.Add($"{{{InGame.player.Loc.Loc} 살펴보기}}");
 
@@ -137,6 +138,9 @@ namespace Goguma.Game.Object.Entity.Player
         case "스킬 보기":
           ViewSkill();
           break;
+        case "퀘스트 보기":
+          InGame.player.Quest.ShowQuests();
+          break;
         case "이동하기":
           InGame.player.Loc.Move();
           break;
@@ -222,7 +226,7 @@ namespace Goguma.Game.Object.Entity.Player
           sb.Append("\n없음");
         else
           foreach (var m in road.SummonMonsters)
-            sb.Append($"\n{Monsters.Get(m.Monster).Name}");
+            sb.Append($"\n{Monster.Monster.Get(m.Monster).Name}");
       }
 
       sb.Append("\n" + StringFunction.GetSep(30));
@@ -270,7 +274,7 @@ namespace Goguma.Game.Object.Entity.Player
               player.Exp += player.RequiredForLevelUp();
               break;
             case "Battle with test monster":
-              var testMonster = Monsters.Get(MonsterList.TEST_MONSTER);
+              var testMonster = Monster.Monster.Get(MonsterList.TEST_MONSTER);
               Battle.Battle.PvE(testMonster);
               break;
             case "Add Test Skill":

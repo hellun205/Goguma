@@ -5,6 +5,7 @@ using Goguma.Game.Console;
 using Goguma.Game.Object.Quest;
 using Goguma.Game.Object.Quest.Dialog;
 using System.Linq;
+using static Goguma.Game.Console.ConsoleFunction;
 
 namespace Goguma.Game.Object.Npc
 {
@@ -69,18 +70,30 @@ namespace Goguma.Game.Object.Npc
 
     public void ReceiveQuest()
     {
-      var ssi = new SelectSceneItems();
-      var quests = (from qst in Quests
-                    where Questss.GetQuestInstance(qst).MeetTheRequirements
-                    select qst).ToList();
-      foreach (var quest in quests)
+      while (true)
       {
-        ssi.Add($"{{[ Lv. {Questss.GetQuestInstance(quest).QRequirements.MinLv} ] ,{Colors.txtWarning}}}{{{Questss.GetQuestInstance(quest).Name}}}");
+        var ssi = new SelectSceneItems();
+        var quests = (from qst in Quests
+                      where Questss.GetQuestInstance(qst).MeetTheRequirements
+                      select qst).ToList();
+        foreach (var quest in quests)
+        {
+          ssi.Add($"{{[ Lv. {Questss.GetQuestInstance(quest).QRequirements.MinLv} ] ,{Colors.txtWarning}}}{{{Questss.GetQuestInstance(quest).Name}}}");
+        }
+
+        var ss = new SelectScene(MeetDialog.Text.DisplayText(String.Empty), ssi, true);
+        if (ss.isCancelled) return;
+
+        var res = Questss.GetQuestInstance(quests[ss.getIndex]);
+        if (res.ShowDialog())
+        {
+          PrintCText($"{{퀘스트 }}{{{res.Name},{Colors.txtInfo}}}{{(을)를 받았습니다.\n}}");
+          Pause();
+
+          InGame.player.Quest.Add(quests[ss.getIndex]);
+        }
+        // TO DO  
       }
-
-      var ss = new SelectScene(MeetDialog.Text.DisplayText(String.Empty), ssi, true);
-
-      // TO DO
     }
   }
 }

@@ -8,14 +8,14 @@ namespace Goguma.Game.Object.Entity.AttSys
   public class AttackSyss
   {
     private Player.Player mPlayer;
-    private Monster.Monster mMonster;
+    private Monster.Mob mMonster;
     public List<ISkill> Skill { get; set; }
     public List<AttCondition> Condition { get; set; }
-    public AttackSyss(Player.Player player, Monster.Monster monster)
+    public AttackSyss(Monster.Mob monster)
     {
       Skill = new List<ISkill>();
       Condition = new List<AttCondition>();
-      mPlayer = player;
+      mPlayer = InGame.player;
       mMonster = monster;
     }
     public void Clear()

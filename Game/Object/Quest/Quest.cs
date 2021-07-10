@@ -3,20 +3,17 @@ using System.Collections.Generic;
 using Colorify;
 using Goguma.Game.Console;
 using Goguma.Game.Object.Entity.Player;
-using Goguma.Game.Object.Inventory.Item;
-using Goguma.Game.Object.Npc;
 using Goguma.Game.Object.Quest.Dialog;
-using static Goguma.Game.Console.ConsoleFunction;
 using static Goguma.Game.Console.StringFunction;
 
 namespace Goguma.Game.Object.Quest
 {
-  abstract class Quest : IQuest
+  public abstract class Quest : IQuest
   {
     public abstract string Name { get; }
     public abstract Npc.Npc Npc { get; }
     public abstract List<IDialog> Dialogs { get; }
-    public abstract QuestList QuestEnum { get; }
+    public abstract QuestList QType { get; }
     public abstract DNpcAsk AskDialog { get; }
     public abstract DNpcSay CancelledDialog { get; }
     public abstract DNpcSay AcceptDialog { get; }
@@ -72,7 +69,7 @@ namespace Goguma.Game.Object.Quest
       var ask = ShowDialog();
       if (ask)
       {
-        player.Quest.Add(this);
+        player.Quest.Add(QType);
       }
     }
 

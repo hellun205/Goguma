@@ -13,41 +13,41 @@ namespace Goguma.Game.Object.Entity
   [Serializable]
   public abstract class Entity : IEntity
   {
-    public string Name { get; set; }
+    public virtual string Name { get; set; }
     public abstract EntityType Type { get; }
-    public int Level { get; set; }
-    public double Hp
+    public virtual int Level { get; set; }
+    public virtual double Hp
     {
       get => Math.Round(hp, 2);
       set => hp = Math.Min(value, MaxHp);
     }
-    public double MaxHp
+    public virtual double MaxHp
     {
       get => Math.Round(maxHp + BuffsIncrease.MaxHp, 2);
       set => maxHp = Math.Max(1, value);
     }
-    public double AttDmg
+    public virtual double AttDmg
     {
       get => Math.Round(attDmg + BuffsIncrease.AttDmg, 2);
       set => attDmg = Math.Max(0, value);
     }
 
-    public double DefPer
+    public virtual double DefPer
     {
       get => Math.Round(defPer + BuffsIncrease.DefPer, 2);
       set => defPer = Math.Max(0, value);
     }
-    public double IgnoreDef
+    public virtual double IgnoreDef
     {
       get => Math.Round(ignoreDef + BuffsIncrease.IgnoreDef, 2);
       set => ignoreDef = Math.Max(0, value);
     }
-    public double CritDmg
+    public virtual double CritDmg
     {
       get => Math.Round(critDmg + BuffsIncrease.CritDmg, 2);
       set => critDmg = Math.Max(0, value);
     }
-    public double CritPer
+    public virtual double CritPer
     {
       get => Math.Floor(critPer + BuffsIncrease.CritPer);
       set => critPer = Math.Max(0, value);
@@ -97,14 +97,14 @@ namespace Goguma.Game.Object.Entity
       MaxHp = entity.MaxHp;
     }
 
-    public void AddBuff(IBuffSkill skill)
+    public virtual void AddBuff(IBuffSkill skill)
     {
       Buffs.Add(skill);
       if (skill.buff.Hp != 0)
         Hp += skill.buff.Hp;
     }
 
-    public void RemoveBuff(IBuffSkill skill)
+    public virtual void RemoveBuff(IBuffSkill skill)
     {
       Buffs.Remove(skill);
     }
@@ -120,7 +120,7 @@ namespace Goguma.Game.Object.Entity
       return Info().ToString();
     }
 
-    protected CTexts Info()
+    protected virtual CTexts Info()
     {
       return new CTexts()
         .Append($"{{\n{GetSep(40, $"{Name} [ Lv. {Level} ]")}}}")
@@ -134,19 +134,19 @@ namespace Goguma.Game.Object.Entity
         .Append($"{{\n{GetSep(40)}}}");
     }
 
-    public double CalAttDmg(IAttackSkill aSkill, IEntity entity, out bool isCrit)
+    public virtual double CalAttDmg(IAttackSkill aSkill, IEntity entity, out bool isCrit)
     {
       var dmg = DamageByLevel((AttDmg + aSkill.Effect.AttDmg), Level, entity.Level) * (1 - ((entity.DefPer / 100) - ((IgnoreDef + aSkill.Effect.IgnoreDef) / 100)));
       return CalCritDmg(dmg, out isCrit, aSkill.Effect);
     }
 
-    public double CalAttDmg(IEntity entity, out bool isCrit)
+    public virtual double CalAttDmg(IEntity entity, out bool isCrit)
     {
       var dmg = DamageByLevel(AttDmg, Level, entity.Level) * (1 - ((entity.DefPer / 100) - ((IgnoreDef) / 100)));
       return CalCritDmg(dmg, out isCrit);
     }
 
-    protected double CalCritDmg(double dmg, out bool isCrit, WeaponEffect wEffect)
+    protected virtual double CalCritDmg(double dmg, out bool isCrit, WeaponEffect wEffect)
     {
       var rand = new Random().Next(0, 101);
       var critPer = Math.Round(CritPer + wEffect.CritPer, 2);
@@ -162,7 +162,7 @@ namespace Goguma.Game.Object.Entity
       }
     }
 
-    protected double CalCritDmg(double dmg, out bool isCrit)
+    protected virtual double CalCritDmg(double dmg, out bool isCrit)
     {
       var rand = new Random().Next(0, 101);
       var critPer = Math.Round(CritPer, 2);

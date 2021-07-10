@@ -12,12 +12,14 @@ namespace Goguma.Game.Object.Quest
   public class QuestSys
   {
     public List<IQuest> Quests { get; set; }
+    public List<QuestList> QType { get; set; }
 
     public int Count => Quests.Count;
 
     public QuestSys()
     {
       Quests = new();
+      QType = new();
     }
 
     public void ShowQuests()
@@ -55,29 +57,25 @@ namespace Goguma.Game.Object.Quest
       }
     }
 
-    public void Add(IQuest quest)
+    public void Add(QuestList quest)
     {
-      Quests.Add(quest);
+      Quests.Add(Questss.GetNewQuest(quest));
+      QType.Add(quest);
     }
 
-    public void Remove(IQuest quest)
+    public void Remove(QuestList quest)
     {
-      Quests.Remove(quest);
+      Quests.Remove(Questss.GetNewQuest(quest));
+      QType.Add(quest);
     }
 
-    public List<IQuest> PossibleToComplete()
-    {
-      return (from qst in Quests
-              where qst.IsCompleted == true
-              select qst).ToList();
-    }
+    public List<IQuest> PossibleToComplete => (from qst in Quests
+                                               where qst.IsCompleted == true
+                                               select qst).ToList();
 
-    public List<IQuest> ImpossibleToComplete()
-    {
-      return (from qst in Quests
-              where qst.IsCompleted == false
-              select qst).ToList();
-    }
+    public List<IQuest> ImpossibleToComplete => (from qst in Quests
+                                                 where qst.IsCompleted == false
+                                                 select qst).ToList();
 
   }
 }

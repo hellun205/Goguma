@@ -1,8 +1,6 @@
 using System.Collections.Generic;
-using System.Runtime.Intrinsics.X86;
 using Colorify;
 using Goguma.Game.Console;
-using Goguma.Game.Object.Npc;
 
 namespace Goguma.Game.Object.Quest.Dialog
 {

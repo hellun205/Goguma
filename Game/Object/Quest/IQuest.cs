@@ -10,7 +10,7 @@ namespace Goguma.Game.Object.Quest
   public interface IQuest
   {
     List<IDialog> Dialogs { get; }
-    QuestList QuestEnum { get; }
+    QuestList QType { get; }
     DNpcAsk AskDialog { get; }
     DNpcSay CancelledDialog { get; }
     DNpcSay AcceptDialog { get; }

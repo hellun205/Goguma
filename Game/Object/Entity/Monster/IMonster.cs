@@ -7,10 +7,10 @@ namespace Goguma.Game.Object.Entity.Monster
 {
   public interface IMonster : IEntity
   {
-    CTexts Descriptions { get; set; }
-    double GivingGold { get; set; }
-    double GivingExp { get; set; }
-    DroppingItems DroppingItems { get; set; }
-    AttackSyss AttSystem { get; set; }
+    CTexts Descriptions { get; }
+    double GivingGold { get; }
+    double GivingExp { get; }
+    DroppingItems DroppingItems { get; }
+    AttackSyss AttSystem { get; }
   }
 }

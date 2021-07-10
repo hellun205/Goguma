@@ -1,4 +1,3 @@
-using Goguma.Game.Console;
 
 namespace Goguma.Game.Object.Quest.Dialog
 {
