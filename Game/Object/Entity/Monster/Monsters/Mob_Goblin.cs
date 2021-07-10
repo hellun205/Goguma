@@ -3,7 +3,6 @@ using Goguma.Game.Console;
 using Goguma.Game.Object.Entity.AttSys;
 using Goguma.Game.Object.Inventory.Item;
 using Goguma.Game.Object.Inventory.Item.Drop;
-using Goguma.Game.Object.Skill;
 
 namespace Goguma.Game.Object.Entity.Monster.Monsters
 {
@@ -29,11 +28,11 @@ namespace Goguma.Game.Object.Entity.Monster.Monsters
 
     public Mob_Goblin()
     {
-      MaxHp = 100;
-      Hp = 100;
-      AttDmg = 4;
-      DefPer = 20;
-      Level = 10;
+      MaxHp = 7;
+      Hp = 7;
+      AttDmg = 2.3;
+      DefPer = 0.4;
+      Level = 3;
     }
 
     public override IMonster GetInstance()

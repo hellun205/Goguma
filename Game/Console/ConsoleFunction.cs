@@ -38,6 +38,7 @@ namespace Goguma.Game.Console
         PrintCText($"{{\n계속하려면 아무 키나 누르시오., {Colors.txtMuted} }}");
 
       ReadKey(true);
+      PrintText("\n\n");
     }
 
     static private void PrintQuestionText(CTexts questionText)
