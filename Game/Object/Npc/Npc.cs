@@ -17,6 +17,8 @@ namespace Goguma.Game.Object.Npc
     public Prefix Prefix { get; protected set; }
     public abstract DNpcSay MeetDialog { get; }
     public abstract DNpcSay ConversationDialog { get; }
+    public abstract DNpcSay QuestReceiveDialog { get; }
+    public abstract DNpcSay QuestCompleteDialog { get; }
     public abstract List<QuestList> Quests { get; }
     public string TypeString => Npcs.GetNpcTypeToString(NpcType);
     public abstract NpcType NpcType { get; }
@@ -28,7 +30,7 @@ namespace Goguma.Game.Object.Npc
       {
         var ssi = new SelectSceneItems();
         foreach (var quest in InGame.player.Quest.Quests)
-          if (quest.IsCompleted)
+          if ((quest.Npc.Type == Type) && quest.IsCompleted)
           {
             ssi.Add("{퀘스트 완료}");
             break;
@@ -65,7 +67,19 @@ namespace Goguma.Game.Object.Npc
 
     public void CompleteQuest()
     {
-      // TO DO
+      var ssi = new SelectSceneItems();
+      var quests = (from qst in InGame.player.Quest.Quests
+                    where (qst.Npc.Type == Type)
+                    select qst).ToList();
+      foreach (var quest in quests)
+      {
+        ssi.Add($"{{[ Lv. {quest.QRequirements.MinLv} ] ,{Colors.txtWarning}}}{{{quest.Name}}}{{{(quest.IsCompleted ? $"[ 완료 가능 ],{Colors.txtSuccess}" : $"[ 진행 중 ],{Colors.txtWarning}")}}}", quest.IsCompleted);
+      }
+
+      var ss = new SelectScene(QuestCompleteDialog.Text.DisplayText(String.Empty), ssi, true);
+      if (ss.isCancelled) return;
+
+      if (InGame.player.CompleteQuest(quests[ss.getIndex].Material)) quests[ss.getIndex].OnCompleted();
     }
 
     public void ReceiveQuest()
@@ -81,7 +95,7 @@ namespace Goguma.Game.Object.Npc
           ssi.Add($"{{[ Lv. {Questss.GetQuestInstance(quest).QRequirements.MinLv} ] ,{Colors.txtWarning}}}{{{Questss.GetQuestInstance(quest).Name}}}");
         }
 
-        var ss = new SelectScene(MeetDialog.Text.DisplayText(String.Empty), ssi, true);
+        var ss = new SelectScene(QuestReceiveDialog.Text.DisplayText(String.Empty), ssi, true);
         if (ss.isCancelled) return;
 
         var res = Questss.GetQuestInstance(quests[ss.getIndex]);
@@ -92,7 +106,6 @@ namespace Goguma.Game.Object.Npc
 
           InGame.player.Quest.Add(quests[ss.getIndex]);
         }
-        // TO DO  
       }
     }
   }

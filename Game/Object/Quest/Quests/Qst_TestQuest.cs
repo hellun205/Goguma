@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Goguma.Game.Object.Inventory.Item;
 using Goguma.Game.Object.Npc;
 using Goguma.Game.Object.Quest.Dialog;
 
@@ -13,15 +14,17 @@ namespace Goguma.Game.Object.Quest.Quests
 
     public override Npc.Npc Npc => Npcs.Get(NpcList.TRADER_K);
 
-    public override List<IDialog> Dialogs
+    public override List<IDialog> Dialogs => new()
     {
-      get => new List<IDialog>()
-      {
-        new DNpcSay(Npc, "{하...}", "무슨 일 있으셔요?"),
-        new DNpcSay(Npc, "{그게 말이다.. 슬라임 때문에 손님이 너무없어~}", "슬라임?"),
-        new DNpcSay(Npc, "{그렇다.. 손님이 없어서야 원.. 장사를 할수가 있나}", "제가 잡아드릴까요?"),
-      };
-    }
+      new DNpcSay(Npc, "{하...}", "무슨 일 있으셔요?"),
+      new DNpcSay(Npc, "{그게 말이다.. 슬라임 때문에 손님이 너무없어~}", "슬라임?"),
+      new DNpcSay(Npc, "{그렇다.. 손님이 없어서야 원.. 장사를 할수가 있나}", "제가 잡아드릴까요?"),
+    };
+
+    public override List<IDialog> OnCompleteDialog => new()
+    {
+      new DNpcSay(Npc, "{고맙네 정말!!}", "이 정도는 간단하죠!")
+    };
 
     public override QuestList Material => QuestList.TEST_QUEST;
 
@@ -31,14 +34,17 @@ namespace Goguma.Game.Object.Quest.Quests
     public override DNpcSay DeclineDialog => new DNpcSay(Npc, "{알겠네.. 슬라임이 잡고 싶다 생각하면 찾아오게나}", "알겠수다");
     public override QuestRequirements QRequirements => new QuestRequirements(Material) { MinLv = 0 };
     public override double GivingExp => 20;
-    public override double GivingGold => 10;
-    public override List<GivingItem> GivingItems => new() { };
+    public override int GivingGold => 10;
+    public override List<ItemPair> GivingItems => new()
+    {
+      new(ItemList.POTION_1, 10)
+    };
 
     public Qst_TestQuest() : base()
     {
       Entitys = new()
       {
-        new(Entity.Monster.MonsterList.SLIME, 10)
+        new(Entity.Monster.MonsterList.SLIME, 3)
       };
     }
   }

@@ -23,5 +23,9 @@ namespace Goguma.Game.Object.Npc.NpcTrader
     };
 
     public override DNpcSay OpenShopDialog => ConversationDialog;
+
+    public override DNpcSay QuestReceiveDialog => throw new System.NotImplementedException();
+
+    public override DNpcSay QuestCompleteDialog => throw new System.NotImplementedException();
   }
 }

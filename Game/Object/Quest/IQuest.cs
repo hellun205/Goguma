@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Goguma.Game.Console;
 using Goguma.Game.Object.Entity.Player;
+using Goguma.Game.Object.Inventory.Item;
 using Goguma.Game.Object.Quest.Dialog;
 
 namespace Goguma.Game.Object.Quest
@@ -20,8 +21,8 @@ namespace Goguma.Game.Object.Quest
     bool MeetTheRequirements { get; }
     bool IsCompleted { get; }
     double GivingExp { get; }
-    double GivingGold { get; }
-    List<GivingItem> GivingItems { get; }
+    int GivingGold { get; }
+    List<ItemPair> GivingItems { get; }
     bool ShowDialog();
     void Exe(IPlayer player);
     void OnCompleted();

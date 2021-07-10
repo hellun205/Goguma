@@ -9,7 +9,7 @@ namespace Goguma.Game.Object.Inventory.Item.Consume
   [Serializable]
   public abstract class ConsumeItem : Item, IConsumeItem
   {
-    public override CTexts DisplayName => Name.Combine($"{{ ( {CTypeString} ),{Colors.txtSuccess}}}");
+    public override CTexts DisplayName => CTexts.Make($"{{[ {TypeString} ],{Colors.txtWarning}}}{{ }}{{[ {CTypeString} ],{Colors.txtSuccess}}}{{ }}").Combine(Name);
     public override HavingType Type => HavingType.Consume;
     public abstract ConsumeItemType CType { get; }
     public override int MaxCount => 64;

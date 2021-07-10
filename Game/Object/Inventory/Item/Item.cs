@@ -1,4 +1,5 @@
-﻿using Goguma.Game.Console;
+﻿using Colorify;
+using Goguma.Game.Console;
 using System;
 using static Goguma.Game.Console.ConsoleFunction;
 
@@ -9,7 +10,7 @@ namespace Goguma.Game.Object.Inventory.Item
   {
     public abstract CTexts Name { get; }
     public abstract ItemList Material { get; }
-    public abstract CTexts DisplayName { get; }
+    public virtual CTexts DisplayName => CTexts.Make($"{{[ {TypeString} ],{Colors.txtWarning}}}{{ }}").Combine(Name);
     public int Count { get; set; }
     public abstract int MaxCount { get; }
     public abstract HavingType Type { get; }

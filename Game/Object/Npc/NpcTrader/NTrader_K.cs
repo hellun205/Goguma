@@ -26,5 +26,9 @@ namespace Goguma.Game.Object.Npc.NpcTrader
     };
 
     public override DNpcSay OpenShopDialog => new DNpcSay(this, "{물건 많이 있수다!}");
+
+    public override DNpcSay QuestReceiveDialog => new(this, "{부탁좀 하겠네!}");
+
+    public override DNpcSay QuestCompleteDialog => QuestReceiveDialog;
   }
 }

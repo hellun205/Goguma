@@ -65,8 +65,14 @@ namespace Goguma.Game.Object.Quest
 
     public void Remove(QuestList quest)
     {
-      Quests.Remove(Questss.GetNewQuest(quest));
-      QType.Add(quest);
+      var quests = (from qst in Quests
+                    where qst.Material == quest
+                    select qst).ToList();
+      foreach (var qst in quests)
+      {
+        Quests.Remove(qst);
+      }
+      QType.Remove(quest);
     }
 
     public List<IQuest> PossibleToComplete => (from qst in Quests

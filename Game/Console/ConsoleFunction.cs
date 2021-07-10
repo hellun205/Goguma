@@ -32,13 +32,13 @@ namespace Goguma.Game.Console
       PrintCText(CTexts.Make(printString));
     }
 
-    static public void Pause(bool isPauseText = true)
+    static public void Pause(bool isPauseText = false)
     {
       if (isPauseText)
         PrintCText($"{{\n계속하려면 아무 키나 누르시오., {Colors.txtMuted} }}");
 
       ReadKey(true);
-      PrintText("\n\n");
+      PrintText("\n");
     }
 
     static private void PrintQuestionText(CTexts questionText)

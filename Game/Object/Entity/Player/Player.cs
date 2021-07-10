@@ -11,6 +11,7 @@ using Goguma.Game.Object.Quest;
 using System.Collections.Generic;
 using Goguma.Game.Object.Entity.Monster;
 using System.Linq;
+using Goguma.Game.Object.Inventory.Item;
 
 namespace Goguma.Game.Object.Entity.Player
 {
@@ -297,6 +298,55 @@ namespace Goguma.Game.Object.Entity.Player
       {
         qst.OnKillEntity(monster);
       }
+    }
+
+    public void ReceiveGold(int value)
+    {
+      PrintCText($"{{\n\n  }}{{{value} G,{Colors.txtWarning}}}{{를 획득했습니다. }}{{( 현재 {Gold + value} G를 보유하고 있습니다. ),{Colors.txtPrimary}}}");
+      Pause(false);
+      Gold += value;
+    }
+
+    public void ReceiveExp(double value)
+    {
+      PrintCText(CTexts.Make($"{{\n\n  }}{{{value} Exp,{Colors.txtSuccess}}}{{를 획득했습니다. ( }}").Combine(GetExpBar(true, value)).Combine("{ )}"));
+      Pause(false);
+      Exp += value;
+    }
+
+    public void ReceiveItem(ItemPair value)
+    {
+      PrintCText(CTexts.Make($"{{\n\n  아이템 }}").Combine(value.ItemM.DisplayName).Combine($"{{ {(value.Count == 1 ? "(을)를" : $"{value.Count}개를")} 획득했습니다. }}"));
+      Pause(false);
+      Inventory.GetItem(Itemss.GetNew(value.Item), value.Count);
+    }
+
+    public void ReceiveItems(ItemPair[] values)
+    {
+      for (var i = 0; i < values.Length; i++)
+      {
+        Inventory.GetItem(Itemss.GetNew(values[i].Item), values[i].Count);
+        PrintCText(CTexts.Make($"{{\n\n  아이템 }}").Combine(values[i].ItemM.DisplayName).Combine($"{{ {(values[i].Count == 1 ? "(을)를" : $"{values[i].Count}개를")} 획득했습니다. \n}}"));
+      }
+      Pause(false);
+    }
+
+    public bool CompleteQuest(QuestList quest)
+    {
+      var cond = CompletedQuests.Contains(quest);
+      if (cond)
+      {
+        PrintCText($"{{  {Questss.GetQuestInstance(quest).Name},{Colors.txtInfo}}}{{(은)는 이미 완료한 퀘스트입니다.\n}}");
+        Pause();
+      }
+      else
+      {
+        CompletedQuests.Add(quest);
+        PrintCText($"{{  {Questss.GetQuestInstance(quest).Name},{Colors.txtInfo}}}{{퀘스트를 완료하셨습니다.\n}}");
+        Pause();
+      }
+      Quest.Remove(quest);
+      return !cond;
     }
   }
 }

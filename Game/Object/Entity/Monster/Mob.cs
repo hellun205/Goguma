@@ -47,20 +47,9 @@ namespace Goguma.Game.Object.Entity.Monster
       var drItems = from drItem in DroppingItems.Items
                     where drItem.Visible == true
                     select drItem;
-      var i = 0;
-      var b = false;
       foreach (var drItem in drItems.ToList<DroppingItem>())
       {
-        var mi = (b ? 2 : 1);
-        if (i == mi)
-        {
-          resCT.Append("{\n}");
-          i = 0;
-          b = true;
-        }
-        i++;
-        resCT.Append(Itemss.GetInstance(drItem.Item).Name.GetInstance());
-        resCT.Append("{，}");
+        resCT.Append(drItem.Item.ItemM.Name).Append($"{{ {(drItem.Item.Count == 1 ? "" : $"{drItem.Item.Count}개")}}}").Append("{，}");
       }
 
       resCT.Append("{등}");

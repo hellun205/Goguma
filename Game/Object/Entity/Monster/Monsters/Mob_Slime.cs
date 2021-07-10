@@ -21,8 +21,8 @@ namespace Goguma.Game.Object.Entity.Monster.Monsters
 
     public override DroppingItems DroppingItems => new(new()
     {
-      new(ItemList.STICKY_LIQUID, 70),
-      new(ItemList.POTION_1, 30)
+      new(new(ItemList.STICKY_LIQUID), 70),
+      new(new(ItemList.POTION_1), 30)
     });
 
     public override AttackSyss AttSystem => new(this);
