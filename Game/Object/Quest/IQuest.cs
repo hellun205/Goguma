@@ -16,7 +16,7 @@ namespace Goguma.Game.Object.Quest
     DNpcSay AcceptDialog { get; }
     DNpcSay DeclineDialog { get; }
     string Name { get; }
-    NpcList Npc { get; }
+    Npc.Npc Npc { get; }
     QuestRequirements QRequirements { get; }
     bool MeetTheRequirements { get; }
     bool IsCompleted { get; }

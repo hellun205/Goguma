@@ -53,30 +53,6 @@ namespace Goguma.Game.Object.Quest.Dialog
       }
     }
 
-    public string this[CTexts text]
-    {
-      get
-      {
-        if (Texts.Count != 0 && text != CTexts.Empty)
-          foreach (var item in Texts)
-          {
-            if (item == text)
-              return PAns[Texts.IndexOf(item)];
-          }
-        return String.Empty;
-      }
-      set
-      {
-        if (Texts.Count != 0)
-          foreach (var item in Texts)
-          {
-            if (item == text)
-              PAns[Texts.IndexOf(text)] = value;
-          }
-        else throw new NotExistTextException();
-      }
-    }
-
     public DialogText Add(string playerAns, CTexts text)
     {
       if (PAns.Contains(playerAns)) throw new AlreadyExistDialogTextException();

@@ -8,17 +8,15 @@ namespace Goguma.Game.Object.Quest.Dialog
 {
   public abstract class Dialog : IDialog
   {
-    public INpc Npc { get; set; }
+    public Npc.Npc Npc { get; set; }
     public DialogText Text { get; set; }
     public bool isCancelled { get; set; }
 
-    public Dialog(NpcList npc, CTexts text)
+    public Dialog(Npc.Npc npc, CTexts text)
     {
-      Npc = Npcs.Get(npc);
+      Npc = npc;
       Text = new DialogText(text, Npc.DisplayName);
     }
-
-    public Dialog(NpcList npc, string text) : this(npc, CTexts.Make(text)) { }
 
     public abstract DialogType Type { get; }
 

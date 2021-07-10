@@ -9,7 +9,7 @@ namespace Goguma.Game.Object.Quest.Quests
     static public readonly Qst_TestQuest Instance = new Qst_TestQuest();
     public override string Name => "K의 테스트 퀘스트";
 
-    public override NpcList Npc => NpcList.TRADER_K;
+    public override Npc.Npc Npc => Npcs.Get(NpcList.TRADER_K);
 
     public override List<IDialog> Dialogs
     {

@@ -8,16 +8,17 @@ using System.Linq;
 
 namespace Goguma.Game.Object.Npc
 {
-  public abstract class Npc : INpc
+  public abstract class Npc
   {
-    public string Name { get; protected set; }
-    public string NameColor { get; protected set; }
+    public abstract string Name { get; }
+    public virtual string NameColor => Colors.txtDefault;
+    public abstract NpcList Type { get; }
     public Prefix Prefix { get; protected set; }
-    public DNpcSay Meet { get; set; }
-    public DNpcSay Conversation { get; set; }
-    public List<QuestList> Quests { get; set; }
-    public string TypeString => Npcs.GetNpcTypeToString(Type);
-    public abstract NpcType Type { get; }
+    public abstract DNpcSay MeetDialog { get; }
+    public abstract DNpcSay ConversationDialog { get; }
+    public abstract List<QuestList> Quests { get; }
+    public string TypeString => Npcs.GetNpcTypeToString(NpcType);
+    public abstract NpcType NpcType { get; }
     public CTexts DisplayName => new CTexts().Append(Prefix.Display).Append($"{{{Name},{NameColor}}}");
 
     public virtual void OnDialogOpen()
@@ -38,7 +39,7 @@ namespace Goguma.Game.Object.Npc
             break;
           }
         ssi.Add("{대화 하기}");
-        var ss = new SelectScene(Meet.Text[String.Empty], ssi, true, CTexts.Make($"{{대화 종료,{Colors.txtMuted}}}"));
+        var ss = new SelectScene(MeetDialog.Text[String.Empty], ssi, true, CTexts.Make($"{{대화 종료,{Colors.txtMuted}}}"));
         if (ss.isCancelled) return;
 
         switch (ss.getString)
@@ -50,7 +51,7 @@ namespace Goguma.Game.Object.Npc
             ReceiveQuest();
             break;
           case "대화 하기":
-            Conversation.Show();
+            ConversationDialog.Show();
             break;
         }
       }
@@ -58,9 +59,7 @@ namespace Goguma.Game.Object.Npc
 
     public Npc()
     {
-      Quests = new();
-      Prefix = new Prefix("NPC", Colors.txtSuccess);
-      NameColor = Colors.txtInfo;
+      Prefix = new Prefix("NPC", Colors.txtSuccess).Add(TypeString, Colors.txtWarning);
     }
 
     public void CompleteQuest()
@@ -79,7 +78,9 @@ namespace Goguma.Game.Object.Npc
         ssi.Add($"{{[ Lv. {Questss.GetQuestInstance(quest).QRequirements.MinLv} ] ,{Colors.txtWarning}}}{{{Questss.GetQuestInstance(quest).Name}}}");
       }
 
-      var ss = new SelectScene(Meet.Text[String.Empty], ssi, true);
+      var ss = new SelectScene(MeetDialog.Text.DisplayText(String.Empty), ssi, true);
+
+      // TO DO
     }
   }
 }

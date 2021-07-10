@@ -11,12 +11,12 @@ namespace Goguma.Game.Object.Quest.Dialog
     public List<string> PlayerSays { get; set; }
     public override DialogType Type => DialogType.PLAYER_SAY;
 
-    public DPlayerSay(NpcList npc, CTexts text, List<string> playerText) : base(npc, text)
+    public DPlayerSay(Npc.Npc npc, CTexts text, List<string> playerText) : base(npc, text)
     {
       PlayerSays = playerText;
     }
 
-    public DPlayerSay(NpcList npc, string text, List<string> playerText) : this(npc, CTexts.Make(text), playerText) { }
+    public DPlayerSay(Npc.Npc npc, string text, List<string> playerText) : this(npc, CTexts.Make(text), playerText) { }
 
     public override string Show(string playerAns)
     {
