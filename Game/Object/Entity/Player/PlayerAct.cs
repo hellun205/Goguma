@@ -11,6 +11,7 @@ using System.Linq;
 using static Goguma.Game.Console.ConsoleFunction;
 using Goguma.Game.Object.Inventory.Item;
 using System;
+using Goguma.Game.Object.Skill.Skills;
 
 namespace Goguma.Game.Object.Entity.Player
 {
@@ -278,9 +279,9 @@ namespace Goguma.Game.Object.Entity.Player
               Battle.Battle.PvE(testMonster);
               break;
             case "Add Test Skill":
-              player.Skills.Add(Skills.GetPlayerSkill(SkillList.TestSkill1));
-              player.Skills.Add(Skills.GetPlayerSkill(SkillList.TestSkill2));
-              player.Skills.Add(Skills.GetPlayerSkill(SkillList.TestBuffSkill1));
+              player.Skills.Add(PlayerSkills.GetNew(SkillList.TestSkill1));
+              player.Skills.Add(PlayerSkills.GetNew(SkillList.TestSkill2));
+              player.Skills.Add(PlayerSkills.GetNew(SkillList.TestBuffSkill1));
               break;
             case "Add Item":
               var ssi = new SelectSceneItems();

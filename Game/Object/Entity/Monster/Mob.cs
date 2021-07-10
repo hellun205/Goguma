@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Colorify;
 using Goguma.Game.Console;
 using Goguma.Game.Object.Entity.AttSys;
@@ -6,6 +5,7 @@ using Goguma.Game.Object.Inventory.Item.Drop;
 using System.Linq;
 using static Goguma.Game.Console.ConsoleFunction;
 using static Goguma.Game.Console.StringFunction;
+using Goguma.Game.Object.Inventory.Item;
 
 namespace Goguma.Game.Object.Entity.Monster
 {
@@ -19,27 +19,7 @@ namespace Goguma.Game.Object.Entity.Monster
     public abstract DroppingItems DroppingItems { get; }
     public abstract AttackSyss AttSystem { get; }
 
-    public Mob() : base()
-    {
-      DroppingItems = new DroppingItems();
-      AttSystem = new AttackSyss(InGame.player, this);
-    }
-    public Mob(Mob monster) : base(monster)
-    {
-      Level = monster.Level;
-      MaxHp = monster.MaxHp;
-      Hp = monster.Hp;
-      AttDmg = monster.AttDmg;
-      DefPer = monster.DefPer;
-
-      var dropItem = new List<DroppingItem>();
-
-      foreach (var i in monster.DroppingItems.Items)
-      {
-        var di = new DroppingItem(i.Item.GetInstance(), i.DropChance);
-        dropItem.Add(di);
-      }
-    }
+    public Mob() : base() { }
 
     public abstract IMonster GetInstance();
 
@@ -79,7 +59,7 @@ namespace Goguma.Game.Object.Entity.Monster
           b = true;
         }
         i++;
-        resCT.Append(drItem.Item.Name.GetInstance());
+        resCT.Append(Itemss.GetInstance(drItem.Item).Name.GetInstance());
         resCT.Append("{，}");
       }
 

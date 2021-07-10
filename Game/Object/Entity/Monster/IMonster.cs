@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Goguma.Game.Console;
+﻿using Goguma.Game.Console;
 using Goguma.Game.Object.Entity.AttSys;
 using Goguma.Game.Object.Inventory.Item.Drop;
 

@@ -4,6 +4,7 @@ using Goguma.Game.Object.Entity.AttSys;
 using Goguma.Game.Object.Inventory.Item;
 using Goguma.Game.Object.Inventory.Item.Drop;
 using Goguma.Game.Object.Skill;
+using Goguma.Game.Object.Skill.Skills;
 
 namespace Goguma.Game.Object.Entity.Monster.Monsters
 {
@@ -35,8 +36,8 @@ namespace Goguma.Game.Object.Entity.Monster.Monsters
       Level = 2;
 
 
-      AttSystem.Add(Skill.Skills.GetMonsterSkill(MSkillList.SLIME_STICKY_ATTACK), new AttCondition(Cond.MonsterHpPer, ">=", 0.7));
-      AttSystem.Add(Skill.Skills.GetMonsterSkill(MSkillList.SLIME_SPOUT_STICKY_LIQUID), new AttCondition(Cond.PlayerHpPer, "<=", 0.5));
+      AttSystem.Add(MonsterSkills.GetNew(MSkillList.SLIME_STICKY_ATTACK), new AttCondition(Cond.MonsterHpPer, ">=", 0.7));
+      AttSystem.Add(MonsterSkills.GetNew(MSkillList.SLIME_SPOUT_STICKY_LIQUID), new AttCondition(Cond.PlayerHpPer, "<=", 0.5));
     }
 
     public override IMonster GetInstance()
