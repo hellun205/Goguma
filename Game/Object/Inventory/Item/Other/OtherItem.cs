@@ -6,21 +6,11 @@ using static Goguma.Game.Console.StringFunction;
 namespace Goguma.Game.Object.Inventory.Item.Other
 {
   [Serializable]
-  class OtherItem : Item, IOtherItem
+  public abstract class OtherItem : Item, IOtherItem
   {
-    public override CTexts DisplayName => Name;
     public override HavingType Type => HavingType.Other;
     public override int MaxCount => 64;
     public OtherItem() : base() { }
-    public OtherItem(in OtherItem item) : base(item)
-    {
-
-    }
-
-    public override IItem GetInstance()
-    {
-      return new OtherItem(this);
-    }
 
     public override CTexts Info(bool showCount = true)
     {

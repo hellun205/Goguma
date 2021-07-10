@@ -3,16 +3,11 @@ using System;
 namespace Goguma.Game.Object.Inventory.Item.Equipment
 {
   [Serializable]
-  class EChestplate : EEquip
+  public abstract class EChestplate : EEquip
   {
     public override WearingType EType => WearingType.Chestplate;
-    public EChestplate() : base() { }
-    public EChestplate(EChestplate item) : base(item) { }
 
-    public override IItem GetInstance()
-    {
-      return new EChestplate(this);
-    }
+    public EChestplate() : base() { }
 
     public override string ToString()
     {

@@ -159,7 +159,7 @@ namespace Goguma.Game.Object.Inventory
             var count = it.Count;
             for (var k = 0; k < (int)(count / it.MaxCount) - 1; k++)
             {
-              var item = it.GetInstance();
+              var item = it.GetNew;
               item.Count = it.MaxCount;
               inven.Add(item);
             }
@@ -167,7 +167,7 @@ namespace Goguma.Game.Object.Inventory
             Math.DivRem(count, it.MaxCount, out div);
             if (div > 0)
             {
-              var item = it.GetInstance();
+              var item = it.GetNew;
               item.Count = div;
               inven.Add(item);
             }

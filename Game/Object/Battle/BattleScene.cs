@@ -256,17 +256,17 @@ namespace Goguma.Game.Object.Battle
           Pause();
         }
 
-        static public void Kill(IMonster monster, List<IItem> dropItemList)
-        {
-          PrintCText($"{{\n\n  {monster.GivingGold} G,{Colors.txtWarning}}}{{를 획득했습니다.\n}}");
-          PrintCText($"{{\n  {monster.GivingExp} Exp,{Colors.txtSuccess}}}{{를 획득했습니다.\n}}");
-          Pause();
-          foreach (var item in dropItemList)
-          {
-            PrintCText(CTexts.Make($"{{\n\n  }}").Combine(ItemText(item)).Combine($"{{(을)를 획득했습니다.}}"));
-          }
-          Pause();
-        }
+        // static public void Kill(IMonster monster, List<IItem> dropItemList)
+        // {
+        //   PrintCText($"{{\n\n  {monster.GivingGold} G,{Colors.txtWarning}}}{{를 획득했습니다.\n}}");
+        //   PrintCText($"{{\n  {monster.GivingExp} Exp,{Colors.txtSuccess}}}{{를 획득했습니다.\n}}");
+        //   Pause();
+        //   foreach (var item in dropItemList)
+        //   {
+        //     PrintCText(CTexts.Make($"{{\n\n  }}").Combine(ItemText(item)).Combine($"{{(을)를 획득했습니다.}}"));
+        //   }
+        //   Pause();
+        // }
 
         static public SelectScene SelSkillType(IPlayer player, out SkillType skType)
         {

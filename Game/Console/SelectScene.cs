@@ -10,11 +10,12 @@ namespace Goguma.Game.Console
     public int getIndex;
     public string getString;
     public bool isCancelled = false;
-    public SelectScene(CTexts questionText, SelectSceneItems answerItems, bool isCancel = false, CTexts cancelText = null)
+    public SelectScene(CTexts questionText, SelectSceneItems answerItems, bool isCancel = false, CTexts cancelText = null, bool isQueTxt = true)
     {
-      PrintQuestionText(questionText);
+      if (isQueTxt) PrintCText(PrintQuestionText(questionText));
       cancelText = (cancelText == null ? CTexts.Make($"{{뒤로 가기,{Colors.txtMuted}}}") : cancelText);
       if (isCancel) answerItems.Add(new SelectSceneItem(cancelText, true));
+      PrintText("\n\n");
 
       for (int i = 1; i <= answerItems.Items.Count; i++)
       {
@@ -26,7 +27,7 @@ namespace Goguma.Game.Console
 
       while (true)
       {
-        PrintReadText();
+        PrintCText(PrintReadText());
 
         string readText = ReadLine();
 
@@ -48,19 +49,21 @@ namespace Goguma.Game.Console
       }
     }
 
-    public SelectScene(string questionText, SelectSceneItems answerItems, bool isCancel = false, CTexts cancelText = null) : this(CTexts.Make(questionText), answerItems, isCancel, cancelText) { }
-
-    static public void PrintQuestionText(CTexts questionText, CTexts plusText = null)
+    internal static void PrintQuestionText(object cTextsText)
     {
-      PrintText("\n\nQ. ");
-      PrintCText(questionText);
-      if (plusText != null) PrintCText(plusText);
-      PrintText("\n\n");
+      throw new NotImplementedException();
     }
 
-    static public void PrintReadText()
+    public SelectScene(string questionText, SelectSceneItems answerItems, bool isCancel = false, CTexts cancelText = null) : this(CTexts.Make(questionText), answerItems, isCancel, cancelText) { }
+
+    static public CTexts PrintQuestionText(CTexts questionText)
     {
-      PrintCText($"{{\n>> , {Colors.txtInfo}}}");
+      return CTexts.Make("\n\n").Combine(questionText).Combine("\n\n");
+    }
+
+    static public CTexts PrintReadText()
+    {
+      return CTexts.Make($"{{\n>> , {Colors.txtInfo}}}");
     }
   }
 }

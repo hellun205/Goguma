@@ -11,6 +11,7 @@ using System.Linq;
 using static Goguma.Game.Console.ConsoleFunction;
 using Goguma.Game.Object.Inventory.Item;
 using System;
+using Goguma.Game.Object.Skill.Skills;
 
 namespace Goguma.Game.Object.Entity.Player
 {
@@ -40,6 +41,7 @@ namespace Goguma.Game.Object.Entity.Player
           resultSSI.Add("{캐릭터 정보 보기}");
           resultSSI.Add("{인벤토리 열기}");
           resultSSI.Add("{스킬 보기}");
+          resultSSI.Add("{퀘스트 보기}");
           resultSSI.Add("{이동하기}");
           resultSSI.Add($"{{{InGame.player.Loc.Loc} 살펴보기}}");
 
@@ -137,6 +139,9 @@ namespace Goguma.Game.Object.Entity.Player
         case "스킬 보기":
           ViewSkill();
           break;
+        case "퀘스트 보기":
+          InGame.player.Quest.ShowQuests();
+          break;
         case "이동하기":
           InGame.player.Loc.Move();
           break;
@@ -170,12 +175,12 @@ namespace Goguma.Game.Object.Entity.Player
         ssi.Add("{없음}", false);
       else
         foreach (var n in town.Npcs)
-          ssi.Add($"{{{Npcs.GetTraderByEnum(n).Name}}}");
+          ssi.Add(Npcs.Get(n).DisplayName);
 
       var s = new SelectScene(CTexts.Make("{누구와 대화하시겠습니까?}"), ssi, true);
       if (s.isCancelled) return;
 
-      Npcs.GetTraderByEnum(town.Npcs[s.getIndex]).OnUse();
+      Npcs.Get(town.Npcs[s.getIndex]).OnDialogOpen();
     }
 
     static private void ViewSkill()
@@ -222,7 +227,7 @@ namespace Goguma.Game.Object.Entity.Player
           sb.Append("\n없음");
         else
           foreach (var m in road.SummonMonsters)
-            sb.Append($"\n{Monsters.Get(m.Monster).Name}");
+            sb.Append($"\n{Monster.Monster.GetNew(m.Monster).Name}");
       }
 
       sb.Append("\n" + StringFunction.GetSep(30));
@@ -270,24 +275,24 @@ namespace Goguma.Game.Object.Entity.Player
               player.Exp += player.RequiredForLevelUp();
               break;
             case "Battle with test monster":
-              var testMonster = Monsters.Get(MonsterList.TEST_MONSTER);
+              var testMonster = Monster.Monster.GetNew(MonsterList.TEST_MONSTER);
               Battle.Battle.PvE(testMonster);
               break;
             case "Add Test Skill":
-              player.Skills.Add(Skills.GetPlayerSkill(SkillList.TestSkill1));
-              player.Skills.Add(Skills.GetPlayerSkill(SkillList.TestSkill2));
-              player.Skills.Add(Skills.GetPlayerSkill(SkillList.TestBuffSkill1));
+              player.Skills.Add(PlayerSkills.GetNew(SkillList.TestSkill1));
+              player.Skills.Add(PlayerSkills.GetNew(SkillList.TestSkill2));
+              player.Skills.Add(PlayerSkills.GetNew(SkillList.TestBuffSkill1));
               break;
             case "Add Item":
               var ssi = new SelectSceneItems();
               for (var i = 0; i < Enum.GetValues(typeof(ItemList)).Length; i++)
-                ssi.Add(Items.Get((ItemList)i).Name);
+                ssi.Add(Itemss.GetNew((ItemList)i).Name);
               var itemSelectSS = new SelectScene(CTexts.Make("{아이템을 선택하시오.}"), ssi, true);
               if (itemSelectSS.isCancelled) return;
               int rCount;
               if (ReadInt("{수량을 입력하세요.}", out rCount, 0, 0)) break;
-              player.Inventory.GetItem(Items.Get((ItemList)itemSelectSS.getIndex), rCount);
-              PrintText($"\n아이템 {Items.Get((ItemList)itemSelectSS.getIndex).Name} {rCount}개를 얻었습니다.\n");
+              player.Inventory.GetItem(Itemss.GetNew((ItemList)itemSelectSS.getIndex), rCount);
+              PrintText($"\n아이템 {Itemss.GetNew((ItemList)itemSelectSS.getIndex).Name} {rCount}개를 얻었습니다.\n");
               Pause();
               break;
             case "Add Gold":

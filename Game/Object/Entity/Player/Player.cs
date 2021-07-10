@@ -7,6 +7,11 @@ using static Goguma.Game.Console.ConsoleFunction;
 using static Goguma.Game.Console.StringFunction;
 using Goguma.Game.Object.Map.Town;
 using Goguma.Game.Object.Inventory.Item.Equipment;
+using Goguma.Game.Object.Quest;
+using System.Collections.Generic;
+using Goguma.Game.Object.Entity.Monster;
+using System.Linq;
+using Goguma.Game.Object.Inventory.Item;
 
 namespace Goguma.Game.Object.Entity.Player
 {
@@ -15,7 +20,11 @@ namespace Goguma.Game.Object.Entity.Player
   {
     public override EntityType Type => EntityType.PLAYER;
     public Inventory.Inventory Inventory { get; set; }
+    public QuestSys Quest { get; set; }
+    public List<QuestList> CompletedQuests { get; set; }
     public Location Loc { get; set; }
+
+    public List<Entitys> KilledMobs { get; set; }
 
     public double Ep
     {
@@ -27,32 +36,32 @@ namespace Goguma.Game.Object.Entity.Player
       get => Math.Round(maxEp + GetEquipEffect.MaxEp + BuffsIncrease.MaxEp, 2);
       set => maxEp = Math.Max(0, value);
     }
-    new public double MaxHp
+    public override double MaxHp
     {
       get => Math.Round(maxHp + GetEquipEffect.MaxHp + BuffsIncrease.MaxHp, 2);
       set => maxHp = Math.Max(0, value);
     }
-    new public double DefPer
+    public override double DefPer
     {
       get => Math.Round(defPer + GetEquipEffect.DefPer + BuffsIncrease.DefPer, 2);
       set => defPer = Math.Max(0, value);
     }
-    new public double AttDmg
+    public override double AttDmg
     {
       get => Math.Round(attDmg + GetWeaponEffect.AttDmg + BuffsIncrease.AttDmg, 2);
       set => attDmg = Math.Max(0, value);
     }
-    new public double CritDmg
+    public override double CritDmg
     {
       get => Math.Round(critDmg + GetWeaponEffect.CritDmg + BuffsIncrease.CritDmg, 2);
       set => critDmg = Math.Max(0, value);
     }
-    new public double CritPer
+    public override double CritPer
     {
       get => Math.Round(critPer + GetWeaponEffect.CritPer + BuffsIncrease.CritPer, 2);
       set => critPer = Math.Max(0, value);
     }
-    new public double IgnoreDef
+    public override double IgnoreDef
     {
       get => Math.Round(ignoreDef + GetWeaponEffect.IgnoreDef + BuffsIncrease.IgnoreDef, 2);
       set => ignoreDef = Math.Max(0, value);
@@ -127,6 +136,9 @@ namespace Goguma.Game.Object.Entity.Player
     {
       Inventory = new Inventory.Inventory(this);
       Loc = new Location(Towns.kks.Name, true);
+      Quest = new();
+      CompletedQuests = new();
+      KilledMobs = new();
       MaxHp = 50;
       MaxEp = 30;
       Hp = MaxHp;
@@ -152,7 +164,7 @@ namespace Goguma.Game.Object.Entity.Player
       Hp = Hp + heal;
     }
 
-    new public void AddBuff(IBuffSkill skill)
+    public override void AddBuff(IBuffSkill skill)
     {
       Buffs.Add(skill);
       if (skill.buff.Hp != 0)
@@ -161,13 +173,7 @@ namespace Goguma.Game.Object.Entity.Player
         Ep += skill.buff.Ep;
     }
 
-    new public void Information()
-    {
-      PrintCText(Info());
-      Pause();
-    }
-
-    new protected CTexts Info()
+    protected override CTexts Info()
     {
       return new CTexts()
       .Append($"{{\n{GetSep(40, $"{Name} [ Lv. {Level} ]")}}}")
@@ -216,19 +222,19 @@ namespace Goguma.Game.Object.Entity.Player
         return bar;
     }
 
-    new public double CalAttDmg(IAttackSkill aSkill, IEntity entity, out bool isCrit)
+    public override double CalAttDmg(IAttackSkill aSkill, IEntity entity, out bool isCrit)
     {
       var dmg = DamageByLevel((AttDmg + aSkill.Effect.AttDmg), Level, entity.Level) * (1 - ((entity.DefPer / 100) - ((IgnoreDef + aSkill.Effect.IgnoreDef) / 100)));
       return CalCritDmg(dmg, out isCrit, aSkill.Effect);
     }
 
-    new public double CalAttDmg(IEntity entity, out bool isCrit)
+    public override double CalAttDmg(IEntity entity, out bool isCrit)
     {
       var dmg = DamageByLevel(AttDmg, Level, entity.Level) * (1 - ((entity.DefPer / 100) - ((IgnoreDef) / 100)));
       return CalCritDmg(dmg, out isCrit);
     }
 
-    new protected double CalCritDmg(double dmg, out bool isCrit, WeaponEffect wEffect)
+    protected override double CalCritDmg(double dmg, out bool isCrit, WeaponEffect wEffect)
     {
       var rand = new Random().Next(0, 101);
       var critPer = Math.Round(CritPer + wEffect.CritPer, 2);
@@ -244,7 +250,7 @@ namespace Goguma.Game.Object.Entity.Player
       }
     }
 
-    new protected double CalCritDmg(double dmg, out bool isCrit)
+    protected override double CalCritDmg(double dmg, out bool isCrit)
     {
       var rand = new Random().Next(0, 101);
       var critPer = Math.Round(CritPer, 2);
@@ -258,6 +264,89 @@ namespace Goguma.Game.Object.Entity.Player
         isCrit = false;
         return Math.Round(dmg, 2);
       }
+    }
+
+    public void KillMob(MonsterList monster)
+    {
+      int containsIndex = 0;
+      var contains = false;
+      for (var i = 0; i < KilledMobs.Count; i++)
+      {
+        if (KilledMobs[i].Mob == monster)
+        {
+          containsIndex = i;
+          contains = true;
+          break;
+        }
+      }
+
+      if (contains)
+      {
+        KilledMobs[containsIndex].Kill();
+      }
+      else
+      {
+        KilledMobs.Add(new(monster, 0));
+        KilledMobs[^1].Kill();
+      }
+
+      var killEntityQuests = (from qst in Quest.Quests
+                              where (qst.Type == QuestType.KILL_ENTITY)
+                              select qst).Cast<QKillEntity>().ToList();
+
+      foreach (var qst in killEntityQuests)
+      {
+        qst.OnKillEntity(monster);
+      }
+    }
+
+    public void ReceiveGold(int value)
+    {
+      PrintCText($"{{\n\n  }}{{{value} G,{Colors.txtWarning}}}{{를 획득했습니다. }}{{( 현재 {Gold + value} G를 보유하고 있습니다. ),{Colors.txtPrimary}}}");
+      Pause(false);
+      Gold += value;
+    }
+
+    public void ReceiveExp(double value)
+    {
+      PrintCText(CTexts.Make($"{{\n\n  }}{{{value} Exp,{Colors.txtSuccess}}}{{를 획득했습니다. ( }}").Combine(GetExpBar(true, value)).Combine("{ )}"));
+      Pause(false);
+      Exp += value;
+    }
+
+    public void ReceiveItem(ItemPair value)
+    {
+      PrintCText(CTexts.Make($"{{\n\n  아이템 }}").Combine(value.ItemM.DisplayName).Combine($"{{ {(value.Count == 1 ? "(을)를" : $"{value.Count}개를")} 획득했습니다. }}"));
+      Pause(false);
+      Inventory.GetItem(Itemss.GetNew(value.Item), value.Count);
+    }
+
+    public void ReceiveItems(ItemPair[] values)
+    {
+      for (var i = 0; i < values.Length; i++)
+      {
+        Inventory.GetItem(Itemss.GetNew(values[i].Item), values[i].Count);
+        PrintCText(CTexts.Make($"{{\n\n  아이템 }}").Combine(values[i].ItemM.DisplayName).Combine($"{{ {(values[i].Count == 1 ? "(을)를" : $"{values[i].Count}개를")} 획득했습니다. \n}}"));
+      }
+      Pause(false);
+    }
+
+    public bool CompleteQuest(QuestList quest)
+    {
+      var cond = CompletedQuests.Contains(quest);
+      if (cond)
+      {
+        PrintCText($"{{  {Questss.GetQuestInstance(quest).Name},{Colors.txtInfo}}}{{(은)는 이미 완료한 퀘스트입니다.\n}}");
+        Pause();
+      }
+      else
+      {
+        CompletedQuests.Add(quest);
+        PrintCText($"{{  {Questss.GetQuestInstance(quest).Name},{Colors.txtInfo}}}{{(을)를 완료하셨습니다.\n}}");
+        Pause();
+      }
+      Quest.Remove(quest);
+      return !cond;
     }
   }
 }

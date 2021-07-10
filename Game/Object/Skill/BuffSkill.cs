@@ -8,9 +8,9 @@ using static Goguma.Game.Console.StringFunction;
 namespace Goguma.Game.Object.Skill
 {
   [Serializable]
-  class BuffSkill : Skill, IBuffSkill
+  public abstract class BuffSkill : Skill, IBuffSkill
   {
-    public Buff buff { get; set; }
+    public abstract Buff buff { get; }
     public override SkillType Type => SkillType.BuffSkill;
 
     public override CTexts EffectInfo()

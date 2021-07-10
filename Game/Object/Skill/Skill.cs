@@ -9,12 +9,12 @@ namespace Goguma.Game.Object.Skill
   [Serializable]
   public abstract class Skill : ISkill
   {
-    public string Name { get; set; }
-    public CTexts Text { get; set; }
-    public CTexts Descriptions { get; set; }
+    public abstract string Name { get; }
+    public abstract CTexts Text { get; }
+    public abstract CTexts Descriptions { get; }
     public string TypeString => Skill.GetTypeString(Type);
     public abstract SkillType Type { get; }
-    public double UseEp { get; set; }
+    public virtual double UseEp => 0;
 
     public static string GetTypeString(SkillType type)
     {

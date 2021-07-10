@@ -7,9 +7,9 @@ using static Goguma.Game.Console.StringFunction;
 namespace Goguma.Game.Object.Inventory.Item.Consume
 {
   [Serializable]
-  abstract class ConsumeItem : Item, IConsumeItem
+  public abstract class ConsumeItem : Item, IConsumeItem
   {
-    public override CTexts DisplayName => Name.Combine($"{{ ( {CTypeString} ),{Colors.txtSuccess}}}");
+    public override CTexts DisplayName => CTexts.Make($"{{[ {TypeString} ],{Colors.txtWarning}}}{{ }}{{[ {CTypeString} ],{Colors.txtSuccess}}}{{ }}").Combine(Name);
     public override HavingType Type => HavingType.Consume;
     public abstract ConsumeItemType CType { get; }
     public override int MaxCount => 64;
@@ -19,11 +19,6 @@ namespace Goguma.Game.Object.Inventory.Item.Consume
     public ConsumeItem() : base()
     {
       LoseCount = 1;
-    }
-
-    public ConsumeItem(in ConsumeItem item) : base(item)
-    {
-      LoseCount = item.LoseCount;
     }
 
     public abstract void UseItem(IPlayer player);

@@ -6,17 +6,15 @@ using static Goguma.Game.Console.StringFunction;
 namespace Goguma.Game.Object.Inventory.Item.Equipment
 {
   [Serializable]
-  abstract class EquipmentItem : Item, IEquipmentItem
+  public abstract class EquipmentItem : Item, IEquipmentItem
   {
-    public override CTexts DisplayName => Name.Combine($"{{ ( {ETypeString},{Colors.txtSuccess} )}}");
+    public override CTexts DisplayName => CTexts.Make($"{{[ {TypeString} ],{Colors.txtWarning}}}{{ }}{{[ {ETypeString} ],{Colors.txtSuccess}}}{{ }}").Combine(Name);
     public override HavingType Type => HavingType.Equipment;
     public override int MaxCount => 1;
     public abstract WearingType EType { get; }
     public string ETypeString => GetETypeString(EType);
 
     public EquipmentItem() : base() { }
-
-    public EquipmentItem(in EquipmentItem item) : base(item) { }
 
     public override CTexts Info(bool showCount = true)
     {
