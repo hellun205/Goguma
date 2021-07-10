@@ -25,8 +25,7 @@ namespace Goguma.Game.Object.Npc
     public NTrader(NpcList npcName) : this()
     {
       var text = String.Empty;
-      Prefixs.Add("상인");
-      PrefixColors.Add(Colors.txtWarning);
+      Prefix.Add("상인", Colors.txtWarning);
 
       switch (npcName)
       {

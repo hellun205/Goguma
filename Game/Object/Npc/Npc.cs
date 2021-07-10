@@ -8,28 +8,17 @@ using System.Linq;
 
 namespace Goguma.Game.Object.Npc
 {
-  public abstract class Npc
+  public abstract class Npc : INpc
   {
     public string Name { get; protected set; }
     public string NameColor { get; protected set; }
-    public List<string> Prefixs { get; protected set; }
-    public List<string> PrefixColors { get; protected set; }
+    public Prefix Prefix { get; protected set; }
     public DNpcSay Meet { get; set; }
     public DNpcSay Conversation { get; set; }
     public List<QuestList> Quests { get; set; }
     public string TypeString => Npcs.GetNpcTypeToString(Type);
     public abstract NpcType Type { get; }
-    public CTexts DisplayName
-    {
-      get
-      {
-        var resCT = new CTexts();
-        for (var i = 0; i < Prefixs.Count; i++)
-          resCT.Append($"{{[ {Prefixs[i]} ],{PrefixColors[i]}}}");
-        resCT.Append($"{{ {Name},{NameColor}}}");
-        return resCT;
-      }
-    }
+    public CTexts DisplayName => new CTexts().Append(Prefix.Display).Append($"{{{Name},{NameColor}}}");
 
     public virtual void OnDialogOpen()
     {
@@ -70,8 +59,7 @@ namespace Goguma.Game.Object.Npc
     public Npc()
     {
       Quests = new();
-      Prefixs = new List<string> { "NPC" };
-      PrefixColors = new List<string> { Colors.txtSuccess };
+      Prefix = new Prefix("NPC", Colors.txtSuccess);
       NameColor = Colors.txtInfo;
     }
 
@@ -91,6 +79,7 @@ namespace Goguma.Game.Object.Npc
         ssi.Add($"{{[ Lv. {Questss.GetQuestInstance(quest).QRequirements.MinLv} ] ,{Colors.txtWarning}}}{{{Questss.GetQuestInstance(quest).Name}}}");
       }
 
+      var ss = new SelectScene(Meet.Text[String.Empty], ssi, true);
     }
   }
 }

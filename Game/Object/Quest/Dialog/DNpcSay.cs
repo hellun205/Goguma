@@ -11,14 +11,11 @@ namespace Goguma.Game.Object.Quest.Dialog
     public string PlayerSay { get; set; }
     public override DialogType Type => DialogType.NPC_SAY;
 
-    public DNpcSay(NpcList npc, CTexts text, string playerText = "다음") : base(npc, new DialogText(text, Npcs.Get(npc).DisplayName))
+    public DNpcSay(NpcList npc, CTexts text, string playerText = "다음") : base(npc, text)
     {
       PlayerSay = playerText;
     }
-    public DNpcSay(NpcList npc, string text, string playerText = "다음") : base(npc, new DialogText(CTexts.Make(text), Npcs.Get(npc).DisplayName))
-    {
-      PlayerSay = playerText;
-    }
+    public DNpcSay(NpcList npc, string text, string playerText = "다음") : this(npc, CTexts.Make(text), playerText) { }
     public override string Show(string playerAns = "")
     {
       PrintCText(SelectScene.PrintQuestionText(Text.DisplayText(playerAns)));

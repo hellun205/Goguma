@@ -2,20 +2,23 @@ using System.Collections.Generic;
 using Colorify;
 using Goguma.Game.Console;
 using Goguma.Game.Object.Npc;
+using static Goguma.Game.Console.ConsoleFunction;
 
 namespace Goguma.Game.Object.Quest.Dialog
 {
   public abstract class Dialog : IDialog
   {
-    public Npc.Npc Npc { get; set; }
+    public INpc Npc { get; set; }
     public DialogText Text { get; set; }
     public bool isCancelled { get; set; }
 
-    public Dialog(NpcList npc, DialogText text)
+    public Dialog(NpcList npc, CTexts text)
     {
       Npc = Npcs.Get(npc);
-      Text = text;
+      Text = new DialogText(text, Npc.DisplayName);
     }
+
+    public Dialog(NpcList npc, string text) : this(npc, CTexts.Make(text)) { }
 
     public abstract DialogType Type { get; }
 
