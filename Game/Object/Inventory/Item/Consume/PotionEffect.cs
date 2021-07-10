@@ -1,7 +1,7 @@
 using System;
 
 [Serializable]
-struct PotionEffect
+public struct PotionEffect
 {
   public double IncreaseMaxHp { get; set; }
   public double IncreaseMaxEp { get; set; }

@@ -41,7 +41,7 @@ namespace Goguma.Game.Object.Quest
       var resCT = new CTexts();
       foreach (var entity in Entitys)
       {
-        var ent = Monster.Get(entity.Mob);
+        var ent = Monster.GetNew(entity.Mob);
         var index = Entitys.IndexOf(entity);
         resCT.Append(ent.Name)
         .Append($"{{ {Entitys[index].Count} 마리 처치 - ( {Entitys[index].KilledCount} / {Entitys[index].Count} )\n,{(Entitys[index].KilledCount >= Entitys[index].Count ? Colors.txtSuccess : Colors.txtDefault)}}}");

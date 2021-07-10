@@ -5,30 +5,13 @@ using static Goguma.Game.Console.StringFunction;
 namespace Goguma.Game.Object.Inventory.Item.Equipment
 {
   [Serializable]
-  class EWeapon : EquipmentItem
+  public abstract class EWeapon : EquipmentItem
   {
     public override WearingType EType => WearingType.Weapon;
-    public WeaponEffect Effect { get; set; }
+    public abstract WeaponEffect Effect { get; }
 
     public EWeapon() : base()
     {
-      Effect = new WeaponEffect()
-      {
-        AttDmg = 0,
-        CritDmg = 0,
-        CritPer = 0,
-        IgnoreDef = 0
-      };
-    }
-
-    public EWeapon(EWeapon item) : base(item)
-    {
-      Effect = item.Effect;
-    }
-
-    public override IItem GetInstance()
-    {
-      return new EWeapon(this);
     }
 
     public override string ToString()

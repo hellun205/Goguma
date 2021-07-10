@@ -37,7 +37,7 @@ namespace Goguma.Game.Object.Map.Road
         var prob = rand.Next(0, 101);
 
         if (SummonMonsters[index].Prob >= prob)
-          return Monster.Get(SummonMonsters[index].Monster);
+          return Monster.GetNew(SummonMonsters[index].Monster);
       }
     }
   }

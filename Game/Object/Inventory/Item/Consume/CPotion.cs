@@ -7,15 +7,13 @@ using static Goguma.Game.Console.StringFunction;
 namespace Goguma.Game.Object.Inventory.Item.Consume
 {
   [Serializable]
-  class CPotion : ConsumeItem
+  public abstract class CPotion : ConsumeItem
   {
-    public PotionEffect Effect { get; set; }
+    public abstract PotionEffect Effect { get; }
+
     public override ConsumeItemType CType => ConsumeItemType.POTION;
+
     public CPotion() : base() { }
-    public CPotion(in CPotion item) : base(item)
-    {
-      Effect = item.Effect;
-    }
 
     public override CTexts EffectInfo()
     {
@@ -72,10 +70,6 @@ namespace Goguma.Game.Object.Inventory.Item.Consume
       player.DefPer += Effect.IncreaseDefPer;
       player.Gold += Effect.IncreaseGold;
       player.Exp += Effect.IncreaseExp;
-    }
-    public override IItem GetInstance()
-    {
-      return new CPotion(this);
     }
 
     public override CTexts UsedText()

@@ -3,24 +3,11 @@ using static Goguma.Game.Console.StringFunction;
 
 namespace Goguma.Game.Object.Inventory.Item.Equipment
 {
-  abstract class EEquip : EquipmentItem
+  public abstract class EEquip : EquipmentItem
   {
-    public EquipEffect Effect { get; set; }
+    public abstract EquipEffect Effect { get; }
 
-    public EEquip() : base()
-    {
-      Effect = new EquipEffect()
-      {
-        DefPer = 0,
-        MaxEp = 0,
-        MaxHp = 0
-      };
-    }
-
-    public EEquip(EEquip item) : base(item)
-    {
-      Effect = item.Effect;
-    }
+    public EEquip() : base() { }
 
     public override CTexts EffectInfo(bool isMinus = false)
     {

@@ -6,7 +6,7 @@ using static Goguma.Game.Console.StringFunction;
 namespace Goguma.Game.Object.Inventory.Item.Equipment
 {
   [Serializable]
-  abstract class EquipmentItem : Item, IEquipmentItem
+  public abstract class EquipmentItem : Item, IEquipmentItem
   {
     public override CTexts DisplayName => Name.Combine($"{{ ( {ETypeString},{Colors.txtSuccess} )}}");
     public override HavingType Type => HavingType.Equipment;
@@ -15,8 +15,6 @@ namespace Goguma.Game.Object.Inventory.Item.Equipment
     public string ETypeString => GetETypeString(EType);
 
     public EquipmentItem() : base() { }
-
-    public EquipmentItem(in EquipmentItem item) : base(item) { }
 
     public override CTexts Info(bool showCount = true)
     {

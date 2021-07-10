@@ -5,38 +5,24 @@ using static Goguma.Game.Console.ConsoleFunction;
 namespace Goguma.Game.Object.Inventory.Item
 {
   [Serializable]
-  abstract class Item : IItem
+  public abstract class Item : IItem
   {
-    public CTexts Name { get; set; }
+    public abstract CTexts Name { get; }
+    public abstract ItemList Material { get; }
     public abstract CTexts DisplayName { get; }
     public int Count { get; set; }
     public abstract int MaxCount { get; }
     public abstract HavingType Type { get; }
     public string TypeString => GetTypeString(Type);
-    public int SalePrice { get; set; }
-    public int PurchasePrice { get; set; }
-    public bool IsSalable { get; set; }
-    public bool IsPurchasable { get; set; }
-    public CTexts Descriptions { get; set; }
+    public virtual int SalePrice => 0;
+    public virtual int PurchasePrice => SalePrice * 2;
+    public virtual bool IsSalable => false;
+    public virtual bool IsPurchasable => false;
+    public abstract CTexts Descriptions { get; }
     public Item()
     {
       Count = 1;
-      SalePrice = 0;
-      PurchasePrice = 0;
-      IsSalable = false;
-      IsPurchasable = false;
     }
-    public Item(in Item item) : this()
-    {
-      Name = item.Name;
-      Count = item.Count;
-      SalePrice = item.SalePrice;
-      PurchasePrice = item.PurchasePrice;
-      Descriptions = item.Descriptions;
-      IsSalable = item.IsSalable;
-      IsPurchasable = item.IsPurchasable;
-    }
-    public abstract IItem GetInstance();
     public void Information(bool showCount = true, bool isPause = true)
     {
       PrintCText(Info());
@@ -64,5 +50,8 @@ namespace Goguma.Game.Object.Inventory.Item
           return null;
       }
     }
+
+    public IItem GetNew => Itemss.GetNew(Material);
+    public IItem GetInstance => Itemss.GetInstance(Material);
   }
 }

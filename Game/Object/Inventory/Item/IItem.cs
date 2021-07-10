@@ -7,19 +7,20 @@ namespace Goguma.Game.Object.Inventory.Item
 {
   public interface IItem
   {
-    CTexts Name { get; set; }
+    CTexts Name { get; }
     CTexts DisplayName { get; }
-    CTexts Descriptions { get; set; }
+    CTexts Descriptions { get; }
     int Count { get; set; }
     int MaxCount { get; }
-    int PurchasePrice { get; set; }
-    int SalePrice { get; set; }
-    bool IsSalable { get; set; }
-    bool IsPurchasable { get; set; }
+    int PurchasePrice { get; }
+    int SalePrice { get; }
+    bool IsSalable { get; }
+    bool IsPurchasable { get; }
     HavingType Type { get; }
     string TypeString { get; }
+    IItem GetNew { get; }
+    IItem GetInstance { get; }
 
-    IItem GetInstance();
     void Information(bool showCount = true, bool isPause = true);
     CTexts Info(bool showCount = true);
   }

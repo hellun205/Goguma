@@ -226,7 +226,7 @@ namespace Goguma.Game.Object.Entity.Player
           sb.Append("\n없음");
         else
           foreach (var m in road.SummonMonsters)
-            sb.Append($"\n{Monster.Monster.Get(m.Monster).Name}");
+            sb.Append($"\n{Monster.Monster.GetNew(m.Monster).Name}");
       }
 
       sb.Append("\n" + StringFunction.GetSep(30));
@@ -274,7 +274,7 @@ namespace Goguma.Game.Object.Entity.Player
               player.Exp += player.RequiredForLevelUp();
               break;
             case "Battle with test monster":
-              var testMonster = Monster.Monster.Get(MonsterList.TEST_MONSTER);
+              var testMonster = Monster.Monster.GetNew(MonsterList.TEST_MONSTER);
               Battle.Battle.PvE(testMonster);
               break;
             case "Add Test Skill":
@@ -285,13 +285,13 @@ namespace Goguma.Game.Object.Entity.Player
             case "Add Item":
               var ssi = new SelectSceneItems();
               for (var i = 0; i < Enum.GetValues(typeof(ItemList)).Length; i++)
-                ssi.Add(Items.Get((ItemList)i).Name);
+                ssi.Add(Itemss.GetNew((ItemList)i).Name);
               var itemSelectSS = new SelectScene(CTexts.Make("{아이템을 선택하시오.}"), ssi, true);
               if (itemSelectSS.isCancelled) return;
               int rCount;
               if (ReadInt("{수량을 입력하세요.}", out rCount, 0, 0)) break;
-              player.Inventory.GetItem(Items.Get((ItemList)itemSelectSS.getIndex), rCount);
-              PrintText($"\n아이템 {Items.Get((ItemList)itemSelectSS.getIndex).Name} {rCount}개를 얻었습니다.\n");
+              player.Inventory.GetItem(Itemss.GetNew((ItemList)itemSelectSS.getIndex), rCount);
+              PrintText($"\n아이템 {Itemss.GetNew((ItemList)itemSelectSS.getIndex).Name} {rCount}개를 얻었습니다.\n");
               Pause();
               break;
             case "Add Gold":

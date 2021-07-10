@@ -28,7 +28,7 @@ namespace Goguma.Game.Object.Inventory.Item.Drop
                  where it.DropChance >= (int)new Random().Next(1, 101)
                  select it;
       foreach (var it in item)
-        dItems.Add(Goguma.Game.Object.Inventory.Item.Items.Get(it.Item));
+        dItems.Add(Itemss.GetNew(it.Item));
       return dItems;
     }
   }
