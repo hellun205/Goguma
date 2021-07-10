@@ -15,7 +15,7 @@ namespace Goguma.Game.Object.Quest
   {
     public abstract string Name { get; }
     public abstract NpcList Npc { get; }
-    public abstract List<IDialog> Dialogs { get; set; }
+    public abstract List<IDialog> Dialogs { get; }
     public abstract QuestList QuestEnum { get; }
     public abstract DNpcAsk AskDialog { get; }
     public abstract DNpcSay CancelledDialog { get; }
@@ -34,7 +34,7 @@ namespace Goguma.Game.Object.Quest
     {
       var info = new CTexts()
       .Append($"{{\n{GetSep(40, $"{Name}")}}}")
-      .Append($"{{\nNPC : }}{{{Npcs.GetTraderByEnum(Npc).TypeString} ,{Colors.txtWarning}}}{{{Npcs.GetTraderByEnum(Npc).Name},{Colors.txtInfo}}}")
+      .Append($"{{\nNPC : }}{{{Npcs.Get(Npc).TypeString} ,{Colors.txtWarning}}}{{{Npcs.Get(Npc).Name},{Colors.txtInfo}}}")
       .Append($"{{\n필요 레벨 : {QRequirements.MinLv} ~ {(QRequirements.MaxLv == Int32.MaxValue ? "" : $"{QRequirements.MaxLv}")}}}")
       .Append($"{{\n완료 시 받는 골드 : }}{{{GivingGold} G, {Colors.txtWarning}}}")
       .Append($"{{\n완료 시 받는 경험치 : }}{{{GivingExp} , {Colors.txtWarning}}}")
@@ -54,7 +54,6 @@ namespace Goguma.Game.Object.Quest
 
     public Quest()
     {
-      Dialogs = new List<IDialog>();
     }
 
     public bool ShowDialog()

@@ -27,7 +27,7 @@ namespace Goguma.Game.Object.Quest
         var ssi = new SelectSceneItems();
         foreach (var quest in Quests)
         {
-          ssi.Add(CTexts.Make($"{{{quest.Name} - }}{{{Npcs.GetTraderByEnum(quest.Npc).Name},{Colors.txtInfo}}}{{ ( {(quest.IsCompleted ? $"완료 가능 ),{Colors.txtSuccess}" : $"진행 중 ), {Colors.txtWarning}")}}}"));
+          ssi.Add(CTexts.Make($"{{{quest.Name} - }}{{{Npcs.Get(quest.Npc).Name},{Colors.txtInfo}}}{{ ( {(quest.IsCompleted ? $"완료 가능 ),{Colors.txtSuccess}" : $"진행 중 ), {Colors.txtWarning}")}}}"));
         }
 
         var ss = new SelectScene($"{{정보를 확인 할 퀘스트를 선택하세요. 총 {Quests.Count}개의 퀘스트가 진행 중입니다.}}", ssi, true);

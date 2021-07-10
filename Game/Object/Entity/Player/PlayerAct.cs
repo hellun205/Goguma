@@ -170,12 +170,12 @@ namespace Goguma.Game.Object.Entity.Player
         ssi.Add("{없음}", false);
       else
         foreach (var n in town.Npcs)
-          ssi.Add(Npcs.GetTraderByEnum(n).DisplayName);
+          ssi.Add(Npcs.Get(n).DisplayName);
 
       var s = new SelectScene(CTexts.Make("{누구와 대화하시겠습니까?}"), ssi, true);
       if (s.isCancelled) return;
 
-      Npcs.GetTraderByEnum(town.Npcs[s.getIndex]).OnDialogOpen();
+      Npcs.Get(town.Npcs[s.getIndex]).OnDialogOpen();
     }
 
     static private void ViewSkill()

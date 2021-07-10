@@ -13,7 +13,7 @@ namespace Goguma.Game.Object.Quest.Dialog
 
     public Dialog(NpcList npc, DialogText text)
     {
-      Npc = Npcs.GetTraderByEnum(npc);
+      Npc = Npcs.Get(npc);
       Text = text;
     }
 

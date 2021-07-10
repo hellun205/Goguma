@@ -7,13 +7,14 @@ namespace Goguma.Game.Object.Npc
     public static NTrader trader = new NTrader();
     public static NTrader tK = new NTrader(NpcList.TRADER_K);
 
-    public static NTrader GetTraderByName(string name)
+    public static NTrader Get(string name)
     {
       if (name == trader.Name) return trader;
+      else if (name == tK.Name) return tK;
       else return null;
     }
 
-    public static NTrader GetTraderByEnum(NpcList npc)
+    public static NTrader Get(NpcList npc)
     {
       switch (npc)
       {

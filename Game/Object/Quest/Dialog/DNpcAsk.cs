@@ -8,9 +8,8 @@ namespace Goguma.Game.Object.Quest.Dialog
   {
     public bool Answer { get; protected set; }
     public override DialogType Type => DialogType.NPC_ASK;
-
-    public DNpcAsk(NpcList npc, DialogText text) : base(npc, text) { }
-    public DNpcAsk(NpcList npc, CTexts text) : base(npc, new DialogText(text)) { }
+    public DNpcAsk(NpcList npc, CTexts text) : base(npc, new DialogText(text, Npcs.Get(npc).DisplayName)) { }
+    public DNpcAsk(NpcList npc, string text) : base(npc, new DialogText(CTexts.Make(text), Npcs.Get(npc).DisplayName)) { }
 
     public override string Show(string playerAns = "")
     {

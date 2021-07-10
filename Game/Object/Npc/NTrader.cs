@@ -35,16 +35,16 @@ namespace Goguma.Game.Object.Npc
           Quests.Add(QuestList.TEST_QUEST);
 
           text = "{어서 옵셔~}";
-          Conversation = new(NpcList.TRADER_K, new DialogText(CTexts.Make("{어이쿠 손님 안녕하신가~}"), DisplayName));
+          Conversation = new(NpcList.TRADER_K, "{어이쿠 손님 안녕하신가~}");
           break;
         default:
           Name = "상인";
 
           text = "{어서오시오}";
-          Conversation = new(NpcList.TRADER_K, new DialogText(CTexts.Make("{안녕하시오.}"), DisplayName));
+          Conversation = new(NpcList.TRADER_K, "{안녕하시오.}");
           break;
       }
-      Meet = new(NpcList.TRADER_K, new DialogText(CTexts.Make(text), DisplayName));
+      Meet = new(NpcList.TRADER_K, text);
     }
 
     public override void OnDialogOpen()
