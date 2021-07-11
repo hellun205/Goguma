@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using Colorify;
 using Goguma.Game.Console;
 using Goguma.Game.Object.Entity.Monster;
-using Goguma.Game.Object.Quest.Exceptions;
-using static Goguma.Game.Console.ConsoleFunction;
 
 namespace Goguma.Game.Object.Quest
 {
@@ -48,7 +46,7 @@ namespace Goguma.Game.Object.Quest
       foreach (var entity in Entitys)
       {
         var ent = Monster.GetInstance(entity.Mob);
-        resCT.Append($"{{{ent.Name},{Colors.txtInfo}}}{{ {entity.Count} 마리 처치 - ( {entity.KilledCount} / {entity.Count} )\n,{(entity.KilledCount >= entity.Count ? Colors.txtSuccess : Colors.txtDefault)}}}");
+        resCT.Append($"{{{ent.Name},{Colors.txtInfo}}}{{ {entity.Count} 마리 처치 - }}{{( {entity.KilledCount} / {entity.Count} )\n,{(entity.KilledCount >= entity.Count ? Colors.txtSuccess : Colors.txtDefault)}}}");
       }
 
       return resCT;

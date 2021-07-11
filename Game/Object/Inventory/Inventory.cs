@@ -108,18 +108,17 @@ namespace Goguma.Game.Object.Inventory
       inven[(int)wType] = null;
     }
 
-    public void RemoveItem(ItemPair item) // Having Item Remove
+    public bool RemoveItem(ItemPair item) // Having Item Remove
     {
-      var inven = Items.having[item.ItemM.Type];
+      List<ItemPair> list;
+      var check = CheckItem(item, out list);
 
-      var items = (from it in inven
-                   where it.Item == item.Item
-                   select it).ToList();
-
-      if (item.Count == items[0].Count)
-        inven.Remove(items[0]);
+      if (item.Count == list[0].Count)
+        Items.having.Items.Remove(list[0]);
       else
-        inven[inven.IndexOf(items[0])].Count -= item.Count;
+        Items.having.Items[Items.having.Items.IndexOf(list[0])].Count -= item.Count;
+
+      return check;
     }
 
     public void SetItem(WearingType wType, ItemList item) // Wearing Item Set

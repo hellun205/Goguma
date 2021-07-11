@@ -1,12 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Colorify;
 using Goguma.Game.Console;
-using Goguma.Game.Object.Entity.Monster;
 using Goguma.Game.Object.Npc;
-using Goguma.Game.Object.Quest.Exceptions;
-using static Goguma.Game.Console.ConsoleFunction;
 
 namespace Goguma.Game.Object.Quest
 {
@@ -51,7 +47,7 @@ namespace Goguma.Game.Object.Quest
       foreach (var np in MeetNpcs)
       {
         var npc = Npcs.Get(np);
-        resCT.Append(npc.DisplayName).Append($"{{(을)를 만나기 }}{{{(MetNpcs.Contains(np) ? $"( 완료 ), {Colors.txtSuccess}" : "")}}}{{\n}}");
+        resCT.Append(npc.DisplayName).Append($"{{(을)를 만나기 }}{{{(MetNpcs.Contains(np) ? $"( 완료 ), {Colors.txtSuccess}" : "( 진행 중 )")}}}{{\n}}");
       }
 
       return resCT;

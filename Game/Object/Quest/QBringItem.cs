@@ -2,9 +2,7 @@ using System;
 using System.Collections.Generic;
 using Colorify;
 using Goguma.Game.Console;
-using Goguma.Game.Object.Entity.Monster;
 using Goguma.Game.Object.Inventory.Item;
-using Goguma.Game.Object.Quest.Exceptions;
 using static Goguma.Game.Console.ConsoleFunction;
 
 namespace Goguma.Game.Object.Quest
@@ -13,48 +11,50 @@ namespace Goguma.Game.Object.Quest
   public abstract class QBringItem : Quest
   {
     public abstract List<ItemPair> ItemsToBring { get; }
-    public List<ItemPair> ItemsReceived { get; set; }
+
+    public List<ItemPair> ItemsToBring_ { get; set; }
 
     public override QuestType Type => QuestType.BRING_ITEM;
 
     protected QBringItem() : base()
     {
-      ItemsReceived = new();
+      ItemsToBring_ = ItemsToBring;
     }
 
-    public void OnBringItem(ItemPair[] items)
+    public void OnBringItem()
     {
       var player = InGame.player;
-      foreach (var item in items)
+      foreach (var item in ItemsToBring_)
       {
-        if (player.Inventory.CheckItem(item))
+        PrintText("\n");
+        if (player.Inventory.RemoveItem(item))
         {
-          player.Inventory.RemoveItem();
+          ItemsToBring_.Remove(item);
+          PrintCText(CTexts.Make("{아이템 }").Combine(item.ItemM.DisplayName).Combine("{(을)를 주었습니다.\n}"));
         }
-        
+        Pause();
       }
-      CheckAvailableComplete();
+      // CheckAvailableComplete();
     }
 
     public override bool IsCompleted
     {
       get
       {
-        // TO DO
-        return false;
+        return (ItemsToBring_.Count == 0);
       }
     }
 
     protected override CTexts InfoDetails()
     {
-      // var resCT = new CTexts();
-      // foreach (var entity in Entitys)
-      // {
-      //   var ent = Monster.GetInstance(entity.Mob);
-      //   resCT.Append($"{{{ent.Name},{Colors.txtInfo}}}{{ {entity.Count} 마리 처치 - ( {entity.KilledCount} / {entity.Count} )\n,{(entity.KilledCount >= entity.Count ? Colors.txtSuccess : Colors.txtDefault)}}}");
-      // }
-      //
-      // return resCT; TO DO
+      var resCT = new CTexts();
+      foreach (var item in ItemsToBring)
+      {
+        var isCompleted = ItemsToBring_.Contains(item);
+        resCT.Append(item.ItemM.DisplayName.Combine($"{{ {item.Count}개 가져다 주기 - }}{{( {(isCompleted ? "완료" : "진행 중")} )\n,{(isCompleted ? Colors.txtSuccess : Colors.txtDefault)}}}"));
+      }
+
+      return resCT;
     }
   }
 }
