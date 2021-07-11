@@ -62,7 +62,7 @@ namespace Goguma.Game.Object.Inventory.Item.Consume
       return resCT;
     }
 
-    public override void UseItem(IPlayer player)
+    public override void UseItem(Player player)
     {
       player.Hp += Effect.HealHp;
       player.Ep += Effect.HealEp;

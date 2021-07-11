@@ -23,8 +23,6 @@ namespace Goguma.Game.Object.Entity.Monster
       AttSystem = new();
     }
 
-    public IMonster GetNew => Monster.GetNew(Material);
-
     new public void Information()
     {
       PrintCText(Info());

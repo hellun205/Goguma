@@ -80,7 +80,7 @@ namespace Goguma.Game.Object.Entity.Player
         };
         return new SelectScene(GetQText(), GetSSI(), true);
       }
-      static public SelectScene SelSkillType(IPlayer player, out SkillType skType)
+      static public SelectScene SelSkillType(Player player, out SkillType skType)
       {
         Func<CTexts> GetQText = () =>
         {
@@ -103,7 +103,7 @@ namespace Goguma.Game.Object.Entity.Player
         var selIndexSc = SelSkill(player, skType);
         return selIndexSc;
       }
-      static public SelectScene SelSkill(IPlayer player, SkillType sType)
+      static public SelectScene SelSkill(Player player, SkillType sType)
       {
         Func<SkillType, CTexts> GetQText = (SkillType sType) =>
          {
@@ -186,7 +186,7 @@ namespace Goguma.Game.Object.Entity.Player
 
     static private void ViewSkill()
     {
-      IPlayer player = InGame.player;
+      Player player = InGame.player;
       while (true)
       {
         SkillType skillType;

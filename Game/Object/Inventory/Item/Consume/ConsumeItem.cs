@@ -21,7 +21,7 @@ namespace Goguma.Game.Object.Inventory.Item.Consume
       LoseCount = 1;
     }
 
-    public abstract void UseItem(IPlayer player);
+    public abstract void UseItem(Player player);
 
     public override CTexts Info(bool showCount = true)
     {

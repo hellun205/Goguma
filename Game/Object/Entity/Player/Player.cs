@@ -16,7 +16,7 @@ using Goguma.Game.Object.Inventory.Item;
 namespace Goguma.Game.Object.Entity.Player
 {
   [Serializable]
-  public class Player : Entity, IPlayer
+  public class Player : Entity
   {
     public override EntityType Type => EntityType.PLAYER;
     public Inventory.Inventory Inventory { get; set; }

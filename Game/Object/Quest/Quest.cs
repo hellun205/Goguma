@@ -66,7 +66,7 @@ namespace Goguma.Game.Object.Quest
       return ask;
     }
 
-    public void Exe(IPlayer player)
+    public void Exe(Player player)
     {
       var ask = ShowDialog();
       if (ask)

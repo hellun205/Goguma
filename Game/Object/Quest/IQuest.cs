@@ -24,7 +24,7 @@ namespace Goguma.Game.Object.Quest
     int GivingGold { get; }
     List<ItemPair> GivingItems { get; }
     bool ShowDialog();
-    void Exe(IPlayer player);
+    void Exe(Player player);
     void OnCompleted();
     CTexts Information();
   }

@@ -26,7 +26,7 @@ namespace Goguma.Game.Object.Inventory.Item.Consume
       .Append($"{{\n사용 시 위 스킬을 획득합니다.}}");
     }
 
-    public override void UseItem(IPlayer player)
+    public override void UseItem(Player player)
     {
       player.Skills.Add(PlayerSkills.GetNew(SkillToReceive));
     }
