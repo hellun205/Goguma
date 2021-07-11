@@ -15,7 +15,7 @@ namespace Goguma.Game.Object.Quest
 
     public override QuestType Type => QuestType.KILL_ENTITY;
 
-    public QKillEntity() : base()
+    protected QKillEntity() : base()
     {
       Entitys = new List<Entitys>();
     }

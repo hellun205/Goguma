@@ -7,16 +7,15 @@ using Goguma.Game.Object.Quest.Dialog;
 namespace Goguma.Game.Object.Quest.Quests
 {
   [Serializable]
-  public class Qst_TestQuest2 : QMeetNpc
+  public class QstTestQuest3 : QGeneral
   {
-    static public readonly IQuest Instance = new Qst_TestQuest2();
-    public override string Name => "K의 테스트 퀘스트2";
-
+    public static readonly IQuest Instance = new QstTestQuest3();
+    public override string Name => "K의 테스트 퀘스트3";
     public override Npc.Npc ReceiveNpc => Npcs.Get(NpcList.TRADER_K);
 
     public override List<IDialog> Dialogs => new()
     {
-      new DNpcSay(ReceiveNpc, "{하...}", "무슨 일 있으셔요?"),
+      new DNpcSay(ReceiveNpc, "{흐음...}", "..? ( 또 뭐지..?)"),
     };
 
     public override List<IDialog> OnCompleteDialog => new()
@@ -24,23 +23,20 @@ namespace Goguma.Game.Object.Quest.Quests
       new DNpcSay(ReceiveNpc, "{그래 좋아.}", ".. ?")
     };
 
-    public override QuestList Material => QuestList.TEST_QUEST2;
+    public override QuestList Material => QuestList.TEST_QUEST3;
 
-    public override DNpcAsk AskDialog => new DNpcAsk(ReceiveNpc, "{나에게 다시 찾아와 다오.}");
-    public override DNpcSay CancelledDialog => new DNpcSay(ReceiveNpc, "{그려}", "넵");
+    public override DNpcAsk AskDialog => new DNpcAsk(ReceiveNpc, "{나한테좀 찾아와 줄래?}");
+    public override DNpcSay CancelledDialog => new DNpcSay(ReceiveNpc, "{알겠네.}", "...");
     public override DNpcSay AcceptDialog => CancelledDialog;
     public override DNpcSay DeclineDialog => CancelledDialog;
     public override QuestRequirements QRequirements => new QuestRequirements(Material) { MinLv = 0 };
-    public override double GivingExp => 10;
-    public override int GivingGold => 200;
+    public override double GivingExp => 18;
+    public override int GivingGold => 250;
     public override List<ItemPair> GivingItems => new()
     {
-      new(ItemList.POTION_1, 15)
+      new(ItemList.POTION_1, 25)
     };
 
-    public Qst_TestQuest2() : base()
-    {
-
-    }
+    public QstTestQuest3() : base() {}
   }
 }

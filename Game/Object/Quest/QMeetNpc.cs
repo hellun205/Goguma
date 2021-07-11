@@ -17,7 +17,7 @@ namespace Goguma.Game.Object.Quest
     public List<NpcList> MetNpcs { get; set; }
     public override QuestType Type => QuestType.MEET_NPC;
 
-    public QMeetNpc() : base()
+    protected QMeetNpc() : base()
     {
       MetNpcs = new();
     }

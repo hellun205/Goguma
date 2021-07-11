@@ -7,9 +7,9 @@ using Goguma.Game.Object.Quest.Dialog;
 namespace Goguma.Game.Object.Quest.Quests
 {
   [Serializable]
-  public class Qst_TestQuest : QKillEntity
+  public class QstTestQuest : QKillEntity
   {
-    static public readonly Qst_TestQuest Instance = new Qst_TestQuest();
+    static public readonly QstTestQuest Instance = new QstTestQuest();
     public override string Name => "K의 테스트 퀘스트";
 
     public override Npc.Npc ReceiveNpc => Npcs.Get(NpcList.TRADER_K);
@@ -40,7 +40,7 @@ namespace Goguma.Game.Object.Quest.Quests
       new(ItemList.POTION_1, 10)
     };
 
-    public Qst_TestQuest() : base()
+    public QstTestQuest() : base()
     {
       Entitys = new()
       {

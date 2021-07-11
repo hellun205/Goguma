@@ -54,7 +54,7 @@ namespace Goguma.Game.Object.Quest
       return info;
     }
 
-    public Quest() { }
+    protected Quest() { }
 
     public bool ShowDialog()
     {
