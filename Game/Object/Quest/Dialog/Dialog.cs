@@ -25,7 +25,7 @@ namespace Goguma.Game.Object.Quest.Dialog
     //   return new CTexts().Append($"{{  {Npc.TypeString} ,{Colors.txtWarning}}}{{{Npc.Name},{Colors.txtInfo}}}{{ : }}").Append(Text[pan]);
     // }
 
-    public static void ShowDialogs(List<IDialog> dialogs, DNpcSay cancelledDialog)
+    public static void ShowDialogs(List<IDialog> dialogs, DNpcSay cancelledDialog = null)
     {
       string ans = "";
       foreach (var dialog in dialogs)
@@ -34,13 +34,13 @@ namespace Goguma.Game.Object.Quest.Dialog
         PrintText("\n\n");
         if (dialog.isCancelled)
         {
-          cancelledDialog.Show();
-          break;
+          if (cancelledDialog != null) cancelledDialog.Show();
+          return;
         }
       }
     }
 
-    public static bool ShowDialogs(List<IDialog> dialogs, DNpcAsk askDialog, DNpcSay cancelledDialog)
+    public static bool ShowDialogs(List<IDialog> dialogs, DNpcAsk askDialog, DNpcSay cancelledDialog = null)
     {
       ShowDialogs(dialogs, cancelledDialog);
       return askDialog.ShowAsk();

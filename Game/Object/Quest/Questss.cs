@@ -11,6 +11,8 @@ namespace Goguma.Game.Object.Quest
       {
         case QuestList.TEST_QUEST: return Qst_TestQuest.Instance;
 
+        case QuestList.TEST_QUEST2: return Qst_TestQuest2.Instance;
+
         default: throw new NotImplementedException();
       }
     }
@@ -20,6 +22,8 @@ namespace Goguma.Game.Object.Quest
       switch (quest)
       {
         case QuestList.TEST_QUEST: return new Qst_TestQuest();
+
+        case QuestList.TEST_QUEST2: return new Qst_TestQuest2();
 
         default: throw new NotImplementedException();
       }

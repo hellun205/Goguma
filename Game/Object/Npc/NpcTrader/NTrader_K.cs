@@ -22,7 +22,8 @@ namespace Goguma.Game.Object.Npc.NpcTrader
 
     public override List<QuestList> Quests => new()
     {
-      QuestList.TEST_QUEST
+      QuestList.TEST_QUEST,
+      QuestList.TEST_QUEST2
     };
 
     public override DNpcSay OpenShopDialog => new DNpcSay(this, "{물건 많이 있수다!}");

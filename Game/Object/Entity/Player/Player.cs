@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using Goguma.Game.Object.Entity.Monster;
 using System.Linq;
 using Goguma.Game.Object.Inventory.Item;
+using Goguma.Game.Object.Npc;
 
 namespace Goguma.Game.Object.Entity.Player
 {
@@ -347,6 +348,17 @@ namespace Goguma.Game.Object.Entity.Player
       }
       Quest.Remove(quest);
       return !cond;
+    }
+
+    public void MeetNpc(NpcList npc)
+    {
+      var quests = (from quest in Quest.Quests
+                    where quest.Type == QuestType.MEET_NPC
+                    select quest).Cast<QMeetNpc>().ToList();
+      foreach (var qst in quests)
+      {
+        qst.OnMeetNpc(npc);
+      }
     }
   }
 }

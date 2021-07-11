@@ -29,11 +29,7 @@ namespace Goguma.Game.Object.Quest
           // return;
         }
       // throw new EntityNotInEntityList();
-      if (IsCompleted)
-      {
-        PrintCText($"{{\n퀘스트 : }}{{{Name},{Colors.txtInfo}}}{{(을)를 완료할 수 있습니다.\n}}");
-        Pause();
-      }
+      CheckAvailableComplete();
     }
 
     public override bool IsCompleted
@@ -54,6 +50,7 @@ namespace Goguma.Game.Object.Quest
         var ent = Monster.GetInstance(entity.Mob);
         resCT.Append($"{{{ent.Name},{Colors.txtInfo}}}{{ {entity.Count} 마리 처치 - ( {entity.KilledCount} / {entity.Count} )\n,{(entity.KilledCount >= entity.Count ? Colors.txtSuccess : Colors.txtDefault)}}}");
       }
+
       return resCT;
     }
   }

@@ -6,7 +6,6 @@ using Goguma.Game.Object.Inventory;
 using Goguma.Game.Object.Inventory.Item;
 using System.Linq;
 using static Goguma.Game.Console.ConsoleFunction;
-using Goguma.Game.Object.Quest;
 using Goguma.Game.Object.Quest.Dialog;
 
 namespace Goguma.Game.Object.Npc.NpcTrader
@@ -19,50 +18,19 @@ namespace Goguma.Game.Object.Npc.NpcTrader
 
     public abstract DNpcSay OpenShopDialog { get; }
 
-    public NTrader() : base()
-    {
-    }
+    public override string[] SSItems => new[] { "상점 열기" };
 
-    public override void OnDialogOpen()
+    public override void OnSelectedSSI(string selectedSSI)
     {
-      while (true)
+      switch (selectedSSI)
       {
-        var ssi = new SelectSceneItems();
-        foreach (var quest in InGame.player.Quest.Quests)
-          if (quest.IsCompleted)
-          {
-            ssi.Add("{퀘스트 완료}");
-            break;
-          }
-        foreach (var quest in Quests)
-          if (Questss.GetQuestInstance(quest).MeetTheRequirements)
-          {
-            ssi.Add("{퀘스트 받기}");
-            break;
-          }
-        ssi.Add("{상점 열기}");
-        ssi.Add("{대화 하기}");
-
-        var ss = new SelectScene(MeetDialog.Text.DisplayText(String.Empty), ssi, true, CTexts.Make($"{{대화 종료,{Colors.txtMuted}}}"));
-        if (ss.isCancelled) return;
-
-        switch (ss.getString)
-        {
-          case "퀘스트 완료":
-            CompleteQuest();
-            break;
-          case "퀘스트 받기":
-            ReceiveQuest();
-            break;
-          case "대화 하기":
-            ConversationDialog.Show();
-            break;
-          case "상점 열기":
-            OpenShop();
-            break;
-        }
+        case "상점 열기":
+          OpenShop();
+          break;
       }
     }
+
+    public NTrader() : base() { }
 
     public void OpenShop()
     {
