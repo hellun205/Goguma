@@ -1,11 +1,10 @@
 using Colorify;
 using Goguma.Game.Console;
-using Goguma.Game.Object.Entity.AttSys;
 using Goguma.Game.Object.Inventory.Item.Drop;
 using System.Linq;
 using static Goguma.Game.Console.ConsoleFunction;
 using static Goguma.Game.Console.StringFunction;
-using Goguma.Game.Object.Inventory.Item;
+using Goguma.Game.Object.Entity.AttackSystem;
 
 namespace Goguma.Game.Object.Entity.Monster
 {
@@ -17,11 +16,14 @@ namespace Goguma.Game.Object.Entity.Monster
     public abstract double GivingGold { get; }
     public abstract double GivingExp { get; }
     public abstract DroppingItems DroppingItems { get; }
-    public abstract AttackSyss AttSystem { get; }
+    public AttackSyss AttSystem { get; set; }
 
-    public Mob() : base() { }
+    public Mob() : base()
+    {
+      AttSystem = new();
+    }
 
-    public abstract IMonster GetInstance();
+    public IMonster GetNew => Monster.GetNew(Material);
 
     new public void Information()
     {

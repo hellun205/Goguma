@@ -1,6 +1,6 @@
 using System;
 using Goguma.Game.Console;
-using Goguma.Game.Object.Entity.AttSys;
+using Goguma.Game.Object.Entity.AttackSystem;
 using Goguma.Game.Object.Inventory.Item;
 using Goguma.Game.Object.Inventory.Item.Drop;
 
@@ -24,9 +24,7 @@ namespace Goguma.Game.Object.Entity.Monster.Monsters
       new(new(ItemList.POTION_1), 80),
     });
 
-    public override AttackSyss AttSystem => new(this);
-
-    public Mob_Goblin()
+    public Mob_Goblin() : base()
     {
       MaxHp = 7;
       Hp = 7;
@@ -35,9 +33,5 @@ namespace Goguma.Game.Object.Entity.Monster.Monsters
       Level = 3;
     }
 
-    public override IMonster GetInstance()
-    {
-      throw new System.NotImplementedException();
-    }
   }
 }

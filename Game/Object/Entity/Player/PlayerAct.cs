@@ -12,6 +12,7 @@ using static Goguma.Game.Console.ConsoleFunction;
 using Goguma.Game.Object.Inventory.Item;
 using System;
 using Goguma.Game.Object.Skill.Skills;
+using ToolBox.Notification;
 
 namespace Goguma.Game.Object.Entity.Player
 {
@@ -77,7 +78,7 @@ namespace Goguma.Game.Object.Entity.Player
           resultSSI.Add("{Add Gold}");
           return resultSSI;
         };
-        return new SelectScene(GetQText(), GetSSI());
+        return new SelectScene(GetQText(), GetSSI(), true);
       }
       static public SelectScene SelSkillType(IPlayer player, out SkillType skType)
       {
@@ -266,6 +267,7 @@ namespace Goguma.Game.Object.Entity.Player
         while (true)
         {
           var ss = Scene.SelAdminAct();
+          if (ss.isCancelled) return;
           switch (ss.getString)
           {
             case "Test Inventory":
@@ -302,8 +304,7 @@ namespace Goguma.Game.Object.Entity.Player
               PrintText($"\n{count}G를 얻었습니다.");
               Pause();
               break;
-            default:
-              return;
+            default: throw new NotImplementedException();
           }
           PrintCText($"{{\nSuccess : {ss.getString}, {Colors.txtSuccess}}}");
           Pause();

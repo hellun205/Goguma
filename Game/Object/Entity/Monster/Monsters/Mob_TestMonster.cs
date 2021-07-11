@@ -1,6 +1,6 @@
 using System;
 using Goguma.Game.Console;
-using Goguma.Game.Object.Entity.AttSys;
+using Goguma.Game.Object.Entity.AttackSystem;
 using Goguma.Game.Object.Inventory.Item;
 using Goguma.Game.Object.Inventory.Item.Drop;
 using Goguma.Game.Object.Skill;
@@ -25,9 +25,7 @@ namespace Goguma.Game.Object.Entity.Monster.Monsters
       new(new(ItemList.TEST_ITEM2), 30)
     });
 
-    public override AttackSyss AttSystem => new(this);
-
-    public Mob_TestMonster()
+    public Mob_TestMonster() : base()
     {
       MaxHp = 100;
       Hp = 100;
@@ -35,16 +33,17 @@ namespace Goguma.Game.Object.Entity.Monster.Monsters
       DefPer = 20;
       Level = 10;
 
-
-      AttSystem.Add(MonsterSkills.GetNew(MSkillList.TestMonster_TestPunch), new AttCondition(Cond.MonsterHpPer, ">=", 0.7));
-      AttSystem.Add(MonsterSkills.GetNew(MSkillList.TestMonster_TestFireBall), new AttCondition(Cond.PlayerHpPer, "<=", 0.3));
-      AttSystem.Add(MonsterSkills.GetNew(MSkillList.TestMonster_TestAttackSkill), new AttCondition(Cond.MonsterHpPer, ">=", 0.7));
-      AttSystem.Add(MonsterSkills.GetNew(MSkillList.TestMonster_DefensivePosture), new AttCondition(Cond.MonsterHpPer, "<=", 0.4));
+      AttSystem = new()
+      {
+        Items = new()
+        {
+          new(this, MSkillList.TESTMONSTER_TEST_PUNCH, Cond.PlayerHpPer, ">=", 0, 100, 1),
+          new(this, MSkillList.TESTMONSTER_TEST_FIREBALL, Cond.PlayerHpPer, ">=", 0, 100, 1),
+          new(this, MSkillList.TESTMONSTER_TEST_ATTACK_SKILL, Cond.PlayerHpPer, "<=", 0.5, 50, 1),
+          new(this, MSkillList.TESTMONSTER_DEFENSIVE_POSTURE, Cond.MonsterHpPer, "<=", 0.5, 1, 0)
+        }
+      };
     }
 
-    public override IMonster GetInstance()
-    {
-      throw new System.NotImplementedException();
-    }
   }
 }

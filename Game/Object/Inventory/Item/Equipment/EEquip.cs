@@ -1,8 +1,10 @@
+using System;
 using Goguma.Game.Console;
 using static Goguma.Game.Console.StringFunction;
 
 namespace Goguma.Game.Object.Inventory.Item.Equipment
 {
+  [Serializable]
   public abstract class EEquip : EquipmentItem
   {
     public abstract EquipEffect Effect { get; }

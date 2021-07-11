@@ -1,4 +1,4 @@
-namespace Goguma.Game.Object.Entity.AttSys
+namespace Goguma.Game.Object.Entity.AttackSystem
 {
   public enum Cond
   {

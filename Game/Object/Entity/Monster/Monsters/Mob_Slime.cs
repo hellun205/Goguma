@@ -1,10 +1,9 @@
 using System;
 using Goguma.Game.Console;
-using Goguma.Game.Object.Entity.AttSys;
+using Goguma.Game.Object.Entity.AttackSystem;
 using Goguma.Game.Object.Inventory.Item;
 using Goguma.Game.Object.Inventory.Item.Drop;
 using Goguma.Game.Object.Skill;
-using Goguma.Game.Object.Skill.Skills;
 
 namespace Goguma.Game.Object.Entity.Monster.Monsters
 {
@@ -25,9 +24,7 @@ namespace Goguma.Game.Object.Entity.Monster.Monsters
       new(new(ItemList.POTION_1), 30)
     });
 
-    public override AttackSyss AttSystem => new(this);
-
-    public Mob_Slime()
+    public Mob_Slime() : base()
     {
       MaxHp = 5;
       Hp = 5;
@@ -35,14 +32,15 @@ namespace Goguma.Game.Object.Entity.Monster.Monsters
       DefPer = 0.2;
       Level = 2;
 
-
-      AttSystem.Add(MonsterSkills.GetNew(MSkillList.SLIME_STICKY_ATTACK), new AttCondition(Cond.MonsterHpPer, ">=", 0.7));
-      AttSystem.Add(MonsterSkills.GetNew(MSkillList.SLIME_SPOUT_STICKY_LIQUID), new AttCondition(Cond.PlayerHpPer, "<=", 0.5));
+      AttSystem = new()
+      {
+        Items = new()
+        {
+          new(this, MSkillList.SLIME_STICKY_ATTACK, Cond.PlayerHpPer, ">=", 0, 100),
+          new(this, MSkillList.SLIME_SPOUT_STICKY_LIQUID, Cond.PlayerHpPer, "<=", 0.5, 10),
+        }
+      };
     }
 
-    public override IMonster GetInstance()
-    {
-      throw new System.NotImplementedException();
-    }
   }
 }
