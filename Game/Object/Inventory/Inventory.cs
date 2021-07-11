@@ -10,9 +10,9 @@ namespace Goguma.Game.Object.Inventory
   public class Inventory
   {
     public InvenItems Items { get; set; }
-    public IPlayer Player { get; set; }
+    public Player Player { get; set; }
 
-    public Inventory(IPlayer player)
+    public Inventory(Player player)
     {
       Items = new InvenItems();
       Player = player;

@@ -16,7 +16,7 @@ using Goguma.Game.Object.Inventory.Item;
 namespace Goguma.Game.Object.Entity.Player
 {
   [Serializable]
-  public class Player : Entity, IPlayer
+  public class Player : Entity
   {
     public override EntityType Type => EntityType.PLAYER;
     public Inventory.Inventory Inventory { get; set; }
@@ -323,10 +323,10 @@ namespace Goguma.Game.Object.Entity.Player
 
     public void ReceiveItems(ItemPair[] values)
     {
-      for (var i = 0; i < values.Length; i++)
+      foreach (var value in values)
       {
-        Inventory.GetItem(Itemss.GetNew(values[i].Item), values[i].Count);
-        PrintCText(CTexts.Make($"{{\n\n  아이템 }}").Combine(values[i].ItemM.DisplayName).Combine($"{{ {(values[i].Count == 1 ? "(을)를" : $"{values[i].Count}개를")} 획득했습니다. \n}}"));
+        Inventory.GetItem(Itemss.GetNew(value.Item), value.Count);
+        PrintCText(CTexts.Make($"{{\n\n  아이템 }}").Combine(value.ItemM.DisplayName).Combine($"{{ {(value.Count == 1 ? "(을)를" : $"{value.Count}개를")} 획득했습니다. \n}}"));
       }
       Pause(false);
     }

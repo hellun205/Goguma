@@ -1,6 +1,6 @@
 using System;
 using Goguma.Game.Console;
-using Goguma.Game.Object.Entity.AttSys;
+using Goguma.Game.Object.Entity.AttackSystem;
 using Goguma.Game.Object.Inventory.Item;
 using Goguma.Game.Object.Inventory.Item.Drop;
 using Goguma.Game.Object.Skill;
@@ -31,9 +31,8 @@ namespace Goguma.Game.Object.Entity.Monster.Monsters
       new(new(ItemList.POTION_1), 80),
     });
 
-    public override AttackSyss AttSystem => new(this);
 
-    public Mob_GoldGoblin()
+    public Mob_GoldGoblin() : base()
     {
       MaxHp = 80;
       Hp = 80;
@@ -41,14 +40,16 @@ namespace Goguma.Game.Object.Entity.Monster.Monsters
       DefPer = 2;
       Level = 17;
 
-      AttSystem.Add(MonsterSkills.GetNew(MSkillList.GOLD_GOBLIN_SWORD_SWING), new AttCondition(Cond.MonsterHpPer, ">=", 0.6));
-      AttSystem.Add(MonsterSkills.GetNew(MSkillList.GOLD_GOBLIN_SWORD_STING), new AttCondition(Cond.MonsterHpPer, ">=", 0.6));
-      AttSystem.Add(MonsterSkills.GetNew(MSkillList.GOLD_GOBLIN_ANGER), new AttCondition(Cond.MonsterHpPer, "<=", 0.5));
+      AttSystem = new()
+      {
+        Items = new()
+        {
+          new(this, MSkillList.GOLD_GOBLIN_SWORD_SWING, Cond.PlayerHpPer, ">=", 0, 100, 1),
+          new(this, MSkillList.GOLD_GOBLIN_SWORD_STING, Cond.PlayerHpPer, "<=", 0.5, 10, 1),
+          new(this, MSkillList.GOLD_GOBLIN_SWORD_SWING, Cond.MonsterHpPer, "<=", 0.5, 1, 0)
+        }
+      };
     }
 
-    public override IMonster GetInstance()
-    {
-      throw new System.NotImplementedException();
-    }
   }
 }

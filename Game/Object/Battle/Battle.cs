@@ -14,7 +14,7 @@ namespace Goguma.Game.Object.Battle
       var player = InGame.player;
       while (true)
       {
-        var scene = BattleScene.PvE.Meet(player, monster);
+        var scene = BattleScene.PvE.Meet(monster);
         switch (scene.getString)
         {
           case "플레이어 정보 보기":
@@ -27,7 +27,7 @@ namespace Goguma.Game.Object.Battle
             PvEStart(monster);
             return;
           case "도망 가기":
-            BattleScene.PvE.Player.Run();
+            BattleScene.PvE.Playerm.Run();
             return;
         }
       }
@@ -56,7 +56,7 @@ namespace Goguma.Game.Object.Battle
       {
         if (player.Ep < skill.UseEp)
         {
-          BattleScene.PvE.Player.LackOfEP(player, (ISkill)skill);
+          BattleScene.PvE.Playerm.LackOfEP((ISkill)skill);
           return false;
         }
         bool isCrit;
@@ -74,12 +74,12 @@ namespace Goguma.Game.Object.Battle
       {
         if (player.Ep < skill.UseEp)
         {
-          BattleScene.PvE.Player.LackOfEP(player, (ISkill)skill);
+          BattleScene.PvE.Playerm.LackOfEP((ISkill)skill);
           return false;
         }
         if (buffs.Contains(skill))
         {
-          BattleScene.PvE.Player.AlreadyUsingBuff(skill);
+          BattleScene.PvE.Playerm.AlreadyUsingBuff(skill);
           return false;
         }
         player.Ep -= skill.UseEp;
@@ -92,7 +92,7 @@ namespace Goguma.Game.Object.Battle
       {
         while (true)
         {
-          var skSc = BattleScene.PvE.Player.SelSkill(player, SkillType.AttackSkill);
+          var skSc = BattleScene.PvE.Playerm.SelSkill(SkillType.AttackSkill);
           if (skSc == null) return false;
           var skills = from sk in player.Skills
                        where sk.Type == SkillType.AttackSkill
@@ -100,7 +100,7 @@ namespace Goguma.Game.Object.Battle
           var skill = skills.ToList<ISkill>()[skSc.getIndex];
           while (true)
           {
-            var skActSC = BattleScene.PvE.Player.SkillAction(skill);
+            var skActSC = BattleScene.PvE.Playerm.SkillAction(skill);
             if (skActSC == null) break;
             switch (skActSC.getString)
             {
@@ -118,7 +118,7 @@ namespace Goguma.Game.Object.Battle
         while (true)
         {
           SkillType skillType;
-          var skSc = BattleScene.PvE.Player.SelSkillType(player, out skillType);
+          var skSc = BattleScene.PvE.Playerm.SelSkillType(out skillType);
           if (skSc == null) return false;
           var skills = from sk in player.Skills
                        where sk.Type == skillType
@@ -126,7 +126,7 @@ namespace Goguma.Game.Object.Battle
           var skill = skills.ToList<ISkill>()[skSc.getIndex];
           while (true)
           {
-            var skActSC = BattleScene.PvE.Player.SkillAction(skill);
+            var skActSC = BattleScene.PvE.Playerm.SkillAction(skill);
             if (skActSC == null) break;
             switch (skActSC.getString)
             {
@@ -230,8 +230,7 @@ namespace Goguma.Game.Object.Battle
 
         while (true)
         {
-          List<ISkill> sList;
-          skill = monster.AttSystem.Get(out sList);
+          skill = monster.AttSystem.Exe();
           if (skill != null)
           {
             switch (skill.Type)
@@ -241,11 +240,6 @@ namespace Goguma.Game.Object.Battle
                 break;
               case SkillType.BuffSkill:
                 if (BuffSkill()) return;
-                else if (sList.Count == 1)
-                {
-                  GeneralAttack();
-                  return;
-                }
                 break;
             }
           }
@@ -260,7 +254,7 @@ namespace Goguma.Game.Object.Battle
       while (true)
       {
         var skip = false;
-        var scene = BattleScene.PvE.Player.Main(player, monster, first);
+        var scene = BattleScene.PvE.Playerm.Main(monster, first);
         first = false;
         switch (scene.getString)
         {
@@ -274,7 +268,7 @@ namespace Goguma.Game.Object.Battle
             skip = player.Inventory.Open();
             break;
           case "공격 하기":
-            var attackScene = BattleScene.PvE.Player.Attack();
+            var attackScene = BattleScene.PvE.Playerm.Attack();
             switch (attackScene.getString)
             {
               case "일반 공격":
@@ -289,7 +283,7 @@ namespace Goguma.Game.Object.Battle
             skip = UseSkill();
             break;
           case "도망 가기":
-            BattleScene.PvE.Player.Run();
+            BattleScene.PvE.Playerm.Run();
             return;
         }
         if (skip)

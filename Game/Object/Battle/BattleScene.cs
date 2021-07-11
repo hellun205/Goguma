@@ -3,7 +3,6 @@ using Colorify;
 using Goguma.Game.Console;
 using Goguma.Game.Object.Entity.Monster;
 using Goguma.Game.Object.Entity.Player;
-using Goguma.Game.Object.Inventory;
 using Goguma.Game.Object.Skill;
 using System.Linq;
 using static Goguma.Game.Console.ConsoleFunction;
@@ -18,7 +17,8 @@ namespace Goguma.Game.Object.Battle
   {
     static public class PvE
     {
-      static public SelectScene Meet(IPlayer player, IMonster monster)
+      static public Entity.Player.Player player = InGame.player;
+      static public SelectScene Meet(IMonster monster)
       {
         Func<CTexts> GetQText = () =>
         {
@@ -52,13 +52,13 @@ namespace Goguma.Game.Object.Battle
         return CTexts.Make($"{{{skill.TypeString} 스킬 , {Colors.txtWarning}}}{{{skill.Name},{Colors.txtInfo}}}");
       }
 
-      static private CTexts MonsterText(IPlayer player, IMonster monster)
+      static private CTexts MonsterText(IMonster monster)
       {
         return CTexts.Make($"{{「{monster.Name} [Lv. {monster.Level}]」,{ColorByLevel(player.Level, monster.Level)}}}");
       }
       static private CTexts CasterText(IEntity caster)
       {
-        return caster.Type == EntityType.PLAYER ? CTexts.Make($"{{당신,{Colors.txtInfo}}}") : MonsterText(InGame.player, (IMonster)caster);
+        return caster.Type == EntityType.PLAYER ? CTexts.Make($"{{당신,{Colors.txtInfo}}}") : MonsterText((IMonster)caster);
       }
 
       static private CTexts ItemText(IItem item)
@@ -71,7 +71,7 @@ namespace Goguma.Game.Object.Battle
 
         var ct = CTexts.Make($"{{\n  }}").Combine(CasterText(caster)).Combine("{(이)가 }").Combine(SkillText(skill)).Combine($"{{(을)를 사용했습니다.}}");
         if (caster.Type == EntityType.PLAYER)
-          PrintCText(ct.Combine($"{{\n    남은 에너지: }}").Combine(((IPlayer)caster).GetEpBar()).Combine($"{{\n    사용한 에너지: }}{{{skill.UseEp}\n, {Colors.txtWarning}}}"));
+          PrintCText(ct.Combine($"{{\n    남은 에너지: }}").Combine(((Player)caster).GetEpBar()).Combine($"{{\n    사용한 에너지: }}{{{skill.UseEp}\n, {Colors.txtWarning}}}"));
         else PrintCText(ct);
 
         Pause();
@@ -198,13 +198,13 @@ namespace Goguma.Game.Object.Battle
         Pause();
       }
 
-      static public class Player
+      static public class Playerm
       {
         static public void Run()
         {
           PrintCText($"{{\n싸움에서}} {{ 도망,{Colors.txtDanger}}} {{쳤습니다.\n}}");
         }
-        static public SelectScene Main(IPlayer player, IMonster monster, bool first = false)
+        static public SelectScene Main(IMonster monster, bool first = false)
         {
           Func<bool, CTexts> GetQText = (bool first) =>
            {
@@ -213,7 +213,7 @@ namespace Goguma.Game.Object.Battle
                txt = "{(이)랑 싸우기 시작했다! 무엇을 하시겠습니까?\n    }";
              else
                txt = "{(이)랑 싸우고 있다. 무엇을 하시겠습니까?\n    }";
-             return MonsterText(player, monster).Combine($"{txt}").Combine(MonsterText(player, monster)).Combine("{의 체력: }").Combine(monster.GetHpBar()).Combine("\n");
+             return MonsterText(monster).Combine($"{txt}").Combine(MonsterText(monster)).Combine("{의 체력: }").Combine(monster.GetHpBar()).Combine("\n");
            };
           Func<SelectSceneItems> GetSSI = () =>
             {
@@ -245,7 +245,7 @@ namespace Goguma.Game.Object.Battle
           return new SelectScene(GetQText(), GetSSI(), true);
         }
 
-        static public void LackOfEP(IPlayer player, ISkill skill)
+        static public void LackOfEP(ISkill skill)
         {
           PrintCText(CTexts.Make($"{{\n  에너지가 부족하여 }}").Combine(SkillText(skill)).Combine($"{{(을)를 사용 할 수 없습니다.\n    남은 에너지: }}").Combine(player.GetEpBar()).Combine($"{{\n    필요한 에너지: }}{{{skill.UseEp}\n, {Colors.txtWarning}}}"));
           Pause();
@@ -268,7 +268,7 @@ namespace Goguma.Game.Object.Battle
         //   Pause();
         // }
 
-        static public SelectScene SelSkillType(IPlayer player, out SkillType skType)
+        static public SelectScene SelSkillType(out SkillType skType)
         {
           Func<CTexts> GetQText = () =>
           {
@@ -288,10 +288,10 @@ namespace Goguma.Game.Object.Battle
           var skills = from sk in player.Skills
                        where sk.Type == (SkillType)(skillTypeSc.getIndex)
                        select sk;
-          var selIndexSc = SelSkill(player, skType);
+          var selIndexSc = SelSkill(skType);
           return selIndexSc;
         }
-        static public SelectScene SelSkill(IPlayer player, SkillType sType)
+        static public SelectScene SelSkill(SkillType sType)
         {
           Func<SkillType, CTexts> GetQText = (SkillType sType) =>
            {
