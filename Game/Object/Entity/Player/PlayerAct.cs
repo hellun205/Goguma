@@ -293,7 +293,7 @@ namespace Goguma.Game.Object.Entity.Player
               if (itemSelectSS.isCancelled) return;
               int rCount;
               if (ReadInt("{수량을 입력하세요.}", out rCount, 0, 0)) break;
-              player.Inventory.GetItem(Itemss.GetNew((ItemList)itemSelectSS.getIndex), rCount);
+              player.Inventory.GetItem(new ItemPair((ItemList)itemSelectSS.getIndex, rCount));
               PrintText($"\n아이템 {Itemss.GetNew((ItemList)itemSelectSS.getIndex).Name} {rCount}개를 얻었습니다.\n");
               Pause();
               break;

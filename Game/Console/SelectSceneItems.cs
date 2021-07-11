@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Goguma.Game.Console
 {
   [Serializable]
-  class SelectSceneItems
+  public class SelectSceneItems
   {
     public List<SelectSceneItem> Items { get; set; }
 

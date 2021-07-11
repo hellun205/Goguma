@@ -8,9 +8,10 @@ namespace Goguma.Game.Object.Inventory.Item
   public interface IItem
   {
     CTexts Name { get; }
+    ItemList Material { get; }
     CTexts DisplayName { get; }
     CTexts Descriptions { get; }
-    int Count { get; set; }
+    // int Count { get; set; }
     int MaxCount { get; }
     int PurchasePrice { get; }
     int SalePrice { get; }
@@ -21,7 +22,7 @@ namespace Goguma.Game.Object.Inventory.Item
     IItem GetNew { get; }
     IItem GetInstance { get; }
 
-    void Information(bool showCount = true, bool isPause = true);
-    CTexts Info(bool showCount = true);
+    void Information(bool isPause = true);
+    CTexts Info();
   }
 }

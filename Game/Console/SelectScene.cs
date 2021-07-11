@@ -5,7 +5,7 @@ using static Goguma.Game.Console.StringFunction;
 using static System.Console;
 namespace Goguma.Game.Console
 {
-  class SelectScene
+  public class SelectScene
   {
     public int getIndex;
     public string getString;

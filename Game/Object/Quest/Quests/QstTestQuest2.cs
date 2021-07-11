@@ -30,7 +30,14 @@ namespace Goguma.Game.Object.Quest.Quests
     public override DNpcSay CancelledDialog => new DNpcSay(ReceiveNpc, "{그려}", "넵");
     public override DNpcSay AcceptDialog => CancelledDialog;
     public override DNpcSay DeclineDialog => CancelledDialog;
-    public override QuestRequirements QRequirements => new QuestRequirements(Material) { MinLv = 0 };
+    public override QuestRequirements QRequirements => new QuestRequirements(Material)
+    {
+      MinLv = 0,
+      CompletedQuests = new()
+      {
+        QuestList.TEST_QUEST
+      }
+    };
     public override double GivingExp => 10;
     public override int GivingGold => 200;
     public override List<ItemPair> GivingItems => new()

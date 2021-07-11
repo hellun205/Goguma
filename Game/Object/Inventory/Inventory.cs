@@ -3,6 +3,8 @@ using System;
 using Goguma.Game.Object.Entity.Player;
 using Goguma.Game.Console;
 using Goguma.Game.Object.Inventory.Item.Equipment;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace Goguma.Game.Object.Inventory
 {
@@ -22,30 +24,32 @@ namespace Goguma.Game.Object.Inventory
     {
       while (true)
       {
-        var select = Select();
+        InvenType invenType;
+        var select = Select(out invenType);
         if (select == null) break;
-        var itemInfo = (ItemInfo)select;
+
         SelectScene ss = null;
         ItemOption io = null;
-        switch (itemInfo.InvenType)
+        switch (invenType)
         {
           case InvenType.Having:
             while (true)
             {
-              ss = InvenInfo.Scene.ItemOption(this, itemInfo.hType, itemInfo.havingIndex);
+              ss = InvenInfo.Scene.ItemOption(this, select);
               if (ss.isCancelled) break;
 
-              io = new ItemOption(this, itemInfo.hType, itemInfo.havingIndex, ss.getString);
+              io = new ItemOption(this, select, ss.getString);
               if (io.Act()) return true;
             }
             break;
           case InvenType.Wearing:
             while (true)
             {
-              ss = InvenInfo.Scene.ItemOption(this, itemInfo.wType);
+              var wType = ((EquipmentItem)select.ItemM).EType;
+              ss = InvenInfo.Scene.ItemOption(this, wType);
               if (ss.isCancelled) break;
 
-              io = new ItemOption(this, itemInfo.wType, ss.getString);
+              io = new ItemOption(this, wType, ss.getString);
               if (io.Act()) return true;
             }
             break;
@@ -53,24 +57,28 @@ namespace Goguma.Game.Object.Inventory
       }
       return false;
     }
-    public ItemInfo? Select()
+
+#nullable enable
+    public ItemPair? Select(out InvenType invenType)
     {
-      var resultII = new ItemInfo();
+      invenType = InvenType.Wearing;
+      var resultIP = new ItemPair();
       while (true)
       {
         var invenTypeSS = InvenInfo.Scene.SelInvenType(); // Select InvenType
         if (invenTypeSS.isCancelled) return null;
-        resultII.InvenType = (InvenType)invenTypeSS.getIndex;
-        switch ((InvenType)invenTypeSS.getIndex)
+
+        invenType = (InvenType)invenTypeSS.getIndex;
+        switch (invenType)
         {
           case InvenType.Wearing:
             while (true)
             {
               var wearingTypeSS = InvenInfo.Scene.WearingInven(this); // Select Wearing Item (Type)
               if (wearingTypeSS.isCancelled) break;
-              resultII.wType = (WearingType)wearingTypeSS.getIndex;
-              resultII.Item = Items.wearing.Items[wearingTypeSS.getIndex];
-              return resultII;
+              resultIP.Item = (ItemList)Items.wearing[wearingTypeSS.getIndex];
+              resultIP.Count = 1;
+              return resultIP;
             }
             break;
           case InvenType.Having:
@@ -78,14 +86,12 @@ namespace Goguma.Game.Object.Inventory
             {
               var havingTypeSS = InvenInfo.Scene.SelHavingInven(); // Select Having Type
               if (havingTypeSS.isCancelled) break;
-              resultII.hType = (HavingType)havingTypeSS.getIndex;
               while (true)
               {
                 var havingIndexSS = InvenInfo.Scene.HavingInven(this, (HavingType)havingTypeSS.getIndex); // Select Having Item
                 if (havingIndexSS.isCancelled) break;
-                resultII.havingIndex = havingIndexSS.getIndex;
-                resultII.Item = Items.having.Items[havingTypeSS.getIndex][havingIndexSS.getIndex];
-                return resultII;
+                resultIP.Item = Items.having[(HavingType)(havingTypeSS.getIndex)][havingIndexSS.getIndex].Item;
+                return resultIP;
               }
             }
             break;
@@ -94,88 +100,55 @@ namespace Goguma.Game.Object.Inventory
         }
       }
     }
-    public void RemoveItem(WearingType wType, int count) // Wearing Item Remove
+    public void RemoveItem(WearingType wType) // Wearing Item Remove
     {
       var inven = Items.wearing.Items;
-      var sItem = Items.wearing.GetItem(wType);
+      var sItem = (ItemList)Items.wearing[wType];
 
-      if (count == sItem.Count)
-        inven[(int)wType] = null;
-      else
-        sItem.Count -= count;
+      inven[(int)wType] = null;
     }
 
-    public void RemoveItem(HavingType hType, int index, int count) // Having Item Remove
+    public void RemoveItem(ItemPair item) // Having Item Remove
     {
-      var inven = Items.having.GetItems(hType);
-      var sItem = inven[index];
+      var inven = Items.having[item.ItemM.Type];
 
-      if (count == sItem.Count)
-        inven.RemoveAt(index);
+      var items = (from it in inven
+                   where it.Item == item.Item
+                   select it).ToList();
+
+      if (item.Count == items[0].Count)
+        inven.Remove(items[0]);
       else
-        sItem.Count -= count;
+        inven[inven.IndexOf(items[0])].Count -= item.Count;
     }
 
-    public void SetItem(WearingType wType, IEquipmentItem item) // Wearing Item Set
+    public void SetItem(WearingType wType, ItemList item) // Wearing Item Set
     {
       var inven = Items.wearing.Items;
       inven[(int)wType] = item;
     }
 
-    public void SetItem(HavingType hType, int index, IEquipmentItem item) // Having Item Set
+    public void GetItem(ItemPair item) // Having Item Get
     {
-      var inven = Items.having.GetItems(hType);
-      inven[index] = item;
-    }
-
-    public void GetItem(IItem item, int count = 1) // Having Item Get
-    {
-      var inven = Items.having.GetItems(item.Type);
+      var inven = Items.having[item.ItemM.Type];
       foreach (var it in inven)
       {
-        if (it.Name.ToString() == item.Name.ToString())
+        if (it.Item == item.Item)
         {
-          it.Count += count;
-          CountTheorem();
+          it.Count += item.Count;
           return;
         }
       }
-      item.Count = count;
       inven.Add(item);
-      CountTheorem();
     }
 
-    private void CountTheorem()
+    public bool CheckItem(ItemPair item, out List<ItemPair> list)
     {
-      for (var i = 0; i < Enum.GetValues(typeof(HavingType)).Length; i++)
-      {
-        var inven = Items.having.GetItems((HavingType)i);
-        var iCount = inven.Count;
-        for (var j = 0; j < iCount; j++)
-        {
-          var it = inven[j];
-          if (it.Count > it.MaxCount)
-          {
-            var count = it.Count;
-            for (var k = 0; k < (int)(count / it.MaxCount) - 1; k++)
-            {
-              var item = it.GetNew;
-              item.Count = it.MaxCount;
-              inven.Add(item);
-            }
-            int div;
-            Math.DivRem(count, it.MaxCount, out div);
-            if (div > 0)
-            {
-              var item = it.GetNew;
-              item.Count = div;
-              inven.Add(item);
-            }
-            it.Count = it.MaxCount;
-          }
-        }
-      }
+      var checkedItems = (from ite in Items.having.Items
+                          where (ite.Item == item.Item) && (ite.Count >= item.Count)
+                          select ite).ToList();
+      list = checkedItems;
+      return (checkedItems.Count > 0);
     }
-
   }
 }

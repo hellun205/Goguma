@@ -319,14 +319,14 @@ namespace Goguma.Game.Object.Entity.Player
     {
       PrintCText(CTexts.Make($"{{\n\n  아이템 }}").Combine(value.ItemM.DisplayName).Combine($"{{ {(value.Count == 1 ? "(을)를" : $"{value.Count}개를")} 획득했습니다. }}"));
       Pause(false);
-      Inventory.GetItem(Itemss.GetNew(value.Item), value.Count);
+      Inventory.GetItem(value);
     }
 
     public void ReceiveItems(ItemPair[] values)
     {
       foreach (var value in values)
       {
-        Inventory.GetItem(Itemss.GetNew(value.Item), value.Count);
+        Inventory.GetItem(value);
         PrintCText(CTexts.Make($"{{\n\n  아이템 }}").Combine(value.ItemM.DisplayName).Combine($"{{ {(value.Count == 1 ? "(을)를" : $"{value.Count}개를")} 획득했습니다. \n}}"));
       }
       Pause(false);

@@ -4,6 +4,7 @@ namespace Goguma.Game.Object.Quest
   {
     KILL_ENTITY,
     MEET_NPC,
-    GENERAL
+    GENERAL,
+    BRING_ITEM
   }
 }
