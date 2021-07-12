@@ -9,6 +9,8 @@ namespace Goguma.Game.Object.Inventory.Item.Items
   {
     public override ItemList Material => ItemList.TEST_ITEM2;
 
+    public static readonly IItem Instance = new Item_TestHead1();
+
     public override CTexts Name => CTexts.Make("{테스트 모자 A}");
 
     public override CTexts Descriptions => CTexts.Make("{테스트용으로 사용되는 아이템이다.}");

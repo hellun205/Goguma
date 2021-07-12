@@ -12,7 +12,6 @@ namespace Goguma.Game.Object.Inventory.Item.Consume
     public override CTexts DisplayName => CTexts.Make($"{{[ {TypeString} ],{Colors.txtWarning}}}{{ }}{{[ {CTypeString} ],{Colors.txtSuccess}}}{{ }}").Combine(Name);
     public override HavingType Type => HavingType.Consume;
     public abstract ConsumeItemType CType { get; }
-    public override int MaxCount => 64;
     public int LoseCount { get; set; }
     public string CTypeString => GetCTypeText(CType);
 

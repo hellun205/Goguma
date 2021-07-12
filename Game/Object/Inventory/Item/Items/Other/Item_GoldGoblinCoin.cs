@@ -10,6 +10,8 @@ namespace Goguma.Game.Object.Inventory.Item.Items
   {
     public override ItemList Material => ItemList.GOLD_GOBLIN_COIN;
 
+    public static readonly IItem Instance = new Item_GoldGoblinCoin();
+
     public override CTexts Name => CTexts.Make($"{{황금 고블린 코인, {Colors.txtWarning}}}");
 
     public override CTexts Descriptions => CTexts.Make("{헉! 황금 고블린을 잡으면 나오는 코인이다!}");

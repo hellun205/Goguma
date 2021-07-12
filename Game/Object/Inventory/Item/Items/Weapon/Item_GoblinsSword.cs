@@ -9,6 +9,8 @@ namespace Goguma.Game.Object.Inventory.Item.Items
   {
     public override ItemList Material => ItemList.GOBLINS_SWORD;
 
+    public static readonly IItem Instance = new Item_GoblinsSword();
+
     public override CTexts Name => CTexts.Make("{고블린의 검}");
 
     public override CTexts Descriptions => CTexts.Make("{고블린들이 주로 사용하는 검이다.}}");

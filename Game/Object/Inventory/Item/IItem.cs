@@ -12,15 +12,12 @@ namespace Goguma.Game.Object.Inventory.Item
     CTexts DisplayName { get; }
     CTexts Descriptions { get; }
     // int Count { get; set; }
-    int MaxCount { get; }
     int PurchasePrice { get; }
     int SalePrice { get; }
     bool IsSalable { get; }
     bool IsPurchasable { get; }
     HavingType Type { get; }
     string TypeString { get; }
-    IItem GetNew { get; }
-    IItem GetInstance { get; }
 
     void Information(bool isPause = true);
     CTexts Info();

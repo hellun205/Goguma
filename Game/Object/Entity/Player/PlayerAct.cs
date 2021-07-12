@@ -288,13 +288,13 @@ namespace Goguma.Game.Object.Entity.Player
             case "Add Item":
               var ssi = new SelectSceneItems();
               for (var i = 0; i < Enum.GetValues(typeof(ItemList)).Length; i++)
-                ssi.Add(Itemss.GetNew((ItemList)i).Name);
+                ssi.Add(Itemss.GetInstance((ItemList)i).DisplayName);
               var itemSelectSS = new SelectScene(CTexts.Make("{아이템을 선택하시오.}"), ssi, true);
               if (itemSelectSS.isCancelled) return;
               int rCount;
               if (ReadInt("{수량을 입력하세요.}", out rCount, 0, 0)) break;
               player.Inventory.GetItem(new ItemPair((ItemList)itemSelectSS.getIndex, rCount));
-              PrintText($"\n아이템 {Itemss.GetNew((ItemList)itemSelectSS.getIndex).Name} {rCount}개를 얻었습니다.\n");
+              PrintCText(CTexts.Make("{\n아이템 }").Combine(Itemss.GetInstance((ItemList)itemSelectSS.getIndex).DisplayName).Combine($"{{{rCount}개를 얻었습니다.\n}}"));
               Pause();
               break;
             case "Add Gold":

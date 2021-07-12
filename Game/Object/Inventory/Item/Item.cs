@@ -12,7 +12,6 @@ namespace Goguma.Game.Object.Inventory.Item
     public abstract ItemList Material { get; }
     public virtual CTexts DisplayName => CTexts.Make($"{{[ {TypeString} ],{Colors.txtWarning}}}{{ }}").Combine(Name);
     // public int Count { get; set; }
-    public abstract int MaxCount { get; }
     public abstract HavingType Type { get; }
     public string TypeString => GetTypeString(Type);
     public virtual int SalePrice => 0;
@@ -51,8 +50,5 @@ namespace Goguma.Game.Object.Inventory.Item
           return null;
       }
     }
-
-    public IItem GetNew => Itemss.GetNew(Material);
-    public IItem GetInstance => Itemss.GetInstance(Material);
   }
 }

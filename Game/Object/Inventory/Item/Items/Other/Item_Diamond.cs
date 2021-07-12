@@ -10,6 +10,8 @@ namespace Goguma.Game.Object.Inventory.Item.Items
   {
     public override ItemList Material => ItemList.DIAMOND;
 
+    public static readonly IItem Instance = new Item_Diamond();
+
     public override CTexts Name => CTexts.Make($"{{다이아몬드,{Colors.txtInfo}}}");
 
     public override CTexts Descriptions => CTexts.Make("{매우 희귀한 보석이다.}}");
