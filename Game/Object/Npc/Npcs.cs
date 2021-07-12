@@ -1,26 +1,36 @@
 using System;
-using Goguma.Game.Object.Npc.NpcTrader;
+using System.Linq;
 
 namespace Goguma.Game.Object.Npc
 {
   public class Npcs
   {
-    public static NTrader trader = new NTraderDefault();
-    public static NTrader tK = new NTraderK();
-
     public static Npc Get(string name)
     {
-      if (name == trader.Name) return trader;
-      else if (name == tK.Name) return tK;
-      else return null;
+      var item = (from NpcList npc in Enum.GetValues(typeof(NpcList))
+                  where Get(npc).Name == name
+                  select Get(npc)).ToList();
+
+      if (item.Count > 0)
+      {
+        return item[0];
+      }
+      else
+      {
+        return null;
+      }
     }
 
     public static Npc Get(NpcList npc)
     {
       switch (npc)
       {
-        case NpcList.TRADER_K: return tK;
-        default: throw new NotImplementedException();
+        case NpcList.TRADER_K: return NpcTrader.NTraderK.Instance;
+
+        case NpcList.GENERAL_STUDENT_A: return NpcGeneral.NGeneralStudentA.Instance;
+
+        default:
+          throw new NotImplementedException();
       }
     }
 

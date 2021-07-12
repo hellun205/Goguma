@@ -8,6 +8,7 @@ namespace Goguma.Game.Object.Npc.NpcTrader
 {
   public class NTraderK : NTrader
   {
+    public static Npc Instance = new NTraderK();
     public override List<IItem> ItemsForSale => new() { };
 
     public override string Name => "K";
