@@ -3,7 +3,7 @@ using System;
 namespace Goguma.Game.Console
 {
   [Serializable]
-  class SelectSceneItem
+  public class SelectSceneItem
   {
     public CTexts Texts { get; set; }
     public bool Enabled { get; set; }

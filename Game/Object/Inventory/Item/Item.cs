@@ -11,9 +11,9 @@ namespace Goguma.Game.Object.Inventory.Item
     public abstract CTexts Name { get; }
     public abstract ItemList Material { get; }
     public virtual CTexts DisplayName => CTexts.Make($"{{[ {TypeString} ],{Colors.txtWarning}}}{{ }}").Combine(Name);
-    public int Count { get; set; }
-    public abstract int MaxCount { get; }
+    // public int Count { get; set; }
     public abstract HavingType Type { get; }
+    public virtual int MaxCount => 999;
     public string TypeString => GetTypeString(Type);
     public virtual int SalePrice => 0;
     public virtual int PurchasePrice => SalePrice * 2;
@@ -22,9 +22,9 @@ namespace Goguma.Game.Object.Inventory.Item
     public abstract CTexts Descriptions { get; }
     public Item()
     {
-      Count = 1;
+      // Count = 1;
     }
-    public void Information(bool showCount = true, bool isPause = true)
+    public void Information(bool isPause = true)
     {
       PrintCText(Info());
       if (isPause) Pause();
@@ -32,10 +32,10 @@ namespace Goguma.Game.Object.Inventory.Item
 
     public override string ToString()
     {
-      return Info(false).ToString();
+      return Info().ToString();
     }
 
-    public abstract CTexts Info(bool showCount = true);
+    public abstract CTexts Info();
 
     static public string GetTypeString(HavingType hType)
     {
@@ -51,8 +51,5 @@ namespace Goguma.Game.Object.Inventory.Item
           return null;
       }
     }
-
-    public IItem GetNew => Itemss.GetNew(Material);
-    public IItem GetInstance => Itemss.GetInstance(Material);
   }
 }

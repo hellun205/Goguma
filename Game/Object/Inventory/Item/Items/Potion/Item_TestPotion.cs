@@ -11,6 +11,8 @@ namespace Goguma.Game.Object.Inventory.Item.Items
 
     public override CTexts Name => CTexts.Make("{테스트용 포션}");
 
+    public static readonly IItem Instance = new Item_TestPotion();
+
     public override CTexts Descriptions => CTexts.Make("{체력을 아주 조금 회복시켜준다.}");
 
     public override PotionEffect Effect => new()

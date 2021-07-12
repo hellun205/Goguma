@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Goguma.Game.Object.Quest
 {
@@ -19,18 +20,17 @@ namespace Goguma.Game.Object.Quest
       Quest = quest;
       Disposable = true;
     }
-    public bool Check()
+    public bool Check() 
     {
       var player = InGame.player;
       var cq = true;
       var eq = true;
       var dq = true;
-      foreach (var cqs in CompletedQuests)
-        if (!player.CompletedQuests.Contains(cqs))
-        {
-          cq = false;
-          break;
-        }
+      foreach (var completedQuests in (from completedQuests in CompletedQuests where !player.CompletedQuests.Contains(completedQuests) select completedQuests).ToList())
+      {
+        cq = false;
+        break;
+      }
 
       eq = !player.Quest.QType.Contains(Quest);
 

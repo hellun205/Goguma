@@ -7,9 +7,9 @@ using System;
 
 namespace Goguma.Game.Object.Battle
 {
-  class Battle
+  public static class Battle
   {
-    static public void PvE(IMonster monster)
+    public static void PvE(IMonster monster)
     {
       var player = InGame.player;
       while (true)
@@ -32,7 +32,7 @@ namespace Goguma.Game.Object.Battle
         }
       }
     }
-    static private void PvEStart(IMonster monster)
+    private static void PvEStart(IMonster monster)
     {
       var player = InGame.player;
       var first = true;
@@ -100,9 +100,9 @@ namespace Goguma.Game.Object.Battle
           var skill = skills.ToList<ISkill>()[skSc.getIndex];
           while (true)
           {
-            var skActSC = BattleScene.PvE.Playerm.SkillAction(skill);
-            if (skActSC == null) break;
-            switch (skActSC.getString)
+            var skActSc = BattleScene.PvE.Playerm.SkillAction(skill);
+            if (skActSc == null) break;
+            switch (skActSc.getString)
             {
               case "사용 하기":
                 return UseAttackSkill((IAttackSkill)skill);
@@ -126,9 +126,9 @@ namespace Goguma.Game.Object.Battle
           var skill = skills.ToList<ISkill>()[skSc.getIndex];
           while (true)
           {
-            var skActSC = BattleScene.PvE.Playerm.SkillAction(skill);
-            if (skActSC == null) break;
-            switch (skActSC.getString)
+            var skActSc = BattleScene.PvE.Playerm.SkillAction(skill);
+            if (skActSc == null) break;
+            switch (skActSc.getString)
             {
               case "사용 하기":
                 switch (skill.Type)

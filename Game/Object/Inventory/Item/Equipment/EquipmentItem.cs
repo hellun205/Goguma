@@ -9,18 +9,22 @@ namespace Goguma.Game.Object.Inventory.Item.Equipment
   public abstract class EquipmentItem : Item, IEquipmentItem
   {
     public override CTexts DisplayName => CTexts.Make($"{{[ {TypeString} ],{Colors.txtWarning}}}{{ }}{{[ {ETypeString} ],{Colors.txtSuccess}}}{{ }}").Combine(Name);
+
     public override HavingType Type => HavingType.Equipment;
-    public override int MaxCount => 1;
+
     public abstract WearingType EType { get; }
+
     public string ETypeString => GetETypeString(EType);
+
+    public override int MaxCount => 1;
 
     public EquipmentItem() : base() { }
 
-    public override CTexts Info(bool showCount = true)
+    public override CTexts Info()
     {
       var player = InGame.player;
       var resCT = new CTexts();
-      resCT.Append($"{{\n{GetSep(45, $"{Name.ToString()}{(showCount ? $" [ {Count}개 ]" : "")}")}}}")
+      resCT.Append($"{{\n{GetSep(45, $"{Name.ToString()}")}}}")
       .Append($"{{\n  {TypeString} 아이템,{Colors.txtWarning}}}{{ {ETypeString}\n,{Colors.txtSuccess}}}")
       .Append(Descriptions)
       .Append($"{{\n{GetSep(45)}}}")

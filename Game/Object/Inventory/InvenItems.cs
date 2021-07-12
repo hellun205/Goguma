@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Goguma.Game.Object.Inventory.Item;
 using Goguma.Game.Object.Inventory.Item.Equipment;
+using System.Linq;
 
 namespace Goguma.Game.Object.Inventory
 {
@@ -9,19 +10,21 @@ namespace Goguma.Game.Object.Inventory
   public class InvenItems
   {
     [Serializable]
+#nullable enable
     public class Wearing
     {
-      public List<IEquipmentItem> Items { get; set; }
+      public List<ItemPair?> Items { get; set; }
+
       public Wearing()
       {
-        Items = new List<IEquipmentItem>();
+        Items = new();
         for (var i = 0; i < Enum.GetValues(typeof(WearingType)).Length; i++)
           Items.Add(null);
       }
-      public IEquipmentItem GetItem(WearingType wType)
-      {
-        return Items[(int)wType];
-      }
+
+      public ItemPair? this[WearingType wType] => Items[(int)wType];
+      public ItemPair? this[int wType] => Items[wType];
+
       public EquipEffect GetEquipEffect
       {
         get
@@ -31,17 +34,21 @@ namespace Goguma.Game.Object.Inventory
           {
             if (item != null)
             {
-              if (item.EType == WearingType.Head || item.EType == WearingType.Chestplate || item.EType == WearingType.Leggings || item.EType == WearingType.Boots)
+              var itemInstance = (IEquipmentItem)((ItemPair)item).ItemM;
+              if (itemInstance.EType == WearingType.Head || itemInstance.EType == WearingType.Chestplate ||
+                  itemInstance.EType == WearingType.Leggings || itemInstance.EType == WearingType.Boots)
               {
-                resultEffect.MaxHp += ((EEquip)item).Effect.MaxHp;
-                resultEffect.MaxEp += ((EEquip)item).Effect.MaxEp;
-                resultEffect.DefPer += ((EEquip)item).Effect.DefPer;
+                resultEffect.MaxHp += ((EEquip)itemInstance).Effect.MaxHp;
+                resultEffect.MaxEp += ((EEquip)itemInstance).Effect.MaxEp;
+                resultEffect.DefPer += ((EEquip)itemInstance).Effect.DefPer;
               }
             }
           }
+
           return resultEffect;
         }
       }
+
       public WeaponEffect GetWeaponEffect
       {
         get
@@ -51,42 +58,114 @@ namespace Goguma.Game.Object.Inventory
           {
             if (item != null)
             {
-              if (item.EType == WearingType.Weapon)
+              var itemInstance = (IEquipmentItem)((ItemPair)item).ItemM;
+              if (itemInstance.EType == WearingType.Weapon)
               {
-                resultEffect.AttDmg += ((EWeapon)item).Effect.AttDmg;
-                resultEffect.CritDmg += ((EWeapon)item).Effect.CritDmg;
-                resultEffect.CritPer += ((EWeapon)item).Effect.CritPer;
-                resultEffect.IgnoreDef += ((EWeapon)item).Effect.IgnoreDef;
+                resultEffect.AttDmg += ((EWeapon)itemInstance).Effect.AttDmg;
+                resultEffect.CritDmg += ((EWeapon)itemInstance).Effect.CritDmg;
+                resultEffect.CritPer += ((EWeapon)itemInstance).Effect.CritPer;
+                resultEffect.IgnoreDef += ((EWeapon)itemInstance).Effect.IgnoreDef;
               }
             }
           }
+
           return resultEffect;
         }
       }
     }
+
     [Serializable]
     public class Having
     {
-      public List<List<IItem>> Items { get; set; }
+      public List<ItemPair> Items { get; set; }
+
+      public ItemPair this[ItemList item] => (from item2 in Items
+                                              where item2.Item == item
+                                              select item2).ToList()[0];
+
       public Having()
       {
-        Items = new List<List<IItem>>();
-        for (var i = 0; i < Enum.GetValues(typeof(HavingType)).Length; i++)
-          Items.Add(new List<IItem>());
+        Items = new();
       }
-      public List<IItem> GetItems(HavingType hType)
+
+      public List<ItemPair> this[HavingType hType, bool countTheorem = false]
       {
-        return Items[(int)hType];
+        get
+        {
+          if (countTheorem)
+          {
+            var resultList = new List<ItemPair>();
+            var needTheoremList = (from item in Items
+                                   where (item.Count > item.ItemM.MaxCount) && (item.ItemM.Type == hType)
+                                   select item).ToList();
+
+            var notNeedTheoremList = (from item in Items
+                                      where (item.Count <= item.ItemM.MaxCount) && (item.ItemM.Type == hType)
+                                      select item).ToList();
+
+            foreach (var item in notNeedTheoremList)
+            {
+              resultList.Add(item);
+            }
+            foreach (var item in needTheoremList)
+            {
+              int rem;
+              var div = Math.DivRem(item.Count, item.ItemM.MaxCount, out rem);
+
+              for (var i = 0; i < div; i++)
+              {
+                resultList.Add(new(item.Item, item.ItemM.MaxCount));
+              }
+              if (rem != 0)
+              {
+                resultList.Add(new(item.Item, rem));
+              }
+            }
+
+            var resList = resultList.OrderBy(item => item.ItemM.Name.ToString());
+            return resList.ToList();
+
+          }
+          else
+          {
+            var resList = (from item in Items
+                           where item.ItemM.Type == hType
+                           orderby item.ItemM.Name.ToString()
+                           select item);
+            return resList.ToList();
+          }
+        }
       }
+
+      public void RemoveItem(ItemPair item)
+      {
+        var items = (from it in Items
+                     where it.Item == item.Item
+                     select it).ToList();
+
+        foreach (var item2 in items)
+        {
+          if (item.Count == items[0].Count)
+            Items.Remove(item2);
+          else
+            Items[Items.IndexOf(item2)].Count -= item.Count;
+        }
+
+
+      }
+
     }
+
     public Wearing wearing;
     public Having having;
+
     public InvenItems()
     {
       wearing = new Wearing();
       having = new Having();
     }
-    static public string GetTypeString(InvenType iType)
+
+    public static string GetTypeString(InvenType iType)
     {
       switch (iType)
       {

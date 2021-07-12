@@ -12,7 +12,6 @@ namespace Goguma.Game.Object.Inventory.Item.Consume
     public override CTexts DisplayName => CTexts.Make($"{{[ {TypeString} ],{Colors.txtWarning}}}{{ }}{{[ {CTypeString} ],{Colors.txtSuccess}}}{{ }}").Combine(Name);
     public override HavingType Type => HavingType.Consume;
     public abstract ConsumeItemType CType { get; }
-    public override int MaxCount => 64;
     public int LoseCount { get; set; }
     public string CTypeString => GetCTypeText(CType);
 
@@ -23,11 +22,11 @@ namespace Goguma.Game.Object.Inventory.Item.Consume
 
     public abstract void UseItem(Player player);
 
-    public override CTexts Info(bool showCount = true)
+    public override CTexts Info()
     {
       var player = InGame.player;
       var resCT = new CTexts();
-      resCT.Append($"{{\n{GetSep(45, $"{Name.ToString()}{(showCount ? $" [ {Count}개 ]" : "")}")}}}")
+      resCT.Append($"{{\n{GetSep(45, $"{Name.ToString()}")}}}")
       .Append($"{{\n  {TypeString} 아이템,{Colors.txtWarning}}}{{ {CTypeString}\n,{Colors.txtSuccess}}}")
       .Append(Descriptions)
       .Append($"{{\n{GetSep(45)}}}")

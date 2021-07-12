@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using Goguma.Game.Object.Entity.Monster;
 using System.Linq;
 using Goguma.Game.Object.Inventory.Item;
+using Goguma.Game.Object.Npc;
 
 namespace Goguma.Game.Object.Entity.Player
 {
@@ -318,14 +319,14 @@ namespace Goguma.Game.Object.Entity.Player
     {
       PrintCText(CTexts.Make($"{{\n\n  아이템 }}").Combine(value.ItemM.DisplayName).Combine($"{{ {(value.Count == 1 ? "(을)를" : $"{value.Count}개를")} 획득했습니다. }}"));
       Pause(false);
-      Inventory.GetItem(Itemss.GetNew(value.Item), value.Count);
+      Inventory.GetItem(value);
     }
 
     public void ReceiveItems(ItemPair[] values)
     {
       foreach (var value in values)
       {
-        Inventory.GetItem(Itemss.GetNew(value.Item), value.Count);
+        Inventory.GetItem(value);
         PrintCText(CTexts.Make($"{{\n\n  아이템 }}").Combine(value.ItemM.DisplayName).Combine($"{{ {(value.Count == 1 ? "(을)를" : $"{value.Count}개를")} 획득했습니다. \n}}"));
       }
       Pause(false);
@@ -347,6 +348,17 @@ namespace Goguma.Game.Object.Entity.Player
       }
       Quest.Remove(quest);
       return !cond;
+    }
+
+    public void MeetNpc(NpcList npc)
+    {
+      var quests = (from quest in Quest.Quests
+                    where quest.Type == QuestType.MEET_NPC
+                    select quest).Cast<QMeetNpc>().ToList();
+      foreach (var qst in quests)
+      {
+        qst.OnMeetNpc(npc);
+      }
     }
   }
 }

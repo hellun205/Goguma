@@ -10,6 +10,8 @@ namespace Goguma.Game.Object.Inventory.Item.Items
   {
     public override ItemList Material => ItemList.GOLD_INGOT;
 
+    public static readonly IItem Instance = new Item_GoldIngot();
+
     public override CTexts Name => CTexts.Make($"{{금괴,{Colors.txtWarning}}}");
 
     public override CTexts Descriptions => CTexts.Make("{말 그대로 금괴이다.}");

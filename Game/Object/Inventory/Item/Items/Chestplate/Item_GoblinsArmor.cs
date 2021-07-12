@@ -9,6 +9,8 @@ namespace Goguma.Game.Object.Inventory.Item.Items
   {
     public override ItemList Material => ItemList.GOBLINS_ARMOR;
 
+    public static readonly IItem Instance = new Item_GoblinsArmor();
+
     public override CTexts Name => CTexts.Make("{고블린의 갑옷}");
 
     public override CTexts Descriptions => CTexts.Make("{고블린들이 주로 착용하는 갑옷이다.}}");

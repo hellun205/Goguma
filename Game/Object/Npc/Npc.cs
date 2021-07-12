@@ -23,26 +23,35 @@ namespace Goguma.Game.Object.Npc
     public string TypeString => Npcs.GetNpcTypeToString(NpcType);
     public abstract NpcType NpcType { get; }
     public CTexts DisplayName => new CTexts().Append(Prefix.Display).Append($"{{{Name},{NameColor}}}");
+    public abstract string[] SSItems { get; }
 
-    public virtual void OnDialogOpen()
+    public abstract void OnSelectedSSI(string selectedSSI);
+
+    public void OnDialogOpen()
     {
       while (true)
       {
+        InGame.player.MeetNpc(this.Type);
         var ssi = new SelectSceneItems();
         foreach (var quest in InGame.player.Quest.Quests)
-          if ((quest.Npc.Type == Type) && quest.IsCompleted)
+          if ((quest.ReceiveNpc.Type == Type))
           {
             ssi.Add("{퀘스트 완료}");
             break;
           }
+
         foreach (var quest in Quests)
           if (Questss.GetQuestInstance(quest).MeetTheRequirements)
           {
             ssi.Add("{퀘스트 받기}");
             break;
           }
+
+        foreach (var item in SSItems)
+          ssi.Add($"{{{item}}}");
+
         ssi.Add("{대화 하기}");
-        var ss = new SelectScene(MeetDialog.Text[String.Empty], ssi, true, CTexts.Make($"{{대화 종료,{Colors.txtMuted}}}"));
+        var ss = new SelectScene(MeetDialog.Text.DisplayText(String.Empty), ssi, true, CTexts.Make($"{{대화 종료,{Colors.txtMuted}}}"));
         if (ss.isCancelled) return;
 
         switch (ss.getString)
@@ -57,6 +66,8 @@ namespace Goguma.Game.Object.Npc
             ConversationDialog.Show();
             break;
         }
+
+        OnSelectedSSI(ss.getString);
       }
     }
 
@@ -69,11 +80,13 @@ namespace Goguma.Game.Object.Npc
     {
       var ssi = new SelectSceneItems();
       var quests = (from qst in InGame.player.Quest.Quests
-                    where (qst.Npc.Type == Type)
+                    where (qst.ReceiveNpc.Type == Type) || (qst.CompleteNpc.Type == Type)
                     select qst).ToList();
       foreach (var quest in quests)
       {
-        ssi.Add($"{{[ Lv. {quest.QRequirements.MinLv} ] ,{Colors.txtWarning}}}{{{quest.Name}}}{{{(quest.IsCompleted ? $"[ 완료 가능 ],{Colors.txtSuccess}" : $"[ 진행 중 ],{Colors.txtWarning}")}}}", quest.IsCompleted);
+        var enabled = (quest.IsCompleted && quest.CompleteNpc.Type == Type);
+
+        ssi.Add($"{{[ Lv. {quest.QRequirements.MinLv} ] ,{Colors.txtWarning}}}{{{quest.Name}}}{{{(enabled ? $"[ 완료 가능 ],{Colors.txtSuccess}" : $"[ 진행 중 ],{Colors.txtWarning}")}}}", enabled);
       }
 
       var ss = new SelectScene(QuestCompleteDialog.Text.DisplayText(String.Empty), ssi, true);

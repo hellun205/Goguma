@@ -10,12 +10,15 @@ namespace Goguma.Game.Object.Inventory.Item.Consume
   [Serializable]
   public abstract class CSkillBook : ConsumeItem
   {
-    public override CTexts Name => CTexts.Make($"{{스킬 북: }}{{TO DO SkillName,{Colors.txtInfo}}}");
+    public override CTexts Name => CTexts.Make($"{{스킬 북: }}{{{PlayerSkills.GetInstance(SkillToReceive).Name},{Colors.txtInfo}}}");
+
     public override CTexts Descriptions => CTexts.Make($"{{사용 하면 다음 스킬을 획득할 수 있다.\n  }}{{▶ ,{Colors.txtInfo}}}{{[ {PlayerSkills.GetInstance(SkillToReceive).TypeString} 스킬 ],{Colors.txtWarning}}}{{ {PlayerSkills.GetInstance(SkillToReceive).Name.ToString()},{Colors.txtInfo}}}");
 
-    public abstract SkillList SkillToReceive { get; }
-    public override ConsumeItemType CType => ConsumeItemType.SKILL_BOOK;
     public override int MaxCount => 1;
+
+    public abstract SkillList SkillToReceive { get; }
+
+    public override ConsumeItemType CType => ConsumeItemType.SKILL_BOOK;
 
     public CSkillBook() : base() { }
 

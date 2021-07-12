@@ -3,6 +3,8 @@ namespace Goguma.Game.Object.Quest
   public enum QuestType
   {
     KILL_ENTITY,
-    MEET_NPC
+    MEET_NPC,
+    GENERAL,
+    BRING_ITEM
   }
 }

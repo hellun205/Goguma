@@ -6,8 +6,8 @@ using Goguma.Game.Object.Inventory;
 using Goguma.Game.Object.Inventory.Item;
 using System.Linq;
 using static Goguma.Game.Console.ConsoleFunction;
-using Goguma.Game.Object.Quest;
 using Goguma.Game.Object.Quest.Dialog;
+using Goguma.Game.Object.Inventory.Item.Equipment;
 
 namespace Goguma.Game.Object.Npc.NpcTrader
 {
@@ -19,50 +19,19 @@ namespace Goguma.Game.Object.Npc.NpcTrader
 
     public abstract DNpcSay OpenShopDialog { get; }
 
-    public NTrader() : base()
-    {
-    }
+    public override string[] SSItems => new[] { "상점 열기" };
 
-    public override void OnDialogOpen()
+    public override void OnSelectedSSI(string selectedSSI)
     {
-      while (true)
+      switch (selectedSSI)
       {
-        var ssi = new SelectSceneItems();
-        foreach (var quest in InGame.player.Quest.Quests)
-          if (quest.IsCompleted)
-          {
-            ssi.Add("{퀘스트 완료}");
-            break;
-          }
-        foreach (var quest in Quests)
-          if (Questss.GetQuestInstance(quest).MeetTheRequirements)
-          {
-            ssi.Add("{퀘스트 받기}");
-            break;
-          }
-        ssi.Add("{상점 열기}");
-        ssi.Add("{대화 하기}");
-
-        var ss = new SelectScene(MeetDialog.Text.DisplayText(String.Empty), ssi, true, CTexts.Make($"{{대화 종료,{Colors.txtMuted}}}"));
-        if (ss.isCancelled) return;
-
-        switch (ss.getString)
-        {
-          case "퀘스트 완료":
-            CompleteQuest();
-            break;
-          case "퀘스트 받기":
-            ReceiveQuest();
-            break;
-          case "대화 하기":
-            ConversationDialog.Show();
-            break;
-          case "상점 열기":
-            OpenShop();
-            break;
-        }
+        case "상점 열기":
+          OpenShop();
+          break;
       }
     }
+
+    public NTrader() : base() { }
 
     public void OpenShop()
     {
@@ -98,7 +67,7 @@ namespace Goguma.Game.Object.Npc.NpcTrader
                 case "구매":
                   int count;
                   if (ReadInt(CTexts.Make($"{{{itemToBuy.Name},{Colors.txtInfo}}}{{(을)를 몇개 구매하시겠습니까? }}{{[ {(int)(InGame.player.Gold / itemToBuy.PurchasePrice)}개 구매 가능 ],{Colors.txtSuccess}}}"), out count, 0, 0, (int)(InGame.player.Gold / itemToBuy.PurchasePrice))) break;
-                  InGame.player.Inventory.GetItem(itemToBuy, count);
+                  InGame.player.Inventory.GetItem(new ItemPair(itemToBuy.Material, count));
                   InGame.player.Gold -= itemToBuy.PurchasePrice * count;
                   PrintCText($"{{\n{Item.GetTypeString(itemToBuy.Type)} 아이템,{Colors.txtWarning}}}{{ {itemToBuy.Name} {count}개를 }}{{{itemToBuy.PurchasePrice * count}G,{Colors.txtWarning}}}{{에 구매했습니다.}}");
                   Pause();
@@ -118,20 +87,23 @@ namespace Goguma.Game.Object.Npc.NpcTrader
       };
       void SellItem()
       {
-        var itemInfo = InGame.player.Inventory.Select();
-        if (itemInfo == null) return;
-        var iInfo = (ItemInfo)itemInfo;
-        int count;
-        if (ReadInt($"{{아이템 {iInfo.Item.Name}(이)가 총 {iInfo.Item.Count}개 있습니다. 몇개를 판매하시겠습니까?\n 판매 가격: {iInfo.Item.SalePrice}}}", out count, 0, 0, iInfo.Item.Count)) return;
-        var sell = ReadYesOrNo($"{{아이템 }}{{{iInfo.Item.Name},{Colors.txtInfo}}}{{ {count}개,{Colors.txtSuccess}}}{{를 }}{{{iInfo.Item.SalePrice * count}G,{Colors.txtWarning}}}{{에 판매하시겠습니까?}}");
+        InvenType invenType;
+        var item = InGame.player.Inventory.Select(out invenType);
+        if (item == null) return;
+        var itemP = (ItemPair)item;
+        int count = 1;
+        if (invenType == InvenType.Having)
+          if (ReadInt(CTexts.Make($"{{아이템 }}").Combine(itemP.ItemM.DisplayName).Combine($"{{(이)가 총 {itemP.Count}개 있습니다. 몇개를 판매하시겠습니까?\n 판매 가격: {itemP.ItemM.SalePrice}}}"), out count, 0, 0, itemP.Count)) return;
+
+        var sell = ReadYesOrNo(CTexts.Make($"{{아이템 }}").Combine(itemP.ItemM.DisplayName).Combine($"{{{(count == 1 ? "(을)를}}" : $" {count}개,{Colors.txtSuccess}}}{{를}}")}{{{itemP.ItemM.SalePrice * count}G,{Colors.txtWarning}}}{{에 판매하시겠습니까?}}"));
         if (sell)
         {
-          if (iInfo.InvenType == InvenType.Having)
-            InGame.player.Inventory.RemoveItem(iInfo.hType, iInfo.havingIndex, count);
+          if (invenType == InvenType.Having)
+            InGame.player.Inventory.RemoveItem(new ItemPair(itemP.Item, count));
           else
-            InGame.player.Inventory.RemoveItem(iInfo.wType, count);
-          InGame.player.Gold += iInfo.Item.SalePrice * count;
-          PrintCText($"{{\n아이템 }}{{{iInfo.Item.Name},{Colors.txtInfo}}}{{ {count}개,{Colors.txtSuccess}}}{{를 판매하여 }}{{{iInfo.Item.SalePrice * count}G,{Colors.txtWarning}}}{{를 얻었습니다.}}");
+            InGame.player.Inventory.RemoveItem(((EquipmentItem)itemP.ItemM).EType);
+          InGame.player.Gold += itemP.ItemM.SalePrice * count;
+          PrintCText(CTexts.Make($"{{\n아이템 }}").Combine(itemP.ItemM.DisplayName).Combine($"{{ {count}개,{Colors.txtSuccess}}}{{를 판매하여 }}{{{itemP.ItemM.SalePrice * count}G,{Colors.txtWarning}}}{{를 얻었습니다.}}"));
           Pause();
         }
         else
