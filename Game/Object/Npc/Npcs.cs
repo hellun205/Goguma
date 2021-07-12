@@ -5,8 +5,8 @@ namespace Goguma.Game.Object.Npc
 {
   public class Npcs
   {
-    public static NTrader trader = new NTrader_Default();
-    public static NTrader tK = new NTrader_K();
+    public static NTrader trader = new NTraderDefault();
+    public static NTrader tK = new NTraderK();
 
     public static Npc Get(string name)
     {
@@ -29,6 +29,8 @@ namespace Goguma.Game.Object.Npc
       switch (type)
       {
         case NpcType.TRADER: return "상인";
+
+        case NpcType.GENERAL: return "일반";
         default: throw new NotImplementedException();
       }
     }

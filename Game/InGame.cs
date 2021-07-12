@@ -6,7 +6,7 @@ using System;
 
 namespace Goguma.Game
 {
-  static class InGame
+  public static class InGame
   {
     public static Player player;
     public static void Go()
@@ -18,7 +18,7 @@ namespace Goguma.Game
       }
     }
 
-    static public void PlayerActScene()
+    public static void PlayerActScene()
     {
       if (player == null) return;
       while (true)
@@ -28,7 +28,7 @@ namespace Goguma.Game
       }
     }
 
-    static public void SetPlayerData()
+    public static void SetPlayerData()
     {
       Player playerData;
       var pc = PlayerSave.GetPlayerList().Count;
@@ -72,10 +72,15 @@ namespace Goguma.Game
       }
     }
 
-    static public void ExitGame()
+    public static void ExitGame()
     {
       if (ReadYesOrNo(CTexts.Make("{진짜로 종료하시겠습니까?}")))
         Environment.Exit(0);
+    }
+
+    public static T Rand<T>(T[] array)
+    {
+      return array[new Random().Next(0, array.Length)];
     }
   }
 }

@@ -6,6 +6,7 @@ using Goguma.Game.Object.Quest;
 using Goguma.Game.Object.Quest.Dialog;
 using System.Linq;
 using static Goguma.Game.Console.ConsoleFunction;
+using static Goguma.Game.InGame;
 
 namespace Goguma.Game.Object.Npc
 {
@@ -13,28 +14,28 @@ namespace Goguma.Game.Object.Npc
   {
     public abstract string Name { get; }
     public virtual string NameColor => Colors.txtDefault;
-    public abstract NpcList Type { get; }
+    public abstract NpcList Material { get; }
     public Prefix Prefix { get; protected set; }
-    public abstract DNpcSay MeetDialog { get; }
-    public abstract DNpcSay ConversationDialog { get; }
-    public abstract DNpcSay QuestReceiveDialog { get; }
-    public abstract DNpcSay QuestCompleteDialog { get; }
+    public abstract DNpcSay[] MeetDialog { get; }
+    public abstract DNpcSay[] ConversationDialog { get; }
+    public abstract DNpcSay[] QuestReceiveDialog { get; }
+    public abstract DNpcSay[] QuestCompleteDialog { get; }
     public abstract List<QuestList> Quests { get; }
     public string TypeString => Npcs.GetNpcTypeToString(NpcType);
     public abstract NpcType NpcType { get; }
     public CTexts DisplayName => new CTexts().Append(Prefix.Display).Append($"{{{Name},{NameColor}}}");
-    public abstract string[] SSItems { get; }
+    public virtual string[] SSItems => null;
 
-    public abstract void OnSelectedSSI(string selectedSSI);
+    public virtual void OnSelectedSSI(string selectedSSI) { }
 
     public void OnDialogOpen()
     {
       while (true)
       {
-        InGame.player.MeetNpc(this.Type);
+        InGame.player.MeetNpc(this.Material);
         var ssi = new SelectSceneItems();
         foreach (var quest in InGame.player.Quest.Quests)
-          if ((quest.ReceiveNpc.Type == Type))
+          if ((quest.ReceiveNpc.Material == Material))
           {
             ssi.Add("{퀘스트 완료}");
             break;
@@ -46,12 +47,12 @@ namespace Goguma.Game.Object.Npc
             ssi.Add("{퀘스트 받기}");
             break;
           }
-
-        foreach (var item in SSItems)
-          ssi.Add($"{{{item}}}");
+        if (SSItems != null)
+          foreach (var item in SSItems)
+            ssi.Add($"{{{item}}}");
 
         ssi.Add("{대화 하기}");
-        var ss = new SelectScene(MeetDialog.Text.DisplayText(String.Empty), ssi, true, CTexts.Make($"{{대화 종료,{Colors.txtMuted}}}"));
+        var ss = new SelectScene(Rand(MeetDialog).Text.DisplayText(String.Empty), ssi, true, CTexts.Make($"{{대화 종료,{Colors.txtMuted}}}"));
         if (ss.isCancelled) return;
 
         switch (ss.getString)
@@ -63,11 +64,11 @@ namespace Goguma.Game.Object.Npc
             ReceiveQuest();
             break;
           case "대화 하기":
-            ConversationDialog.Show();
+            Rand(ConversationDialog).Show();
             break;
         }
-
-        OnSelectedSSI(ss.getString);
+        if (SSItems != null)
+          OnSelectedSSI(ss.getString);
       }
     }
 
@@ -80,16 +81,16 @@ namespace Goguma.Game.Object.Npc
     {
       var ssi = new SelectSceneItems();
       var quests = (from qst in InGame.player.Quest.Quests
-                    where (qst.ReceiveNpc.Type == Type) || (qst.CompleteNpc.Type == Type)
+                    where (qst.ReceiveNpc.Material == Material) || (qst.CompleteNpc.Material == Material)
                     select qst).ToList();
       foreach (var quest in quests)
       {
-        var enabled = (quest.IsCompleted && quest.CompleteNpc.Type == Type);
+        var enabled = (quest.IsCompleted && quest.CompleteNpc.Material == Material);
 
         ssi.Add($"{{[ Lv. {quest.QRequirements.MinLv} ] ,{Colors.txtWarning}}}{{{quest.Name}}}{{{(enabled ? $"[ 완료 가능 ],{Colors.txtSuccess}" : $"[ 진행 중 ],{Colors.txtWarning}")}}}", enabled);
       }
 
-      var ss = new SelectScene(QuestCompleteDialog.Text.DisplayText(String.Empty), ssi, true);
+      var ss = new SelectScene(Rand(QuestCompleteDialog).Text.DisplayText(String.Empty), ssi, true);
       if (ss.isCancelled) return;
 
       if (InGame.player.CompleteQuest(quests[ss.getIndex].Material)) quests[ss.getIndex].OnCompleted();
@@ -108,7 +109,7 @@ namespace Goguma.Game.Object.Npc
           ssi.Add($"{{[ Lv. {Questss.GetQuestInstance(quest).QRequirements.MinLv} ] ,{Colors.txtWarning}}}{{{Questss.GetQuestInstance(quest).Name}}}");
         }
 
-        var ss = new SelectScene(QuestReceiveDialog.Text.DisplayText(String.Empty), ssi, true);
+        var ss = new SelectScene(Rand(QuestReceiveDialog).Text.DisplayText(String.Empty), ssi, true);
         if (ss.isCancelled) return;
 
         var res = Questss.GetQuestInstance(quests[ss.getIndex]);
