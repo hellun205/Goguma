@@ -13,6 +13,7 @@ namespace Goguma.Game.Object.Inventory.Item
     public virtual CTexts DisplayName => CTexts.Make($"{{[ {TypeString} ],{Colors.txtWarning}}}{{ }}").Combine(Name);
     // public int Count { get; set; }
     public abstract HavingType Type { get; }
+    public virtual int MaxCount => 999;
     public string TypeString => GetTypeString(Type);
     public virtual int SalePrice => 0;
     public virtual int PurchasePrice => SalePrice * 2;

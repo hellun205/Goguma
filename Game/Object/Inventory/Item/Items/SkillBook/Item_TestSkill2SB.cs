@@ -11,7 +11,7 @@ namespace Goguma.Game.Object.Inventory.Item.Items
 
     public static readonly IItem Instance = new Item_TestSkill2SB();
 
-    public override SkillList SkillToReceive => SkillList.TestSkill1;
+    public override SkillList SkillToReceive => SkillList.TestSkill2;
 
     public Item_TestSkill2SB() : base() { }
   }

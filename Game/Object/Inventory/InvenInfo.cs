@@ -54,7 +54,7 @@ namespace Goguma.Game.Object.Inventory
           {
             if (inven.Items.wearing[i] != null)
             {
-              var item = Itemss.GetInstance((ItemList)inven.Items.wearing[i]);
+              var item = ((ItemPair)inven.Items.wearing[i]).ItemM;
               resultSsi.Add(CTexts
                 .Make($"{{{EquipmentItem.GetETypeString((WearingType)i)}, {Colors.txtSuccess}}} {{ : }} ")
                 .Combine(item.DisplayName));
@@ -113,7 +113,7 @@ namespace Goguma.Game.Object.Inventory
         SelectSceneItems GetSsi(Inventory inventory, HavingType hType)
         {
           var resultSsi = new SelectSceneItems();
-          foreach (var item in inventory.Items.having[hType])
+          foreach (var item in inventory.Items.having[hType, true])
           {
             resultSsi.Add(item.ItemM.DisplayName.Combine($"{{ [ {item.Count}개 ], {Colors.txtInfo}}}"));
           }
@@ -132,7 +132,7 @@ namespace Goguma.Game.Object.Inventory
           var sItem = inven.Items.wearing[wType];
           if (sItem != null)
           {
-            var item = Itemss.GetInstance((ItemList)sItem);
+            var item = ((ItemPair)sItem).ItemM;
             return CTexts.Make(
                         $"{{무슨 작업을 하시겠습니까?\n    }} {{\n    선택 : }} ").Combine(item.DisplayName).Combine($"{{\n    위치 : }} {{{InvenItems.GetTypeString(iType)}, {Colors.txtSuccess}}} {{.}} {{{EquipmentItem.GetETypeString(wType)},{Colors.txtSuccess}}}");
           }

@@ -11,6 +11,8 @@ namespace Goguma.Game.Object.Inventory.Item.Other
     public override HavingType Type => HavingType.Other;
     public OtherItem() : base() { }
 
+    public override int MaxCount => 999;
+
     public override CTexts Info()
     {
       return new CTexts().Append($"{{\n{GetSep(45, $"{Name.ToString()}")}}}")

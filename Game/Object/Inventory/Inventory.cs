@@ -76,8 +76,7 @@ namespace Goguma.Game.Object.Inventory
             {
               var wearingTypeSS = InvenInfo.Scene.WearingInven(this); // Select Wearing Item (Type)
               if (wearingTypeSS.isCancelled) break;
-              resultIP.Item = (ItemList)Items.wearing[wearingTypeSS.getIndex];
-              resultIP.Count = 1;
+              resultIP = (ItemPair)Items.wearing[wearingTypeSS.getIndex];
               return resultIP;
             }
             break;
@@ -90,7 +89,7 @@ namespace Goguma.Game.Object.Inventory
               {
                 var havingIndexSS = InvenInfo.Scene.HavingInven(this, (HavingType)havingTypeSS.getIndex); // Select Having Item
                 if (havingIndexSS.isCancelled) break;
-                resultIP.Item = Items.having[(HavingType)(havingTypeSS.getIndex)][havingIndexSS.getIndex].Item;
+                resultIP = Items.having[(HavingType)(havingTypeSS.getIndex), true][havingIndexSS.getIndex];
                 return resultIP;
               }
             }
@@ -102,10 +101,7 @@ namespace Goguma.Game.Object.Inventory
     }
     public void RemoveItem(WearingType wType) // Wearing Item Remove
     {
-      var inven = Items.wearing.Items;
-      var sItem = (ItemList)Items.wearing[wType];
-
-      inven[(int)wType] = null;
+      Items.wearing.Items[(int)wType] = null;
     }
 
     public bool RemoveItem(ItemPair item) // Having Item Remove
@@ -121,7 +117,7 @@ namespace Goguma.Game.Object.Inventory
       return check;
     }
 
-    public void SetItem(WearingType wType, ItemList item) // Wearing Item Set
+    public void SetItem(WearingType wType, ItemPair item) // Wearing Item Set
     {
       var inven = Items.wearing.Items;
       inven[(int)wType] = item;

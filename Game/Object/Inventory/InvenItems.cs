@@ -10,9 +10,10 @@ namespace Goguma.Game.Object.Inventory
   public class InvenItems
   {
     [Serializable]
+#nullable enable
     public class Wearing
     {
-      public List<ItemList?> Items { get; set; }
+      public List<ItemPair?> Items { get; set; }
 
       public Wearing()
       {
@@ -21,8 +22,8 @@ namespace Goguma.Game.Object.Inventory
           Items.Add(null);
       }
 
-      public ItemList? this[WearingType wType] => Items[(int)wType];
-      public ItemList? this[int wType] => Items[wType];
+      public ItemPair? this[WearingType wType] => Items[(int)wType];
+      public ItemPair? this[int wType] => Items[wType];
 
       public EquipEffect GetEquipEffect
       {
@@ -33,7 +34,7 @@ namespace Goguma.Game.Object.Inventory
           {
             if (item != null)
             {
-              var itemInstance = (IEquipmentItem)Itemss.GetInstance((ItemList)item);
+              var itemInstance = (IEquipmentItem)((ItemPair)item).ItemM;
               if (itemInstance.EType == WearingType.Head || itemInstance.EType == WearingType.Chestplate ||
                   itemInstance.EType == WearingType.Leggings || itemInstance.EType == WearingType.Boots)
               {
@@ -57,7 +58,7 @@ namespace Goguma.Game.Object.Inventory
           {
             if (item != null)
             {
-              var itemInstance = (IEquipmentItem)Itemss.GetInstance((ItemList)item);
+              var itemInstance = (IEquipmentItem)((ItemPair)item).ItemM;
               if (itemInstance.EType == WearingType.Weapon)
               {
                 resultEffect.AttDmg += ((EWeapon)itemInstance).Effect.AttDmg;
@@ -78,16 +79,63 @@ namespace Goguma.Game.Object.Inventory
     {
       public List<ItemPair> Items { get; set; }
 
-      public ItemPair this[int index] => Items[index];
+      public ItemPair this[ItemList item] => (from item2 in Items
+                                              where item2.Item == item
+                                              select item2).ToList()[0];
 
       public Having()
       {
         Items = new();
       }
 
-      public List<ItemPair> this[HavingType hType] => (from item in Items
-                                                       where item.ItemM.Type == hType
-                                                       select item).ToList();
+      public List<ItemPair> this[HavingType hType, bool countTheorem = false]
+      {
+        get
+        {
+          if (countTheorem)
+          {
+            var resultList = new List<ItemPair>();
+            var needTheoremList = (from item in Items
+                                   where (item.Count > item.ItemM.MaxCount) && (item.ItemM.Type == hType)
+                                   select item).ToList();
+
+            var notNeedTheoremList = (from item in Items
+                                      where (item.Count <= item.ItemM.MaxCount) && (item.ItemM.Type == hType)
+                                      select item).ToList();
+
+            foreach (var item in notNeedTheoremList)
+            {
+              resultList.Add(item);
+            }
+            foreach (var item in needTheoremList)
+            {
+              int rem;
+              var div = Math.DivRem(item.Count, item.ItemM.MaxCount, out rem);
+
+              for (var i = 0; i < div; i++)
+              {
+                resultList.Add(new(item.Item, item.ItemM.MaxCount));
+              }
+              if (rem != 0)
+              {
+                resultList.Add(new(item.Item, rem));
+              }
+            }
+
+            var resList = resultList.OrderBy(item => item.ItemM.Name.ToString());
+            return resList.ToList();
+
+          }
+          else
+          {
+            var resList = (from item in Items
+                           where item.ItemM.Type == hType
+                           orderby item.ItemM.Name.ToString()
+                           select item);
+            return resList.ToList();
+          }
+        }
+      }
 
       public void RemoveItem(ItemPair item)
       {

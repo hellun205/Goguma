@@ -9,9 +9,14 @@ namespace Goguma.Game.Object.Inventory.Item.Equipment
   public abstract class EquipmentItem : Item, IEquipmentItem
   {
     public override CTexts DisplayName => CTexts.Make($"{{[ {TypeString} ],{Colors.txtWarning}}}{{ }}{{[ {ETypeString} ],{Colors.txtSuccess}}}{{ }}").Combine(Name);
+
     public override HavingType Type => HavingType.Equipment;
+
     public abstract WearingType EType { get; }
+
     public string ETypeString => GetETypeString(EType);
+
+    public override int MaxCount => 1;
 
     public EquipmentItem() : base() { }
 
