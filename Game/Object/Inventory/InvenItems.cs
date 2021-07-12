@@ -86,7 +86,7 @@ namespace Goguma.Game.Object.Inventory
       }
 
       public List<ItemPair> this[HavingType hType] => (from item in Items
-                                                       where Itemss.GetInstance(item.Item).Type == hType
+                                                       where item.ItemM.Type == hType
                                                        select item).ToList();
 
       public void RemoveItem(ItemPair item)

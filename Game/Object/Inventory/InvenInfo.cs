@@ -134,7 +134,7 @@ namespace Goguma.Game.Object.Inventory
           {
             var item = Itemss.GetInstance((ItemList)sItem);
             return CTexts.Make(
-                        $"{{무슨 작업을 하시겠습니까?\n    }} {{\n    선택 : }} {{{item.Name.ToString()}}}{{\n    위치 : }} {{{InvenItems.GetTypeString(iType)}, {Colors.txtSuccess}}} {{.}} {{{EquipmentItem.GetETypeString(wType)},{Colors.txtSuccess}}}");
+                        $"{{무슨 작업을 하시겠습니까?\n    }} {{\n    선택 : }} ").Combine(item.DisplayName).Combine($"{{\n    위치 : }} {{{InvenItems.GetTypeString(iType)}, {Colors.txtSuccess}}} {{.}} {{{EquipmentItem.GetETypeString(wType)},{Colors.txtSuccess}}}");
           }
           else return null;
         };
@@ -157,7 +157,7 @@ namespace Goguma.Game.Object.Inventory
         {
           return CTexts.Make($"{{무슨 작업을 하시겠습니까?\n    }} {{\n    선택 : }} ")
           .Combine(item.ItemM.DisplayName)
-          .Combine($"{{{item.ItemM.Name.ToString()}}} {{ [{item.Count}], {Colors.txtInfo}}} {{\n    위치 : }}  {{{InvenItems.GetTypeString(iType)}, {Colors.txtSuccess}}} {{.}} {{{Item.Item.GetTypeString(item.ItemM.Type)},{Colors.txtSuccess}}}");
+          .Combine($"{{ [ {item.Count}개 ], {Colors.txtInfo}}} {{\n    위치 : }}  {{{InvenItems.GetTypeString(iType)}, {Colors.txtSuccess}}} {{.}} {{{Item.Item.GetTypeString(item.ItemM.Type)},{Colors.txtSuccess}}}");
         };
         SelectSceneItems GetSSI()
         {

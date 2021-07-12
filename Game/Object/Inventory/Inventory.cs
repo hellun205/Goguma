@@ -129,8 +129,7 @@ namespace Goguma.Game.Object.Inventory
 
     public void GetItem(ItemPair item) // Having Item Get
     {
-      var inven = Items.having[item.ItemM.Type];
-      foreach (var it in inven)
+      foreach (var it in Items.having.Items)
       {
         if (it.Item == item.Item)
         {
@@ -138,7 +137,7 @@ namespace Goguma.Game.Object.Inventory
           return;
         }
       }
-      inven.Add(item);
+      Items.having.Items.Add(item);
     }
 
     public bool CheckItem(ItemPair item, out List<ItemPair> list)
