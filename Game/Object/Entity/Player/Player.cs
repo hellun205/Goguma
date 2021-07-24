@@ -25,6 +25,8 @@ namespace Goguma.Game.Object.Entity.Player
     public List<QuestList> CompletedQuests { get; set; }
     public Location Loc { get; set; }
 
+    public Gender Gender { get; set; }
+
     public List<Entitys> KilledMobs { get; set; }
 
     public double Ep
@@ -153,6 +155,7 @@ namespace Goguma.Game.Object.Entity.Player
       IncreaseAttDmg = 2;
       IncreaseMaxHp = 10;
       IncreaseMaxEp = 5;
+      Gender = Gender.MALE;
     }
 
     public Player(string name) : this()

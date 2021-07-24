@@ -20,10 +20,7 @@ namespace Goguma.Game.Object.Inventory.Item
     public virtual bool IsSalable => false;
     public virtual bool IsPurchasable => false;
     public abstract CTexts Descriptions { get; }
-    public Item()
-    {
-      // Count = 1;
-    }
+
     public void Information(bool isPause = true)
     {
       PrintCText(Info());

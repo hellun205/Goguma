@@ -9,7 +9,7 @@ namespace Goguma.Game.Object.Quest
   [Serializable]
   public abstract class QMeetNpc : Quest
   {
-    public virtual List<NpcList> MeetNpcs => new() { CompleteNpc.Type };
+    public virtual List<NpcList> MeetNpcs => new() { CompleteNpc.Material };
     public List<NpcList> MetNpcs { get; set; }
     public override QuestType Type => QuestType.MEET_NPC;
 

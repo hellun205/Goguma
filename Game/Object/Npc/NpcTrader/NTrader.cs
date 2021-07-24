@@ -6,6 +6,7 @@ using Goguma.Game.Object.Inventory;
 using Goguma.Game.Object.Inventory.Item;
 using System.Linq;
 using static Goguma.Game.Console.ConsoleFunction;
+using static Goguma.Game.InGame;
 using Goguma.Game.Object.Quest.Dialog;
 using Goguma.Game.Object.Inventory.Item.Equipment;
 
@@ -17,7 +18,7 @@ namespace Goguma.Game.Object.Npc.NpcTrader
 
     public override NpcType NpcType => NpcType.TRADER;
 
-    public abstract DNpcSay OpenShopDialog { get; }
+    public abstract DNpcSay[] OpenShopDialog { get; }
 
     public override string[] SSItems => new[] { "상점 열기" };
 
@@ -117,7 +118,7 @@ namespace Goguma.Game.Object.Npc.NpcTrader
         var ssi = new SelectSceneItems();
         ssi.Add("{아이템 구매}");
         ssi.Add("{아이템 판매}");
-        var ss = new SelectScene(OpenShopDialog.Text.DisplayText(String.Empty), ssi, true);
+        var ss = new SelectScene(Rand(OpenShopDialog).Text.DisplayText(String.Empty), ssi, true);
         if (ss.isCancelled) return;
         switch (ss.getString)
         {

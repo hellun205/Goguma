@@ -18,6 +18,7 @@ namespace Goguma.Game.Object.Inventory.Item
     EMERALD,
     POTION_1,
     SKILLBOOK_TEST_SKILL1,
-    SKILLBOOK_TEST_SKILL2
+    SKILLBOOK_TEST_SKILL2,
+    APPLE
   }
 }

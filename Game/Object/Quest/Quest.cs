@@ -54,8 +54,6 @@ namespace Goguma.Game.Object.Quest
       return info;
     }
 
-    protected Quest() { }
-
     public bool ShowDialog()
     {
       var ask = Dialog.Dialog.ShowDialogs(Dialogs, AskDialog, CancelledDialog);
