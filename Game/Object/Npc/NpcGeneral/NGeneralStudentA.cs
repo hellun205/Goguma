@@ -40,7 +40,7 @@ namespace Goguma.Game.Object.Npc.NpcGeneral
 
     public override List<QuestList> Quests => new()
     {
-
+      QuestList.STUDENT_A_QUEST1,
     };
   }
 }

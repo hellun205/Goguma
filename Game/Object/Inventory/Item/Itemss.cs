@@ -73,6 +73,8 @@ namespace Goguma.Game.Object.Inventory.Item
 
         case ItemList.SKILLBOOK_TEST_SKILL2: return Item_TestSkill2SB.Instance;
 
+        case ItemList.APPLE: return ItemApple.Instance;
+
         default: throw new NotImplementedException();
       }
     }

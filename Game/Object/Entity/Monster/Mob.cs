@@ -23,12 +23,7 @@ namespace Goguma.Game.Object.Entity.Monster
       AttSystem = new();
     }
 
-    new public void Information()
-    {
-      PrintCText(Info());
-      Pause();
-    }
-    new protected CTexts Info()
+    protected override CTexts Info()
     {
       var resCT = new CTexts()
         .Append($"{{\n{GetSep(40, $"{Name} [ Lv. {Level} ]")}\n}}")

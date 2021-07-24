@@ -61,7 +61,7 @@ namespace Goguma.Game.Object.Entity
     protected double critPer;
     protected double defPer;
     protected double ignoreDef;
-    protected Buff BuffsIncrease
+    protected virtual Buff BuffsIncrease
     {
       get
       {
