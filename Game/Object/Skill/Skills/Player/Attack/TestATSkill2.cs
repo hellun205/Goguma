@@ -1,11 +1,11 @@
 using System;
 using Goguma.Game.Console;
-using Goguma.Game.Object.Inventory.Item.Equipment;
+using Goguma.Game.Object.Skill.Attack;
 
 namespace Goguma.Game.Object.Skill.Skills.Player.Attack
 {
   [Serializable]
-  public class TestATSkill2 : AttackSkill
+  public class TestATSkill2 : APhysicalAttackSkill
   {
     public override string Name => "조금 강력한 테스트 공격 스킬";
 
@@ -15,11 +15,11 @@ namespace Goguma.Game.Object.Skill.Skills.Player.Attack
 
     public override double UseEp => 6;
 
-    public override WeaponEffect Effect => new()
+    public override AttackEffect Effect => new()
     {
       PhysicalDamage = 7,
-      CritDmg = 5,
-      CritPer = 5,
+      CriticalDamage = 5,
+      CriticalPercent = 5,
       PhysicalPenetration = 2
     };
   }

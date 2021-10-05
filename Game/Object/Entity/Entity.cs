@@ -9,6 +9,7 @@ using Colorify;
 using Goguma.Game.Object.Inventory.Item.Equipment;
 using Goguma.Game.Object.Entity.Player;
 using Goguma.Game.Object.Skill.Skills;
+using Goguma.Game.Object.Skill.Attack;
 
 namespace Goguma.Game.Object.Entity
 {

@@ -12,7 +12,7 @@ namespace Goguma.Game.Object.Skill.Attack
 
     public abstract string DamageTypeString { get; }
 
-    public abstract AttackEffect Effect { get; protected set; }
+    public abstract AttackEffect Effect { get; }
 
     public override SkillType Type => SkillType.AttackSkill;
 

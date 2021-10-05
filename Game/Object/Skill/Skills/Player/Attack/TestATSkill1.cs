@@ -1,11 +1,12 @@
 using System;
 using Goguma.Game.Console;
 using Goguma.Game.Object.Inventory.Item.Equipment;
+using Goguma.Game.Object.Skill.Attack;
 
 namespace Goguma.Game.Object.Skill.Skills.Player.Attack
 {
   [Serializable]
-  public class TestATSkill1 : AttackSkill
+  public class TestATSkill1 : APhysicalAttackSkill
   {
     public override string Name => "테스트 공격 스킬1";
 
@@ -15,9 +16,10 @@ namespace Goguma.Game.Object.Skill.Skills.Player.Attack
 
     public override double UseEp => 2;
 
-    public override WeaponEffect Effect => new()
+    public override AttackEffect Effect => new()
     {
       PhysicalDamage = 5
     };
+
   }
 }
