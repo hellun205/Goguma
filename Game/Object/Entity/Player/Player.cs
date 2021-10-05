@@ -2,7 +2,6 @@ using System;
 using Colorify;
 using Goguma.Game.Object.Map;
 using Goguma.Game.Console;
-using Goguma.Game.Object.Skill;
 using static Goguma.Game.Console.ConsoleFunction;
 using static Goguma.Game.Console.StringFunction;
 using Goguma.Game.Object.Map.Town;
@@ -14,6 +13,8 @@ using System.Linq;
 using Goguma.Game.Object.Inventory.Item;
 using Goguma.Game.Object.Npc;
 using Goguma.Game.Object.Entity.Npc;
+using Goguma.Game.Object.Skill.Buff;
+using Goguma.Game.Object.Skill.Attack;
 
 namespace Goguma.Game.Object.Entity.Player
 {
@@ -206,10 +207,10 @@ namespace Goguma.Game.Object.Entity.Player
     public override void AddBuff(IBuffSkill skill)
     {
       Buffs.Add(skill);
-      if (skill.buff.Hp != 0)
-        Hp += skill.buff.Hp;
-      if (skill.buff.Ep != 0)
-        Ep += skill.buff.Ep;
+      if (skill.Effect.Hp != 0)
+        Hp += skill.Effect.Hp;
+      if (skill.Effect.Ep != 0)
+        Ep += skill.Effect.Ep;
     }
 
     protected override CTexts Info()
@@ -225,11 +226,17 @@ namespace Goguma.Game.Object.Entity.Player
       .Append(GetHpBar())
       .Append("{\n에너지 : }")
       .Append(GetEpBar())
-      .Append($"{{\n공격력 : }}{{{PhysicalDamage},{Colors.txtDanger}}}")
-      .Append($"{{\n크리티컬 데미지 : }}{{{CriticalDamage} %,{Colors.txtDanger}}}")
-      .Append($"{{\n크리티컬 확률 : }}{{{CriticalPercent} %,{Colors.txtDanger}}}")
-      .Append($"{{\n방어율 무시 : }}{{{PhysicalPenetration} %,{Colors.txtDanger}}}")
-      .Append($"{{\n방어율 : }}{{{PhysicalDefense} %,{Colors.txtInfo}}}")
+      .Append($"{{\n물리 공격력 : }}{{{PhysicalDamage},{Colors.txtDanger}}}")
+      .Append($"{{\n마법 공격력 : }}{{{MagicDamage},{Colors.txtInfo}}}")
+
+      .Append($"{{\n물리 관통력 : }}{{{PhysicalPenetration},{Colors.txtDanger}}}")
+      .Append($"{{\n마법 관통력 : }}{{{MagicPenetration},{Colors.txtInfo}}}")
+
+      .Append($"{{\n물리 방어력 : }}{{{PhysicalDefense},{Colors.txtDanger}}}{{ ( {Math.Round(1 - (100 / (100 + PhysicalDefense)), 2)} % )}}")
+      .Append($"{{\n마법 방어력 : }}{{{MagicDefense},{Colors.txtInfo}}}{{ ( {Math.Round(1 - (100 / (100 + MagicDefense)), 2)} % )}}")
+
+      .Append($"{{\n치명타 데미지 : }}{{{CriticalDamage} %,{Colors.txtWarning}}}")
+      .Append($"{{\n치명타 확률 : }}{{{CriticalPercent} %,{Colors.txtWarning}}}")
       .Append($"{{\n{GetSep(40)}}}");
     }
 
@@ -259,50 +266,6 @@ namespace Goguma.Game.Object.Entity.Player
         return bar.Combine(CTexts.Make($"{{ [ }}{{{Exp + plus} / {MaxExp},{Colors.txtWarning}}}{{ ]}}"));
       else
         return bar;
-    }
-
-    public override double CalAttDmg(IAttackSkill aSkill, IEntity entity, out bool isCrit)
-    {
-      var dmg = DamageByLevel((PhysicalDamage + aSkill.Effect.AttDmg), Level, entity.Level) * (1 - ((entity.PhysicalDefense / 100) - ((PhysicalPenetration + aSkill.Effect.IgnoreDef) / 100)));
-      return CalCritDmg(dmg, out isCrit, aSkill.Effect);
-    }
-
-    public override double CalAttDmg(IEntity entity, out bool isCrit)
-    {
-      var dmg = DamageByLevel(PhysicalDamage, Level, entity.Level) * (1 - ((entity.PhysicalDefense / 100) - ((PhysicalPenetration) / 100)));
-      return CalCritDmg(dmg, out isCrit);
-    }
-
-    protected override double CalCritDmg(double dmg, out bool isCrit, WeaponEffect wEffect)
-    {
-      var rand = new Random().Next(0, 101);
-      var critPer = Math.Round(CriticalPercent + wEffect.CritPer, 2);
-      if (critPer >= rand)
-      {
-        isCrit = true;
-        return Math.Round(dmg * (1 + ((CriticalDamage + wEffect.CritDmg) / 100)), 2);
-      }
-      else
-      {
-        isCrit = false;
-        return Math.Round(dmg, 2);
-      }
-    }
-
-    protected override double CalCritDmg(double dmg, out bool isCrit)
-    {
-      var rand = new Random().Next(0, 101);
-      var critPer = Math.Round(CriticalPercent, 2);
-      if (critPer >= rand)
-      {
-        isCrit = true;
-        return Math.Round(dmg * (1 + (CriticalDamage / 100)), 2);
-      }
-      else
-      {
-        isCrit = false;
-        return Math.Round(dmg, 2);
-      }
     }
 
     public void KillMob(MonsterList monster)

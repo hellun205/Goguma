@@ -1,15 +1,13 @@
 using System;
 using System.Collections.Generic;
 using Goguma.Game.Console;
-using Goguma.Game.Object.Entity.Monster;
 using Goguma.Game.Object.Skill;
 using static Goguma.Game.Console.StringFunction;
 using static Goguma.Game.Console.ConsoleFunction;
 using Colorify;
-using Goguma.Game.Object.Inventory.Item.Equipment;
 using Goguma.Game.Object.Entity.Player;
-using Goguma.Game.Object.Skill.Skills;
 using Goguma.Game.Object.Skill.Attack;
+using Goguma.Game.Object.Skill.Buff;
 
 namespace Goguma.Game.Object.Entity
 {
@@ -100,11 +98,11 @@ namespace Goguma.Game.Object.Entity
     protected double magicPenetration;
     protected double criticalDamage;
     protected double criticalPercent;
-    protected virtual Buff BuffsIncrease
+    protected virtual BuffEffect BuffsIncrease
     {
       get
       {
-        var resultBuff = new Buff();
+        var resultBuff = new BuffEffect();
         return resultBuff.Plus(Buffs.ToArray());
       }
     }
@@ -129,8 +127,8 @@ namespace Goguma.Game.Object.Entity
     public virtual void AddBuff(IBuffSkill skill)
     {
       Buffs.Add(skill);
-      if (skill.buff.Hp != 0)
-        Hp += skill.buff.Hp;
+      if (skill.Effect.Hp != 0)
+        Hp += skill.Effect.Hp;
     }
 
     public virtual void RemoveBuff(IBuffSkill skill)
@@ -155,34 +153,40 @@ namespace Goguma.Game.Object.Entity
         .Append($"{{\n{GetSep(40, $"{Name} [ Lv. {Level} ]")}}}")
         .Append("{\n체력 : }")
         .Append(GetHpBar())
-        .Append($"{{\n공격력 : }}{{{PhysicalDamage},{Colors.txtDanger}}}")
-        .Append($"{{\n크리티컬 데미지 : }}{{{CriticalDamage} %,{Colors.txtDanger}}}")
-        .Append($"{{\n크리티컬 확률 : }}{{{CriticalPercent} %,{Colors.txtDanger}}}")
-        .Append($"{{\n방어율 무시 : }}{{{PhysicalPenetration} %,{Colors.txtDanger}}}")
-        .Append($"{{\n방어율 : }}{{{PhysicalDefense} %,{Colors.txtInfo}}}")
+        .Append($"{{\n물리 공격력 : }}{{{PhysicalDamage},{Colors.txtDanger}}}")
+        .Append($"{{\n마법 공격력 : }}{{{MagicDamage},{Colors.txtInfo}}}")
+
+        .Append($"{{\n물리 관통력 : }}{{{PhysicalPenetration},{Colors.txtDanger}}}")
+        .Append($"{{\n마법 관통력 : }}{{{MagicPenetration},{Colors.txtInfo}}}")
+
+        .Append($"{{\n물리 방어력 : }}{{{PhysicalDefense},{Colors.txtDanger}}}{{ ( {Math.Round(1 - (100 / (100 + PhysicalDefense)), 2)} % )}}")
+        .Append($"{{\n마법 방어력 : }}{{{MagicDefense},{Colors.txtInfo}}}{{ ( {Math.Round(1 - (100 / (100 + MagicDefense)), 2)} % )}}")
+
+        .Append($"{{\n치명타 데미지 : }}{{{CriticalDamage} %,{Colors.txtWarning}}}")
+        .Append($"{{\n치명타 확률 : }}{{{CriticalPercent} %,{Colors.txtWarning}}}")
         .Append($"{{\n{GetSep(40)}}}");
     }
 
     public virtual double CalAttDmg(IAttackSkill aSkill, IEntity entity, out bool isCrit)
     {
-      var dmg = DamageByLevel((PhysicalDamage + aSkill.Effect.AttDmg), Level, entity.Level) * (1 - ((entity.PhysicalDefense / 100) - ((PhysicalPenetration + aSkill.Effect.IgnoreDef) / 100)));
-      return CalCritDmg(dmg, out isCrit, aSkill.Effect);
+      var damage = ((PhysicalDamage + aSkill.Effect.PhysicalDamage) * (100 / (100 + entity.PhysicalDefense - PhysicalPenetration + aSkill.Effect.PhysicalPenetration))) + ((MagicDamage + aSkill.Effect.MagicDamage) * (100 / (100 + entity.MagicDefense - MagicPenetration + aSkill.Effect.MagicPenetration)));
+      return CalCritDmg(damage, out isCrit, aSkill.Effect);
     }
 
     public virtual double CalAttDmg(IEntity entity, out bool isCrit)
     {
-      var dmg = DamageByLevel(PhysicalDamage, Level, entity.Level) * (1 - ((entity.PhysicalDefense / 100) - ((PhysicalPenetration) / 100)));
-      return CalCritDmg(dmg, out isCrit);
+      var damage = (PhysicalDamage * (100 / (100 + entity.PhysicalDefense - PhysicalPenetration))) + (MagicDamage * (100 / (100 + entity.MagicDefense - MagicPenetration)));
+      return CalCritDmg(damage, out isCrit);
     }
 
-    protected virtual double CalCritDmg(double dmg, out bool isCrit, WeaponEffect wEffect)
+    protected virtual double CalCritDmg(double dmg, out bool isCrit, AttackEffect wEffect)
     {
       var rand = new Random().Next(0, 101);
-      var critPer = Math.Round(CriticalPercent + wEffect.CritPer, 2);
+      var critPer = Math.Round(CriticalPercent + wEffect.CriticalPercent, 2);
       if (critPer >= rand)
       {
         isCrit = true;
-        return Math.Round(dmg * (1 + ((CriticalDamage + wEffect.CritDmg) / 100)), 2);
+        return Math.Round(dmg * (1 + ((CriticalDamage + wEffect.CriticalDamage) / 100)), 2);
       }
       else
       {
