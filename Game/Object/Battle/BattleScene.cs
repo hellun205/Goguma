@@ -10,6 +10,8 @@ using static Goguma.Game.Console.StringFunction;
 using System.Collections.Generic;
 using Goguma.Game.Object.Inventory.Item;
 using Goguma.Game.Object.Entity;
+using Goguma.Game.Object.Skill.Buff;
+using Goguma.Game.Object.Skill.Attack;
 
 namespace Goguma.Game.Object.Battle
 {
@@ -112,51 +114,79 @@ namespace Goguma.Game.Object.Battle
             };
           bool isBuff = false;
           resCT.Add("\n");
-          if (skill.buff.MaxHp != 0)
+
+          if (skill.Effect.Hp != 0)
           {
             isBuff = true;
-            resCT.Append(GetText($"{{최대 체력이 }}{{{skill.buff.MaxHp},{Colors.txtInfo}}}", false));
+            resCT.Append(GetText($"{{체력을 }}{{{skill.Effect.Hp},{Colors.txtInfo}}}", true));
           }
-          if (skill.buff.MaxEp != 0 && caster.Type == EntityType.PLAYER)
+
+          if (skill.Effect.Ep != 0 && caster.Type == EntityType.PLAYER)
           {
             isBuff = true;
-            resCT.Append(GetText($"{{최대 에너지가 }}{{{skill.buff.MaxEp},{Colors.txtInfo}}}", false));
+            resCT.Append(GetText($"{{에너지를 }}{{{skill.Effect.Ep},{Colors.txtInfo}}}", true));
           }
-          if (skill.buff.PhysicalDamage != 0)
+
+          if (skill.Effect.MaxHp != 0)
           {
             isBuff = true;
-            resCT.Append(GetText($"{{공격력이 }}{{{skill.buff.PhysicalDamage},{Colors.txtDanger}}}", false));
+            resCT.Append(GetText($"{{최대 체력이 }}{{{skill.Effect.MaxHp},{Colors.txtWarning}}}", false));
           }
-          if (skill.buff.CriticalDamage != 0)
+
+          if (skill.Effect.MaxEp != 0 && caster.Type == EntityType.PLAYER)
           {
             isBuff = true;
-            resCT.Append(GetText($"{{크리티컬 데미지가 }}{{{skill.buff.CriticalDamage} %,{Colors.txtDanger}}}", false));
+            resCT.Append(GetText($"{{최대 에너지가 }}{{{skill.Effect.MaxEp},{Colors.txtWarning}}}", false));
           }
-          if (skill.buff.CriticalPercent != 0)
+
+          if (skill.Effect.PhysicalDamage != 0)
           {
             isBuff = true;
-            resCT.Append(GetText($"{{크리티컬 확률이 }}{{{skill.buff.CriticalPercent} %,{Colors.txtDanger}}}", false));
+            resCT.Append(GetText($"{{물리 공격력이 }}{{{skill.Effect.PhysicalDamage},{Colors.txtDanger}}}", false));
           }
-          if (skill.buff.PhysicalPenetration != 0)
+
+          if (skill.Effect.MagicDamage != 0)
           {
             isBuff = true;
-            resCT.Append(GetText($"{{방어율 무시가 }}{{{skill.buff.PhysicalPenetration} %,{Colors.txtDanger}}}", false));
+            resCT.Append(GetText($"{{마법 공격력이 }}{{{skill.Effect.MagicDamage},{Colors.txtInfo}}}", false));
           }
-          if (skill.buff.PhysicalDefense != 0)
+
+          if (skill.Effect.PhysicalPenetration != 0)
           {
             isBuff = true;
-            resCT.Append(GetText($"{{방어율이 }}{{{skill.buff.PhysicalDefense} %,{Colors.txtInfo}}}", false));
+            resCT.Append(GetText($"{{물리 관통력이 }}{{{skill.Effect.PhysicalPenetration} %,{Colors.txtDanger}}}", false));
           }
-          if (skill.buff.Hp != 0)
+
+          if (skill.Effect.MagicPenetration != 0)
           {
             isBuff = true;
-            resCT.Append(GetText($"{{체력을 }}{{{skill.buff.Hp},{Colors.txtInfo}}}", true));
+            resCT.Append(GetText($"{{마법 관통력이 }}{{{skill.Effect.MagicPenetration} %,{Colors.txtInfo}}}", false));
           }
-          if (skill.buff.Ep != 0 && caster.Type == EntityType.PLAYER)
+
+          if (skill.Effect.PhysicalDefense != 0)
           {
             isBuff = true;
-            resCT.Append(GetText($"{{에너지를 }}{{{skill.buff.Ep},{Colors.txtInfo}}}", true));
+            resCT.Append(GetText($"{{물리 방어력이 }}{{{skill.Effect.PhysicalDefense} %,{Colors.txtDanger}}}", false));
           }
+
+          if (skill.Effect.MagicDefense != 0)
+          {
+            isBuff = true;
+            resCT.Append(GetText($"{{마법 방어력이 }}{{{skill.Effect.MagicDefense} %,{Colors.txtInfo}}}", false));
+          }
+
+          if (skill.Effect.CriticalDamage != 0)
+          {
+            isBuff = true;
+            resCT.Append(GetText($"{{치명타 데미지가 }}{{{skill.Effect.CriticalDamage} %,{Colors.txtWarning}}}", false));
+          }
+
+          if (skill.Effect.CriticalPercent != 0)
+          {
+            isBuff = true;
+            resCT.Append(GetText($"{{치명타 확률이 }}{{{skill.Effect.CriticalPercent} %,{Colors.txtWarning}}}", false));
+          }
+
           if (!isBuff)
             resCT.Append(CTexts.Make("{아무런 효과가 없었습니다.}"));
           resCT.Append(CTexts.Make("{\n}"));

@@ -32,6 +32,6 @@ namespace Goguma.Game.Object.Skill.Skills
       }
     }
 
-    
+
   }
 }

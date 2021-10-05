@@ -4,6 +4,8 @@ using System.Linq;
 using Goguma.Game.Object.Skill;
 using System.Collections.Generic;
 using System;
+using Goguma.Game.Object.Skill.Attack;
+using Goguma.Game.Object.Skill.Buff;
 
 namespace Goguma.Game.Object.Battle
 {
@@ -153,7 +155,7 @@ namespace Goguma.Game.Object.Battle
         if (buffs.Count == 0) return;
         if (!all)
           endBuffs = from bf in buffs
-                     where (bf.buff.turn + buffTurns[buffs.IndexOf(bf)]) == turn
+                     where (bf.Effect.turn + buffTurns[buffs.IndexOf(bf)]) == turn
                      select bf;
         else
           endBuffs = from bf in buffs
@@ -180,7 +182,7 @@ namespace Goguma.Game.Object.Battle
           IEnumerable<IBuffSkill> endBuffs;
           if (!all)
             endBuffs = from bf in monster.Buffs
-                       where (bf.buff.turn + mBuffTurns[monster.Buffs.IndexOf(bf)]) == turn
+                       where (bf.Effect.turn + mBuffTurns[monster.Buffs.IndexOf(bf)]) == turn
                        select bf;
           else
             endBuffs = from bf in monster.Buffs

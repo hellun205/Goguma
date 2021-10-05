@@ -1,5 +1,6 @@
 using System;
 using Goguma.Game.Console;
+using Goguma.Game.Object.Skill.Buff;
 
 namespace Goguma.Game.Object.Skill.Skills.Mob.TestMonster
 {
@@ -12,7 +13,7 @@ namespace Goguma.Game.Object.Skill.Skills.Mob.TestMonster
 
     public override CTexts Descriptions => CTexts.Make("{테스트 몬스터가 자신의 체력이 낮아지면 사용하는 버프 스킬이다.}}}");
 
-    public override Buff buff => new()
+    public override BuffEffect Effect => new()
     {
       PhysicalDamage = -5,
       PhysicalDefense = 50,
