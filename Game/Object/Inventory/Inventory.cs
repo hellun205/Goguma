@@ -76,6 +76,7 @@ namespace Goguma.Game.Object.Inventory
             {
               var wearingTypeSS = InvenInfo.Scene.WearingInven(this); // Select Wearing Item (Type)
               if (wearingTypeSS.isCancelled) break;
+              #pragma warning disable CS8600
               resultIP = (ItemPair)Items.wearing[wearingTypeSS.getIndex];
               return resultIP;
             }

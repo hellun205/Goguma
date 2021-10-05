@@ -25,7 +25,7 @@ namespace Goguma.Game.Object.Skill
         case SkillType.BuffSkill:
           return "버프";
         default:
-          throw new NotImplementedException();
+          return "none";
       }
     }
 
