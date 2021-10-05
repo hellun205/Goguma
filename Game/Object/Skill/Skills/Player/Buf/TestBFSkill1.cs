@@ -17,8 +17,8 @@ namespace Goguma.Game.Object.Skill.Skills.Player.Buf
     public override Buff buff => new()
     {
       MaxHp = 20,
-      AttDmg = 5,
-      DefPer = 0.4,
+      PhysicalDamage = 5,
+      PhysicalDefense = 0.4,
       turn = 5,
       Hp = 20
     };

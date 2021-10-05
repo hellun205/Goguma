@@ -4,7 +4,7 @@ using Colorify;
 
 namespace Goguma.Game.Console
 {
-  static class StringFunction
+  public static class StringFunction
   {
     static public bool IsInt(string text)
     {

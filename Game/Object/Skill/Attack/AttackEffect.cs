@@ -1,9 +1,9 @@
 using System;
 
-namespace Goguma.Game.Object.Inventory.Item.Equipment
+namespace Goguma.Game.Object.Skill.Attack
 {
   [Serializable]
-  public struct WeaponEffect
+  public struct AttackEffect
   {
     public double PhysicalDamage { get; set; }
 
@@ -13,9 +13,8 @@ namespace Goguma.Game.Object.Inventory.Item.Equipment
 
     public double MagicPenetration { get; set; }
 
-    public double CritPer { get; set; }
+    public double CriticalDamage { get; set; }
 
-    public double CritDmg { get; set; }
-
+    public double CriticalPercent { get; set; }
   }
 }

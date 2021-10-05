@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Goguma.Game.Console;
+using Goguma.Game.Object.Entity.Player;
 using Goguma.Game.Object.Skill;
 
 namespace Goguma.Game.Object.Entity
@@ -7,15 +8,20 @@ namespace Goguma.Game.Object.Entity
   public interface IEntity
   {
     string Name { get; set; }
+    CTexts DisplayName { get; }
+    ClassType Class { get; }
     EntityType Type { get; }
     double Hp { get; set; }
     double MaxHp { get; set; }
     int Level { get; set; }
-    double AttDmg { get; set; }
-    double DefPer { get; set; }
-    double CritDmg { get; set; }
-    double CritPer { get; set; }
-    double IgnoreDef { get; set; }
+    double PhysicalDamage { get; set; }
+    double MagicDamage { get; set; }
+    double PhysicalDefense { get; set; }
+    double MagicDefense { get; set; }
+    double CriticalDamage { get; set; }
+    double CriticalPercent { get; set; }
+    double PhysicalPenetration { get; set; }
+    double MagicPenetration { get; set; }
     List<ISkill> Skills { get; set; }
     List<IBuffSkill> Buffs { get; set; }
     void Information();

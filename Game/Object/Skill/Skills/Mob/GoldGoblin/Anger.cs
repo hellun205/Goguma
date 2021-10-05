@@ -14,10 +14,10 @@ namespace Goguma.Game.Object.Skill.Skills.Mob.GoldGoblin
 
     public override Buff buff => new()
     {
-      AttDmg = 7.1,
-      DefPer = -16.5,
-      CritDmg = 30,
-      CritPer = 40,
+      PhysicalDamage = 7.1,
+      PhysicalDefense = -16.5,
+      CriticalDamage = 30,
+      CriticalPercent = 40,
       turn = 10
     };
   }

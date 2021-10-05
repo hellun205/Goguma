@@ -5,7 +5,7 @@ using Colorify;
 
 namespace Goguma.Game.Console
 {
-  static class ConsoleFunction
+  public static class ConsoleFunction
   {
     public static Format colorify { get; set; }
 

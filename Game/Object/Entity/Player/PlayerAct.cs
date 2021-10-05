@@ -40,6 +40,11 @@ namespace Goguma.Game.Object.Entity.Player
           var resultSSI = new SelectSceneItems();
 
           resultSSI.Add("{캐릭터 정보 보기}");
+          if (InGame.player.PartyCount != 0)
+          {
+            resultSSI.Add("{파티원 정보 보기}");
+          }
+          
           resultSSI.Add("{인벤토리 열기}");
           resultSSI.Add("{스킬 보기}");
           resultSSI.Add("{퀘스트 보기}");
@@ -157,6 +162,9 @@ namespace Goguma.Game.Object.Entity.Player
           break;
         case "게임 종료":
           InGame.ExitGame();
+          break;
+        case "파티원 정보 보기":
+          // TO DO .
           break;
         default:
           if (actText.StartsWith(InGame.player.Loc.Loc))

@@ -17,10 +17,10 @@ namespace Goguma.Game.Object.Skill.Skills.Player.Attack
 
     public override WeaponEffect Effect => new()
     {
-      AttDmg = 7,
+      PhysicalDamage = 7,
       CritDmg = 5,
       CritPer = 5,
-      IgnoreDef = 2
+      PhysicalPenetration = 2
     };
   }
 }

@@ -15,7 +15,7 @@ namespace Goguma.Game.Object.Skill.Skills.Mob.TestMonster
 
     public override WeaponEffect Effect => new()
     {
-      AttDmg = 2
+      PhysicalDamage = 2
     };
   }
 }

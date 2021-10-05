@@ -15,8 +15,8 @@ namespace Goguma.Game.Object.Skill.Skills.Mob.GoldGoblin
 
     public override WeaponEffect Effect => new()
     {
-      AttDmg = 2.1,
-      IgnoreDef = 10,
+      PhysicalDamage = 2.1,
+      PhysicalPenetration = 10,
       CritDmg = 50,
       CritPer = 70
     };

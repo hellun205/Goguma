@@ -17,7 +17,7 @@ namespace Goguma.Game.Object.Skill.Skills.Player.Attack
 
     public override WeaponEffect Effect => new()
     {
-      AttDmg = 5
+      PhysicalDamage = 5
     };
   }
 }

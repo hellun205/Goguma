@@ -14,8 +14,8 @@ namespace Goguma.Game.Object.Skill.Skills.Mob.TestMonster
 
     public override Buff buff => new()
     {
-      AttDmg = -5,
-      DefPer = 50,
+      PhysicalDamage = -5,
+      PhysicalDefense = 50,
       turn = 5
     };
   }

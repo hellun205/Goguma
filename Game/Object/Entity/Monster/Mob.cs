@@ -31,11 +31,11 @@ namespace Goguma.Game.Object.Entity.Monster
         .Append($"{{\n{GetSep(40)}}}")
         .Append("{\n체력 : }")
         .Append(GetHpBar())
-        .Append($"{{\n공격력 : }}{{{AttDmg},{Colors.txtDanger}}}")
-        .Append($"{{\n크리티컬 데미지 : }}{{{CritDmg} %,{Colors.txtDanger}}}")
-        .Append($"{{\n크리티컬 확률 : }}{{{CritPer} %,{Colors.txtDanger}}}")
-        .Append($"{{\n방어율 무시 : }}{{{IgnoreDef} %,{Colors.txtDanger}}}")
-        .Append($"{{\n방어율 : }}{{{DefPer} %,{Colors.txtInfo}}}")
+        .Append($"{{\n공격력 : }}{{{PhysicalDamage},{Colors.txtDanger}}}")
+        .Append($"{{\n크리티컬 데미지 : }}{{{CriticalDamage} %,{Colors.txtDanger}}}")
+        .Append($"{{\n크리티컬 확률 : }}{{{CriticalPercent} %,{Colors.txtDanger}}}")
+        .Append($"{{\n방어율 무시 : }}{{{PhysicalPenetration} %,{Colors.txtDanger}}}")
+        .Append($"{{\n방어율 : }}{{{PhysicalDefense} %,{Colors.txtInfo}}}")
         .Append($"{{\n{GetSep(40)}}}")
         .Append($"{{\n드랍 아이템 : }}");
 

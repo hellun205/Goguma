@@ -122,30 +122,30 @@ namespace Goguma.Game.Object.Battle
             isBuff = true;
             resCT.Append(GetText($"{{최대 에너지가 }}{{{skill.buff.MaxEp},{Colors.txtInfo}}}", false));
           }
-          if (skill.buff.AttDmg != 0)
+          if (skill.buff.PhysicalDamage != 0)
           {
             isBuff = true;
-            resCT.Append(GetText($"{{공격력이 }}{{{skill.buff.AttDmg},{Colors.txtDanger}}}", false));
+            resCT.Append(GetText($"{{공격력이 }}{{{skill.buff.PhysicalDamage},{Colors.txtDanger}}}", false));
           }
-          if (skill.buff.CritDmg != 0)
+          if (skill.buff.CriticalDamage != 0)
           {
             isBuff = true;
-            resCT.Append(GetText($"{{크리티컬 데미지가 }}{{{skill.buff.CritDmg} %,{Colors.txtDanger}}}", false));
+            resCT.Append(GetText($"{{크리티컬 데미지가 }}{{{skill.buff.CriticalDamage} %,{Colors.txtDanger}}}", false));
           }
-          if (skill.buff.CritPer != 0)
+          if (skill.buff.CriticalPercent != 0)
           {
             isBuff = true;
-            resCT.Append(GetText($"{{크리티컬 확률이 }}{{{skill.buff.CritPer} %,{Colors.txtDanger}}}", false));
+            resCT.Append(GetText($"{{크리티컬 확률이 }}{{{skill.buff.CriticalPercent} %,{Colors.txtDanger}}}", false));
           }
-          if (skill.buff.IgnoreDef != 0)
+          if (skill.buff.PhysicalPenetration != 0)
           {
             isBuff = true;
-            resCT.Append(GetText($"{{방어율 무시가 }}{{{skill.buff.IgnoreDef} %,{Colors.txtDanger}}}", false));
+            resCT.Append(GetText($"{{방어율 무시가 }}{{{skill.buff.PhysicalPenetration} %,{Colors.txtDanger}}}", false));
           }
-          if (skill.buff.DefPer != 0)
+          if (skill.buff.PhysicalDefense != 0)
           {
             isBuff = true;
-            resCT.Append(GetText($"{{방어율이 }}{{{skill.buff.DefPer} %,{Colors.txtInfo}}}", false));
+            resCT.Append(GetText($"{{방어율이 }}{{{skill.buff.PhysicalDefense} %,{Colors.txtInfo}}}", false));
           }
           if (skill.buff.Hp != 0)
           {

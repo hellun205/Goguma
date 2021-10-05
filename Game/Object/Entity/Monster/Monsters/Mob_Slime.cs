@@ -28,8 +28,8 @@ namespace Goguma.Game.Object.Entity.Monster.Monsters
     {
       MaxHp = 5;
       Hp = 5;
-      AttDmg = 2;
-      DefPer = 0.2;
+      PhysicalDamage = 2;
+      PhysicalDefense = 0.2;
       Level = 2;
 
       AttSystem = new()

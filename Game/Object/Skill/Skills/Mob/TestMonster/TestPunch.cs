@@ -15,8 +15,8 @@ namespace Goguma.Game.Object.Skill.Skills.Mob.TestMonster
 
     public override WeaponEffect Effect => new()
     {
-      AttDmg = 1,
-      IgnoreDef = 1,
+      PhysicalDamage = 1,
+      PhysicalPenetration = 1,
       CritDmg = 10,
       CritPer = 50
     };

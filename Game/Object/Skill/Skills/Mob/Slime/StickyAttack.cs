@@ -15,7 +15,7 @@ namespace Goguma.Game.Object.Skill.Skills.Mob.Slime
 
     public override WeaponEffect Effect => new()
     {
-      AttDmg = 2
+      PhysicalDamage = 2
     };
   }
 }
