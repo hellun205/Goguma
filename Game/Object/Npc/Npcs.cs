@@ -26,9 +26,7 @@ namespace Goguma.Game.Object.Npc
       switch (npc)
       {
         case NpcList.TraderK: return NpcTrader.NTraderK.instance;
-
-        case NpcList.GeneralStudentA: return NpcGeneral.NGeneralStudentA.instance;
-
+        
         default:
           throw new NotImplementedException();
       }
