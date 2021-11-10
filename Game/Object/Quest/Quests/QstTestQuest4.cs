@@ -12,11 +12,11 @@ namespace Goguma.Game.Object.Quest.Quests
   {
     public static readonly IQuest Instance = new QstTestQuest4();
     public override string Name => "K의 테스트 퀘스트4";
-    public override Npc.Npc ReceiveNpc => Npcs.Get(NpcList.TRADER_K);
+    public override Npc.Npc ReceiveNpc => Npcs.Get(NpcList.TraderK);
 
     public override List<ItemPair> ItemsToBring => new()
     {
-      new ItemPair(ItemList.STICKY_LIQUID, 4)
+      new ItemPair(ItemList.StickyLiquid, 4)
     };
 
     public override List<IDialog> Dialogs => new()
@@ -30,7 +30,7 @@ namespace Goguma.Game.Object.Quest.Quests
       new DNpcSay(ReceiveNpc, "{고맙군!}", "넵")
     };
 
-    public override QuestList Material => QuestList.TEST_QUEST4;
+    public override QuestList Material => QuestList.TestQuest4;
 
     public override DNpcAsk AskDialog => new DNpcAsk(ReceiveNpc, $"{{끈적끈적한 액체 4개,{Colors.txtInfo}}}{{를 가져와 줄 수 있나?}}");
     public override DNpcSay CancelledDialog => new DNpcSay(ReceiveNpc, "{알겠네.}", "다음에 또 오겠습니다.");
@@ -41,7 +41,7 @@ namespace Goguma.Game.Object.Quest.Quests
       MinLv = 0,
       CompletedQuests = new()
       {
-        QuestList.TEST_QUEST3
+        QuestList.TestQuest3
       }
     };
 
@@ -50,7 +50,7 @@ namespace Goguma.Game.Object.Quest.Quests
 
     public override List<ItemPair> GivingItems => new()
     {
-      new(ItemList.POTION_1, 35)
+      new(ItemList.Potion1, 35)
     };
 
 

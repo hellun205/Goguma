@@ -6,11 +6,11 @@ using Goguma.Game.Object.Inventory.Item.Other;
 namespace Goguma.Game.Object.Inventory.Item.Items
 {
   [Serializable]
-  public class Item_Diamond : OtherItem
+  public class ItemDiamond : OtherItem
   {
-    public override ItemList Material => ItemList.DIAMOND;
+    public override ItemList Material => ItemList.Diamond;
 
-    public static readonly IItem Instance = new Item_Diamond();
+    public static readonly IItem Instance = new ItemDiamond();
 
     public override CTexts Name => CTexts.Make($"{{다이아몬드,{Colors.txtInfo}}}");
 
@@ -25,6 +25,6 @@ namespace Goguma.Game.Object.Inventory.Item.Items
     public override bool IsPurchasable => true;
 
 
-    public Item_Diamond() : base() { }
+    public ItemDiamond() : base() { }
   }
 }

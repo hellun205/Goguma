@@ -8,12 +8,12 @@ namespace Goguma.Game.Object.Npc.NpcTrader
 {
   public class NTraderDefault : NTrader
   {
-    public static Npc Instance = new NTraderDefault();
+    public static Npc instance = new NTraderDefault();
     public override List<IItem> ItemsForSale => new() { };
 
     public override string Name => "상인 A";
 
-    public override NpcList Material => NpcList.TRADER_DEFAULT;
+    public override NpcList Material => NpcList.TraderDefault;
 
     public override DNpcSay[] MeetDialog => new[] { new DNpcSay(this, "{어서오시오}") };
 

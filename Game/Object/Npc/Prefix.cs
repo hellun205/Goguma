@@ -44,11 +44,11 @@ namespace Goguma.Game.Object.Npc
     {
       get
       {
-        var resCT = new CTexts();
+        var resCt = new CTexts();
         for (var i = 0; i < Items.Count; i++)
-          resCT.Append(this[i]).Append("{ }");
+          resCt.Append(this[i]).Append("{ }");
 
-        return resCT;
+        return resCt;
       }
     }
   }

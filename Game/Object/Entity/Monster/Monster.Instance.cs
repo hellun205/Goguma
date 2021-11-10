@@ -4,9 +4,9 @@ namespace Goguma.Game.Object.Entity.Monster
 {
   public static partial class Monster
   {
-    static public readonly Mob M_TestMonster = new Mob_TestMonster();
-    static public readonly Mob M_Slime = new Mob_Slime();
-    static public readonly Mob M_Goblin = new Mob_Goblin();
-    static public readonly Mob M_GoldGoblin = new Mob_GoldGoblin();
+    static public readonly Mob MTestMonster = new MobTestMonster();
+    static public readonly Mob MSlime = new MobSlime();
+    static public readonly Mob MGoblin = new MobGoblin();
+    static public readonly Mob MGoldGoblin = new MobGoldGoblin();
   }
 }

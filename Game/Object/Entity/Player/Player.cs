@@ -21,7 +21,7 @@ namespace Goguma.Game.Object.Entity.Player
   [Serializable]
   public class Player : Entity
   {
-    public override EntityType Type => EntityType.PLAYER;
+    public override EntityType Type => EntityType.Player;
 
     public Inventory.Inventory Inventory { get; set; }
 
@@ -41,14 +41,14 @@ namespace Goguma.Game.Object.Entity.Player
 
     public double Ep
     {
-      get => Math.Round(ep, 2);
-      set => ep = Math.Min(value, MaxEp);
+      get => Math.Round(_ep, 2);
+      set => _ep = Math.Min(value, MaxEp);
     }
 
     public double MaxEp
     {
-      get => Math.Round(maxEp + GetEquipEffect.MaxEp + BuffsIncrease.MaxEp, 2);
-      set => maxEp = Math.Max(0, value);
+      get => Math.Round(_maxEp + GetEquipEffect.MaxEp + BuffsIncrease.MaxEp, 2);
+      set => _maxEp = Math.Max(0, value);
     }
 
     public override double MaxHp
@@ -107,11 +107,11 @@ namespace Goguma.Game.Object.Entity.Player
 
     public double Exp
     {
-      get => exp;
+      get => _exp;
       set
       {
         if (MaxExp > value)
-          exp = value;
+          _exp = value;
         else if (MaxExp <= value)
         {
           Level += 1; // Level Up
@@ -132,9 +132,9 @@ namespace Goguma.Game.Object.Entity.Player
 
     private EquipEffect GetEquipEffect => Inventory.Items.wearing.GetEquipEffect;
     private WeaponEffect GetWeaponEffect => Inventory.Items.wearing.GetWeaponEffect;
-    private double ep;
-    private double exp;
-    private double maxEp;
+    private double _ep;
+    private double _exp;
+    private double _maxEp;
 
     public Player() : base()
     {
@@ -156,7 +156,7 @@ namespace Goguma.Game.Object.Entity.Player
       MagicDamage = 0;
       MagicDefense = 0;
       MagicPenetration = 0;
-      Gender = Gender.MALE;
+      Gender = Gender.Male;
       PartyNpcs = new();
     }
 
@@ -259,7 +259,7 @@ namespace Goguma.Game.Object.Entity.Player
       }
 
       var killEntityQuests = (from qst in Quest.Quests
-                              where qst.Type == QuestType.KILL_ENTITY
+                              where qst.Type == QuestType.KillEntity
                               select qst).Cast<QKillEntity>().ToList();
 
       foreach (var qst in killEntityQuests)
@@ -320,7 +320,7 @@ namespace Goguma.Game.Object.Entity.Player
     public void MeetNpc(NpcList npc)
     {
       var quests = (from quest in Quest.Quests
-                    where quest.Type == QuestType.MEET_NPC
+                    where quest.Type == QuestType.MeetNpc
                     select quest).Cast<QMeetNpc>().ToList();
       foreach (var qst in quests)
       {

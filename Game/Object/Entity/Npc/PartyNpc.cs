@@ -8,7 +8,7 @@ namespace Goguma.Game.Object.Entity.Npc
   [Serializable]
   public class PartyNpc : Entity
   {
-    public override EntityType Type => EntityType.NPC;
+    public override EntityType Type => EntityType.Npc;
 
     public bool AddPartyMember()
     {

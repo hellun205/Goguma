@@ -22,20 +22,20 @@ namespace Goguma.Game.Object.Battle
       static public Entity.Player.Player player = InGame.player;
       static public SelectScene Meet(IMonster monster)
       {
-        Func<CTexts> GetQText = () =>
+        Func<CTexts> getQText = () =>
         {
           return CTexts.Make($"{{「{monster.Name} [Lv. {monster.Level}]」,{ColorByLevel(player.Level, monster.Level)}}} {{(을)를 만났다! 무엇을 하시겠습니까?}}");
         };
-        Func<SelectSceneItems> GetSSI = () =>
+        Func<SelectSceneItems> getSsi = () =>
         {
-          var resultSSI = new SelectSceneItems();
-          resultSSI.Add($"{{싸우기, {Colors.txtSuccess}}}");
-          resultSSI.Add($"{{플레이어 정보 보기}}");
-          resultSSI.Add($"{{몬스터 정보 보기}}");
-          resultSSI.Add($"{{도망 가기, {Colors.txtDanger}}}");
-          return resultSSI;
+          var resultSsi = new SelectSceneItems();
+          resultSsi.Add($"{{싸우기, {Colors.txtSuccess}}}");
+          resultSsi.Add($"{{플레이어 정보 보기}}");
+          resultSsi.Add($"{{몬스터 정보 보기}}");
+          resultSsi.Add($"{{도망 가기, {Colors.txtDanger}}}");
+          return resultSsi;
         };
-        return new SelectScene(GetQText(), GetSSI());
+        return new SelectScene(getQText(), getSsi());
       }
 
       static private void SkillText(IEntity caster, ISkill skill)
@@ -60,7 +60,7 @@ namespace Goguma.Game.Object.Battle
       }
       static private CTexts CasterText(IEntity caster)
       {
-        return caster.Type == EntityType.PLAYER ? CTexts.Make($"{{당신,{Colors.txtInfo}}}") : MonsterText((IMonster)caster);
+        return caster.Type == EntityType.Player ? CTexts.Make($"{{당신,{Colors.txtInfo}}}") : MonsterText((IMonster)caster);
       }
 
       static private CTexts ItemText(IItem item)
@@ -72,7 +72,7 @@ namespace Goguma.Game.Object.Battle
       {
 
         var ct = CTexts.Make($"{{\n  }}").Combine(CasterText(caster)).Combine("{(이)가 }").Combine(SkillText(skill)).Combine($"{{(을)를 사용했습니다.}}");
-        if (caster.Type == EntityType.PLAYER)
+        if (caster.Type == EntityType.Player)
           PrintCText(ct.Combine($"{{\n    남은 에너지: }}").Combine(((Player)caster).GetEpBar()).Combine($"{{\n    사용한 에너지: }}{{{skill.UseEp}\n, {Colors.txtWarning}}}"));
         else PrintCText(ct);
 
@@ -84,7 +84,7 @@ namespace Goguma.Game.Object.Battle
       {
 
 
-        Func<CTexts> GetText = () =>
+        Func<CTexts> getText = () =>
         {
           var dText = new CTexts();
           if (target.IsDead)
@@ -96,104 +96,104 @@ namespace Goguma.Game.Object.Battle
         };
 
         UseSkillText(caster, skill);
-        PrintCText(GetText());
+        PrintCText(getText());
         Pause();
       }
 
       static public void BuffSkill(IEntity caster, IBuffSkill skill)
       {
-        Func<CTexts> GetBfEftTxt = () =>
+        Func<CTexts> getBfEftTxt = () =>
         {
-          var resCT = new CTexts();
+          var resCt = new CTexts();
 
-          Func<string, bool, CTexts> GetText = (string str, bool isHeal) =>
+          Func<string, bool, CTexts> getText = (string str, bool isHeal) =>
             {
-              var firstCT = CTexts.Make("{\n  }").Combine(CasterText(caster)).Combine("{의 }");
-              var lastCT = isHeal ? CTexts.Make("{만큼 회복했습니다.}") : CTexts.Make("{만큼 증가했습니다.}");
-              return firstCT.Combine(CTexts.Make(str)).Combine(lastCT);
+              var firstCt = CTexts.Make("{\n  }").Combine(CasterText(caster)).Combine("{의 }");
+              var lastCt = isHeal ? CTexts.Make("{만큼 회복했습니다.}") : CTexts.Make("{만큼 증가했습니다.}");
+              return firstCt.Combine(CTexts.Make(str)).Combine(lastCt);
             };
           bool isBuff = false;
-          resCT.Add("\n");
+          resCt.Add("\n");
 
           if (skill.Effect.Hp != 0)
           {
             isBuff = true;
-            resCT.Append(GetText($"{{체력을 }}{{{skill.Effect.Hp},{Colors.txtInfo}}}", true));
+            resCt.Append(getText($"{{체력을 }}{{{skill.Effect.Hp},{Colors.txtInfo}}}", true));
           }
 
-          if (skill.Effect.Ep != 0 && caster.Type == EntityType.PLAYER)
+          if (skill.Effect.Ep != 0 && caster.Type == EntityType.Player)
           {
             isBuff = true;
-            resCT.Append(GetText($"{{에너지를 }}{{{skill.Effect.Ep},{Colors.txtInfo}}}", true));
+            resCt.Append(getText($"{{에너지를 }}{{{skill.Effect.Ep},{Colors.txtInfo}}}", true));
           }
 
           if (skill.Effect.MaxHp != 0)
           {
             isBuff = true;
-            resCT.Append(GetText($"{{최대 체력이 }}{{{skill.Effect.MaxHp},{Colors.txtWarning}}}", false));
+            resCt.Append(getText($"{{최대 체력이 }}{{{skill.Effect.MaxHp},{Colors.txtWarning}}}", false));
           }
 
-          if (skill.Effect.MaxEp != 0 && caster.Type == EntityType.PLAYER)
+          if (skill.Effect.MaxEp != 0 && caster.Type == EntityType.Player)
           {
             isBuff = true;
-            resCT.Append(GetText($"{{최대 에너지가 }}{{{skill.Effect.MaxEp},{Colors.txtWarning}}}", false));
+            resCt.Append(getText($"{{최대 에너지가 }}{{{skill.Effect.MaxEp},{Colors.txtWarning}}}", false));
           }
 
           if (skill.Effect.PhysicalDamage != 0)
           {
             isBuff = true;
-            resCT.Append(GetText($"{{물리 공격력이 }}{{{skill.Effect.PhysicalDamage},{Colors.txtDanger}}}", false));
+            resCt.Append(getText($"{{물리 공격력이 }}{{{skill.Effect.PhysicalDamage},{Colors.txtDanger}}}", false));
           }
 
           if (skill.Effect.MagicDamage != 0)
           {
             isBuff = true;
-            resCT.Append(GetText($"{{마법 공격력이 }}{{{skill.Effect.MagicDamage},{Colors.txtInfo}}}", false));
+            resCt.Append(getText($"{{마법 공격력이 }}{{{skill.Effect.MagicDamage},{Colors.txtInfo}}}", false));
           }
 
           if (skill.Effect.PhysicalPenetration != 0)
           {
             isBuff = true;
-            resCT.Append(GetText($"{{물리 관통력이 }}{{{skill.Effect.PhysicalPenetration} %,{Colors.txtDanger}}}", false));
+            resCt.Append(getText($"{{물리 관통력이 }}{{{skill.Effect.PhysicalPenetration} %,{Colors.txtDanger}}}", false));
           }
 
           if (skill.Effect.MagicPenetration != 0)
           {
             isBuff = true;
-            resCT.Append(GetText($"{{마법 관통력이 }}{{{skill.Effect.MagicPenetration} %,{Colors.txtInfo}}}", false));
+            resCt.Append(getText($"{{마법 관통력이 }}{{{skill.Effect.MagicPenetration} %,{Colors.txtInfo}}}", false));
           }
 
           if (skill.Effect.PhysicalDefense != 0)
           {
             isBuff = true;
-            resCT.Append(GetText($"{{물리 방어력이 }}{{{skill.Effect.PhysicalDefense} %,{Colors.txtDanger}}}", false));
+            resCt.Append(getText($"{{물리 방어력이 }}{{{skill.Effect.PhysicalDefense} %,{Colors.txtDanger}}}", false));
           }
 
           if (skill.Effect.MagicDefense != 0)
           {
             isBuff = true;
-            resCT.Append(GetText($"{{마법 방어력이 }}{{{skill.Effect.MagicDefense} %,{Colors.txtInfo}}}", false));
+            resCt.Append(getText($"{{마법 방어력이 }}{{{skill.Effect.MagicDefense} %,{Colors.txtInfo}}}", false));
           }
 
           if (skill.Effect.CriticalDamage != 0)
           {
             isBuff = true;
-            resCT.Append(GetText($"{{치명타 데미지가 }}{{{skill.Effect.CriticalDamage} %,{Colors.txtWarning}}}", false));
+            resCt.Append(getText($"{{치명타 데미지가 }}{{{skill.Effect.CriticalDamage} %,{Colors.txtWarning}}}", false));
           }
 
           if (skill.Effect.CriticalPercent != 0)
           {
             isBuff = true;
-            resCT.Append(GetText($"{{치명타 확률이 }}{{{skill.Effect.CriticalPercent} %,{Colors.txtWarning}}}", false));
+            resCt.Append(getText($"{{치명타 확률이 }}{{{skill.Effect.CriticalPercent} %,{Colors.txtWarning}}}", false));
           }
 
           if (!isBuff)
-            resCT.Append(CTexts.Make("{아무런 효과가 없었습니다.}"));
-          resCT.Append(CTexts.Make("{\n}"));
-          return resCT;
+            resCt.Append(CTexts.Make("{아무런 효과가 없었습니다.}"));
+          resCt.Append(CTexts.Make("{\n}"));
+          return resCt;
         };
         UseSkillText(caster, skill);
-        PrintCText(GetBfEftTxt());
+        PrintCText(getBfEftTxt());
         Pause();
         // PrintBuffEffect();
         // Pause();
@@ -214,7 +214,7 @@ namespace Goguma.Game.Object.Battle
       {
 
 
-        Func<CTexts> GetText = () =>
+        Func<CTexts> getText = () =>
         {
           var dText = new CTexts();
           if (target.IsDead)
@@ -224,7 +224,7 @@ namespace Goguma.Game.Object.Battle
 
           return CasterText(caster).Combine($"{{(이)가 }}").Combine(CasterText(target)).Combine($"{{(을)를 공격해서 }}{{{Math.Round(damage, 2)},{Colors.txtDanger}}}").Combine(dText);
         };
-        PrintCText(GetText());
+        PrintCText(getText());
         Pause();
       }
 
@@ -236,7 +236,7 @@ namespace Goguma.Game.Object.Battle
         }
         static public SelectScene Main(IMonster monster, bool first = false)
         {
-          Func<bool, CTexts> GetQText = (bool first) =>
+          Func<bool, CTexts> getQText = (bool first) =>
            {
              string txt;
              if (first)
@@ -245,37 +245,37 @@ namespace Goguma.Game.Object.Battle
                txt = "{(이)랑 싸우고 있다. 무엇을 하시겠습니까?\n    }";
              return MonsterText(monster).Combine($"{txt}").Combine(MonsterText(monster)).Combine("{의 체력: }").Combine(monster.GetHpBar()).Combine("\n");
            };
-          Func<SelectSceneItems> GetSSI = () =>
+          Func<SelectSceneItems> getSsi = () =>
             {
-              var resultSSI = new SelectSceneItems();
-              resultSSI.Add($"{{공격 하기, {Colors.txtSuccess}}}");
-              resultSSI.Add($"{{스킬 사용, {Colors.txtSuccess}}}");
-              resultSSI.Add($"{{인벤토리 열기}}");
-              resultSSI.Add($"{{플레이어 정보 보기}}");
-              resultSSI.Add($"{{몬스터 정보 보기}}");
-              resultSSI.Add($"{{도망 가기, {Colors.txtDanger}}}");
-              return resultSSI;
+              var resultSsi = new SelectSceneItems();
+              resultSsi.Add($"{{공격 하기, {Colors.txtSuccess}}}");
+              resultSsi.Add($"{{스킬 사용, {Colors.txtSuccess}}}");
+              resultSsi.Add($"{{인벤토리 열기}}");
+              resultSsi.Add($"{{플레이어 정보 보기}}");
+              resultSsi.Add($"{{몬스터 정보 보기}}");
+              resultSsi.Add($"{{도망 가기, {Colors.txtDanger}}}");
+              return resultSsi;
             };
 
-          return new SelectScene(GetQText(first), GetSSI());
+          return new SelectScene(getQText(first), getSsi());
         }
         static public SelectScene Attack()
         {
-          Func<CTexts> GetQText = () =>
+          Func<CTexts> getQText = () =>
           {
             return CTexts.Make($"{{어떻게 공격하시겠습니까?}}");
           };
-          Func<SelectSceneItems> GetSSI = () =>
+          Func<SelectSceneItems> getSsi = () =>
           {
-            var resultSSI = new SelectSceneItems();
-            resultSSI.Add($"{{일반 공격,{Colors.txtSuccess}}}");
-            resultSSI.Add($"{{스킬 공격,{Colors.txtSuccess}}}");
-            return resultSSI;
+            var resultSsi = new SelectSceneItems();
+            resultSsi.Add($"{{일반 공격,{Colors.txtSuccess}}}");
+            resultSsi.Add($"{{스킬 공격,{Colors.txtSuccess}}}");
+            return resultSsi;
           };
-          return new SelectScene(GetQText(), GetSSI(), true);
+          return new SelectScene(getQText(), getSsi(), true);
         }
 
-        static public void LackOfEP(ISkill skill)
+        static public void LackOfEp(ISkill skill)
         {
           PrintCText(CTexts.Make($"{{\n  에너지가 부족하여 }}").Combine(SkillText(skill)).Combine($"{{(을)를 사용 할 수 없습니다.\n    남은 에너지: }}").Combine(player.GetEpBar()).Combine($"{{\n    필요한 에너지: }}{{{skill.UseEp}\n, {Colors.txtWarning}}}"));
           Pause();
@@ -300,19 +300,19 @@ namespace Goguma.Game.Object.Battle
 
         static public SelectScene SelSkillType(out SkillType skType)
         {
-          Func<CTexts> GetQText = () =>
+          Func<CTexts> getQText = () =>
           {
             return CTexts.Make($"{{무슨 스킬을 사용하시겠습니까?}}");
           };
-          Func<SelectSceneItems> GetSSI = () =>
+          Func<SelectSceneItems> getSsi = () =>
           {
-            var resultSSI = new SelectSceneItems();
+            var resultSsi = new SelectSceneItems();
             for (var i = 0; i < Enum.GetValues(typeof(SkillType)).Length; i++)
-              resultSSI.Add($"{{{Skill.Skill.GetTypeString((SkillType)i)} 스킬}}");
-            return resultSSI;
+              resultSsi.Add($"{{{Skill.Skill.GetTypeString((SkillType)i)} 스킬}}");
+            return resultSsi;
           };
           skType = (SkillType)0;
-          var skillTypeSc = new SelectScene(GetQText(), GetSSI(), true);
+          var skillTypeSc = new SelectScene(getQText(), getSsi(), true);
           if (skillTypeSc.isCancelled) return null;
           skType = (SkillType)(skillTypeSc.getIndex);
           var skills = from sk in player.Skills
@@ -323,38 +323,38 @@ namespace Goguma.Game.Object.Battle
         }
         static public SelectScene SelSkill(SkillType sType)
         {
-          Func<SkillType, CTexts> GetQText = (SkillType sType) =>
+          Func<SkillType, CTexts> getQText = (SkillType sType) =>
            {
              return CTexts.Make($"{{무슨 스킬을 사용하시겠습니까? }} {{[ {Skill.Skill.GetTypeString(sType)} 스킬 ],{Colors.txtWarning}}}");
            };
-          Func<SkillType, SelectSceneItems> GetSSI = (SkillType sType) =>
+          Func<SkillType, SelectSceneItems> getSsi = (SkillType sType) =>
           {
-            var resultSSI = new SelectSceneItems();
+            var resultSsi = new SelectSceneItems();
             var skill = from sk in player.Skills
                         where sk.Type == sType
                         select sk;
             foreach (var sk in skill)
-              resultSSI.Add($"{{{sk.Name}}}");
-            return resultSSI;
+              resultSsi.Add($"{{{sk.Name}}}");
+            return resultSsi;
           };
-          var scene = new SelectScene(GetQText(sType), GetSSI(sType), true);
+          var scene = new SelectScene(getQText(sType), getSsi(sType), true);
           if (scene.isCancelled) return null;
           return scene;
         }
         static public SelectScene SkillAction(ISkill skill)
         {
-          Func<ISkill, CTexts> GetQText = (ISkill skill) =>
+          Func<ISkill, CTexts> getQText = (ISkill skill) =>
           {
             return CTexts.Make($"{{{skill.TypeString} 스킬,{Colors.txtWarning}}}{{ 「{skill.Name}」}}");
           };
-          Func<SelectSceneItems> GetSSI = () =>
+          Func<SelectSceneItems> getSsi = () =>
           {
-            var resultSSI = new SelectSceneItems();
-            resultSSI.Add($"{{사용 하기,{Colors.txtSuccess}}}");
-            resultSSI.Add($"{{정보 보기,{Colors.txtSuccess}}}");
-            return resultSSI;
+            var resultSsi = new SelectSceneItems();
+            resultSsi.Add($"{{사용 하기,{Colors.txtSuccess}}}");
+            resultSsi.Add($"{{정보 보기,{Colors.txtSuccess}}}");
+            return resultSsi;
           };
-          var scene = new SelectScene(GetQText(skill), GetSSI(), true);
+          var scene = new SelectScene(getQText(skill), getSsi(), true);
           if (scene.isCancelled) return null;
           return scene;
         }

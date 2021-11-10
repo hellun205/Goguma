@@ -11,7 +11,7 @@ namespace Goguma.Game.Object.Quest
   {
     public virtual List<NpcList> MeetNpcs => new() { CompleteNpc.Material };
     public List<NpcList> MetNpcs { get; set; }
-    public override QuestType Type => QuestType.MEET_NPC;
+    public override QuestType Type => QuestType.MeetNpc;
 
     protected QMeetNpc() : base()
     {
@@ -43,14 +43,14 @@ namespace Goguma.Game.Object.Quest
 
     protected override CTexts InfoDetails()
     {
-      var resCT = new CTexts();
+      var resCt = new CTexts();
       foreach (var np in MeetNpcs)
       {
         var npc = Npcs.Get(np);
-        resCT.Append(npc.DisplayName).Append($"{{(을)를 만나기 }}{{{(MetNpcs.Contains(np) ? $"( 완료 ), {Colors.txtSuccess}" : "( 진행 중 )")}}}{{\n}}");
+        resCt.Append(npc.DisplayName).Append($"{{(을)를 만나기 }}{{{(MetNpcs.Contains(np) ? $"( 완료 ), {Colors.txtSuccess}" : "( 진행 중 )")}}}{{\n}}");
       }
 
-      return resCT;
+      return resCt;
     }
   }
 }

@@ -32,24 +32,24 @@ namespace Goguma.Game.Console
 
     static public CTexts NumberColor(double number, string unit = "", string minusColor = Colors.txtDanger, string plusColor = Colors.txtInfo, string zeroColor = Colors.txtMuted)
     {
-      CTexts resultCT = new CTexts();
+      CTexts resultCt = new CTexts();
       var resultColor = Colors.txtDefault;
-      resultCT.Texts.Add(new CText((/*(int)*/number).ToString()));
+      resultCt.texts.Add(new CText((/*(int)*/number).ToString()));
 
       if (number > 0)
       {
         resultColor = plusColor;
-        resultCT.Texts[0].Text = resultCT.Texts[0].Text.Insert(0, "+");
+        resultCt.texts[0].Text = resultCt.texts[0].Text.Insert(0, "+");
       }
       else if (number == 0)
         resultColor = zeroColor;
       else if (number < 0)
         resultColor = minusColor;
 
-      resultCT.Texts[0].Color = resultColor;
-      if (unit != "") resultCT.Add($" {unit}", resultColor);
+      resultCt.texts[0].Color = resultColor;
+      if (unit != "") resultCt.Add($" {unit}", resultColor);
 
-      return resultCT;
+      return resultCt;
     }
 
     static public string GetSep(int length, string txt = "")
@@ -154,18 +154,18 @@ namespace Goguma.Game.Console
 
     static public CTexts GetPerStr(double inte, double maxinte, string filledColor = Colors.txtDefault, string emptiedColor = Colors.txtMuted, string chr = "|")
     {
-      var resCT = new CTexts();
+      var resCt = new CTexts();
       var perc = (int)(inte / maxinte * 10);
-      var fillSB = new StringBuilder();
-      var emptySB = new StringBuilder();
+      var fillSb = new StringBuilder();
+      var emptySb = new StringBuilder();
       for (var i = 0; i < perc; i++)
-        fillSB.Append(chr);
+        fillSb.Append(chr);
       for (var i = 0; i < 10 - perc; i++)
-        emptySB.Append(chr);
+        emptySb.Append(chr);
 
-      resCT.Add(fillSB.ToString(), filledColor);
-      resCT.Add(emptySB.ToString(), emptiedColor);
-      return resCT;
+      resCt.Add(fillSb.ToString(), filledColor);
+      resCt.Add(emptySb.ToString(), emptiedColor);
+      return resCt;
     }
   }
 }

@@ -8,14 +8,14 @@ namespace Goguma.Game.Object.Npc.NpcTrader
 {
   public class NTraderK : NTrader
   {
-    public static Npc Instance = new NTraderK();
+    public static Npc instance = new NTraderK();
     public override List<IItem> ItemsForSale => new() { };
 
     public override string Name => "K";
 
     public override string NameColor => Colors.txtInfo;
 
-    public override NpcList Material => NpcList.TRADER_K;
+    public override NpcList Material => NpcList.TraderK;
 
     public override DNpcSay[] MeetDialog => new[] { new DNpcSay(this, "{어서 옵쇼~}") };
 
@@ -23,10 +23,10 @@ namespace Goguma.Game.Object.Npc.NpcTrader
 
     public override List<QuestList> Quests => new()
     {
-      QuestList.TEST_QUEST,
-      QuestList.TEST_QUEST2,
-      QuestList.TEST_QUEST3,
-      QuestList.TEST_QUEST4
+      QuestList.TestQuest,
+      QuestList.TestQuest2,
+      QuestList.TestQuest3,
+      QuestList.TestQuest4
     };
 
     public override DNpcSay[] OpenShopDialog => new[] { new DNpcSay(this, "{물건 많이 있수다!}") };

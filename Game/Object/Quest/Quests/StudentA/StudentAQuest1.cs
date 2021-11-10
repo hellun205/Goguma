@@ -14,7 +14,7 @@ namespace Goguma.Game.Object.Quest.Quests
 
     public override string Name => "배고픈 아이";
 
-    public override Npc.Npc ReceiveNpc => Npcs.Get(NpcList.TRADER_K);
+    public override Npc.Npc ReceiveNpc => Npcs.Get(NpcList.TraderK);
 
     public override List<IDialog> Dialogs => new()
     {
@@ -28,13 +28,13 @@ namespace Goguma.Game.Object.Quest.Quests
       new DNpcSay(ReceiveNpc, "{(꿀꺽꿀꺽) 흐아.. 감사해요..}", "그래.. 뭐..")
     };
 
-    public override QuestList Material => QuestList.TEST_QUEST;
+    public override QuestList Material => QuestList.TestQuest;
 
     public override DNpcAsk AskDialog => new DNpcAsk(ReceiveNpc, "{저... 사과가 너무 먹고싶어요..}");
 
     public override DNpcSay CancelledDialog => new DNpcSay(ReceiveNpc, "{(꼬르륵...))}", "(...)");
 
-    public override DNpcSay AcceptDialog => new DNpcSay(ReceiveNpc, $"{{오..! {(InGame.player.Gender == Entity.Player.Gender.MALE ? "형" : "누나")} 감사해요... 저.. 그럼.. }}{{사과 10개,{Colors.txtInfo}}}{{만 가져와주세요..}}", "그래");
+    public override DNpcSay AcceptDialog => new DNpcSay(ReceiveNpc, $"{{오..! {(InGame.player.Gender == Entity.Player.Gender.Male ? "형" : "누나")} 감사해요... 저.. 그럼.. }}{{사과 10개,{Colors.txtInfo}}}{{만 가져와주세요..}}", "그래");
 
     public override DNpcSay DeclineDialog => CancelledDialog;
 
@@ -48,7 +48,7 @@ namespace Goguma.Game.Object.Quest.Quests
 
     public override List<ItemPair> ItemsToBring => new()
     {
-      new ItemPair(ItemList.APPLE, 10)
+      new ItemPair(ItemList.Apple, 10)
     };
 
     public StudentAQuest1() : base() { }

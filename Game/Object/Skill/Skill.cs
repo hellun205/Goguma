@@ -29,10 +29,10 @@ namespace Goguma.Game.Object.Skill
       }
     }
 
-    public void Information(bool IsPause)
+    public void Information(bool isPause)
     {
       PrintCText(Info());
-      if (IsPause) Pause();
+      if (isPause) Pause();
     }
 
     public override string ToString()

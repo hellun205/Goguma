@@ -11,7 +11,7 @@ namespace Goguma.Game.Object.Quest.Quests
   {
     public static readonly IQuest Instance = new QstTestQuest3();
     public override string Name => "K의 테스트 퀘스트3";
-    public override Npc.Npc ReceiveNpc => Npcs.Get(NpcList.TRADER_K);
+    public override Npc.Npc ReceiveNpc => Npcs.Get(NpcList.TraderK);
 
     public override List<IDialog> Dialogs => new()
     {
@@ -23,7 +23,7 @@ namespace Goguma.Game.Object.Quest.Quests
       new DNpcSay(ReceiveNpc, "{그래 좋아.}", ".. ?")
     };
 
-    public override QuestList Material => QuestList.TEST_QUEST3;
+    public override QuestList Material => QuestList.TestQuest3;
 
     public override DNpcAsk AskDialog => new DNpcAsk(ReceiveNpc, "{나한테좀 찾아와 줄래?}");
     public override DNpcSay CancelledDialog => new DNpcSay(ReceiveNpc, "{알겠네.}", "...");
@@ -34,7 +34,7 @@ namespace Goguma.Game.Object.Quest.Quests
       MinLv = 0,
       CompletedQuests = new()
       {
-        QuestList.TEST_QUEST2
+        QuestList.TestQuest2
       }
     };
     
@@ -43,7 +43,7 @@ namespace Goguma.Game.Object.Quest.Quests
 
     public override List<ItemPair> GivingItems => new()
     {
-      new(ItemList.POTION_1, 25)
+      new(ItemList.Potion1, 25)
     };
 
     public QstTestQuest3() : base() { }

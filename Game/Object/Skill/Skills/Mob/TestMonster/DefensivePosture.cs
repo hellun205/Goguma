@@ -17,7 +17,7 @@ namespace Goguma.Game.Object.Skill.Skills.Mob.TestMonster
     {
       PhysicalDamage = -5,
       PhysicalDefense = 50,
-      turn = 5
+      Turn = 5
     };
   }
 }

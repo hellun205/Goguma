@@ -7,6 +7,6 @@ namespace Goguma.Game.Object.Quest.Dialog
     DialogType Type { get; }
     string Show(string playerAns = "");
 
-    bool isCancelled { get; set; }
+    bool IsCancelled { get; set; }
   }
 }

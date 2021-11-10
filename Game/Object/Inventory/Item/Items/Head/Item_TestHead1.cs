@@ -5,11 +5,11 @@ using Goguma.Game.Object.Inventory.Item.Equipment;
 namespace Goguma.Game.Object.Inventory.Item.Items
 {
   [Serializable]
-  public class Item_TestHead1 : EHead
+  public class ItemTestHead1 : EHead
   {
-    public override ItemList Material => ItemList.TEST_ITEM2;
+    public override ItemList Material => ItemList.TestItem2;
 
-    public static readonly IItem Instance = new Item_TestHead1();
+    public static readonly IItem Instance = new ItemTestHead1();
 
     public override CTexts Name => CTexts.Make("{테스트 모자 A}");
 
@@ -21,6 +21,6 @@ namespace Goguma.Game.Object.Inventory.Item.Items
       DefPer = 0.2
     };
 
-    public Item_TestHead1() : base() { }
+    public ItemTestHead1() : base() { }
   }
 }

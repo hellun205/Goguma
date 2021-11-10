@@ -8,13 +8,13 @@ namespace Goguma.Game.Object.Entity.Monster
     {
       switch (monster)
       {
-        case MonsterList.TEST_MONSTER: return M_TestMonster;
+        case MonsterList.TestMonster: return MTestMonster;
 
-        case MonsterList.SLIME: return M_Slime;
+        case MonsterList.Slime: return MSlime;
 
-        case MonsterList.GOBLIN: return M_Goblin;
+        case MonsterList.Goblin: return MGoblin;
 
-        case MonsterList.GOLD_GOBLIN: return M_GoldGoblin;
+        case MonsterList.GoldGoblin: return MGoldGoblin;
 
         default: return null;
       }
@@ -24,13 +24,13 @@ namespace Goguma.Game.Object.Entity.Monster
     {
       switch (monster)
       {
-        case MonsterList.TEST_MONSTER: return new Mob_TestMonster();
+        case MonsterList.TestMonster: return new MobTestMonster();
 
-        case MonsterList.SLIME: return new Mob_Slime();
+        case MonsterList.Slime: return new MobSlime();
 
-        case MonsterList.GOBLIN: return new Mob_Goblin();
+        case MonsterList.Goblin: return new MobGoblin();
 
-        case MonsterList.GOLD_GOBLIN: return new Mob_GoldGoblin();
+        case MonsterList.GoldGoblin: return new MobGoldGoblin();
 
         default: return null;
       }

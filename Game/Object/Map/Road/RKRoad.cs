@@ -4,7 +4,7 @@ using Goguma.Game.Object.Entity.Monster;
 
 namespace Goguma.Game.Object.Map.Road
 {
-  public class RKRoad : Road
+  public class RkRoad : Road
   {
     public override string Name
     {
@@ -16,19 +16,19 @@ namespace Goguma.Game.Object.Map.Road
       get => "K-로드";
     }
 
-    internal RKRoad()
+    internal RkRoad()
     {
       SummonMonsters = new List<Road.RoadMonster>()
       {
-        new RoadMonster(MonsterList.SLIME, 100),
-        new RoadMonster(MonsterList.GOBLIN, 100),
-        new RoadMonster(MonsterList.GOLD_GOBLIN, 10)
+        new RoadMonster(MonsterList.Slime, 100),
+        new RoadMonster(MonsterList.Goblin, 100),
+        new RoadMonster(MonsterList.GoldGoblin, 10)
       };
 
       Adjacents = new List<MapList>()
       {
-        MapList.KKS_TOWN,
-        MapList.HELLUN_TOWN
+        MapList.KksTown,
+        MapList.HellunTown
       };
     }
   }

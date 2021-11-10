@@ -6,11 +6,11 @@ using Goguma.Game.Object.Inventory.Item.Other;
 namespace Goguma.Game.Object.Inventory.Item.Items
 {
   [Serializable]
-  public class Item_Emerald : OtherItem
+  public class ItemEmerald : OtherItem
   {
-    public override ItemList Material => ItemList.EMERALD;
+    public override ItemList Material => ItemList.Emerald;
 
-    public static readonly IItem Instance = new Item_Emerald();
+    public static readonly IItem Instance = new ItemEmerald();
 
     public override CTexts Name => CTexts.Make($"{{에메랄드,{Colors.txtInfo}}}");
 
@@ -25,6 +25,6 @@ namespace Goguma.Game.Object.Inventory.Item.Items
     public override bool IsPurchasable => true;
 
 
-    public Item_Emerald() : base() { }
+    public ItemEmerald() : base() { }
   }
 }

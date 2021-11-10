@@ -3,10 +3,10 @@ namespace Goguma.Game.Object.Quest
 {
   public enum QuestList
   {
-    TEST_QUEST,
-    TEST_QUEST2,
-    TEST_QUEST3,
-    TEST_QUEST4,
-    STUDENT_A_QUEST1
+    TestQuest,
+    TestQuest2,
+    TestQuest3,
+    TestQuest4,
+    StudentAQuest1
   }
 }

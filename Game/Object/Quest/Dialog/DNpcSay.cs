@@ -8,7 +8,7 @@ namespace Goguma.Game.Object.Quest.Dialog
   public class DNpcSay : Dialog
   {
     public string PlayerSay { get; set; }
-    public override DialogType Type => DialogType.NPC_SAY;
+    public override DialogType Type => DialogType.NpcSay;
 
     public DNpcSay(Npc.Npc npc, CTexts text, string playerText = "다음") : base(npc, text)
     {
@@ -23,7 +23,7 @@ namespace Goguma.Game.Object.Quest.Dialog
 
       PrintCText($"{{\nESC. 대화 종료,{Colors.txtMuted}}}");
       var key = System.Console.ReadKey(true);
-      if (key.Key == ConsoleKey.Escape) isCancelled = true;
+      if (key.Key == ConsoleKey.Escape) IsCancelled = true;
       PrintText("\n");
       return PlayerSay;
     }

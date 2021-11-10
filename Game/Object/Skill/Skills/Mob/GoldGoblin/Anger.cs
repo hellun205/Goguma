@@ -19,7 +19,7 @@ namespace Goguma.Game.Object.Skill.Skills.Mob.GoldGoblin
       PhysicalDefense = -16.5,
       CriticalDamage = 30,
       CriticalPercent = 40,
-      turn = 10
+      Turn = 10
     };
   }
 }

@@ -2,8 +2,8 @@ namespace Goguma.Game.Object.Map.Town
 {
   public class Towns
   {
-    public static TKks kks = new TKks();
-    public static THellun hellun = new THellun();
+    public static Kks kks = new Kks();
+    public static Hellun hellun = new Hellun();
 
     // public static Town GetTownByName(string name)
     // {

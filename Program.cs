@@ -13,9 +13,9 @@ namespace Goguma
     {
       AppDomain.CurrentDomain.ProcessExit += OnProcessExit;
 
-      ConsoleFunction.colorify = new Format(Theme.Dark);
-      ConsoleFunction.colorify.ResetColor();
-      ConsoleFunction.colorify.Clear();
+      ConsoleFunction.Colorify = new Format(Theme.Dark);
+      ConsoleFunction.Colorify.ResetColor();
+      ConsoleFunction.Colorify.Clear();
 
       InGame.Go();
     }

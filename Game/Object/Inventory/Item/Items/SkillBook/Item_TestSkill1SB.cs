@@ -5,14 +5,14 @@ using Goguma.Game.Object.Skill;
 namespace Goguma.Game.Object.Inventory.Item.Items
 {
   [Serializable]
-  public class Item_TestSkill1SB : CSkillBook
+  public class ItemTestSkill1Sb : CSkillBook
   {
-    public override ItemList Material => ItemList.SKILLBOOK_TEST_SKILL1;
+    public override ItemList Material => ItemList.SkillbookTestSkill1;
 
-    public static readonly IItem Instance = new Item_TestSkill1SB();
+    public static readonly IItem Instance = new ItemTestSkill1Sb();
 
     public override SkillList SkillToReceive => SkillList.TestSkill1;
 
-    public Item_TestSkill1SB() : base() { }
+    public ItemTestSkill1Sb() : base() { }
   }
 }

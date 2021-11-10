@@ -138,16 +138,16 @@ namespace Goguma.Game.Object.Inventory
           }
           else return null;
         };
-        SelectSceneItems GetSSI(WearingType wType)
+        SelectSceneItems GetSsi(WearingType wType)
         {
-          var resultSSI = new SelectSceneItems();
+          var resultSsi = new SelectSceneItems();
 
-          resultSSI.Add("{아이템 정보 보기}");
-          resultSSI.Add("{착용 해제}");
-          resultSSI.Add("{버리기}");
-          return resultSSI;
+          resultSsi.Add("{아이템 정보 보기}");
+          resultSsi.Add("{착용 해제}");
+          resultSsi.Add("{버리기}");
+          return resultSsi;
         };
-        return new SelectScene(GetQText(inven, wType), GetSSI(wType), true);
+        return new SelectScene(GetQText(inven, wType), GetSsi(wType), true);
       }
 
       static public SelectScene ItemOption(Inventory inven, ItemPair item) // Having
@@ -159,29 +159,29 @@ namespace Goguma.Game.Object.Inventory
           .Combine(item.ItemM.DisplayName)
           .Combine($"{{ [ {item.Count}개 ], {Colors.txtInfo}}} {{\n    위치 : }}  {{{InvenItems.GetTypeString(iType)}, {Colors.txtSuccess}}} {{.}} {{{Item.Item.GetTypeString(item.ItemM.Type)},{Colors.txtSuccess}}}");
         };
-        SelectSceneItems GetSSI()
+        SelectSceneItems GetSsi()
         {
-          var resultSSI = new SelectSceneItems();
+          var resultSsi = new SelectSceneItems();
 
-          resultSSI.Items.Add(new SelectSceneItem(CTexts.Make("{아이템 정보 보기}")));
+          resultSsi.Items.Add(new SelectSceneItem(CTexts.Make("{아이템 정보 보기}")));
 
           switch (item.ItemM.Type)
           {
             case HavingType.Equipment:
-              resultSSI.Add("{착용}");
+              resultSsi.Add("{착용}");
               break;
             case HavingType.Consume:
-              resultSSI.Add("{사용}}");
+              resultSsi.Add("{사용}}");
               break;
             case HavingType.Other:
               // TO DO
               break;
           }
 
-          resultSSI.Add("{버리기}");
-          return resultSSI;
+          resultSsi.Add("{버리기}");
+          return resultSsi;
         };
-        return new SelectScene(GetQText(), GetSSI(), true);
+        return new SelectScene(GetQText(), GetSsi(), true);
       }
     }
   }

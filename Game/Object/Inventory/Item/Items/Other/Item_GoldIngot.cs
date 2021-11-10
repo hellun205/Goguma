@@ -6,11 +6,11 @@ using Goguma.Game.Object.Inventory.Item.Other;
 namespace Goguma.Game.Object.Inventory.Item.Items
 {
   [Serializable]
-  public class Item_GoldIngot : OtherItem
+  public class ItemGoldIngot : OtherItem
   {
-    public override ItemList Material => ItemList.GOLD_INGOT;
+    public override ItemList Material => ItemList.GoldIngot;
 
-    public static readonly IItem Instance = new Item_GoldIngot();
+    public static readonly IItem Instance = new ItemGoldIngot();
 
     public override CTexts Name => CTexts.Make($"{{금괴,{Colors.txtWarning}}}");
 
@@ -25,6 +25,6 @@ namespace Goguma.Game.Object.Inventory.Item.Items
     public override bool IsPurchasable => true;
 
 
-    public Item_GoldIngot() : base() { }
+    public ItemGoldIngot() : base() { }
   }
 }

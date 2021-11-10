@@ -9,50 +9,50 @@ namespace Goguma.Game.Console
   [Serializable]
   public class CTexts
   {
-    public List<CText> Texts;
+    public List<CText> texts;
     public CTexts()
     {
-      Texts = new List<CText>();
+      texts = new List<CText>();
     }
 
     public CTexts(CTexts ct) : this()
     {
-      for (var i = 0; i < ct.Texts.Count; i++)
-        Texts.Add(ct.Texts[i]);
+      for (var i = 0; i < ct.texts.Count; i++)
+        texts.Add(ct.texts[i]);
     }
 
-    public CTexts Combine(CTexts TextsB)
+    public CTexts Combine(CTexts textsB)
     {
       var resultCTexts = GetInstance();
 
-      for (var i = 0; i < TextsB.Texts.Count; i++)
-        resultCTexts.Texts.Add(TextsB.Texts[i]);
+      for (var i = 0; i < textsB.texts.Count; i++)
+        resultCTexts.texts.Add(textsB.texts[i]);
 
       return resultCTexts;
     }
 
-    public CTexts Append(CTexts TextsB)
+    public CTexts Append(CTexts textsB)
     {
-      for (var i = 0; i < TextsB.Texts.Count; i++)
-        this.Texts.Add(TextsB.Texts[i]);
+      for (var i = 0; i < textsB.texts.Count; i++)
+        this.texts.Add(textsB.texts[i]);
       return this;
     }
 
-    public CTexts Combine(string TextsB)
+    public CTexts Combine(string textsB)
     {
-      return Combine(CTexts.Make(TextsB));
+      return Combine(CTexts.Make(textsB));
     }
 
-    public CTexts Append(string TextsB)
+    public CTexts Append(string textsB)
     {
-      return Append(CTexts.Make(TextsB));
+      return Append(CTexts.Make(textsB));
     }
 
     public override string ToString()
     {
       var sb = new StringBuilder();
-      for (var i = 0; i < Texts.Count; i++)
-        sb.Append(Texts[i].Text);
+      for (var i = 0; i < texts.Count; i++)
+        sb.Append(texts[i].Text);
 
       return sb.ToString();
     }
@@ -64,25 +64,25 @@ namespace Goguma.Game.Console
 
     public void Add(string txt, string color = Colors.txtDefault)
     {
-      Texts.Add(new CText(txt, color));
+      texts.Add(new CText(txt, color));
     }
 
     public void Add(CText cT)
     {
-      Texts.Add(cT);
+      texts.Add(cT);
     }
 
     public void RemoveAt(int index)
     {
-      Texts.RemoveAt(index);
+      texts.RemoveAt(index);
     }
 
     public void Remove(CText item)
     {
-      Texts.Remove(item);
+      texts.Remove(item);
     }
 
-    public int Count => Texts.Count;
+    public int Count => texts.Count;
 
     static public CTexts Make(string cText)
     {
@@ -107,7 +107,7 @@ namespace Goguma.Game.Console
 
         try
         {
-          result.Texts.Add(new CText(splitText, splitColor));
+          result.texts.Add(new CText(splitText, splitColor));
         }
         catch (Exception ex)
         {

@@ -18,7 +18,7 @@ namespace Goguma.Game.Object.Inventory.Item.Consume
 
     public abstract SkillList SkillToReceive { get; }
 
-    public override ConsumeItemType CType => ConsumeItemType.SKILL_BOOK;
+    public override ConsumeItemType CType => ConsumeItemType.SkillBook;
 
     public CSkillBook() : base() { }
 

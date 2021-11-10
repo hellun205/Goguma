@@ -5,7 +5,7 @@ using Goguma.Game.Object.Skill.Attack;
 namespace Goguma.Game.Object.Skill.Skills.Player.Attack
 {
   [Serializable]
-  public class TestATSkill2 : APhysicalAttackSkill
+  public class TestAtSkill2 : APhysicalAttackSkill
   {
     public override string Name => "조금 강력한 테스트 공격 스킬";
 

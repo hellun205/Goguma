@@ -7,8 +7,8 @@ namespace Goguma.Game.Object.Entity.AttackSystem
   public class AttCondition
   {
     public ISkill Skill { get; private set; }
-    private Player.Player player = InGame.player;
-    private IMonster monster;
+    private Player.Player _player = InGame.player;
+    private IMonster _monster;
     public Cond cond1;
     public double cond2;
     public string cond;
@@ -18,7 +18,7 @@ namespace Goguma.Game.Object.Entity.AttackSystem
 
     public AttCondition(IMonster mob, ISkill skill, Cond c1, string c, double c2, int count = 1, int priority = 0)
     {
-      monster = mob;
+      _monster = mob;
       Skill = skill;
       cond1 = c1;
       cond = c;
@@ -38,17 +38,17 @@ namespace Goguma.Game.Object.Entity.AttackSystem
     {
       switch (cond)
       {
-        case Cond.MonsterHp: return monster.Hp;
+        case Cond.MonsterHp: return _monster.Hp;
 
-        case Cond.PlayerHp: return player.Hp;
+        case Cond.PlayerHp: return _player.Hp;
 
-        case Cond.MonsterMaxHp: return monster.MaxHp;
+        case Cond.MonsterMaxHp: return _monster.MaxHp;
 
-        case Cond.PlayerMaxHp: return player.MaxHp;
+        case Cond.PlayerMaxHp: return _player.MaxHp;
 
-        case Cond.PlayerHpPer: return player.Hp / player.MaxHp;
+        case Cond.PlayerHpPer: return _player.Hp / _player.MaxHp;
 
-        case Cond.MonsterHpPer: return monster.Hp / monster.MaxHp;
+        case Cond.MonsterHpPer: return _monster.Hp / _monster.MaxHp;
 
         default: return 0;
 

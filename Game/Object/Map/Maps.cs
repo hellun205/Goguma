@@ -17,9 +17,9 @@ namespace Goguma.Game.Object.Map
     {
       switch (map)
       {
-        case MapList.KKS_TOWN: return Towns.kks;
-        case MapList.HELLUN_TOWN: return Towns.hellun;
-        case MapList.K_ROAD: return Roads.kRoad;
+        case MapList.KksTown: return Towns.kks;
+        case MapList.HellunTown: return Towns.hellun;
+        case MapList.KRoad: return Roads.kRoad;
         default: return null;
       }
     }

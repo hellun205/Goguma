@@ -1,15 +1,15 @@
 
 using Goguma.Game.Object.Skill.Skills.Player.Attack;
-using Goguma.Game.Object.Skill.Skills.Player.Buf;
+using Goguma.Game.Object.Skill.Skills.Player.Buff;
 
 namespace Goguma.Game.Object.Skill.Skills
 {
   public static partial class PlayerSkills
   {
-    public static readonly ISkill TestATSkill1 = new TestATSkill1();
+    public static readonly ISkill TestAtSkill1 = new TestAtSkill1();
 
-    public static readonly ISkill TestATSkill2 = new TestATSkill2();
+    public static readonly ISkill TestAtSkill2 = new TestAtSkill2();
 
-    public static readonly ISkill TestBFSkill1 = new TestBFSkill1();
+    public static readonly ISkill TestBfSkill1 = new TestBfSkill1();
   }
 }

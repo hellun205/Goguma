@@ -5,11 +5,11 @@ using Goguma.Game.Object.Inventory.Item.Equipment;
 namespace Goguma.Game.Object.Inventory.Item.Items
 {
   [Serializable]
-  public class Item_TestWep1 : EWeapon
+  public class ItemTestWep1 : EWeapon
   {
-    public override ItemList Material => ItemList.TEST_ITEM1;
+    public override ItemList Material => ItemList.TestItem1;
 
-    public static readonly IItem Instance = new Item_TestWep1();
+    public static readonly IItem Instance = new ItemTestWep1();
 
     public override CTexts Name => CTexts.Make("{테스트 무기}");
 
@@ -23,6 +23,6 @@ namespace Goguma.Game.Object.Inventory.Item.Items
       PhysicalPenetration = 0.5
     };
 
-    public Item_TestWep1() : base() { }
+    public ItemTestWep1() : base() { }
   }
 }

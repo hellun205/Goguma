@@ -21,7 +21,7 @@ namespace Goguma.Game.Object.Entity.Player
     {
       public static SelectScene SelPlayerAct(Location loc, bool isAdmin = false)
       {
-        Func<Location, CTexts> GetQText = (Location loc) =>
+        Func<Location, CTexts> getQText = (Location loc) =>
         {
           var map = Maps.GetMapByName(loc.Loc);
           string colors;
@@ -34,72 +34,72 @@ namespace Goguma.Game.Object.Entity.Player
           return CTexts.Make($"{{[ {map.Name} ] , {colors}}} {{무엇을 하시겠습니까?}}");
         };
 
-        Func<bool, SelectSceneItems> GetSSI = (bool isAdmin) =>
+        Func<bool, SelectSceneItems> getSsi = (bool isAdmin) =>
         {
-          var resultSSI = new SelectSceneItems();
+          var resultSsi = new SelectSceneItems();
 
-          resultSSI.Add("{캐릭터 정보 보기}");
+          resultSsi.Add("{캐릭터 정보 보기}");
           if (InGame.player.PartyCount != 0)
           {
-            resultSSI.Add("{파티원 정보 보기}");
+            resultSsi.Add("{파티원 정보 보기}");
           }
 
-          resultSSI.Add("{인벤토리 열기}");
-          resultSSI.Add("{스킬 보기}");
-          resultSSI.Add("{스탯 보기}");
-          resultSSI.Add("{퀘스트 보기}");
-          resultSSI.Add("{이동하기}");
-          resultSSI.Add($"{{{InGame.player.Loc.Loc} 살펴보기}}");
+          resultSsi.Add("{인벤토리 열기}");
+          resultSsi.Add("{스킬 보기}");
+          resultSsi.Add("{스탯 보기}");
+          resultSsi.Add("{퀘스트 보기}");
+          resultSsi.Add("{이동하기}");
+          resultSsi.Add($"{{{InGame.player.Loc.Loc} 살펴보기}}");
 
           if (InGame.player.Loc.InTown)
           {
-            resultSSI.Add("{시설 이용하기}");
-            resultSSI.Add("{NPC와 대화하기}");
+            resultSsi.Add("{시설 이용하기}");
+            resultSsi.Add("{NPC와 대화하기}");
           }
           else
-            resultSSI.Add("{전투하기}");
+            resultSsi.Add("{전투하기}");
 
           if (isAdmin)
-            resultSSI.Add($"{{A,{Colors.txtWarning}}} {{D,{Colors.txtDanger}}} {{M,{Colors.txtSuccess}}} {{I,{Colors.txtInfo}}} {{N,{Colors.txtPrimary}}}");
-          resultSSI.Add($"{{게임 종료, {Colors.txtMuted}}}");
-          return resultSSI;
+            resultSsi.Add($"{{A,{Colors.txtWarning}}} {{D,{Colors.txtDanger}}} {{M,{Colors.txtSuccess}}} {{I,{Colors.txtInfo}}} {{N,{Colors.txtPrimary}}}");
+          resultSsi.Add($"{{게임 종료, {Colors.txtMuted}}}");
+          return resultSsi;
         };
-        return new SelectScene(GetQText(loc), GetSSI(isAdmin));
+        return new SelectScene(getQText(loc), getSsi(isAdmin));
       }
       public static SelectScene SelAdminAct()
       {
-        Func<CTexts> GetQText = () =>
+        Func<CTexts> getQText = () =>
         {
           return CTexts.Make($"{{작업을 선택하세요.}}");
         };
-        Func<SelectSceneItems> GetSSI = () =>
+        Func<SelectSceneItems> getSsi = () =>
         {
-          var resultSSI = new SelectSceneItems();
-          resultSSI.Add("{Test Inventory}");
-          resultSSI.Add("{Player Level Up}");
-          resultSSI.Add("{Battle with test monster}");
-          resultSSI.Add("{Add Test Skill}");
-          resultSSI.Add("{Add Item}");
-          resultSSI.Add("{Add Gold}");
-          return resultSSI;
+          var resultSsi = new SelectSceneItems();
+          resultSsi.Add("{Test Inventory}");
+          resultSsi.Add("{Player Level Up}");
+          resultSsi.Add("{Battle with test monster}");
+          resultSsi.Add("{Add Test Skill}");
+          resultSsi.Add("{Add Item}");
+          resultSsi.Add("{Add Gold}");
+          return resultSsi;
         };
-        return new SelectScene(GetQText(), GetSSI(), true);
+        return new SelectScene(getQText(), getSsi(), true);
       }
       public static SelectScene SelSkillType(Player player, out SkillType skType)
       {
-        Func<CTexts> GetQText = () =>
+        Func<CTexts> getQText = () =>
         {
           return CTexts.Make($"{{스킬을 선택하세요.}}");
         };
-        Func<SelectSceneItems> GetSSI = () =>
+        Func<SelectSceneItems> getSsi = () =>
         {
-          var resultSSI = new SelectSceneItems();
+          var resultSsi = new SelectSceneItems();
           for (var i = 0; i < Enum.GetValues(typeof(SkillType)).Length; i++)
-            resultSSI.Add($"{{{Skill.Skill.GetTypeString((SkillType)i)} 스킬}}");
-          return resultSSI;
+            resultSsi.Add($"{{{Skill.Skill.GetTypeString((SkillType)i)} 스킬}}");
+          return resultSsi;
         };
         skType = (SkillType)0;
-        var skillTypeSc = new SelectScene(GetQText(), GetSSI(), true);
+        var skillTypeSc = new SelectScene(getQText(), getSsi(), true);
         if (skillTypeSc.isCancelled) return null;
         skType = (SkillType)(skillTypeSc.getIndex);
         var skills = from sk in player.Skills
@@ -110,21 +110,21 @@ namespace Goguma.Game.Object.Entity.Player
       }
       public static SelectScene SelSkill(Player player, SkillType sType)
       {
-        Func<SkillType, CTexts> GetQText = (SkillType sType) =>
+        Func<SkillType, CTexts> getQText = (SkillType sType) =>
          {
            return CTexts.Make($"{{스킬을 선택하세요.}} {{[ {Skill.Skill.GetTypeString(sType)} 스킬 ],{Colors.txtWarning}}}");
          };
-        Func<SkillType, SelectSceneItems> GetSSI = (SkillType sType) =>
+        Func<SkillType, SelectSceneItems> getSsi = (SkillType sType) =>
         {
-          var resultSSI = new SelectSceneItems();
+          var resultSsi = new SelectSceneItems();
           var skill = from sk in player.Skills
                       where sk.Type == sType
                       select sk;
           foreach (var sk in skill)
-            resultSSI.Add($"{{{sk.Name}}}");
-          return resultSSI;
+            resultSsi.Add($"{{{sk.Name}}}");
+          return resultSsi;
         };
-        var scene = new SelectScene(GetQText(sType), GetSSI(sType), true);
+        var scene = new SelectScene(getQText(sType), getSsi(sType), true);
         if (scene.isCancelled) return null;
         return scene;
       }
@@ -288,7 +288,7 @@ namespace Goguma.Game.Object.Entity.Player
               player.Exp += player.RequiredForLevelUp();
               break;
             case "Battle with test monster":
-              var testMonster = Monster.Monster.GetNew(MonsterList.TEST_MONSTER);
+              var testMonster = Monster.Monster.GetNew(MonsterList.TestMonster);
               Battle.Battle.PvE(testMonster);
               break;
             case "Add Test Skill":
@@ -300,12 +300,12 @@ namespace Goguma.Game.Object.Entity.Player
               var ssi = new SelectSceneItems();
               for (var i = 0; i < Enum.GetValues(typeof(ItemList)).Length; i++)
                 ssi.Add(Itemss.GetInstance((ItemList)i).DisplayName);
-              var itemSelectSS = new SelectScene(CTexts.Make("{아이템을 선택하시오.}"), ssi, true);
-              if (itemSelectSS.isCancelled) return;
+              var itemSelectSs = new SelectScene(CTexts.Make("{아이템을 선택하시오.}"), ssi, true);
+              if (itemSelectSs.isCancelled) return;
               int rCount;
               if (ReadInt("{수량을 입력하세요.}", out rCount, 0, 0)) break;
-              player.Inventory.GetItem(new ItemPair((ItemList)itemSelectSS.getIndex, rCount));
-              PrintCText(CTexts.Make("{\n아이템 }").Combine(Itemss.GetInstance((ItemList)itemSelectSS.getIndex).DisplayName).Combine($"{{{rCount}개를 얻었습니다.\n}}"));
+              player.Inventory.GetItem(new ItemPair((ItemList)itemSelectSs.getIndex, rCount));
+              PrintCText(CTexts.Make("{\n아이템 }").Combine(Itemss.GetInstance((ItemList)itemSelectSs.getIndex).DisplayName).Combine($"{{{rCount}개를 얻었습니다.\n}}"));
               Pause();
               break;
             case "Add Gold":

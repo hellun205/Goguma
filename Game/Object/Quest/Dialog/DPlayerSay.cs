@@ -7,7 +7,7 @@ namespace Goguma.Game.Object.Quest.Dialog
   public class DPlayerSay : Dialog
   {
     public List<string> PlayerSays { get; set; }
-    public override DialogType Type => DialogType.PLAYER_SAY;
+    public override DialogType Type => DialogType.PlayerSay;
 
     public DPlayerSay(Npc.Npc npc, CTexts text, List<string> playerText) : base(npc, text)
     {
@@ -23,7 +23,7 @@ namespace Goguma.Game.Object.Quest.Dialog
         ssi.Add($"{{{str}}}");
 
       var ss = new SelectScene(Text.DisplayText(playerAns), ssi, true, CTexts.Make($"{{대화 종료, {Colors.txtMuted}}}"));
-      isCancelled = ss.isCancelled;
+      IsCancelled = ss.isCancelled;
 
       return ss.getString;
     }

@@ -6,11 +6,11 @@ using Goguma.Game.Object.Inventory.Item.Other;
 namespace Goguma.Game.Object.Inventory.Item.Items
 {
   [Serializable]
-  public class Item_GoldGoblinCoin : OtherItem
+  public class ItemGoldGoblinCoin : OtherItem
   {
-    public override ItemList Material => ItemList.GOLD_GOBLIN_COIN;
+    public override ItemList Material => ItemList.GoldGoblinCoin;
 
-    public static readonly IItem Instance = new Item_GoldGoblinCoin();
+    public static readonly IItem Instance = new ItemGoldGoblinCoin();
 
     public override CTexts Name => CTexts.Make($"{{황금 고블린 코인, {Colors.txtWarning}}}");
 
@@ -20,6 +20,6 @@ namespace Goguma.Game.Object.Inventory.Item.Items
 
     public override bool IsSalable => true;
 
-    public Item_GoldGoblinCoin() : base() { }
+    public ItemGoldGoblinCoin() : base() { }
   }
 }

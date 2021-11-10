@@ -14,7 +14,7 @@ namespace Goguma.Game.Object.Quest
 
     public List<ItemPair> ItemsToBring_ { get; set; }
 
-    public override QuestType Type => QuestType.BRING_ITEM;
+    public override QuestType Type => QuestType.BringItem;
 
     protected QBringItem() : base()
     {
@@ -47,14 +47,14 @@ namespace Goguma.Game.Object.Quest
 
     protected override CTexts InfoDetails()
     {
-      var resCT = new CTexts();
+      var resCt = new CTexts();
       foreach (var item in ItemsToBring)
       {
         var isCompleted = ItemsToBring_.Contains(item);
-        resCT.Append(item.ItemM.DisplayName.Combine($"{{ {item.Count}개 가져다 주기 - }}{{( {(isCompleted ? "완료" : "진행 중")} )\n,{(isCompleted ? Colors.txtSuccess : Colors.txtDefault)}}}"));
+        resCt.Append(item.ItemM.DisplayName.Combine($"{{ {item.Count}개 가져다 주기 - }}{{( {(isCompleted ? "완료" : "진행 중")} )\n,{(isCompleted ? Colors.txtSuccess : Colors.txtDefault)}}}"));
       }
 
-      return resCT;
+      return resCt;
     }
   }
 }

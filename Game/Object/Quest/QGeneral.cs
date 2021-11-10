@@ -6,7 +6,7 @@ namespace Goguma.Game.Object.Quest
   [Serializable]
   public abstract class QGeneral : Quest
   {
-    public override QuestType Type => QuestType.GENERAL;
+    public override QuestType Type => QuestType.General;
 
     protected QGeneral() : base() { }
 

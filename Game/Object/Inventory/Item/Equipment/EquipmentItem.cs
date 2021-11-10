@@ -23,14 +23,14 @@ namespace Goguma.Game.Object.Inventory.Item.Equipment
     public override CTexts Info()
     {
       var player = InGame.player;
-      var resCT = new CTexts();
-      resCT.Append($"{{\n{GetSep(45, $"{Name.ToString()}")}}}")
+      var resCt = new CTexts();
+      resCt.Append($"{{\n{GetSep(45, $"{Name.ToString()}")}}}")
       .Append($"{{\n  {TypeString} 아이템,{Colors.txtWarning}}}{{ {ETypeString}\n,{Colors.txtSuccess}}}")
       .Append(Descriptions)
       .Append($"{{\n{GetSep(45)}}}")
       .Append(EffectInfo());
-      resCT.Append($"{{\n{GetSep(45)}}}");
-      return resCT;
+      resCt.Append($"{{\n{GetSep(45)}}}");
+      return resCt;
     }
 
     public override string ToString()
@@ -43,21 +43,21 @@ namespace Goguma.Game.Object.Inventory.Item.Equipment
     public CTexts EquipedText()
     {
       return EffectInfo()
-      .Combine($"{{\n\n위 능력치들이 {SMP(false)}하였습니다.\n}}");
+      .Combine($"{{\n\n위 능력치들이 {Smp(false)}하였습니다.\n}}");
     }
 
     public CTexts UnEquipedText()
     {
       return EffectInfo(true)
-      .Combine($"{{\n\n위 능력치들이 {SMP(true)}하였습니다.\n}}");
+      .Combine($"{{\n\n위 능력치들이 {Smp(true)}하였습니다.\n}}");
     }
 
-    protected double DMP(double dob, bool isMinus)
+    protected double Dmp(double dob, bool isMinus)
     {
       return (isMinus ? dob * -1 : dob);
     }
 
-    protected string SMP(bool isMinus, string minusStr = "감소", string plusStr = "증가")
+    protected string Smp(bool isMinus, string minusStr = "감소", string plusStr = "증가")
     {
       return (isMinus ? minusStr : plusStr);
     }

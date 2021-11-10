@@ -8,7 +8,7 @@ namespace Goguma.Game.Object.Quest.Dialog
   {
     public Npc.Npc Npc { get; set; }
     public DialogText Text { get; set; }
-    public bool isCancelled { get; set; }
+    public bool IsCancelled { get; set; }
 
     public Dialog(Npc.Npc npc, CTexts text)
     {
@@ -32,7 +32,7 @@ namespace Goguma.Game.Object.Quest.Dialog
       {
         ans = dialog.Show(ans);
         PrintText("\n\n");
-        if (dialog.isCancelled)
+        if (dialog.IsCancelled)
         {
           if (cancelledDialog != null) cancelledDialog.Show();
           return;

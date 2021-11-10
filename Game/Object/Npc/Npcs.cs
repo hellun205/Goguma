@@ -25,9 +25,9 @@ namespace Goguma.Game.Object.Npc
     {
       switch (npc)
       {
-        case NpcList.TRADER_K: return NpcTrader.NTraderK.Instance;
+        case NpcList.TraderK: return NpcTrader.NTraderK.instance;
 
-        case NpcList.GENERAL_STUDENT_A: return NpcGeneral.NGeneralStudentA.Instance;
+        case NpcList.GeneralStudentA: return NpcGeneral.NGeneralStudentA.instance;
 
         default:
           throw new NotImplementedException();
@@ -38,9 +38,9 @@ namespace Goguma.Game.Object.Npc
     {
       switch (type)
       {
-        case NpcType.TRADER: return "상인";
+        case NpcType.Trader: return "상인";
 
-        case NpcType.GENERAL: return "일반";
+        case NpcType.General: return "일반";
         default: throw new NotImplementedException();
       }
     }

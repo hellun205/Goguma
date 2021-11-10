@@ -11,7 +11,7 @@ namespace Goguma.Game.Object.Quest
   {
     public List<Entitys> Entitys { get; set; }
 
-    public override QuestType Type => QuestType.KILL_ENTITY;
+    public override QuestType Type => QuestType.KillEntity;
 
     protected QKillEntity() : base()
     {
@@ -42,14 +42,14 @@ namespace Goguma.Game.Object.Quest
 
     protected override CTexts InfoDetails()
     {
-      var resCT = new CTexts();
+      var resCt = new CTexts();
       foreach (var entity in Entitys)
       {
         var ent = Monster.GetInstance(entity.Mob);
-        resCT.Append($"{{{ent.Name},{Colors.txtInfo}}}{{ {entity.Count} 마리 처치 - }}{{( {entity.KilledCount} / {entity.Count} )\n,{(entity.KilledCount >= entity.Count ? Colors.txtSuccess : Colors.txtDefault)}}}");
+        resCt.Append($"{{{ent.Name},{Colors.txtInfo}}}{{ {entity.Count} 마리 처치 - }}{{( {entity.KilledCount} / {entity.Count} )\n,{(entity.KilledCount >= entity.Count ? Colors.txtSuccess : Colors.txtDefault)}}}");
       }
 
-      return resCT;
+      return resCt;
     }
   }
 }

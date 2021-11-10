@@ -5,11 +5,11 @@ using Goguma.Game.Object.Inventory.Item.Other;
 namespace Goguma.Game.Object.Inventory.Item.Items
 {
   [Serializable]
-  public class Item_StickyLiquid : OtherItem
+  public class ItemStickyLiquid : OtherItem
   {
-    public override ItemList Material => ItemList.STICKY_LIQUID;
+    public override ItemList Material => ItemList.StickyLiquid;
 
-    public static readonly IItem Instance = new Item_StickyLiquid();
+    public static readonly IItem Instance = new ItemStickyLiquid();
 
     public override CTexts Name => CTexts.Make("{끈적끈적한 액체}");
 
@@ -19,6 +19,6 @@ namespace Goguma.Game.Object.Inventory.Item.Items
 
     public override bool IsSalable => true;
 
-    public Item_StickyLiquid() : base() { }
+    public ItemStickyLiquid() : base() { }
   }
 }

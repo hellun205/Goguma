@@ -7,25 +7,25 @@ namespace Goguma.Game.Console
 {
   public static class ConsoleFunction
   {
-    public static Format colorify { get; set; }
+    public static Format Colorify { get; set; }
 
     static public void PrintCText(CTexts printCText)
     {
-      for (var i = 0; i < printCText.Texts.Count; i++)
+      for (var i = 0; i < printCText.texts.Count; i++)
       {
         try
         {
-          colorify.Write(printCText.Texts[i].Text, printCText.Texts[i].Color);
+          Colorify.Write(printCText.texts[i].Text, printCText.texts[i].Color);
         }
         catch
         {
-          colorify.Write(printCText.Texts[i].Text, Colors.txtDefault);
+          Colorify.Write(printCText.texts[i].Text, Colors.txtDefault);
         }
       }
     }
     static public void PrintText(string printString)
     {
-      colorify.Write(printString);
+      Colorify.Write(printString);
     }
     static public void PrintCText(string printString)
     {

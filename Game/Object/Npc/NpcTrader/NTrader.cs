@@ -16,15 +16,15 @@ namespace Goguma.Game.Object.Npc.NpcTrader
   {
     public abstract List<IItem> ItemsForSale { get; }
 
-    public override NpcType NpcType => NpcType.TRADER;
+    public override NpcType NpcType => NpcType.Trader;
 
     public abstract DNpcSay[] OpenShopDialog { get; }
 
-    public override string[] SSItems => new[] { "상점 열기" };
+    public override string[] SsItems => new[] { "상점 열기" };
 
-    public override void OnSelectedSSI(string selectedSSI)
+    public override void OnSelectedSSI(string selectedSsi)
     {
-      switch (selectedSSI)
+      switch (selectedSsi)
       {
         case "상점 열기":
           OpenShop();
@@ -40,30 +40,30 @@ namespace Goguma.Game.Object.Npc.NpcTrader
       {
         while (true)
         {
-          var htSSI = new SelectSceneItems();
+          var htSsi = new SelectSceneItems();
           for (var i = 0; i < Enum.GetValues(typeof(HavingType)).Length; i++)
-            htSSI.Add($"{{{Item.GetTypeString((HavingType)i)} 아이템}}");
-          var htSS = new SelectScene(CTexts.Make("{구매 할 아이템 종류를 선택 하세요.}"), htSSI, true);
-          if (htSS.isCancelled) return;
+            htSsi.Add($"{{{Item.GetTypeString((HavingType)i)} 아이템}}");
+          var htSs = new SelectScene(CTexts.Make("{구매 할 아이템 종류를 선택 하세요.}"), htSsi, true);
+          if (htSs.isCancelled) return;
           while (true)
           {
-            var itemSSI = new SelectSceneItems();
+            var itemSsi = new SelectSceneItems();
             var items = from it in ItemsForSale
-                        where it.Type == (HavingType)htSS.getIndex
+                        where it.Type == (HavingType)htSs.getIndex
                         select it;
             foreach (var item in items.ToList<IItem>())
-              itemSSI.Add($"{{{item.Name} }} {{[ {item.PurchasePrice}G ],{Colors.txtWarning}}}");
-            var sItem = new SelectScene(CTexts.Make($"{{구매 할 아이템을 선택 하세요. 현재 }}{{{InGame.player.Gold} G,{Colors.txtWarning}}}{{를 보유하고 있습니다.}}"), itemSSI, true);
+              itemSsi.Add($"{{{item.Name} }} {{[ {item.PurchasePrice}G ],{Colors.txtWarning}}}");
+            var sItem = new SelectScene(CTexts.Make($"{{구매 할 아이템을 선택 하세요. 현재 }}{{{InGame.player.Gold} G,{Colors.txtWarning}}}{{를 보유하고 있습니다.}}"), itemSsi, true);
             if (sItem.isCancelled) break;
 
             var itemToBuy = items.ToList<IItem>()[sItem.getIndex];
             if (InGame.player.Gold >= itemToBuy.PurchasePrice)
             {
-              var sItemSSI = new SelectSceneItems();
-              sItemSSI.Add("{구매}");
-              sItemSSI.Add("{아이템 정보}");
-              var sItemSS = new SelectScene(CTexts.Make($"{{{itemToBuy.Name},{Colors.txtInfo}}}{{(을)를 구매하시겠습니까?}}"), sItemSSI, true, CTexts.Make($"{{아니오,{Colors.txtMuted}}}"));
-              switch (sItemSS.getString)
+              var sItemSsi = new SelectSceneItems();
+              sItemSsi.Add("{구매}");
+              sItemSsi.Add("{아이템 정보}");
+              var sItemSs = new SelectScene(CTexts.Make($"{{{itemToBuy.Name},{Colors.txtInfo}}}{{(을)를 구매하시겠습니까?}}"), sItemSsi, true, CTexts.Make($"{{아니오,{Colors.txtMuted}}}"));
+              switch (sItemSs.getString)
               {
                 case "구매":
                   int count;

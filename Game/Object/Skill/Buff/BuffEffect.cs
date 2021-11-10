@@ -5,7 +5,7 @@ namespace Goguma.Game.Object.Skill.Buff
   [Serializable]
   public struct BuffEffect
   {
-    public int turn { get; set; }
+    public int Turn { get; set; }
     public double MaxHp { get; set; }
     public double MaxEp { get; set; }
     public double PhysicalDamage { get; set; }

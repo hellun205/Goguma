@@ -8,10 +8,10 @@ using Goguma.Game.Object.Skill.Skills;
 
 namespace Goguma.Game.Object.Entity.Monster.Monsters
 {
-  public class Mob_GoldGoblin : Mob
+  public class MobGoldGoblin : Mob
   {
     public override string Name => "황금 고블린";
-    public override MonsterList Material => MonsterList.GOLD_GOBLIN;
+    public override MonsterList Material => MonsterList.GoldGoblin;
 
     public override CTexts Descriptions => CTexts.Make("{황금색 고블린이다. 죽이면 고가의 아이템을 얻을 수 있을지도 모른다.}");
 
@@ -21,18 +21,18 @@ namespace Goguma.Game.Object.Entity.Monster.Monsters
 
     public override DroppingItems DroppingItems => new(new()
     {
-      new(new(ItemList.GOBLINS_ARMOR), 30),
-      new(new(ItemList.GOLD_GOBLINS_SWORD), 20),
-      new(new(ItemList.GOLD_GOBLIN_COIN), 10),
-      new(new(ItemList.DIAMOND), 6),
-      new(new(ItemList.RED_DIAMOND), 2),
-      new(new(ItemList.EMERALD), 9),
-      new(new(ItemList.GOLD_INGOT), 16),
-      new(new(ItemList.POTION_1), 80),
+      new(new(ItemList.GoblinsArmor), 30),
+      new(new(ItemList.GoldGoblinsSword), 20),
+      new(new(ItemList.GoldGoblinCoin), 10),
+      new(new(ItemList.Diamond), 6),
+      new(new(ItemList.RedDiamond), 2),
+      new(new(ItemList.Emerald), 9),
+      new(new(ItemList.GoldIngot), 16),
+      new(new(ItemList.Potion1), 80),
     });
 
 
-    public Mob_GoldGoblin() : base()
+    public MobGoldGoblin() : base()
     {
       MaxHp = 80;
       Hp = 80;
@@ -44,9 +44,9 @@ namespace Goguma.Game.Object.Entity.Monster.Monsters
       {
         Items = new()
         {
-          new(this, MSkillList.GOLD_GOBLIN_SWORD_SWING, Cond.PlayerHpPer, ">=", 0, 100, 1),
-          new(this, MSkillList.GOLD_GOBLIN_SWORD_STING, Cond.PlayerHpPer, "<=", 0.5, 10, 1),
-          new(this, MSkillList.GOLD_GOBLIN_SWORD_SWING, Cond.MonsterHpPer, "<=", 0.5, 1, 0)
+          new(this, MSkillList.GoldGoblinSwordSwing, Cond.PlayerHpPer, ">=", 0, 100, 1),
+          new(this, MSkillList.GoldGoblinSwordSting, Cond.PlayerHpPer, "<=", 0.5, 10, 1),
+          new(this, MSkillList.GoldGoblinSwordSwing, Cond.MonsterHpPer, "<=", 0.5, 1, 0)
         }
       };
     }

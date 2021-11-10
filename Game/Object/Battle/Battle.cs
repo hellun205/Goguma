@@ -43,7 +43,7 @@ namespace Goguma.Game.Object.Battle
       var buffTurns = new List<int>();
       var mBuffTurns = new List<int>();
 
-      Action Kill = () =>
+      Action kill = () =>
       {
         var drop = monster.DroppingItems.Drop();
         // BattleScene.PvE.Player.Kill(monster, drop);
@@ -54,11 +54,11 @@ namespace Goguma.Game.Object.Battle
 
         player.KillMob(monster.Material);
       };
-      Func<IAttackSkill, bool> UseAttackSkill = (IAttackSkill skill) =>
+      Func<IAttackSkill, bool> useAttackSkill = (IAttackSkill skill) =>
       {
         if (player.Ep < skill.UseEp)
         {
-          BattleScene.PvE.Playerm.LackOfEP((ISkill)skill);
+          BattleScene.PvE.Playerm.LackOfEp((ISkill)skill);
           return false;
         }
         bool isCrit;
@@ -72,11 +72,11 @@ namespace Goguma.Game.Object.Battle
         BattleScene.PvE.SkillAttack(player, monster, skill, damage, isCrit);
         return true;
       };
-      Func<IBuffSkill, bool> UseBuffSkill = (IBuffSkill skill) =>
+      Func<IBuffSkill, bool> useBuffSkill = (IBuffSkill skill) =>
       {
         if (player.Ep < skill.UseEp)
         {
-          BattleScene.PvE.Playerm.LackOfEP((ISkill)skill);
+          BattleScene.PvE.Playerm.LackOfEp((ISkill)skill);
           return false;
         }
         if (buffs.Contains(skill))
@@ -90,7 +90,7 @@ namespace Goguma.Game.Object.Battle
         buffTurns.Add(turn);
         return true;
       };
-      Func<bool> SelectAttSkill = () =>
+      Func<bool> selectAttSkill = () =>
       {
         while (true)
         {
@@ -107,7 +107,7 @@ namespace Goguma.Game.Object.Battle
             switch (skActSc.getString)
             {
               case "사용 하기":
-                return UseAttackSkill((IAttackSkill)skill);
+                return useAttackSkill((IAttackSkill)skill);
               case "정보 보기":
                 skill.Information();
                 break;
@@ -115,7 +115,7 @@ namespace Goguma.Game.Object.Battle
           }
         }
       };
-      Func<bool> UseSkill = () =>
+      Func<bool> useSkill = () =>
       {
         while (true)
         {
@@ -136,9 +136,9 @@ namespace Goguma.Game.Object.Battle
                 switch (skill.Type)
                 {
                   case SkillType.AttackSkill:
-                    return UseAttackSkill((IAttackSkill)skill);
+                    return useAttackSkill((IAttackSkill)skill);
                   case SkillType.BuffSkill:
-                    return UseBuffSkill((IBuffSkill)skill);
+                    return useBuffSkill((IBuffSkill)skill);
                   default:
                     return false;
                 }
@@ -149,13 +149,13 @@ namespace Goguma.Game.Object.Battle
           }
         }
       };
-      Action<bool> EndBuff = (bool all) =>
+      Action<bool> endBuff = (bool all) =>
       {
         IEnumerable<IBuffSkill> endBuffs;
         if (buffs.Count == 0) return;
         if (!all)
           endBuffs = from bf in buffs
-                     where (bf.Effect.turn + buffTurns[buffs.IndexOf(bf)]) == turn
+                     where (bf.Effect.Turn + buffTurns[buffs.IndexOf(bf)]) == turn
                      select bf;
         else
           endBuffs = from bf in buffs
@@ -168,7 +168,7 @@ namespace Goguma.Game.Object.Battle
           player.RemoveBuff(eBf);
         }
       };
-      Func<bool> GeneralAttack = () =>
+      Func<bool> generalAttack = () =>
       {
         bool isCrit;
         double damage = player.CalAttDmg(monster, out isCrit);
@@ -177,12 +177,12 @@ namespace Goguma.Game.Object.Battle
         BattleScene.PvE.GeneralAttack(player, monster, damage, isCrit);
         return true;
       };
-      Action<bool> MEndBuff = (bool all) =>
+      Action<bool> mEndBuff = (bool all) =>
         {
           IEnumerable<IBuffSkill> endBuffs;
           if (!all)
             endBuffs = from bf in monster.Buffs
-                       where (bf.Effect.turn + mBuffTurns[monster.Buffs.IndexOf(bf)]) == turn
+                       where (bf.Effect.Turn + mBuffTurns[monster.Buffs.IndexOf(bf)]) == turn
                        select bf;
           else
             endBuffs = from bf in monster.Buffs
@@ -195,14 +195,14 @@ namespace Goguma.Game.Object.Battle
             monster.RemoveBuff(eBf);
           }
         };
-      Action MonsterTurn = () =>
+      Action monsterTurn = () =>
       {
         ISkill skill = null;
-        Action Kill = () =>
+        Action kill = () =>
         {
           // TO DO: Player Warp Town
         };
-        Action GeneralAttack = () =>
+        Action generalAttack = () =>
         {
           bool isCrit;
           double damage = monster.CalAttDmg(player, out isCrit);
@@ -210,7 +210,7 @@ namespace Goguma.Game.Object.Battle
 
           BattleScene.PvE.GeneralAttack(monster, player, damage, isCrit);
         };
-        Func<bool> SkillAttack = () =>
+        Func<bool> skillAttack = () =>
         {
           var aSkill = (IAttackSkill)skill;
           bool isCrit;
@@ -220,7 +220,7 @@ namespace Goguma.Game.Object.Battle
           BattleScene.PvE.SkillAttack(monster, player, aSkill, damage, isCrit);
           return true;
         };
-        Func<bool> BuffSkill = () =>
+        Func<bool> buffSkill = () =>
         {
           var bSkill = (IBuffSkill)skill;
           if (monster.Buffs.Contains(skill)) return false;
@@ -238,16 +238,16 @@ namespace Goguma.Game.Object.Battle
             switch (skill.Type)
             {
               case SkillType.AttackSkill:
-                if (SkillAttack()) return;
+                if (skillAttack()) return;
                 break;
               case SkillType.BuffSkill:
-                if (BuffSkill()) return;
+                if (buffSkill()) return;
                 break;
             }
           }
           else
           {
-            GeneralAttack();
+            generalAttack();
             return;
           }
         }
@@ -274,15 +274,15 @@ namespace Goguma.Game.Object.Battle
             switch (attackScene.getString)
             {
               case "일반 공격":
-                skip = GeneralAttack();
+                skip = generalAttack();
                 break;
               case "스킬 공격":
-                skip = SelectAttSkill();
+                skip = selectAttSkill();
                 break;
             }
             break;
           case "스킬 사용":
-            skip = UseSkill();
+            skip = useSkill();
             break;
           case "도망 가기":
             BattleScene.PvE.Playerm.Run();
@@ -292,19 +292,19 @@ namespace Goguma.Game.Object.Battle
         {
           if (monster.Hp == 0)
           {
-            Kill();
-            EndBuff(true);
+            kill();
+            endBuff(true);
             return;
           }
-          EndBuff(false);
-          MonsterTurn();
+          endBuff(false);
+          monsterTurn();
           if (player.Hp <= 0)
           {
-            EndBuff(true);
-            MEndBuff(true);
+            endBuff(true);
+            mEndBuff(true);
             return;
           }
-          MEndBuff(false);
+          mEndBuff(false);
           turn += 1;
         }
       }

@@ -20,7 +20,7 @@ namespace Goguma.Game.Object.Entity
 
     public abstract EntityType Type { get; }
 
-    public virtual ClassType Class => ClassType.WARRIOR;
+    public virtual ClassType Class => ClassType.Warrior;
 
     public virtual int Level { get; set; }
 

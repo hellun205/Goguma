@@ -2,7 +2,7 @@ namespace Goguma.Game.Object.Map.Road
 {
   public class Roads
   {
-    public static RKRoad kRoad = new RKRoad();
+    public static RkRoad kRoad = new RkRoad();
 
     // public static Road GetRoadByName(string name)
     // {

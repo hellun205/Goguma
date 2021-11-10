@@ -10,7 +10,7 @@ namespace Goguma.Game.Object.Skill
     SkillType Type { get; }
     string TypeString { get; }
     double UseEp { get; }
-    void Information(bool IsPause = true);
+    void Information(bool isPause = true);
     CTexts Info(int sepLen = 40);
     CTexts EffectInfo();
   }

@@ -62,12 +62,12 @@ namespace Goguma.Game.Object.Quest.Dialog
     public CTexts DisplayText(string playerAnswer)
     {
       // return (HasPrefix ? CTexts.Make($"{{[ {Prefix} ] ,{PrefixColor}}}{{{Name},{NameColor}}}{{ : }}").Combine(this[playerAnswer]) : this[playerAnswer]);
-      var resCT = new CTexts();
+      var resCt = new CTexts();
       if (HasPrefix)
-        resCT.Append(Prefix).Append("{ : }");
-      resCT.Append(this[playerAnswer]);
+        resCt.Append(Prefix).Append("{ : }");
+      resCt.Append(this[playerAnswer]);
 
-      return resCT;
+      return resCt;
     }
   }
 }

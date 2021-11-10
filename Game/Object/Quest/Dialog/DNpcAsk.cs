@@ -6,7 +6,7 @@ namespace Goguma.Game.Object.Quest.Dialog
   public class DNpcAsk : Dialog
   {
     public bool Answer { get; protected set; }
-    public override DialogType Type => DialogType.NPC_ASK;
+    public override DialogType Type => DialogType.NpcAsk;
     public DNpcAsk(Npc.Npc npc, CTexts text) : base(npc, text) { }
     public DNpcAsk(Npc.Npc npc, string text) : this(npc, CTexts.Make(text)) { }
 

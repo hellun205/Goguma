@@ -25,14 +25,14 @@ namespace Goguma.Game.Object.Inventory.Item.Consume
     public override CTexts Info()
     {
       var player = InGame.player;
-      var resCT = new CTexts();
-      resCT.Append($"{{\n{GetSep(45, $"{Name.ToString()}")}}}")
+      var resCt = new CTexts();
+      resCt.Append($"{{\n{GetSep(45, $"{Name.ToString()}")}}}")
       .Append($"{{\n  {TypeString} 아이템,{Colors.txtWarning}}}{{ {CTypeString}\n,{Colors.txtSuccess}}}")
       .Append(Descriptions)
       .Append($"{{\n{GetSep(45)}}}")
       .Append(EffectInfo());
-      resCT.Append($"{{\n{GetSep(45)}}}");
-      return resCT;
+      resCt.Append($"{{\n{GetSep(45)}}}");
+      return resCt;
     }
 
     public abstract CTexts EffectInfo();
@@ -42,9 +42,9 @@ namespace Goguma.Game.Object.Inventory.Item.Consume
     {
       switch (cType)
       {
-        case ConsumeItemType.POTION:
+        case ConsumeItemType.Potion:
           return "포션";
-        case ConsumeItemType.SKILL_BOOK:
+        case ConsumeItemType.SkillBook:
           return "스킬 북";
         default:
           throw new NotImplementedException();

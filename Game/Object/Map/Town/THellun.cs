@@ -4,7 +4,7 @@ using Goguma.Game.Object.Npc;
 
 namespace Goguma.Game.Object.Map.Town
 {
-  public class THellun : Town
+  public class Hellun : Town
   {
     public override string Name
     {
@@ -15,17 +15,17 @@ namespace Goguma.Game.Object.Map.Town
       get => "제작자 Hellun을 기리기 위한 마을";
     }
 
-    internal THellun()
+    internal Hellun()
     {
       base.AddFacility(Facility.Facilities.hospital);
 
       Adjacents = new List<MapList>()
       {
-        MapList.K_ROAD
+        MapList.KRoad
       };
       Npcs = new List<NpcList>()
       {
-        NpcList.TRADER_K
+        NpcList.TraderK
       };
     }
   }

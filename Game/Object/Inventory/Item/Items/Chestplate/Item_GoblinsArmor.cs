@@ -5,11 +5,11 @@ using Goguma.Game.Object.Inventory.Item.Equipment;
 namespace Goguma.Game.Object.Inventory.Item.Items
 {
   [Serializable]
-  public class Item_GoblinsArmor : EChestplate
+  public class ItemGoblinsArmor : EChestplate
   {
-    public override ItemList Material => ItemList.GOBLINS_ARMOR;
+    public override ItemList Material => ItemList.GoblinsArmor;
 
-    public static readonly IItem Instance = new Item_GoblinsArmor();
+    public static readonly IItem Instance = new ItemGoblinsArmor();
 
     public override CTexts Name => CTexts.Make("{고블린의 갑옷}");
 
@@ -25,6 +25,6 @@ namespace Goguma.Game.Object.Inventory.Item.Items
 
     public override bool IsSalable => true;
 
-    public Item_GoblinsArmor() : base() { }
+    public ItemGoblinsArmor() : base() { }
   }
 }

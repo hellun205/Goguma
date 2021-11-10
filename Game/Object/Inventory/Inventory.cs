@@ -62,35 +62,35 @@ namespace Goguma.Game.Object.Inventory
     public ItemPair? Select(out InvenType invenType)
     {
       invenType = InvenType.Wearing;
-      var resultIP = new ItemPair();
+      var resultIp = new ItemPair();
       while (true)
       {
-        var invenTypeSS = InvenInfo.Scene.SelInvenType(); // Select InvenType
-        if (invenTypeSS.isCancelled) return null;
+        var invenTypeSs = InvenInfo.Scene.SelInvenType(); // Select InvenType
+        if (invenTypeSs.isCancelled) return null;
 
-        invenType = (InvenType)invenTypeSS.getIndex;
+        invenType = (InvenType)invenTypeSs.getIndex;
         switch (invenType)
         {
           case InvenType.Wearing:
             while (true)
             {
-              var wearingTypeSS = InvenInfo.Scene.WearingInven(this); // Select Wearing Item (Type)
-              if (wearingTypeSS.isCancelled) break;
-              resultIP = (ItemPair)Items.wearing[wearingTypeSS.getIndex];
-              return resultIP;
+              var wearingTypeSs = InvenInfo.Scene.WearingInven(this); // Select Wearing Item (Type)
+              if (wearingTypeSs.isCancelled) break;
+              resultIp = (ItemPair)Items.wearing[wearingTypeSs.getIndex];
+              return resultIp;
             }
             break;
           case InvenType.Having:
             while (true)
             {
-              var havingTypeSS = InvenInfo.Scene.SelHavingInven(); // Select Having Type
-              if (havingTypeSS.isCancelled) break;
+              var havingTypeSs = InvenInfo.Scene.SelHavingInven(); // Select Having Type
+              if (havingTypeSs.isCancelled) break;
               while (true)
               {
-                var havingIndexSS = InvenInfo.Scene.HavingInven(this, (HavingType)havingTypeSS.getIndex); // Select Having Item
-                if (havingIndexSS.isCancelled) break;
-                resultIP = Items.having[(HavingType)(havingTypeSS.getIndex), true][havingIndexSS.getIndex];
-                return resultIP;
+                var havingIndexSs = InvenInfo.Scene.HavingInven(this, (HavingType)havingTypeSs.getIndex); // Select Having Item
+                if (havingIndexSs.isCancelled) break;
+                resultIp = Items.having[(HavingType)(havingTypeSs.getIndex), true][havingIndexSs.getIndex];
+                return resultIp;
               }
             }
             break;

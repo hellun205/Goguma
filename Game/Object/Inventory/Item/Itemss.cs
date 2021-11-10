@@ -45,35 +45,35 @@ namespace Goguma.Game.Object.Inventory.Item
     {
       switch (item)
       {
-        case ItemList.TEST_ITEM1: return Item_TestWep1.Instance;
+        case ItemList.TestItem1: return ItemTestWep1.Instance;
 
-        case ItemList.TEST_ITEM2: return Item_TestHead1.Instance;
+        case ItemList.TestItem2: return ItemTestHead1.Instance;
 
-        case ItemList.STICKY_LIQUID: return Item_StickyLiquid.Instance;
+        case ItemList.StickyLiquid: return ItemStickyLiquid.Instance;
 
-        case ItemList.GOBLINS_SWORD: return Item_GoblinsSword.Instance;
+        case ItemList.GoblinsSword: return ItemGoblinsSword.Instance;
 
-        case ItemList.GOBLINS_ARMOR: return Item_GoblinsArmor.Instance;
+        case ItemList.GoblinsArmor: return ItemGoblinsArmor.Instance;
 
-        case ItemList.GOLD_GOBLIN_COIN: return Item_GoldGoblinCoin.Instance;
+        case ItemList.GoldGoblinCoin: return ItemGoldGoblinCoin.Instance;
 
-        case ItemList.GOLD_GOBLINS_SWORD: return Item_GoldGoblinsSword.Instance;
+        case ItemList.GoldGoblinsSword: return ItemGoldGoblinsSword.Instance;
 
-        case ItemList.DIAMOND: return Item_Diamond.Instance;
+        case ItemList.Diamond: return ItemDiamond.Instance;
 
-        case ItemList.RED_DIAMOND: return Item_RedDiamond.Instance;
+        case ItemList.RedDiamond: return ItemRedDiamond.Instance;
 
-        case ItemList.EMERALD: return Item_Emerald.Instance;
+        case ItemList.Emerald: return ItemEmerald.Instance;
 
-        case ItemList.GOLD_INGOT: return Item_GoldIngot.Instance;
+        case ItemList.GoldIngot: return ItemGoldIngot.Instance;
 
-        case ItemList.POTION_1: return Item_TestPotion.Instance;
+        case ItemList.Potion1: return ItemTestPotion.Instance;
 
-        case ItemList.SKILLBOOK_TEST_SKILL1: return Item_TestSkill1SB.Instance;
+        case ItemList.SkillbookTestSkill1: return ItemTestSkill1Sb.Instance;
 
-        case ItemList.SKILLBOOK_TEST_SKILL2: return Item_TestSkill2SB.Instance;
+        case ItemList.SkillbookTestSkill2: return ItemTestSkill2Sb.Instance;
 
-        case ItemList.APPLE: return ItemApple.Instance;
+        case ItemList.Apple: return ItemApple.Instance;
 
         default: throw new NotImplementedException();
       }

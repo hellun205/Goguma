@@ -6,11 +6,11 @@ using Goguma.Game.Object.Inventory.Item.Equipment;
 namespace Goguma.Game.Object.Inventory.Item.Items
 {
   [Serializable]
-  public class Item_GoldGoblinsSword : EWeapon
+  public class ItemGoldGoblinsSword : EWeapon
   {
-    public override ItemList Material => ItemList.GOLD_GOBLINS_SWORD;
+    public override ItemList Material => ItemList.GoldGoblinsSword;
 
-    public static readonly IItem Instance = new Item_GoldGoblinsSword();
+    public static readonly IItem Instance = new ItemGoldGoblinsSword();
 
     public override CTexts Name => CTexts.Make($"{{황금 고블린의 검, {Colors.txtWarning}}}");
 
@@ -27,6 +27,6 @@ namespace Goguma.Game.Object.Inventory.Item.Items
 
     public override bool IsSalable => true;
 
-    public Item_GoldGoblinsSword() : base() { }
+    public ItemGoldGoblinsSword() : base() { }
   }
 }
