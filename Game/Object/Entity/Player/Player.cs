@@ -115,12 +115,9 @@ namespace Goguma.Game.Object.Entity.Player
         else if (MaxExp <= value)
         {
           Level += 1; // Level Up
-          PhysicalDamage += IncreaseAttDmg;
-          MaxHp += IncreaseMaxHp;
-          MaxEp += IncreaseMaxEp;
           Hp = MaxHp;
           Ep = MaxEp;
-          MaxExp += IncreaseMaxExp;
+          MaxExp *= 1.4;
           PrintCText($"{{\nLevel UP! Lv. }} {{{Level}\n, {Colors.txtInfo}}}");
           Exp = Math.Max(0, value - MaxExp);
           Pause();
@@ -131,41 +128,10 @@ namespace Goguma.Game.Object.Entity.Player
 
     public double MaxExp { get; set; }
 
-    public double IncreaseMaxExp
-    {
-      get => IncreaseMul(increaseMaxExp);
-      set => increaseMaxExp = value;
-    }
-    public double IncreaseAttDmg
-    {
-      get => IncreaseMul(increaseAttDmg);
-      set => increaseAttDmg = value;
-    }
-    // public int IncreaseDefPer
-    // {
-    //   get => IncreaseMul(increaseDefPer);
-    //   set => increaseDefPer = value;
-    // }
-    public double IncreaseMaxHp
-    {
-      get => IncreaseMul(increaseMaxHp);
-      set => increaseMaxHp = value;
-    }
-    public double IncreaseMaxEp
-    {
-      get => IncreaseMul(increaseMaxEp);
-      set => increaseMaxEp = value;
-    }
     public double Gold { get; set; }
 
     private EquipEffect GetEquipEffect => Inventory.Items.wearing.GetEquipEffect;
     private WeaponEffect GetWeaponEffect => Inventory.Items.wearing.GetWeaponEffect;
-    private double increaseMaxExp;
-    private double increaseAttDmg;
-    //private int increaseDefPer;
-    private double increaseMaxHp;
-    private double increaseMaxEp;
-    private double IncreaseMul(double i) { return i * (Level * 0.1); }
     private double ep;
     private double exp;
     private double maxEp;
@@ -184,12 +150,12 @@ namespace Goguma.Game.Object.Entity.Player
       Level = 1;
       MaxExp = 20;
       Exp = 0;
-      physicalDamage = 4;
-      physicalDefense = 0;
-      IncreaseMaxExp = 2;
-      IncreaseAttDmg = 2;
-      IncreaseMaxHp = 10;
-      IncreaseMaxEp = 5;
+      PhysicalDamage = 0;
+      PhysicalDefense = 0;
+      PhysicalPenetration = 0;
+      MagicDamage = 0;
+      MagicDefense = 0;
+      MagicPenetration = 0;
       Gender = Gender.MALE;
       PartyNpcs = new();
     }
@@ -219,7 +185,7 @@ namespace Goguma.Game.Object.Entity.Player
       .Append($"{{\n{GetSep(40, $"{Name} [ Lv. {Level} ]")}}}")
       .Append("{\n경험치 : }")
       .Append(GetExpBar())
-      .Append($"{{\n골드 : }}{{{Gold} G,{Colors.txtWarning}}}")
+      .Append($"{{\t골드 : }}{{{Gold} G,{Colors.txtWarning}}}")
       .Append($"{{\n위치 : }}{{{Loc.Loc},{Colors.txtInfo}}}")
       .Append($"{{\n{GetSep(40)}}}")
       .Append("{\n체력 : }")
@@ -227,16 +193,16 @@ namespace Goguma.Game.Object.Entity.Player
       .Append("{\n에너지 : }")
       .Append(GetEpBar())
       .Append($"{{\n물리 공격력 : }}{{{PhysicalDamage},{Colors.txtDanger}}}")
-      .Append($"{{\n마법 공격력 : }}{{{MagicDamage},{Colors.txtInfo}}}")
+      .Append($"{{\t\t마법 공격력 : }}{{{MagicDamage},{Colors.txtInfo}}}")
 
       .Append($"{{\n물리 관통력 : }}{{{PhysicalPenetration},{Colors.txtDanger}}}")
-      .Append($"{{\n마법 관통력 : }}{{{MagicPenetration},{Colors.txtInfo}}}")
+      .Append($"{{\t\t마법 관통력 : }}{{{MagicPenetration},{Colors.txtInfo}}}")
 
-      .Append($"{{\n물리 방어력 : }}{{{PhysicalDefense},{Colors.txtDanger}}}{{ ( {Math.Round(1 - (100 / (100 + PhysicalDefense)), 2)} % )}}")
-      .Append($"{{\n마법 방어력 : }}{{{MagicDefense},{Colors.txtInfo}}}{{ ( {Math.Round(1 - (100 / (100 + MagicDefense)), 2)} % )}}")
+      .Append($"{{\n물리 방어력 : }}{{{PhysicalDefense},{Colors.txtDanger}}}{{ ({Math.Floor(1 - (100 / (100 + PhysicalDefense)))}%)}}")
+      .Append($"{{\t마법 방어력 : }}{{{MagicDefense},{Colors.txtInfo}}}{{ ({Math.Floor(1 - (100 / (100 + MagicDefense)))}%)}}")
 
       .Append($"{{\n치명타 데미지 : }}{{{CriticalDamage} %,{Colors.txtWarning}}}")
-      .Append($"{{\n치명타 확률 : }}{{{CriticalPercent} %,{Colors.txtWarning}}}")
+      .Append($"{{\t치명타 확률 : }}{{{CriticalPercent} %,{Colors.txtWarning}}}")
       .Append($"{{\n{GetSep(40)}}}");
     }
 
@@ -293,7 +259,7 @@ namespace Goguma.Game.Object.Entity.Player
       }
 
       var killEntityQuests = (from qst in Quest.Quests
-                              where (qst.Type == QuestType.KILL_ENTITY)
+                              where qst.Type == QuestType.KILL_ENTITY
                               select qst).Cast<QKillEntity>().ToList();
 
       foreach (var qst in killEntityQuests)
@@ -361,7 +327,6 @@ namespace Goguma.Game.Object.Entity.Player
         qst.OnMeetNpc(npc);
       }
     }
-
 
   }
 }

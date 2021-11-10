@@ -154,16 +154,16 @@ namespace Goguma.Game.Object.Entity
         .Append("{\n체력 : }")
         .Append(GetHpBar())
         .Append($"{{\n물리 공격력 : }}{{{PhysicalDamage},{Colors.txtDanger}}}")
-        .Append($"{{\n마법 공격력 : }}{{{MagicDamage},{Colors.txtInfo}}}")
+        .Append($"{{\t\t마법 공격력 : }}{{{MagicDamage},{Colors.txtInfo}}}")
 
         .Append($"{{\n물리 관통력 : }}{{{PhysicalPenetration},{Colors.txtDanger}}}")
-        .Append($"{{\n마법 관통력 : }}{{{MagicPenetration},{Colors.txtInfo}}}")
+        .Append($"{{\t\t마법 관통력 : }}{{{MagicPenetration},{Colors.txtInfo}}}")
 
-        .Append($"{{\n물리 방어력 : }}{{{PhysicalDefense},{Colors.txtDanger}}}{{ ( {Math.Round(1 - (100 / (100 + PhysicalDefense)), 2)} % )}}")
-        .Append($"{{\n마법 방어력 : }}{{{MagicDefense},{Colors.txtInfo}}}{{ ( {Math.Round(1 - (100 / (100 + MagicDefense)), 2)} % )}}")
+        .Append($"{{\n물리 방어력 : }}{{{PhysicalDefense},{Colors.txtDanger}}}{{ ({Math.Floor(1 - (100 / (100 + PhysicalDefense)))}%)}}")
+        .Append($"{{\t\t마법 방어력 : }}{{{MagicDefense},{Colors.txtInfo}}}{{ ({Math.Floor(1 - (100 / (100 + MagicDefense)))}%)}}")
 
         .Append($"{{\n치명타 데미지 : }}{{{CriticalDamage} %,{Colors.txtWarning}}}")
-        .Append($"{{\n치명타 확률 : }}{{{CriticalPercent} %,{Colors.txtWarning}}}")
+        .Append($"{{\t치명타 확률 : }}{{{CriticalPercent} %,{Colors.txtWarning}}}")
         .Append($"{{\n{GetSep(40)}}}");
     }
 

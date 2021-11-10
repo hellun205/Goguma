@@ -12,15 +12,14 @@ using static Goguma.Game.Console.ConsoleFunction;
 using Goguma.Game.Object.Inventory.Item;
 using System;
 using Goguma.Game.Object.Skill.Skills;
-using ToolBox.Notification;
 
 namespace Goguma.Game.Object.Entity.Player
 {
   class PlayerAct
   {
-    static public class Scene
+    public static class Scene
     {
-      static public SelectScene SelPlayerAct(Location loc, bool isAdmin = false)
+      public static SelectScene SelPlayerAct(Location loc, bool isAdmin = false)
       {
         Func<Location, CTexts> GetQText = (Location loc) =>
         {
@@ -44,9 +43,10 @@ namespace Goguma.Game.Object.Entity.Player
           {
             resultSSI.Add("{파티원 정보 보기}");
           }
-          
+
           resultSSI.Add("{인벤토리 열기}");
           resultSSI.Add("{스킬 보기}");
+          resultSSI.Add("{스탯 보기}");
           resultSSI.Add("{퀘스트 보기}");
           resultSSI.Add("{이동하기}");
           resultSSI.Add($"{{{InGame.player.Loc.Loc} 살펴보기}}");
@@ -66,7 +66,7 @@ namespace Goguma.Game.Object.Entity.Player
         };
         return new SelectScene(GetQText(loc), GetSSI(isAdmin));
       }
-      static public SelectScene SelAdminAct()
+      public static SelectScene SelAdminAct()
       {
         Func<CTexts> GetQText = () =>
         {
@@ -85,7 +85,7 @@ namespace Goguma.Game.Object.Entity.Player
         };
         return new SelectScene(GetQText(), GetSSI(), true);
       }
-      static public SelectScene SelSkillType(Player player, out SkillType skType)
+      public static SelectScene SelSkillType(Player player, out SkillType skType)
       {
         Func<CTexts> GetQText = () =>
         {
@@ -108,7 +108,7 @@ namespace Goguma.Game.Object.Entity.Player
         var selIndexSc = SelSkill(player, skType);
         return selIndexSc;
       }
-      static public SelectScene SelSkill(Player player, SkillType sType)
+      public static SelectScene SelSkill(Player player, SkillType sType)
       {
         Func<SkillType, CTexts> GetQText = (SkillType sType) =>
          {
@@ -129,7 +129,7 @@ namespace Goguma.Game.Object.Entity.Player
         return scene;
       }
     }
-    static public void Act(string actText)
+    public static void Act(string actText)
     {
       switch (actText)
       {
@@ -166,6 +166,9 @@ namespace Goguma.Game.Object.Entity.Player
         case "파티원 정보 보기":
           // TO DO .
           break;
+        case "스탯 보기":
+          ViewStat();
+          break;
         default:
           if (actText.StartsWith(InGame.player.Loc.Loc))
             InsepctLoc();
@@ -173,7 +176,7 @@ namespace Goguma.Game.Object.Entity.Player
       }
     }
 
-    static private void TalkWithNpc()
+    private static void TalkWithNpc()
     {
       if (!InGame.player.Loc.InTown) return;
       var town = (Town)Maps.GetMapByName(InGame.player.Loc.Loc);
@@ -192,7 +195,7 @@ namespace Goguma.Game.Object.Entity.Player
       Npcs.Get(town.Npcs[s.getIndex]).OnDialogOpen();
     }
 
-    static private void ViewSkill()
+    private static void ViewSkill()
     {
       Player player = InGame.player;
       while (true)
@@ -208,7 +211,7 @@ namespace Goguma.Game.Object.Entity.Player
       }
     }
 
-    static private void InsepctLoc()
+    private static void InsepctLoc()
     {
       var sb = new StringBuilder();
       sb.Append(StringFunction.GetSep(30, InGame.player.Loc.Loc));
@@ -244,7 +247,7 @@ namespace Goguma.Game.Object.Entity.Player
       Pause();
     }
 
-    static private void UseFacility()
+    private static void UseFacility()
     {
       if (!InGame.player.Loc.InTown) return;
       var town = (Town)Maps.GetMapByName(InGame.player.Loc.Loc);
@@ -258,7 +261,7 @@ namespace Goguma.Game.Object.Entity.Player
       town.Facilities[select.getIndex].OnUse();
     }
 
-    static private void StartRoadPvE()
+    private static void StartRoadPvE()
     {
       if (InGame.player.Loc.InTown) return;
 
@@ -268,7 +271,7 @@ namespace Goguma.Game.Object.Entity.Player
       Battle.Battle.PvE(monster);
     }
 
-    static private void AdminOption(Player player, bool isAdmin = false)
+    private static void AdminOption(Player player, bool isAdmin = false)
     {
       if (isAdmin)
       {
@@ -318,6 +321,11 @@ namespace Goguma.Game.Object.Entity.Player
           Pause();
         }
       }
+    }
+
+    private static void ViewStat()
+    {
+      
     }
   }
 }
