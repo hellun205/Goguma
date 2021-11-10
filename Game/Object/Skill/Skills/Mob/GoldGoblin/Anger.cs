@@ -1,5 +1,6 @@
 using System;
 using Goguma.Game.Console;
+using Goguma.Game.Object.Skill.Buff;
 
 namespace Goguma.Game.Object.Skill.Skills.Mob.GoldGoblin
 {
@@ -12,12 +13,12 @@ namespace Goguma.Game.Object.Skill.Skills.Mob.GoldGoblin
 
     public override CTexts Descriptions => CTexts.Make("{황금 고블린이 분노하여 방어율은 감소하지만, 공격력 크게 증가한다.}}");
 
-    public override Buff buff => new()
+    public override BuffEffect Effect => new()
     {
-      AttDmg = 7.1,
-      DefPer = -16.5,
-      CritDmg = 30,
-      CritPer = 40,
+      PhysicalDamage = 7.1,
+      PhysicalDefense = -16.5,
+      CriticalDamage = 30,
+      CriticalPercent = 40,
       turn = 10
     };
   }

@@ -31,5 +31,7 @@ namespace Goguma.Game.Object.Skill.Skills
         default: throw new NotImplementedException();
       }
     }
+
+
   }
 }

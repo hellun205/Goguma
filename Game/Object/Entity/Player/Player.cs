@@ -2,7 +2,6 @@ using System;
 using Colorify;
 using Goguma.Game.Object.Map;
 using Goguma.Game.Console;
-using Goguma.Game.Object.Skill;
 using static Goguma.Game.Console.ConsoleFunction;
 using static Goguma.Game.Console.StringFunction;
 using Goguma.Game.Object.Map.Town;
@@ -13,6 +12,9 @@ using Goguma.Game.Object.Entity.Monster;
 using System.Linq;
 using Goguma.Game.Object.Inventory.Item;
 using Goguma.Game.Object.Npc;
+using Goguma.Game.Object.Entity.Npc;
+using Goguma.Game.Object.Skill.Buff;
+using Goguma.Game.Object.Skill.Attack;
 
 namespace Goguma.Game.Object.Entity.Player
 {
@@ -20,54 +22,87 @@ namespace Goguma.Game.Object.Entity.Player
   public class Player : Entity
   {
     public override EntityType Type => EntityType.PLAYER;
+
     public Inventory.Inventory Inventory { get; set; }
+
     public QuestSys Quest { get; set; }
+
     public List<QuestList> CompletedQuests { get; set; }
+
     public Location Loc { get; set; }
 
     public Gender Gender { get; set; }
 
     public List<Entitys> KilledMobs { get; set; }
 
+    public List<PartyNpc> PartyNpcs { get; set; }
+
+    public int PartyCount => PartyNpcs.Count;
+
     public double Ep
     {
       get => Math.Round(ep, 2);
       set => ep = Math.Min(value, MaxEp);
     }
+
     public double MaxEp
     {
       get => Math.Round(maxEp + GetEquipEffect.MaxEp + BuffsIncrease.MaxEp, 2);
       set => maxEp = Math.Max(0, value);
     }
+
     public override double MaxHp
     {
       get => Math.Round(maxHp + GetEquipEffect.MaxHp + BuffsIncrease.MaxHp, 2);
       set => maxHp = Math.Max(0, value);
     }
-    public override double DefPer
+
+    public override double PhysicalDefense
     {
-      get => Math.Round(defPer + GetEquipEffect.DefPer + BuffsIncrease.DefPer, 2);
-      set => defPer = Math.Max(0, value);
+      get => Math.Round(physicalDefense + GetEquipEffect.DefPer + BuffsIncrease.PhysicalDefense, 2);
+      set => physicalDefense = Math.Max(0, value);
     }
-    public override double AttDmg
+
+    public override double PhysicalDamage
     {
-      get => Math.Round(attDmg + GetWeaponEffect.AttDmg + BuffsIncrease.AttDmg, 2);
-      set => attDmg = Math.Max(0, value);
+      get => Math.Round(physicalDamage + GetWeaponEffect.PhysicalDamage + BuffsIncrease.PhysicalDamage, 2);
+      set => physicalDamage = Math.Max(0, value);
     }
-    public override double CritDmg
+
+    public override double PhysicalPenetration
     {
-      get => Math.Round(critDmg + GetWeaponEffect.CritDmg + BuffsIncrease.CritDmg, 2);
-      set => critDmg = Math.Max(0, value);
+      get => Math.Round(magicPenetration + GetWeaponEffect.MagicPenetration + BuffsIncrease.MagicPenetration, 2);
+      set => magicPenetration = Math.Max(0, value);
     }
-    public override double CritPer
+
+    public override double MagicDefense
     {
-      get => Math.Round(critPer + GetWeaponEffect.CritPer + BuffsIncrease.CritPer, 2);
-      set => critPer = Math.Max(0, value);
+      get => Math.Round(physicalDefense + GetEquipEffect.DefPer + BuffsIncrease.PhysicalDefense, 2);
+      set => physicalDefense = Math.Max(0, value);
     }
-    public override double IgnoreDef
+
+    public override double MagicDamage
     {
-      get => Math.Round(ignoreDef + GetWeaponEffect.IgnoreDef + BuffsIncrease.IgnoreDef, 2);
-      set => ignoreDef = Math.Max(0, value);
+      get => Math.Round(physicalDamage + GetWeaponEffect.PhysicalDamage + BuffsIncrease.PhysicalDamage, 2);
+      set => physicalDamage = Math.Max(0, value);
+    }
+
+    public override double MagicPenetration
+    {
+      get => Math.Round(physicalPenetration + GetWeaponEffect.PhysicalPenetration + BuffsIncrease.PhysicalPenetration, 2);
+      set => physicalPenetration = Math.Max(0, value);
+    }
+
+    public override double CriticalDamage
+    {
+      get => Math.Round(criticalDamage + GetWeaponEffect.CritDmg + BuffsIncrease.CriticalDamage, 2);
+      set => criticalDamage = Math.Max(0, value);
+    }
+
+    public override double CriticalPercent
+    {
+      get => Math.Round(criticalPercent + GetWeaponEffect.CritPer + BuffsIncrease.CriticalPercent, 2);
+      set => criticalPercent = Math.Max(0, value);
     }
 
     public double Exp
@@ -80,12 +115,9 @@ namespace Goguma.Game.Object.Entity.Player
         else if (MaxExp <= value)
         {
           Level += 1; // Level Up
-          AttDmg += IncreaseAttDmg;
-          MaxHp += IncreaseMaxHp;
-          MaxEp += IncreaseMaxEp;
           Hp = MaxHp;
           Ep = MaxEp;
-          MaxExp += IncreaseMaxExp;
+          MaxExp *= 1.4;
           PrintCText($"{{\nLevel UP! Lv. }} {{{Level}\n, {Colors.txtInfo}}}");
           Exp = Math.Max(0, value - MaxExp);
           Pause();
@@ -96,41 +128,10 @@ namespace Goguma.Game.Object.Entity.Player
 
     public double MaxExp { get; set; }
 
-    public double IncreaseMaxExp
-    {
-      get => IncreaseMul(increaseMaxExp);
-      set => increaseMaxExp = value;
-    }
-    public double IncreaseAttDmg
-    {
-      get => IncreaseMul(increaseAttDmg);
-      set => increaseAttDmg = value;
-    }
-    // public int IncreaseDefPer
-    // {
-    //   get => IncreaseMul(increaseDefPer);
-    //   set => increaseDefPer = value;
-    // }
-    public double IncreaseMaxHp
-    {
-      get => IncreaseMul(increaseMaxHp);
-      set => increaseMaxHp = value;
-    }
-    public double IncreaseMaxEp
-    {
-      get => IncreaseMul(increaseMaxEp);
-      set => increaseMaxEp = value;
-    }
     public double Gold { get; set; }
 
     private EquipEffect GetEquipEffect => Inventory.Items.wearing.GetEquipEffect;
     private WeaponEffect GetWeaponEffect => Inventory.Items.wearing.GetWeaponEffect;
-    private double increaseMaxExp;
-    private double increaseAttDmg;
-    //private int increaseDefPer;
-    private double increaseMaxHp;
-    private double increaseMaxEp;
-    private double IncreaseMul(double i) { return i * (Level * 0.1); }
     private double ep;
     private double exp;
     private double maxEp;
@@ -149,13 +150,14 @@ namespace Goguma.Game.Object.Entity.Player
       Level = 1;
       MaxExp = 20;
       Exp = 0;
-      attDmg = 4;
-      defPer = 0;
-      IncreaseMaxExp = 2;
-      IncreaseAttDmg = 2;
-      IncreaseMaxHp = 10;
-      IncreaseMaxEp = 5;
+      PhysicalDamage = 0;
+      PhysicalDefense = 0;
+      PhysicalPenetration = 0;
+      MagicDamage = 0;
+      MagicDefense = 0;
+      MagicPenetration = 0;
       Gender = Gender.MALE;
+      PartyNpcs = new();
     }
 
     public Player(string name) : this()
@@ -171,10 +173,10 @@ namespace Goguma.Game.Object.Entity.Player
     public override void AddBuff(IBuffSkill skill)
     {
       Buffs.Add(skill);
-      if (skill.buff.Hp != 0)
-        Hp += skill.buff.Hp;
-      if (skill.buff.Ep != 0)
-        Ep += skill.buff.Ep;
+      if (skill.Effect.Hp != 0)
+        Hp += skill.Effect.Hp;
+      if (skill.Effect.Ep != 0)
+        Ep += skill.Effect.Ep;
     }
 
     protected override CTexts Info()
@@ -183,18 +185,24 @@ namespace Goguma.Game.Object.Entity.Player
       .Append($"{{\n{GetSep(40, $"{Name} [ Lv. {Level} ]")}}}")
       .Append("{\n경험치 : }")
       .Append(GetExpBar())
-      .Append($"{{\n골드 : }}{{{Gold} G,{Colors.txtWarning}}}")
+      .Append($"{{\t골드 : }}{{{Gold} G,{Colors.txtWarning}}}")
       .Append($"{{\n위치 : }}{{{Loc.Loc},{Colors.txtInfo}}}")
       .Append($"{{\n{GetSep(40)}}}")
       .Append("{\n체력 : }")
       .Append(GetHpBar())
       .Append("{\n에너지 : }")
       .Append(GetEpBar())
-      .Append($"{{\n공격력 : }}{{{AttDmg},{Colors.txtDanger}}}")
-      .Append($"{{\n크리티컬 데미지 : }}{{{CritDmg} %,{Colors.txtDanger}}}")
-      .Append($"{{\n크리티컬 확률 : }}{{{CritPer} %,{Colors.txtDanger}}}")
-      .Append($"{{\n방어율 무시 : }}{{{IgnoreDef} %,{Colors.txtDanger}}}")
-      .Append($"{{\n방어율 : }}{{{DefPer} %,{Colors.txtInfo}}}")
+      .Append($"{{\n물리 공격력 : }}{{{PhysicalDamage},{Colors.txtDanger}}}")
+      .Append($"{{\t\t마법 공격력 : }}{{{MagicDamage},{Colors.txtInfo}}}")
+
+      .Append($"{{\n물리 관통력 : }}{{{PhysicalPenetration},{Colors.txtDanger}}}")
+      .Append($"{{\t\t마법 관통력 : }}{{{MagicPenetration},{Colors.txtInfo}}}")
+
+      .Append($"{{\n물리 방어력 : }}{{{PhysicalDefense},{Colors.txtDanger}}}{{ ({Math.Floor(1 - (100 / (100 + PhysicalDefense)))}%)}}")
+      .Append($"{{\t마법 방어력 : }}{{{MagicDefense},{Colors.txtInfo}}}{{ ({Math.Floor(1 - (100 / (100 + MagicDefense)))}%)}}")
+
+      .Append($"{{\n치명타 데미지 : }}{{{CriticalDamage} %,{Colors.txtWarning}}}")
+      .Append($"{{\t치명타 확률 : }}{{{CriticalPercent} %,{Colors.txtWarning}}}")
       .Append($"{{\n{GetSep(40)}}}");
     }
 
@@ -226,50 +234,6 @@ namespace Goguma.Game.Object.Entity.Player
         return bar;
     }
 
-    public override double CalAttDmg(IAttackSkill aSkill, IEntity entity, out bool isCrit)
-    {
-      var dmg = DamageByLevel((AttDmg + aSkill.Effect.AttDmg), Level, entity.Level) * (1 - ((entity.DefPer / 100) - ((IgnoreDef + aSkill.Effect.IgnoreDef) / 100)));
-      return CalCritDmg(dmg, out isCrit, aSkill.Effect);
-    }
-
-    public override double CalAttDmg(IEntity entity, out bool isCrit)
-    {
-      var dmg = DamageByLevel(AttDmg, Level, entity.Level) * (1 - ((entity.DefPer / 100) - ((IgnoreDef) / 100)));
-      return CalCritDmg(dmg, out isCrit);
-    }
-
-    protected override double CalCritDmg(double dmg, out bool isCrit, WeaponEffect wEffect)
-    {
-      var rand = new Random().Next(0, 101);
-      var critPer = Math.Round(CritPer + wEffect.CritPer, 2);
-      if (critPer >= rand)
-      {
-        isCrit = true;
-        return Math.Round(dmg * (1 + ((CritDmg + wEffect.CritDmg) / 100)), 2);
-      }
-      else
-      {
-        isCrit = false;
-        return Math.Round(dmg, 2);
-      }
-    }
-
-    protected override double CalCritDmg(double dmg, out bool isCrit)
-    {
-      var rand = new Random().Next(0, 101);
-      var critPer = Math.Round(CritPer, 2);
-      if (critPer >= rand)
-      {
-        isCrit = true;
-        return Math.Round(dmg * (1 + (CritDmg / 100)), 2);
-      }
-      else
-      {
-        isCrit = false;
-        return Math.Round(dmg, 2);
-      }
-    }
-
     public void KillMob(MonsterList monster)
     {
       int containsIndex = 0;
@@ -295,7 +259,7 @@ namespace Goguma.Game.Object.Entity.Player
       }
 
       var killEntityQuests = (from qst in Quest.Quests
-                              where (qst.Type == QuestType.KILL_ENTITY)
+                              where qst.Type == QuestType.KILL_ENTITY
                               select qst).Cast<QKillEntity>().ToList();
 
       foreach (var qst in killEntityQuests)
@@ -363,5 +327,6 @@ namespace Goguma.Game.Object.Entity.Player
         qst.OnMeetNpc(npc);
       }
     }
+
   }
 }

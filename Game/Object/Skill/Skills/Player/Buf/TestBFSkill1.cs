@@ -1,5 +1,6 @@
 using System;
 using Goguma.Game.Console;
+using Goguma.Game.Object.Skill.Buff;
 
 namespace Goguma.Game.Object.Skill.Skills.Player.Buf
 {
@@ -14,11 +15,11 @@ namespace Goguma.Game.Object.Skill.Skills.Player.Buf
 
     public override double UseEp => 6;
 
-    public override Buff buff => new()
+    public override BuffEffect Effect => new()
     {
       MaxHp = 20,
-      AttDmg = 5,
-      DefPer = 0.4,
+      PhysicalDamage = 5,
+      PhysicalDefense = 0.4,
       turn = 5,
       Hp = 20
     };

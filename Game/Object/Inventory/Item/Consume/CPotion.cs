@@ -34,30 +34,30 @@ namespace Goguma.Game.Object.Inventory.Item.Consume
 
       if (Effect.IncreaseMaxEp != 0) resCT.Append($"{{\n최대 에너지 {{영구,{Colors.txtDanger}}}{{ 증가 : }}").Append(NumberColor(Effect.IncreaseMaxEp)).Append($"{{ ( {player.MaxEp} }}").Append(NumberColor(Effect.IncreaseMaxEp)).Append("{ → }").Append(NumberColor(player.MaxEp + Effect.IncreaseMaxEp)).Append("{ )}");
 
-      if (Effect.IncreaseAttDmg != 0) resCT.Append($"{{\n공격력 }}{{영구,{Colors.txtDanger}}}{{ 증가 : }}").Append(NumberColor(Effect.IncreaseAttDmg)).Append($"{{ ( {player.AttDmg} }}").Append(NumberColor(Effect.IncreaseAttDmg)).Append("{ → }").Append(NumberColor(player.AttDmg + Effect.IncreaseAttDmg)).Append("{ )}");
+      if (Effect.IncreaseAttDmg != 0) resCT.Append($"{{\n공격력 }}{{영구,{Colors.txtDanger}}}{{ 증가 : }}").Append(NumberColor(Effect.IncreaseAttDmg)).Append($"{{ ( {player.PhysicalDamage} }}").Append(NumberColor(Effect.IncreaseAttDmg)).Append("{ → }").Append(NumberColor(player.PhysicalDamage + Effect.IncreaseAttDmg)).Append("{ )}");
 
-      if (Effect.IncreaseCritDmg != 0) resCT.Append($"{{\n크리티컬 데미지 }}{{영구,{Colors.txtDanger}}}{{ 증가 : }}").Append(NumberColor(Effect.IncreaseCritDmg, "%")).Append($"{{ ( {player.CritDmg} % }}").Append(NumberColor(Effect.IncreaseCritDmg, "%")).Append("{ → }").Append(NumberColor(player.CritDmg + Effect.IncreaseCritDmg, "%")).Append("{ )}");
+      if (Effect.IncreaseCritDmg != 0) resCT.Append($"{{\n크리티컬 데미지 }}{{영구,{Colors.txtDanger}}}{{ 증가 : }}").Append(NumberColor(Effect.IncreaseCritDmg, "%")).Append($"{{ ( {player.CriticalDamage} % }}").Append(NumberColor(Effect.IncreaseCritDmg, "%")).Append("{ → }").Append(NumberColor(player.CriticalDamage + Effect.IncreaseCritDmg, "%")).Append("{ )}");
 
-      if (Effect.IncreaseCritPer != 0) resCT.Append($"{{\n크리티컬 확률 }}{{영구,{Colors.txtDanger}}}{{ 증가 : }}").Append(NumberColor(Effect.IncreaseCritPer, "%")).Append($"{{ ( {player.CritPer} % }}").Append(NumberColor(Effect.IncreaseCritPer, "%")).Append("{ → }").Append(NumberColor(player.CritPer + Effect.IncreaseCritPer, "%")).Append("{ )}");
+      if (Effect.IncreaseCritPer != 0) resCT.Append($"{{\n크리티컬 확률 }}{{영구,{Colors.txtDanger}}}{{ 증가 : }}").Append(NumberColor(Effect.IncreaseCritPer, "%")).Append($"{{ ( {player.CriticalPercent} % }}").Append(NumberColor(Effect.IncreaseCritPer, "%")).Append("{ → }").Append(NumberColor(player.CriticalPercent + Effect.IncreaseCritPer, "%")).Append("{ )}");
 
-      if (Effect.IncreaseIgnoreDef != 0) resCT.Append($"{{\n방어율 무시 }}{{영구,{Colors.txtDanger}}}{{ 증가 : }}").Append(NumberColor(Effect.IncreaseIgnoreDef, "%")).Append($"{{ ( {player.IgnoreDef} % }}").Append(NumberColor(Effect.IncreaseIgnoreDef, "%")).Append("{ → }").Append(NumberColor(player.IgnoreDef + Effect.IncreaseIgnoreDef, "%")).Append("{ )}");
+      if (Effect.IncreaseIgnoreDef != 0) resCT.Append($"{{\n방어율 무시 }}{{영구,{Colors.txtDanger}}}{{ 증가 : }}").Append(NumberColor(Effect.IncreaseIgnoreDef, "%")).Append($"{{ ( {player.PhysicalPenetration} % }}").Append(NumberColor(Effect.IncreaseIgnoreDef, "%")).Append("{ → }").Append(NumberColor(player.PhysicalPenetration + Effect.IncreaseIgnoreDef, "%")).Append("{ )}");
 
-      if (Effect.IncreaseDefPer != 0) resCT.Append($"{{\n방어율 }}{{영구,{Colors.txtDanger}}}{{ 증가 : }}").Append(NumberColor(Effect.IncreaseDefPer, "%")).Append($"{{ ( {player.DefPer} % }}").Append(NumberColor(Effect.IncreaseDefPer, "%")).Append("{ → }").Append(NumberColor(player.DefPer + Effect.IncreaseDefPer, "%")).Append("{ )}");
+      if (Effect.IncreaseDefPer != 0) resCT.Append($"{{\n방어율 }}{{영구,{Colors.txtDanger}}}{{ 증가 : }}").Append(NumberColor(Effect.IncreaseDefPer, "%")).Append($"{{ ( {player.PhysicalDefense} % }}").Append(NumberColor(Effect.IncreaseDefPer, "%")).Append("{ → }").Append(NumberColor(player.PhysicalDefense + Effect.IncreaseDefPer, "%")).Append("{ )}");
 
 
       if (Effect.InBattleMaxHp != 0) resCT.Append($"{{\n}}{{배틀 중 ,{Colors.txtDanger}}}{{최대 체력 증가 : }}").Append(NumberColor(Effect.InBattleMaxHp)).Append($"{{ ( {player.MaxHp} }}").Append(NumberColor(Effect.InBattleMaxHp)).Append("{ → }").Append(NumberColor(player.MaxHp + Effect.InBattleMaxHp)).Append("{ )}");
 
       if (Effect.InBattleMaxEp != 0) resCT.Append($"{{\n}}{{배틀 중 ,{Colors.txtDanger}}}{{최대 에너지 증가 : }}").Append(NumberColor(Effect.InBattleMaxEp)).Append($"{{ ( {player.MaxEp} }}").Append(NumberColor(Effect.InBattleMaxEp)).Append("{ → }").Append(NumberColor(player.MaxEp + Effect.InBattleMaxEp)).Append("{ )}");
 
-      if (Effect.InBattleAttDmg != 0) resCT.Append($"{{\n}}{{배틀 중 ,{Colors.txtDanger}}}{{공격력 증가 : }}").Append(NumberColor(Effect.InBattleAttDmg)).Append($"{{ ( {player.AttDmg} }}").Append(NumberColor(Effect.InBattleAttDmg)).Append("{ → }").Append(NumberColor(player.AttDmg + Effect.InBattleAttDmg)).Append("{ )}");
+      if (Effect.InBattleAttDmg != 0) resCT.Append($"{{\n}}{{배틀 중 ,{Colors.txtDanger}}}{{공격력 증가 : }}").Append(NumberColor(Effect.InBattleAttDmg)).Append($"{{ ( {player.PhysicalDamage} }}").Append(NumberColor(Effect.InBattleAttDmg)).Append("{ → }").Append(NumberColor(player.PhysicalDamage + Effect.InBattleAttDmg)).Append("{ )}");
 
-      if (Effect.InBattleCritDmg != 0) resCT.Append($"{{\n}}{{배틀 중 ,{Colors.txtDanger}}}{{크리티컬 데미지 증가 : }}").Append(NumberColor(Effect.InBattleCritDmg, "%")).Append($"{{ ( {player.CritDmg} % }}").Append(NumberColor(Effect.InBattleCritDmg, "%")).Append("{ → }").Append(NumberColor(player.CritDmg + Effect.InBattleCritDmg, "%")).Append("{ )}");
+      if (Effect.InBattleCritDmg != 0) resCT.Append($"{{\n}}{{배틀 중 ,{Colors.txtDanger}}}{{크리티컬 데미지 증가 : }}").Append(NumberColor(Effect.InBattleCritDmg, "%")).Append($"{{ ( {player.CriticalDamage} % }}").Append(NumberColor(Effect.InBattleCritDmg, "%")).Append("{ → }").Append(NumberColor(player.CriticalDamage + Effect.InBattleCritDmg, "%")).Append("{ )}");
 
-      if (Effect.InBattleCritPer != 0) resCT.Append($"{{\n}}{{배틀 중 ,{Colors.txtDanger}}}{{크리티컬 확률 증가 : }}").Append(NumberColor(Effect.InBattleCritPer, "%")).Append($"{{ ( {player.CritPer} % }}").Append(NumberColor(Effect.InBattleCritPer, "%")).Append("{ → }").Append(NumberColor(player.CritPer + Effect.InBattleCritPer, "%")).Append("{ )}");
+      if (Effect.InBattleCritPer != 0) resCT.Append($"{{\n}}{{배틀 중 ,{Colors.txtDanger}}}{{크리티컬 확률 증가 : }}").Append(NumberColor(Effect.InBattleCritPer, "%")).Append($"{{ ( {player.CriticalPercent} % }}").Append(NumberColor(Effect.InBattleCritPer, "%")).Append("{ → }").Append(NumberColor(player.CriticalPercent + Effect.InBattleCritPer, "%")).Append("{ )}");
 
-      if (Effect.InBattleIgnoreDef != 0) resCT.Append($"{{\n}}{{배틀 중 ,{Colors.txtDanger}}}{{방어율 무시 증가 : }}").Append(NumberColor(Effect.InBattleIgnoreDef, "%")).Append($"{{ ( {player.IgnoreDef} % }}").Append(NumberColor(Effect.InBattleIgnoreDef, "%")).Append("{ → }").Append(NumberColor(player.IgnoreDef + Effect.InBattleIgnoreDef, "%")).Append("{ )}");
+      if (Effect.InBattleIgnoreDef != 0) resCT.Append($"{{\n}}{{배틀 중 ,{Colors.txtDanger}}}{{방어율 무시 증가 : }}").Append(NumberColor(Effect.InBattleIgnoreDef, "%")).Append($"{{ ( {player.PhysicalPenetration} % }}").Append(NumberColor(Effect.InBattleIgnoreDef, "%")).Append("{ → }").Append(NumberColor(player.PhysicalPenetration + Effect.InBattleIgnoreDef, "%")).Append("{ )}");
 
-      if (Effect.InBattleDefPer != 0) resCT.Append($"{{\n}}{{배틀 중 ,{Colors.txtDanger}}}{{방어율 증가 : }}").Append(NumberColor(Effect.InBattleDefPer, "%")).Append($"{{ ( {player.DefPer} % }}").Append(NumberColor(Effect.InBattleDefPer, "%")).Append("{ → }").Append(NumberColor(player.DefPer + Effect.InBattleDefPer, "%")).Append("{ )}");
+      if (Effect.InBattleDefPer != 0) resCT.Append($"{{\n}}{{배틀 중 ,{Colors.txtDanger}}}{{방어율 증가 : }}").Append(NumberColor(Effect.InBattleDefPer, "%")).Append($"{{ ( {player.PhysicalDefense} % }}").Append(NumberColor(Effect.InBattleDefPer, "%")).Append("{ → }").Append(NumberColor(player.PhysicalDefense + Effect.InBattleDefPer, "%")).Append("{ )}");
 
       return resCT;
     }
@@ -66,8 +66,8 @@ namespace Goguma.Game.Object.Inventory.Item.Consume
     {
       player.Hp += Effect.HealHp;
       player.Ep += Effect.HealEp;
-      player.AttDmg += Effect.IncreaseAttDmg;
-      player.DefPer += Effect.IncreaseDefPer;
+      player.PhysicalDamage += Effect.IncreaseAttDmg;
+      player.PhysicalDefense += Effect.IncreaseDefPer;
       player.Gold += Effect.IncreaseGold;
       player.Exp += Effect.IncreaseExp;
     }

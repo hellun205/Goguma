@@ -1,11 +1,11 @@
 using System;
 using Goguma.Game.Console;
-using Goguma.Game.Object.Inventory.Item.Equipment;
+using Goguma.Game.Object.Skill.Attack;
 
 namespace Goguma.Game.Object.Skill.Skills.Mob.Slime
 {
   [Serializable]
-  public class StickyAttack : AttackSkill
+  public class StickyAttack : AMagicAttackSkill
   {
     public override string Name => "끈적 공격";
 
@@ -13,9 +13,9 @@ namespace Goguma.Game.Object.Skill.Skills.Mob.Slime
 
     public override CTexts Descriptions => CTexts.Make("{슬라임의 역겨운 공격이다.}");
 
-    public override WeaponEffect Effect => new()
+    public override AttackEffect Effect => new()
     {
-      AttDmg = 2
+      MagicDamage = 2
     };
   }
 }

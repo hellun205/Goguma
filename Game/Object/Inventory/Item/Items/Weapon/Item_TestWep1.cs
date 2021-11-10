@@ -17,10 +17,10 @@ namespace Goguma.Game.Object.Inventory.Item.Items
 
     public override WeaponEffect Effect => new()
     {
-      AttDmg = 1,
+      PhysicalDamage = 1,
       CritDmg = 10,
       CritPer = 50,
-      IgnoreDef = 0.5
+      PhysicalPenetration = 0.5
     };
 
     public Item_TestWep1() : base() { }

@@ -61,10 +61,10 @@ namespace Goguma.Game.Object.Inventory
               var itemInstance = (IEquipmentItem)((ItemPair)item).ItemM;
               if (itemInstance.EType == WearingType.Weapon)
               {
-                resultEffect.AttDmg += ((EWeapon)itemInstance).Effect.AttDmg;
+                resultEffect.PhysicalDamage += ((EWeapon)itemInstance).Effect.PhysicalDamage;
                 resultEffect.CritDmg += ((EWeapon)itemInstance).Effect.CritDmg;
                 resultEffect.CritPer += ((EWeapon)itemInstance).Effect.CritPer;
-                resultEffect.IgnoreDef += ((EWeapon)itemInstance).Effect.IgnoreDef;
+                resultEffect.PhysicalPenetration += ((EWeapon)itemInstance).Effect.PhysicalPenetration;
               }
             }
           }
@@ -174,7 +174,7 @@ namespace Goguma.Game.Object.Inventory
         case InvenType.Having:
           return "소지";
         default:
-          return null;
+          return "null";
       }
     }
   }

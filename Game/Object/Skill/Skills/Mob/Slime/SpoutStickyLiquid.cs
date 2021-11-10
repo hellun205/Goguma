@@ -1,11 +1,11 @@
 using System;
 using Goguma.Game.Console;
-using Goguma.Game.Object.Inventory.Item.Equipment;
+using Goguma.Game.Object.Skill.Attack;
 
 namespace Goguma.Game.Object.Skill.Skills.Mob.Slime
 {
   [Serializable]
-  public class SpoutStickyLiquid : AttackSkill
+  public class SpoutStickyLiquid : AMagicAttackSkill
   {
     public override string Name => "끈적한 액체 내뿜기";
 
@@ -13,10 +13,10 @@ namespace Goguma.Game.Object.Skill.Skills.Mob.Slime
 
     public override CTexts Descriptions => CTexts.Make("{슬라임의 역겨운 공격2}");
 
-    public override WeaponEffect Effect => new()
+    public override AttackEffect Effect => new()
     {
-      AttDmg = 2.7,
-      IgnoreDef = 0.3
+      MagicDamage = 2.7,
+      MagicPenetration = 0.3
     };
   }
 }

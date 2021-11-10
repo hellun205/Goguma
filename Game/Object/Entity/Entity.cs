@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
 using Goguma.Game.Console;
-using Goguma.Game.Object.Entity.Monster;
 using Goguma.Game.Object.Skill;
 using static Goguma.Game.Console.StringFunction;
 using static Goguma.Game.Console.ConsoleFunction;
 using Colorify;
-using Goguma.Game.Object.Inventory.Item.Equipment;
+using Goguma.Game.Object.Entity.Player;
+using Goguma.Game.Object.Skill.Attack;
+using Goguma.Game.Object.Skill.Buff;
 
 namespace Goguma.Game.Object.Entity
 {
@@ -14,69 +15,95 @@ namespace Goguma.Game.Object.Entity
   public abstract class Entity : IEntity
   {
     public virtual string Name { get; set; }
+
+    public virtual CTexts DisplayName => CTexts.Make($"{{{Name}}}");
+
     public abstract EntityType Type { get; }
+
+    public virtual ClassType Class => ClassType.WARRIOR;
+
     public virtual int Level { get; set; }
+
     public virtual double Hp
     {
       get => Math.Round(hp, 2);
       set => hp = Math.Min(value, MaxHp);
     }
+
     public virtual double MaxHp
     {
       get => Math.Round(maxHp + BuffsIncrease.MaxHp, 2);
       set => maxHp = Math.Max(1, value);
     }
-    public virtual double AttDmg
+
+    public virtual double PhysicalDamage
     {
-      get => Math.Round(attDmg + BuffsIncrease.AttDmg, 2);
-      set => attDmg = Math.Max(0, value);
+      get => Math.Round(physicalDamage + BuffsIncrease.PhysicalDamage, 2);
+      set => physicalDamage = Math.Max(0, value);
     }
 
-    public virtual double DefPer
+    public virtual double PhysicalDefense
     {
-      get => Math.Round(defPer + BuffsIncrease.DefPer, 2);
-      set => defPer = Math.Max(0, value);
+      get => Math.Round(physicalDefense + BuffsIncrease.PhysicalDefense, 2);
+      set => physicalDefense = Math.Max(0, value);
     }
-    public virtual double IgnoreDef
+
+    public virtual double PhysicalPenetration
     {
-      get => Math.Round(ignoreDef + BuffsIncrease.IgnoreDef, 2);
-      set => ignoreDef = Math.Max(0, value);
+      get => Math.Round(physicalPenetration + BuffsIncrease.PhysicalPenetration, 2);
+      set => physicalPenetration = Math.Max(0, value);
     }
-    public virtual double CritDmg
+
+    public virtual double CriticalDamage
     {
-      get => Math.Round(critDmg + BuffsIncrease.CritDmg, 2);
-      set => critDmg = Math.Max(0, value);
+      get => Math.Round(criticalDamage + BuffsIncrease.CriticalDamage, 2);
+      set => criticalDamage = Math.Max(0, value);
     }
-    public virtual double CritPer
+
+    public virtual double CriticalPercent
     {
-      get => Math.Floor(critPer + BuffsIncrease.CritPer);
-      set => critPer = Math.Max(0, value);
+      get => Math.Floor(criticalPercent + BuffsIncrease.CriticalPercent);
+      set => criticalPercent = Math.Max(0, value);
     }
+
+    public virtual double MagicDamage
+    {
+      get => Math.Round(magicDamage + BuffsIncrease.MagicDamage, 2);
+      set => magicDamage = Math.Max(0, value);
+    }
+
+    public virtual double MagicDefense
+    {
+      get => Math.Round(magicDefense + BuffsIncrease.MagicDefense, 2);
+      set => magicDefense = Math.Max(0, value);
+    }
+
+    public virtual double MagicPenetration
+    {
+      get => Math.Round(magicPenetration + BuffsIncrease.MagicPenetration, 2);
+      set => magicPenetration = Math.Max(0, value);
+    }
+
     public List<ISkill> Skills { get; set; }
+
     public List<IBuffSkill> Buffs { get; set; }
+
     protected double hp;
     protected double maxHp;
-    protected double attDmg;
-    protected double critDmg;
-    protected double critPer;
-    protected double defPer;
-    protected double ignoreDef;
-    protected virtual Buff BuffsIncrease
+    protected double physicalDamage;
+    protected double physicalDefense;
+    protected double physicalPenetration;
+    protected double magicDamage;
+    protected double magicDefense;
+    protected double magicPenetration;
+    protected double criticalDamage;
+    protected double criticalPercent;
+    protected virtual BuffEffect BuffsIncrease
     {
       get
       {
-        var resultBuff = new Buff();
-        foreach (var bf in Buffs)
-        {
-          resultBuff.MaxHp += bf.buff.MaxHp;
-          resultBuff.MaxEp += bf.buff.MaxEp;
-          resultBuff.AttDmg += bf.buff.AttDmg;
-          resultBuff.DefPer += bf.buff.DefPer;
-          resultBuff.CritPer += bf.buff.CritPer;
-          resultBuff.CritDmg += bf.buff.CritDmg;
-          resultBuff.IgnoreDef += bf.buff.IgnoreDef;
-        }
-        return resultBuff;
+        var resultBuff = new BuffEffect();
+        return resultBuff.Plus(Buffs.ToArray());
       }
     }
     public Entity()
@@ -89,19 +116,19 @@ namespace Goguma.Game.Object.Entity
     {
       Level = entity.Level;
       Hp = entity.Hp;
-      AttDmg = entity.AttDmg;
-      DefPer = entity.DefPer;
-      CritDmg = entity.CritDmg;
-      CritPer = entity.CritPer;
-      IgnoreDef = entity.IgnoreDef;
+      PhysicalDamage = entity.PhysicalDamage;
+      PhysicalDefense = entity.PhysicalDefense;
+      CriticalDamage = entity.CriticalDamage;
+      CriticalPercent = entity.CriticalPercent;
+      PhysicalPenetration = entity.PhysicalPenetration;
       MaxHp = entity.MaxHp;
     }
 
     public virtual void AddBuff(IBuffSkill skill)
     {
       Buffs.Add(skill);
-      if (skill.buff.Hp != 0)
-        Hp += skill.buff.Hp;
+      if (skill.Effect.Hp != 0)
+        Hp += skill.Effect.Hp;
     }
 
     public virtual void RemoveBuff(IBuffSkill skill)
@@ -126,34 +153,40 @@ namespace Goguma.Game.Object.Entity
         .Append($"{{\n{GetSep(40, $"{Name} [ Lv. {Level} ]")}}}")
         .Append("{\n체력 : }")
         .Append(GetHpBar())
-        .Append($"{{\n공격력 : }}{{{AttDmg},{Colors.txtDanger}}}")
-        .Append($"{{\n크리티컬 데미지 : }}{{{CritDmg} %,{Colors.txtDanger}}}")
-        .Append($"{{\n크리티컬 확률 : }}{{{CritPer} %,{Colors.txtDanger}}}")
-        .Append($"{{\n방어율 무시 : }}{{{IgnoreDef} %,{Colors.txtDanger}}}")
-        .Append($"{{\n방어율 : }}{{{DefPer} %,{Colors.txtInfo}}}")
+        .Append($"{{\n물리 공격력 : }}{{{PhysicalDamage},{Colors.txtDanger}}}")
+        .Append($"{{\t\t마법 공격력 : }}{{{MagicDamage},{Colors.txtInfo}}}")
+
+        .Append($"{{\n물리 관통력 : }}{{{PhysicalPenetration},{Colors.txtDanger}}}")
+        .Append($"{{\t\t마법 관통력 : }}{{{MagicPenetration},{Colors.txtInfo}}}")
+
+        .Append($"{{\n물리 방어력 : }}{{{PhysicalDefense},{Colors.txtDanger}}}{{ ({Math.Floor(1 - (100 / (100 + PhysicalDefense)))}%)}}")
+        .Append($"{{\t\t마법 방어력 : }}{{{MagicDefense},{Colors.txtInfo}}}{{ ({Math.Floor(1 - (100 / (100 + MagicDefense)))}%)}}")
+
+        .Append($"{{\n치명타 데미지 : }}{{{CriticalDamage} %,{Colors.txtWarning}}}")
+        .Append($"{{\t치명타 확률 : }}{{{CriticalPercent} %,{Colors.txtWarning}}}")
         .Append($"{{\n{GetSep(40)}}}");
     }
 
     public virtual double CalAttDmg(IAttackSkill aSkill, IEntity entity, out bool isCrit)
     {
-      var dmg = DamageByLevel((AttDmg + aSkill.Effect.AttDmg), Level, entity.Level) * (1 - ((entity.DefPer / 100) - ((IgnoreDef + aSkill.Effect.IgnoreDef) / 100)));
-      return CalCritDmg(dmg, out isCrit, aSkill.Effect);
+      var damage = ((PhysicalDamage + aSkill.Effect.PhysicalDamage) * (100 / (100 + entity.PhysicalDefense - PhysicalPenetration + aSkill.Effect.PhysicalPenetration))) + ((MagicDamage + aSkill.Effect.MagicDamage) * (100 / (100 + entity.MagicDefense - MagicPenetration + aSkill.Effect.MagicPenetration)));
+      return CalCritDmg(damage, out isCrit, aSkill.Effect);
     }
 
     public virtual double CalAttDmg(IEntity entity, out bool isCrit)
     {
-      var dmg = DamageByLevel(AttDmg, Level, entity.Level) * (1 - ((entity.DefPer / 100) - ((IgnoreDef) / 100)));
-      return CalCritDmg(dmg, out isCrit);
+      var damage = (PhysicalDamage * (100 / (100 + entity.PhysicalDefense - PhysicalPenetration))) + (MagicDamage * (100 / (100 + entity.MagicDefense - MagicPenetration)));
+      return CalCritDmg(damage, out isCrit);
     }
 
-    protected virtual double CalCritDmg(double dmg, out bool isCrit, WeaponEffect wEffect)
+    protected virtual double CalCritDmg(double dmg, out bool isCrit, AttackEffect wEffect)
     {
       var rand = new Random().Next(0, 101);
-      var critPer = Math.Round(CritPer + wEffect.CritPer, 2);
+      var critPer = Math.Round(CriticalPercent + wEffect.CriticalPercent, 2);
       if (critPer >= rand)
       {
         isCrit = true;
-        return Math.Round(dmg * (1 + ((CritDmg + wEffect.CritDmg) / 100)), 2);
+        return Math.Round(dmg * (1 + ((CriticalDamage + wEffect.CriticalDamage) / 100)), 2);
       }
       else
       {
@@ -165,11 +198,11 @@ namespace Goguma.Game.Object.Entity
     protected virtual double CalCritDmg(double dmg, out bool isCrit)
     {
       var rand = new Random().Next(0, 101);
-      var critPer = Math.Round(CritPer, 2);
+      var critPer = Math.Round(CriticalPercent, 2);
       if (critPer >= rand)
       {
         isCrit = true;
-        return Math.Round(dmg * (1 + (CritDmg / 100)), 2);
+        return Math.Round(dmg * (1 + (CriticalDamage / 100)), 2);
       }
       else
       {
@@ -188,5 +221,7 @@ namespace Goguma.Game.Object.Entity
     }
 
     public bool IsDead => (Hp <= 0);
+
+
   }
 }

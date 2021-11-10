@@ -17,7 +17,7 @@ namespace Goguma.Game.Object.Inventory.Item.Items
 
     public override WeaponEffect Effect => new()
     {
-      AttDmg = 3
+      PhysicalDamage = 3
     };
 
     public override int SalePrice => 7;
