@@ -25,7 +25,7 @@ namespace Goguma
       if (InGame.player != null)
       {
         PlayerSave.SaveCurrentPlayer();
-        ConsoleFunction.PrintText("저장되었습니다.");
+        ConsoleFunction.PrintText("고구마 저장 완료");
       }
     }
   }

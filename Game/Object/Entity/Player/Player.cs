@@ -139,7 +139,7 @@ namespace Goguma.Game.Object.Entity.Player
     public Player() : base()
     {
       Inventory = new Inventory.Inventory(this);
-      Loc = new Location(Towns.kks.Name, true);
+      Loc = new Location(Towns.gogumaPlantation.Name, true);
       Quest = new();
       CompletedQuests = new();
       KilledMobs = new();

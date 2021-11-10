@@ -17,8 +17,6 @@ namespace Goguma.Game.Object.Quest
 
         case QuestList.TestQuest4: return QstTestQuest4.Instance;
 
-        case QuestList.StudentAQuest1: return StudentAQuest1.Instance;
-
         default: throw new NotImplementedException();
       }
     }
@@ -34,8 +32,6 @@ namespace Goguma.Game.Object.Quest
         case QuestList.TestQuest3: return new QstTestQuest3();
 
         case QuestList.TestQuest4: return new QstTestQuest4();
-
-        case QuestList.StudentAQuest1: return new StudentAQuest1();
 
         default: throw new NotImplementedException();
       }

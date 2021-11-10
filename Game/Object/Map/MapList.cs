@@ -4,6 +4,7 @@ namespace Goguma.Game.Object.Map
   {
     KRoad,
     HellunTown,
-    KksTown
+    KksTown,
+    GogumaPlantation
   }
 }

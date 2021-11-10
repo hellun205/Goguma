@@ -33,15 +33,15 @@ namespace Goguma.Game
       Player playerData;
       var pc = PlayerSave.GetPlayerList().Count;
 
-      var qt = CTexts.Make($"{{고구마 게임,{Colors.bgWarning}}}");
+      var qt = CTexts.Make($"{{고구마,{Colors.bgWarning}}}");
 
       var ssi = new SelectSceneItems();
-      ssi.Add("{새로 시작}");
+      ssi.Add("{새로운 고구마}");
       if (pc > 0)
-        ssi.Add("{이어서 시작}");
-      ssi.Add("{게임 종료}");
+        ssi.Add("{이미 있는 고구마}");
+      ssi.Add("{종료}");
 
-      Func<bool> keepPlay = () =>
+      bool KeepPlay()
       {
         playerData = PlayerSave.GetPlayerData();
         if (playerData != null)
@@ -49,13 +49,14 @@ namespace Goguma.Game
           player = playerData;
           return true;
         }
-        else return false;
-      };
+        else
+          return false;
+      }
 
       var ss = new SelectScene(qt, ssi);
       switch (ss.getString)
       {
-        case "새로 시작":
+        case "새로운 고구마":
           playerData = PlayerSave.CreatePlayerData();
           if (playerData != null)
           {
@@ -63,10 +64,10 @@ namespace Goguma.Game
             return;
           }
           break;
-        case "이어서 시작":
-          if (keepPlay()) return;
+        case "이미 있는 고구마":
+          if (KeepPlay()) return;
           break;
-        case "게임 종료":
+        case "종료":
           ExitGame();
           break;
       }
@@ -74,7 +75,7 @@ namespace Goguma.Game
 
     public static void ExitGame()
     {
-      if (ReadYesOrNo(CTexts.Make("{진짜로 종료하시겠습니까?}")))
+      if (ReadYesOrNo(CTexts.Make("{고구마를 내버려두고 가시는 겁니까?}"), "고구마를 내버려두고 종료한다", "아니다, 고구마를 키우러 간다"))
         Environment.Exit(0);
     }
 

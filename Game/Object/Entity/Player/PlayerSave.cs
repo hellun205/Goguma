@@ -16,7 +16,7 @@ namespace Goguma.Game.Object.Entity.Player
     {
       CreateDirectory(InGame.player.Name);
 
-      var ws = new FileStream($"datas/{InGame.player.Name}/player.pdata", FileMode.OpenOrCreate);
+      var ws = new FileStream($"datas/{InGame.player.Name}/data.goguma", FileMode.OpenOrCreate);
       var serializer = new BinaryFormatter();
 
 #pragma warning disable SYSLIB0011
@@ -28,7 +28,7 @@ namespace Goguma.Game.Object.Entity.Player
     {
       CreateDirectory(player.Name);
 
-      var ws = new FileStream($"datas/{player.Name}/player.pdata", FileMode.OpenOrCreate);
+      var ws = new FileStream($"datas/{player.Name}/data.goguma", FileMode.OpenOrCreate);
       var serializer = new BinaryFormatter();
 
 #pragma warning disable SYSLIB0011
@@ -79,12 +79,12 @@ namespace Goguma.Game.Object.Entity.Player
           return true;
       };
 
-      var name = ReadText("{만들 캐릭터의 이름을 입력하세요.}", checkNull);
+      var name = ReadText("{만들 고구마의 이름을 입력하세요.}", checkNull);
       if (name == "" || name == null) return null;
       name = name.Trim();
       if (IsExistUserName(name))
       {
-        if (ReadYesOrNo(CTexts.Make("{캐릭터가 이미 존재합니다. 불러오시겠습니까?}")))
+        if (ReadYesOrNo(CTexts.Make("{동일 이름의 고구마가 이미 존재합니다. 불러오시겠습니까?}")))
           return LoadPlayerData(name);
         else
           return null;
@@ -111,7 +111,7 @@ namespace Goguma.Game.Object.Entity.Player
     {
       CreateDirectory();
 
-      var qt = CTexts.Make("{불러올 캐릭터를 선택하세요.}");
+      var qt = CTexts.Make("{불러올 고구마를 선택하세요.}");
       var ssi = new SelectSceneItems();
 
       var di = new DirectoryInfo("datas");
@@ -127,7 +127,7 @@ namespace Goguma.Game.Object.Entity.Player
 
       if (player == null)
       {
-        PrintText("캐릭터를 찾을 수 없습니다.");
+        PrintText("해당 고구마를 찾을 수 없습니다.");
         Pause();
         return null;
       }

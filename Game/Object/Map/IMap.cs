@@ -8,5 +8,6 @@ namespace Goguma.Game.Object.Map
     public string Desc { get; }
     public bool IsTown { get; }
     public List<MapList> Adjacents { get; }
+    public EntryRequirements Requirements { get; }
   }
 }

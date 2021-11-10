@@ -8,10 +8,8 @@ namespace Goguma.Game.Object.Map.Road
   {
     public abstract string Name { get; }
     public abstract string Desc { get; }
-    public bool IsTown
-    {
-      get => false;
-    }
+    public virtual EntryRequirements Requirements => EntryRequirements.Empty;
+    public bool IsTown => false;
     public List<MapList> Adjacents { get; protected set; }
 
     public struct RoadMonster

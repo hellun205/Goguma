@@ -11,7 +11,7 @@ namespace Goguma.Game.Object.Entity
   {
     string Name { get; set; }
     CTexts DisplayName { get; }
-    ClassType Class { get; }
+    Class Class { get; }
     EntityType Type { get; }
     double Hp { get; set; }
     double MaxHp { get; set; }

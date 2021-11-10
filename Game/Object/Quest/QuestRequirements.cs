@@ -12,6 +12,7 @@ namespace Goguma.Game.Object.Quest
     public bool Disposable { get; set; }
     public List<QuestList> CompletedQuests { get; set; }
 
+
     public QuestRequirements(QuestList quest)
     {
       MinLv = 0;

@@ -9,10 +9,9 @@ namespace Goguma.Game.Object.Map.Town
   {
     public abstract string Name { get; }
     public abstract string Desc { get; }
-    public bool IsTown
-    {
-      get => true;
-    }
+    public virtual EntryRequirements Requirements => EntryRequirements.Empty;
+
+    public bool IsTown => true;
     public List<MapList> Adjacents { get; protected set; }
     public List<NpcList> Npcs { get; protected set; }
 

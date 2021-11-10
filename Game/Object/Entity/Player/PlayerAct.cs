@@ -23,7 +23,7 @@ namespace Goguma.Game.Object.Entity.Player
       {
         Func<Location, CTexts> getQText = (Location loc) =>
         {
-          var map = Maps.GetMapByName(loc.Loc);
+          var map = Maps.GetMap(loc.Loc);
           string colors;
 
           if (loc.InTown)
@@ -179,7 +179,7 @@ namespace Goguma.Game.Object.Entity.Player
     private static void TalkWithNpc()
     {
       if (!InGame.player.Loc.InTown) return;
-      var town = (Town)Maps.GetMapByName(InGame.player.Loc.Loc);
+      var town = (Town)Maps.GetMap(InGame.player.Loc.Loc);
 
       var ssi = new SelectSceneItems();
 
@@ -221,7 +221,7 @@ namespace Goguma.Game.Object.Entity.Player
       {
         sb.Append("\n\n편의 시설");
 
-        var town = (Town)Maps.GetMapByName(InGame.player.Loc.Loc);
+        var town = (Town)Maps.GetMap(InGame.player.Loc.Loc);
 
         if (town.Facilities.Count < 1)
           sb.Append("\n없음");
@@ -233,7 +233,7 @@ namespace Goguma.Game.Object.Entity.Player
       {
         sb.Append("\n\n출현 몬스터");
 
-        var road = (Road)Maps.GetMapByName(InGame.player.Loc.Loc);
+        var road = (Road)Maps.GetMap(InGame.player.Loc.Loc);
 
         if (road.SummonMonsters.Count < 1)
           sb.Append("\n없음");
@@ -250,7 +250,7 @@ namespace Goguma.Game.Object.Entity.Player
     private static void UseFacility()
     {
       if (!InGame.player.Loc.InTown) return;
-      var town = (Town)Maps.GetMapByName(InGame.player.Loc.Loc);
+      var town = (Town)Maps.GetMap(InGame.player.Loc.Loc);
       var ssi = new SelectSceneItems();
 
       foreach (var f in town.Facilities)
@@ -265,7 +265,7 @@ namespace Goguma.Game.Object.Entity.Player
     {
       if (InGame.player.Loc.InTown) return;
 
-      var road = (Road)Maps.GetMapByName(InGame.player.Loc.Loc);
+      var road = (Road)Maps.GetMap(InGame.player.Loc.Loc);
       var monster = road.SummonMonster();
 
       Battle.Battle.PvE(monster);
