@@ -2,9 +2,9 @@ namespace Goguma.Game.Object.Map
 {
   public enum MapList
   {
-    KRoad,
-    HellunTown,
-    KksTown,
-    GogumaPlantation
+    K_ROAD,
+    HELLUN_TOWN,
+    KKS_TOWN,
+    GOGUMA_PLANTATION
   }
 }

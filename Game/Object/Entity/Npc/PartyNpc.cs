@@ -1,14 +1,14 @@
 using static Goguma.Game.Console.ConsoleFunction;
-using static Goguma.Game.Console.StringFunction;
 using Colorify;
 using System;
 
 namespace Goguma.Game.Object.Entity.Npc
 {
   [Serializable]
+  [Obsolete("not use", true)]
   public class PartyNpc : Entity
   {
-    public override EntityType Type => EntityType.Npc;
+    public override EntityType Type => EntityType.NPC;
 
     public bool AddPartyMember()
     {

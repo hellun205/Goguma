@@ -13,7 +13,7 @@ namespace Goguma.Game.Object.Npc.NpcTrader
 
     public override string Name => "상인 A";
 
-    public override NpcList Material => NpcList.TraderDefault;
+    public override NpcList Material => NpcList.TRADER_DEFAULT;
 
     public override DNpcSay[] MeetDialog => new[] { new DNpcSay(this, "{어서오시오}") };
 

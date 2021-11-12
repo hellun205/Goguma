@@ -7,7 +7,7 @@ namespace Goguma.Game.Object.Inventory.Item.Items
   [Serializable]
   public class ItemTestWep1 : EWeapon
   {
-    public override ItemList Material => ItemList.TestItem1;
+    public override ItemList Material => ItemList.TEST_ITEM1;
 
     public static readonly IItem Instance = new ItemTestWep1();
 

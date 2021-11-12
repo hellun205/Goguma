@@ -94,10 +94,10 @@ namespace Goguma.Game.Object.Battle
       {
         while (true)
         {
-          var skSc = BattleScene.PvE.Playerm.SelSkill(SkillType.AttackSkill);
+          var skSc = BattleScene.PvE.Playerm.SelSkill(SkillType.ATTACK_SKILL);
           if (skSc == null) return false;
           var skills = from sk in player.Skills
-                       where sk.Type == SkillType.AttackSkill
+                       where sk.Type == SkillType.ATTACK_SKILL
                        select sk;
           var skill = skills.ToList<ISkill>()[skSc.getIndex];
           while (true)
@@ -135,9 +135,9 @@ namespace Goguma.Game.Object.Battle
               case "사용 하기":
                 switch (skill.Type)
                 {
-                  case SkillType.AttackSkill:
+                  case SkillType.ATTACK_SKILL:
                     return useAttackSkill((IAttackSkill)skill);
-                  case SkillType.BuffSkill:
+                  case SkillType.BUFF_SKILL:
                     return useBuffSkill((IBuffSkill)skill);
                   default:
                     return false;
@@ -237,10 +237,10 @@ namespace Goguma.Game.Object.Battle
           {
             switch (skill.Type)
             {
-              case SkillType.AttackSkill:
+              case SkillType.ATTACK_SKILL:
                 if (skillAttack()) return;
                 break;
-              case SkillType.BuffSkill:
+              case SkillType.BUFF_SKILL:
                 if (buffSkill()) return;
                 break;
             }

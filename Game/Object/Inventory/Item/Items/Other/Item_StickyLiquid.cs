@@ -7,7 +7,7 @@ namespace Goguma.Game.Object.Inventory.Item.Items
   [Serializable]
   public class ItemStickyLiquid : OtherItem
   {
-    public override ItemList Material => ItemList.StickyLiquid;
+    public override ItemList Material => ItemList.STICKY_LIQUID;
 
     public static readonly IItem Instance = new ItemStickyLiquid();
 

@@ -16,7 +16,7 @@ namespace Goguma.Game.Object.Npc.NpcTrader
   {
     public abstract List<IItem> ItemsForSale { get; }
 
-    public override NpcType NpcType => NpcType.Trader;
+    public override NpcType NpcType => NpcType.TRADER;
 
     public abstract DNpcSay[] OpenShopDialog { get; }
 
@@ -93,13 +93,13 @@ namespace Goguma.Game.Object.Npc.NpcTrader
         if (item == null) return;
         var itemP = (ItemPair)item;
         int count = 1;
-        if (invenType == InvenType.Having)
+        if (invenType == InvenType.HAVING)
           if (ReadInt(CTexts.Make($"{{아이템 }}").Combine(itemP.ItemM.DisplayName).Combine($"{{(이)가 총 {itemP.Count}개 있습니다. 몇개를 판매하시겠습니까?\n 판매 가격: {itemP.ItemM.SalePrice}}}"), out count, 0, 0, itemP.Count)) return;
 
         var sell = ReadYesOrNo(CTexts.Make($"{{아이템 }}").Combine(itemP.ItemM.DisplayName).Combine($"{{{(count == 1 ? "(을)를}}" : $" {count}개,{Colors.txtSuccess}}}{{를}}")}{{{itemP.ItemM.SalePrice * count}G,{Colors.txtWarning}}}{{에 판매하시겠습니까?}}"));
         if (sell)
         {
-          if (invenType == InvenType.Having)
+          if (invenType == InvenType.HAVING)
             InGame.player.Inventory.RemoveItem(new ItemPair(itemP.Item, count));
           else
             InGame.player.Inventory.RemoveItem(((EquipmentItem)itemP.ItemM).EType);

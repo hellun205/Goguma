@@ -7,7 +7,7 @@ namespace Goguma.Game.Object.Inventory.Item.Items
   [Serializable]
   public class ItemTestHead1 : EHead
   {
-    public override ItemList Material => ItemList.TestItem2;
+    public override ItemList Material => ItemList.TEST_ITEM2;
 
     public static readonly IItem Instance = new ItemTestHead1();
 

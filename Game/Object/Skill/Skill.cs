@@ -20,9 +20,9 @@ namespace Goguma.Game.Object.Skill
     {
       switch (type)
       {
-        case SkillType.AttackSkill:
+        case SkillType.ATTACK_SKILL:
           return "공격";
-        case SkillType.BuffSkill:
+        case SkillType.BUFF_SKILL:
           return "버프";
         default:
           throw new NotImplementedException();

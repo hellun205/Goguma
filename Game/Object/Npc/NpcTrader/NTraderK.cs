@@ -15,7 +15,7 @@ namespace Goguma.Game.Object.Npc.NpcTrader
 
     public override string NameColor => Colors.txtInfo;
 
-    public override NpcList Material => NpcList.TraderK;
+    public override NpcList Material => NpcList.TRADER_K;
 
     public override DNpcSay[] MeetDialog => new[] { new DNpcSay(this, "{어서 옵쇼~}") };
 
@@ -23,10 +23,9 @@ namespace Goguma.Game.Object.Npc.NpcTrader
 
     public override List<QuestList> Quests => new()
     {
-      QuestList.TestQuest,
-      QuestList.TestQuest2,
-      QuestList.TestQuest3,
-      QuestList.TestQuest4
+      QuestList.TEST_QUEST,
+      QuestList.TEST_QUEST2,
+      QuestList.TEST_QUEST3,
     };
 
     public override DNpcSay[] OpenShopDialog => new[] { new DNpcSay(this, "{물건 많이 있수다!}") };

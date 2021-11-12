@@ -11,7 +11,7 @@ namespace Goguma.Game.Object.Inventory.Item.Consume
   {
     public abstract PotionEffect Effect { get; }
 
-    public override ConsumeItemType CType => ConsumeItemType.Potion;
+    public override ConsumeItemType CType => ConsumeItemType.POTION;
 
     public CPotion() : base() { }
 

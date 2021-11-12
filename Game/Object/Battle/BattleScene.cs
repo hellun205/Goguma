@@ -60,7 +60,7 @@ namespace Goguma.Game.Object.Battle
       }
       static private CTexts CasterText(IEntity caster)
       {
-        return caster.Type == EntityType.Player ? CTexts.Make($"{{당신,{Colors.txtInfo}}}") : MonsterText((IMonster)caster);
+        return caster.Type == EntityType.PLAYER ? CTexts.Make($"{{당신,{Colors.txtInfo}}}") : MonsterText((IMonster)caster);
       }
 
       static private CTexts ItemText(IItem item)
@@ -72,7 +72,7 @@ namespace Goguma.Game.Object.Battle
       {
 
         var ct = CTexts.Make($"{{\n  }}").Combine(CasterText(caster)).Combine("{(이)가 }").Combine(SkillText(skill)).Combine($"{{(을)를 사용했습니다.}}");
-        if (caster.Type == EntityType.Player)
+        if (caster.Type == EntityType.PLAYER)
           PrintCText(ct.Combine($"{{\n    남은 에너지: }}").Combine(((Player)caster).GetEpBar()).Combine($"{{\n    사용한 에너지: }}{{{skill.UseEp}\n, {Colors.txtWarning}}}"));
         else PrintCText(ct);
 
@@ -121,7 +121,7 @@ namespace Goguma.Game.Object.Battle
             resCt.Append(getText($"{{체력을 }}{{{skill.Effect.Hp},{Colors.txtInfo}}}", true));
           }
 
-          if (skill.Effect.Ep != 0 && caster.Type == EntityType.Player)
+          if (skill.Effect.Ep != 0 && caster.Type == EntityType.PLAYER)
           {
             isBuff = true;
             resCt.Append(getText($"{{에너지를 }}{{{skill.Effect.Ep},{Colors.txtInfo}}}", true));
@@ -133,7 +133,7 @@ namespace Goguma.Game.Object.Battle
             resCt.Append(getText($"{{최대 체력이 }}{{{skill.Effect.MaxHp},{Colors.txtWarning}}}", false));
           }
 
-          if (skill.Effect.MaxEp != 0 && caster.Type == EntityType.Player)
+          if (skill.Effect.MaxEp != 0 && caster.Type == EntityType.PLAYER)
           {
             isBuff = true;
             resCt.Append(getText($"{{최대 에너지가 }}{{{skill.Effect.MaxEp},{Colors.txtWarning}}}", false));

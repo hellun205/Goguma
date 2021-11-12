@@ -7,7 +7,7 @@ namespace Goguma.Game.Object.Inventory.Item.Items
   [Serializable]
   public class ItemGoblinsArmor : EChestplate
   {
-    public override ItemList Material => ItemList.GoblinsArmor;
+    public override ItemList Material => ItemList.GOBLINS_ARMOR;
 
     public static readonly IItem Instance = new ItemGoblinsArmor();
 

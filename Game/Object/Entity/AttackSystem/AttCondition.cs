@@ -38,17 +38,17 @@ namespace Goguma.Game.Object.Entity.AttackSystem
     {
       switch (cond)
       {
-        case Cond.MonsterHp: return _monster.Hp;
+        case Cond.MONSTER_HP: return _monster.Hp;
 
-        case Cond.PlayerHp: return _player.Hp;
+        case Cond.PLAYER_HP: return _player.Hp;
 
-        case Cond.MonsterMaxHp: return _monster.MaxHp;
+        case Cond.MONSTER_MAX_HP: return _monster.MaxHp;
 
-        case Cond.PlayerMaxHp: return _player.MaxHp;
+        case Cond.PLAYER_MAX_HP: return _player.MaxHp;
 
-        case Cond.PlayerHpPer: return _player.Hp / _player.MaxHp;
+        case Cond.PLAYER_HP_PER: return _player.Hp / _player.MaxHp;
 
-        case Cond.MonsterHpPer: return _monster.Hp / _monster.MaxHp;
+        case Cond.MONSTER_HP_PER: return _monster.Hp / _monster.MaxHp;
 
         default: return 0;
 

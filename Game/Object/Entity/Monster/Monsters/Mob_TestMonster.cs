@@ -11,7 +11,7 @@ namespace Goguma.Game.Object.Entity.Monster.Monsters
   public class MobTestMonster : Mob
   {
     public override string Name => "테스트 몬스터";
-    public override MonsterList Material => MonsterList.TestMonster;
+    public override MonsterList Material => MonsterList.TEST_MONSTER;
 
     public override CTexts Descriptions => CTexts.Make("{테스트용으로 사용되는 몬스터이다.}");
 
@@ -21,8 +21,8 @@ namespace Goguma.Game.Object.Entity.Monster.Monsters
 
     public override DroppingItems DroppingItems => new(new()
     {
-      new(new(ItemList.TestItem1), 70),
-      new(new(ItemList.TestItem2), 30)
+      new(new(ItemList.TEST_ITEM1), 70),
+      new(new(ItemList.TEST_ITEM2), 30)
     });
 
     public MobTestMonster() : base()
@@ -37,10 +37,10 @@ namespace Goguma.Game.Object.Entity.Monster.Monsters
       {
         Items = new()
         {
-          new(this, MSkillList.TestmonsterTestPunch, Cond.PlayerHpPer, ">=", 0, 100, 1),
-          new(this, MSkillList.TestmonsterTestFireball, Cond.PlayerHpPer, ">=", 0, 100, 1),
-          new(this, MSkillList.TestmonsterTestAttackSkill, Cond.PlayerHpPer, "<=", 0.5, 50, 1),
-          new(this, MSkillList.TestmonsterDefensivePosture, Cond.MonsterHpPer, "<=", 0.5, 1, 0)
+          new(this, MSkillList.TESTMONSTER_TEST_PUNCH, Cond.PLAYER_HP_PER, ">=", 0, 100, 1),
+          new(this, MSkillList.TESTMONSTER_TEST_FIREBALL, Cond.PLAYER_HP_PER, ">=", 0, 100, 1),
+          new(this, MSkillList.TESTMONSTER_TEST_ATTACK_SKILL, Cond.PLAYER_HP_PER, "<=", 0.5, 50, 1),
+          new(this, MSkillList.TESTMONSTER_DEFENSIVE_POSTURE, Cond.MONSTER_HP_PER, "<=", 0.5, 1, 0)
         }
       };
     }

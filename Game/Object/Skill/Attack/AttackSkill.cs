@@ -14,7 +14,7 @@ namespace Goguma.Game.Object.Skill.Attack
 
     public abstract AttackEffect Effect { get; }
 
-    public override SkillType Type => SkillType.AttackSkill;
+    public override SkillType Type => SkillType.ATTACK_SKILL;
 
     public override CTexts EffectInfo()
     {

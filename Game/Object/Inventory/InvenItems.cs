@@ -35,8 +35,8 @@ namespace Goguma.Game.Object.Inventory
             if (item != null)
             {
               var itemInstance = (IEquipmentItem)((ItemPair)item).ItemM;
-              if (itemInstance.EType == WearingType.Head || itemInstance.EType == WearingType.Chestplate ||
-                  itemInstance.EType == WearingType.Leggings || itemInstance.EType == WearingType.Boots)
+              if (itemInstance.EType == WearingType.HEAD || itemInstance.EType == WearingType.CHESTPLATE ||
+                  itemInstance.EType == WearingType.LEGGINGS || itemInstance.EType == WearingType.BOOTS)
               {
                 resultEffect.MaxHp += ((EEquip)itemInstance).Effect.MaxHp;
                 resultEffect.MaxEp += ((EEquip)itemInstance).Effect.MaxEp;
@@ -59,7 +59,7 @@ namespace Goguma.Game.Object.Inventory
             if (item != null)
             {
               var itemInstance = (IEquipmentItem)((ItemPair)item).ItemM;
-              if (itemInstance.EType == WearingType.Weapon)
+              if (itemInstance.EType == WearingType.WEAPON)
               {
                 resultEffect.PhysicalDamage += ((EWeapon)itemInstance).Effect.PhysicalDamage;
                 resultEffect.CritDmg += ((EWeapon)itemInstance).Effect.CritDmg;
@@ -169,9 +169,9 @@ namespace Goguma.Game.Object.Inventory
     {
       switch (iType)
       {
-        case InvenType.Wearing:
+        case InvenType.WEARING:
           return "착용";
-        case InvenType.Having:
+        case InvenType.HAVING:
           return "소지";
         default:
           return "null";

@@ -22,7 +22,7 @@ namespace Goguma.Game.Object.Inventory.Item
       OptionText = optionText;
       SelectedItem = item;
 
-      InvType = InvenType.Having;
+      InvType = InvenType.HAVING;
 
       SText = CTexts.Make($"{{\n    선택 : }} ").Combine(SelectedItem.ItemM.DisplayName).Combine($"{{ [ {SelectedItem.Count}개 ], {Colors.txtInfo}}} {{\n    위치 : }} {{{InvenItems.GetTypeString(InvType)},{Colors.txtSuccess}}} {{.}} {{{Item.GetTypeString(SelectedItem.ItemM.Type)},{Colors.txtSuccess}}},{Colors.txtSuccess}}}");
     }
@@ -34,7 +34,7 @@ namespace Goguma.Game.Object.Inventory.Item
       SelectedItem = (ItemPair)inventory.Items.wearing[wType];
       WType = wType;
 
-      InvType = InvenType.Wearing;
+      InvType = InvenType.WEARING;
 
       SText = CTexts.Make($"{{\n    선택 : }} ").Combine(SelectedItem.ItemM.DisplayName).Combine($"{{ [ {SelectedItem.Count}개 ], {Colors.txtInfo}}} {{\n    위치 : }} {{{InvenItems.GetTypeString(InvType)},{Colors.txtSuccess}}} {{.}} {{{Item.GetTypeString(SelectedItem.ItemM.Type)},{Colors.txtSuccess}}},{Colors.txtSuccess}}}");
     }
@@ -62,10 +62,10 @@ namespace Goguma.Game.Object.Inventory.Item
     {
       switch (InvType)
       {
-        case InvenType.Wearing:
+        case InvenType.WEARING:
           MyInventory.RemoveItem(WType);
           break;
-        case InvenType.Having:
+        case InvenType.HAVING:
           MyInventory.RemoveItem(new ItemPair(SelectedItem.Item, count));
           break;
       }
@@ -75,9 +75,9 @@ namespace Goguma.Game.Object.Inventory.Item
     {
       switch (InvType)
       {
-        case InvenType.Wearing:
+        case InvenType.WEARING:
           break;
-        case InvenType.Having:
+        case InvenType.HAVING:
           MyInventory.GetItem(item);
           break;
       }

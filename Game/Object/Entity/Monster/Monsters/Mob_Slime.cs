@@ -10,7 +10,7 @@ namespace Goguma.Game.Object.Entity.Monster.Monsters
   public class MobSlime : Mob
   {
     public override string Name => "슬라임";
-    public override MonsterList Material => MonsterList.Slime;
+    public override MonsterList Material => MonsterList.SLIME;
 
     public override CTexts Descriptions => CTexts.Make("{끈적끈적하니 기분이 더럽다.}");
 
@@ -20,8 +20,8 @@ namespace Goguma.Game.Object.Entity.Monster.Monsters
 
     public override DroppingItems DroppingItems => new(new()
     {
-      new(new(ItemList.StickyLiquid), 70),
-      new(new(ItemList.Potion1), 30)
+      new(new(ItemList.STICKY_LIQUID), 70),
+      new(new(ItemList.POTION1), 30)
     });
 
     public MobSlime() : base()
@@ -36,8 +36,8 @@ namespace Goguma.Game.Object.Entity.Monster.Monsters
       {
         Items = new()
         {
-          new(this, MSkillList.SlimeStickyAttack, Cond.PlayerHpPer, ">=", 0, 100),
-          new(this, MSkillList.SlimeSpoutStickyLiquid, Cond.PlayerHpPer, "<=", 0.5, 10),
+          new(this, MSkillList.SLIME_STICKY_ATTACK, Cond.PLAYER_HP_PER, ">=", 0, 100),
+          new(this, MSkillList.SLIME_SPOUT_STICKY_LIQUID, Cond.PLAYER_HP_PER, "<=", 0.5, 10),
         }
       };
     }

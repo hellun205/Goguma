@@ -5,20 +5,20 @@ namespace Goguma.Game.Object.Inventory.Item
   [Serializable]
   public enum ItemList
   {
-    TestItem1,
-    TestItem2,
-    StickyLiquid,
-    GoblinsSword,
-    GoblinsArmor,
-    GoldGoblinCoin,
-    GoldGoblinsSword,
-    Diamond,
-    RedDiamond,
-    GoldIngot,
-    Emerald,
-    Potion1,
-    SkillbookTestSkill1,
-    SkillbookTestSkill2,
-    Apple
+    TEST_ITEM1,
+    TEST_ITEM2,
+    STICKY_LIQUID,
+    GOBLINS_SWORD,
+    GOBLINS_ARMOR,
+    GOLD_GOBLIN_COIN,
+    GOLD_GOBLINS_SWORD,
+    DIAMOND,
+    RED_DIAMOND,
+    GOLD_INGOT,
+    EMERALD,
+    POTION1,
+    SKILLBOOK_TEST_SKILL1,
+    SKILLBOOK_TEST_SKILL2,
+    APPLE
   }
 }

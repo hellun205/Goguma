@@ -38,11 +38,11 @@ namespace Goguma.Game.Object.Inventory.Item
     {
       switch (hType)
       {
-        case HavingType.Equipment:
+        case HavingType.EQUIPMENT:
           return "장비";
-        case HavingType.Consume:
+        case HavingType.CONSUME:
           return "소비";
-        case HavingType.Other:
+        case HavingType.OTHER:
           return "기타";
         default:
           return null;

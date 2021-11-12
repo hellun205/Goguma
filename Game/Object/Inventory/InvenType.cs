@@ -5,7 +5,7 @@ namespace Goguma.Game.Object.Inventory
   [Serializable]
   public enum InvenType
   {
-    Wearing,
-    Having
+    WEARING,
+    HAVING
   }
 }

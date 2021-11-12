@@ -21,7 +21,7 @@ namespace Goguma.Game.Object.Entity.Player
   [Serializable]
   public class Player : Entity
   {
-    public override EntityType Type => EntityType.Player;
+    public override EntityType Type => EntityType.PLAYER;
 
     public Inventory.Inventory Inventory { get; set; }
 
@@ -30,14 +30,12 @@ namespace Goguma.Game.Object.Entity.Player
     public List<QuestList> CompletedQuests { get; set; }
 
     public Location Loc { get; set; }
-
-    public Gender Gender { get; set; }
-
+    
     public List<Entitys> KilledMobs { get; set; }
 
-    public List<PartyNpc> PartyNpcs { get; set; }
+    // public List<PartyNpc> PartyNpcs { get; set; } cancel
 
-    public int PartyCount => PartyNpcs.Count;
+    // public int PartyCount => PartyNpcs.Count;
 
     public double Ep
     {
@@ -156,8 +154,7 @@ namespace Goguma.Game.Object.Entity.Player
       MagicDamage = 0;
       MagicDefense = 0;
       MagicPenetration = 0;
-      Gender = Gender.Male;
-      PartyNpcs = new();
+      // PartyNpcs = new();
     }
 
     public Player(string name) : this()
@@ -182,28 +179,28 @@ namespace Goguma.Game.Object.Entity.Player
     protected override CTexts Info()
     {
       return new CTexts()
-      .Append($"{{\n{GetSep(40, $"{Name} [ Lv. {Level} ]")}}}")
-      .Append("{\n경험치 : }")
-      .Append(GetExpBar())
-      .Append($"{{\t골드 : }}{{{Gold} G,{Colors.txtWarning}}}")
-      .Append($"{{\n위치 : }}{{{Loc.Loc},{Colors.txtInfo}}}")
-      .Append($"{{\n{GetSep(40)}}}")
-      .Append("{\n체력 : }")
-      .Append(GetHpBar())
-      .Append("{\n에너지 : }")
-      .Append(GetEpBar())
-      .Append($"{{\n물리 공격력 : }}{{{PhysicalDamage},{Colors.txtDanger}}}")
-      .Append($"{{\t\t마법 공격력 : }}{{{MagicDamage},{Colors.txtInfo}}}")
+        .Append($"{{\n{GetSep(40, $"{Name} [ Lv. {Level} ]")}}}")
+        .Append("{\n경험치 : }")
+        .Append(GetExpBar())
+        .Append($"{{\t골드 : }}{{{Gold} G,{Colors.txtWarning}}}")
+        .Append($"{{\n위치 : }}{{{Loc.Loc},{Colors.txtInfo}}}")
+        .Append($"{{\n{GetSep(40)}}}")
+        .Append("{\n체력 : }")
+        .Append(GetHpBar())
+        .Append("{\n에너지 : }")
+        .Append(GetEpBar())
+        .Append($"{{\n물리 공격력 : }}{{{PhysicalDamage},{Colors.txtDanger}}}")
+        .Append($"{{\t\t마법 공격력 : }}{{{MagicDamage},{Colors.txtInfo}}}")
 
-      .Append($"{{\n물리 관통력 : }}{{{PhysicalPenetration},{Colors.txtDanger}}}")
-      .Append($"{{\t\t마법 관통력 : }}{{{MagicPenetration},{Colors.txtInfo}}}")
+        .Append($"{{\n물리 관통력 : }}{{{PhysicalPenetration},{Colors.txtDanger}}}")
+        .Append($"{{\t\t마법 관통력 : }}{{{MagicPenetration},{Colors.txtInfo}}}")
 
-      .Append($"{{\n물리 방어력 : }}{{{PhysicalDefense},{Colors.txtDanger}}}{{ ({Math.Floor(1 - (100 / (100 + PhysicalDefense)))}%)}}")
-      .Append($"{{\t마법 방어력 : }}{{{MagicDefense},{Colors.txtInfo}}}{{ ({Math.Floor(1 - (100 / (100 + MagicDefense)))}%)}}")
+        .Append($"{{\n물리 방어력 : }}{{{PhysicalDefense},{Colors.txtDanger}}}{{ ({Math.Floor(1 - (100 / (100 + PhysicalDefense)))}%)}}")
+        .Append($"{{\t마법 방어력 : }}{{{MagicDefense},{Colors.txtInfo}}}{{ ({Math.Floor(1 - (100 / (100 + MagicDefense)))}%)}}")
 
-      .Append($"{{\n치명타 데미지 : }}{{{CriticalDamage} %,{Colors.txtWarning}}}")
-      .Append($"{{\t치명타 확률 : }}{{{CriticalPercent} %,{Colors.txtWarning}}}")
-      .Append($"{{\n{GetSep(40)}}}");
+        .Append($"{{\n치명타 데미지 : }}{{{CriticalDamage} %,{Colors.txtWarning}}}")
+        .Append($"{{\t치명타 확률 : }}{{{CriticalPercent} %,{Colors.txtWarning}}}")
+        .Append($"{{\n{GetSep(40)}}}");
     }
 
     public double RequiredForLevelUp()
@@ -259,8 +256,8 @@ namespace Goguma.Game.Object.Entity.Player
       }
 
       var killEntityQuests = (from qst in Quest.Quests
-                              where qst.Type == QuestType.KillEntity
-                              select qst).Cast<QKillEntity>().ToList();
+        where qst.Type == QuestType.KILL_ENTITY
+        select qst).Cast<QKillEntity>().ToList();
 
       foreach (var qst in killEntityQuests)
       {
@@ -270,33 +267,49 @@ namespace Goguma.Game.Object.Entity.Player
 
     public void ReceiveGold(int value)
     {
-      PrintCText($"{{\n\n  }}{{{value} G,{Colors.txtWarning}}}{{를 획득했습니다. }}{{( 현재 {Gold + value} G를 보유하고 있습니다. ),{Colors.txtPrimary}}}");
-      Pause(false);
-      Gold += value;
+      if (value != 0)
+      {
+        PrintCText($"{{\n\n  }}{{{value} G,{Colors.txtWarning}}}{{{(value > 0 ? "를 획득했습니다." : "를 상실했습니다.")}}}{{( 현재 {Gold + value} G를 보유하고 있습니다. ),{Colors.txtPrimary}}}");
+        Pause(false);
+        Gold += value;
+      }
     }
 
     public void ReceiveExp(double value)
     {
-      PrintCText(CTexts.Make($"{{\n\n  }}{{{value} Exp,{Colors.txtSuccess}}}{{를 획득했습니다. ( }}").Combine(GetExpBar(true, value)).Combine("{ )}"));
-      Pause(false);
-      Exp += value;
+      if (value != 0)
+      {
+        PrintCText(CTexts.Make($"{{\n\n  }}{{{value} Exp,{Colors.txtSuccess}}}{{{(value > 0 ? "를 획득했습니다." : "를 상실했습니다.")}( }}").Combine(GetExpBar(true, value)).Combine("{ )}"));
+        Pause(false);
+        Exp += value;
+      }
     }
 
     public void ReceiveItem(ItemPair value)
     {
-      PrintCText(CTexts.Make($"{{\n\n  아이템 }}").Combine(value.ItemM.DisplayName).Combine($"{{ {(value.Count == 1 ? "(을)를" : $"{value.Count}개를")} 획득했습니다. }}"));
-      Pause(false);
-      Inventory.GetItem(value);
+      if (value != null)
+      {
+        PrintCText(CTexts.Make($"{{\n\n  아이템 }}").Combine(value.ItemM.DisplayName).Combine($"{{ {(value.Count == 1 ? "(을)를" : $"{value.Count}개를")} 획득했습니다. }}"));
+        Pause(false);
+        Inventory.GetItem(value);
+      }
     }
 
     public void ReceiveItems(ItemPair[] values)
     {
-      foreach (var value in values)
+      if (values.Length != 0)
       {
-        Inventory.GetItem(value);
-        PrintCText(CTexts.Make($"{{\n\n  아이템 }}").Combine(value.ItemM.DisplayName).Combine($"{{ {(value.Count == 1 ? "(을)를" : $"{value.Count}개를")} 획득했습니다. \n}}"));
+        foreach (var value in values)
+        {
+          if (value != null)
+          {
+            Inventory.GetItem(value);
+            PrintCText(CTexts.Make($"{{\n\n  아이템 }}").Combine(value.ItemM.DisplayName)
+              .Combine($"{{ {(value.Count == 1 ? "(을)를" : $"{value.Count}개를")} 획득했습니다. \n}}"));
+          }
+        }
+        Pause(false);
       }
-      Pause(false);
     }
 
     public bool CompleteQuest(QuestList quest)
@@ -320,8 +333,8 @@ namespace Goguma.Game.Object.Entity.Player
     public void MeetNpc(NpcList npc)
     {
       var quests = (from quest in Quest.Quests
-                    where quest.Type == QuestType.MeetNpc
-                    select quest).Cast<QMeetNpc>().ToList();
+        where quest.Type == QuestType.MEET_NPC
+        select quest).Cast<QMeetNpc>().ToList();
       foreach (var qst in quests)
       {
         qst.OnMeetNpc(npc);

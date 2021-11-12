@@ -8,7 +8,7 @@ namespace Goguma.Game.Object.Inventory.Item.Items
   [Serializable]
   public class ItemGoldIngot : OtherItem
   {
-    public override ItemList Material => ItemList.GoldIngot;
+    public override ItemList Material => ItemList.GOLD_INGOT;
 
     public static readonly IItem Instance = new ItemGoldIngot();
 

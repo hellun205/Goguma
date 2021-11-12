@@ -3,7 +3,7 @@ using Goguma.Game.Object.Npc;
 
 namespace Goguma.Game.Object.Map.Town
 {
-  public class TGogumaPlantation : Town
+  public class GogumaPlantation : Town
   {
     public override string Name
     {
@@ -14,7 +14,7 @@ namespace Goguma.Game.Object.Map.Town
       get => "고구마가 재배되는 곳이다.";
     }
 
-    internal TGogumaPlantation()
+    internal GogumaPlantation()
     {
       base.AddFacility(Facility.Facilities.hospital);
 

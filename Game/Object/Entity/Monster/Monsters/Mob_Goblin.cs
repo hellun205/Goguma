@@ -9,7 +9,7 @@ namespace Goguma.Game.Object.Entity.Monster.Monsters
   public class MobGoblin : Mob
   {
     public override string Name => "고블린";
-    public override MonsterList Material => MonsterList.Goblin;
+    public override MonsterList Material => MonsterList.GOBLIN;
 
     public override CTexts Descriptions => CTexts.Make("{못생겼다.}");
 
@@ -19,9 +19,9 @@ namespace Goguma.Game.Object.Entity.Monster.Monsters
 
     public override DroppingItems DroppingItems => new(new()
     {
-      new(new(ItemList.GoblinsSword), 35),
-      new(new(ItemList.GoblinsArmor), 30),
-      new(new(ItemList.Potion1), 80),
+      new(new(ItemList.GOBLINS_SWORD), 35),
+      new(new(ItemList.GOBLINS_ARMOR), 30),
+      new(new(ItemList.POTION1), 80),
     });
 
     public MobGoblin() : base()

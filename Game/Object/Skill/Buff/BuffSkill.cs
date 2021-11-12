@@ -8,7 +8,7 @@ namespace Goguma.Game.Object.Skill.Buff
   public abstract class BuffSkill : Skill, IBuffSkill
   {
     public abstract BuffEffect Effect { get; }
-    public override SkillType Type => SkillType.BuffSkill;
+    public override SkillType Type => SkillType.BUFF_SKILL;
 
     public override CTexts EffectInfo()
     {

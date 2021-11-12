@@ -11,7 +11,7 @@ namespace Goguma.Game.Object.Quest
   {
     public virtual List<NpcList> MeetNpcs => new() { CompleteNpc.Material };
     public List<NpcList> MetNpcs { get; set; }
-    public override QuestType Type => QuestType.MeetNpc;
+    public override QuestType Type => QuestType.MEET_NPC;
 
     protected QMeetNpc() : base()
     {

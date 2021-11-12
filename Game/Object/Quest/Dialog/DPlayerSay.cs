@@ -1,31 +1,31 @@
-using System.Collections.Generic;
+﻿using System;
 using Colorify;
 using Goguma.Game.Console;
+using static Goguma.Game.Console.ConsoleFunction;
 
 namespace Goguma.Game.Object.Quest.Dialog
 {
   public class DPlayerSay : Dialog
   {
-    public List<string> PlayerSays { get; set; }
-    public override DialogType Type => DialogType.PlayerSay;
+    public string PlayerSay { get; set; }
+    public override DialogType Type => DialogType.PLAYER_SAY;
 
-    public DPlayerSay(Npc.Npc npc, CTexts text, List<string> playerText) : base(npc, text)
+    public DPlayerSay(CTexts text, string playerText = "다음") : base(InGame.player.DisplayName, text)
     {
-      PlayerSays = playerText;
+      PlayerSay = playerText;
     }
-
-    public DPlayerSay(Npc.Npc npc, string text, List<string> playerText) : this(npc, CTexts.Make(text), playerText) { }
-
-    public override string Show(string playerAns)
+    public DPlayerSay(string text, string playerText = "다음") : this(CTexts.Make(text), playerText) { }
+    public override string Show(string playerAns = "")
     {
-      var ssi = new SelectSceneItems();
-      foreach (var str in PlayerSays)
-        ssi.Add($"{{{str}}}");
+      PrintCText(SelectScene.PrintQuestionText(Text.DisplayText(playerAns)));
+      PrintText("\n");
+      PrintCText(SelectScene.PrintReadText().Combine($"{{{PlayerSay}}}"));
 
-      var ss = new SelectScene(Text.DisplayText(playerAns), ssi, true, CTexts.Make($"{{대화 종료, {Colors.txtMuted}}}"));
-      IsCancelled = ss.isCancelled;
-
-      return ss.getString;
+      PrintCText($"{{\nESC. 대화 종료,{Colors.txtMuted}}}");
+      var key = System.Console.ReadKey(true);
+      if (key.Key == ConsoleKey.Escape) IsCancelled = true;
+      PrintText("\n");
+      return PlayerSay;
     }
   }
 }

@@ -10,7 +10,7 @@ namespace Goguma.Game.Object.Inventory.Item.Consume
   public abstract class ConsumeItem : Item, IConsumeItem
   {
     public override CTexts DisplayName => CTexts.Make($"{{[ {TypeString} ],{Colors.txtWarning}}}{{ }}{{[ {CTypeString} ],{Colors.txtSuccess}}}{{ }}").Combine(Name);
-    public override HavingType Type => HavingType.Consume;
+    public override HavingType Type => HavingType.CONSUME;
     public abstract ConsumeItemType CType { get; }
     public int LoseCount { get; set; }
     public string CTypeString => GetCTypeText(CType);
@@ -42,9 +42,9 @@ namespace Goguma.Game.Object.Inventory.Item.Consume
     {
       switch (cType)
       {
-        case ConsumeItemType.Potion:
+        case ConsumeItemType.POTION:
           return "포션";
-        case ConsumeItemType.SkillBook:
+        case ConsumeItemType.SKILL_BOOK:
           return "스킬 북";
         default:
           throw new NotImplementedException();

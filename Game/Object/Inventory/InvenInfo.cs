@@ -36,7 +36,7 @@ namespace Goguma.Game.Object.Inventory
 
       public static SelectScene WearingInven(Inventory inven)
       {
-        var iType = InvenType.Wearing;
+        var iType = InvenType.WEARING;
 
         CTexts GetQText()
         {
@@ -76,7 +76,7 @@ namespace Goguma.Game.Object.Inventory
 
       public static SelectScene SelHavingInven()
       {
-        var iType = InvenType.Having;
+        var iType = InvenType.HAVING;
 
         CTexts GetQText()
         {
@@ -102,7 +102,7 @@ namespace Goguma.Game.Object.Inventory
 
       public static SelectScene HavingInven(Inventory inven, HavingType hType)
       {
-        InvenType iType = InvenType.Having;
+        InvenType iType = InvenType.HAVING;
 
         CTexts GetQText(HavingType hType)
         {
@@ -126,7 +126,7 @@ namespace Goguma.Game.Object.Inventory
 
       public static SelectScene ItemOption(Inventory inven, WearingType wType) // Wearing
       {
-        InvenType iType = InvenType.Wearing;
+        InvenType iType = InvenType.WEARING;
         CTexts GetQText(Inventory inven, WearingType wType)
         {
           var sItem = inven.Items.wearing[wType];
@@ -152,7 +152,7 @@ namespace Goguma.Game.Object.Inventory
 
       static public SelectScene ItemOption(Inventory inven, ItemPair item) // Having
       {
-        InvenType iType = InvenType.Having;
+        InvenType iType = InvenType.HAVING;
         CTexts GetQText()
         {
           return CTexts.Make($"{{무슨 작업을 하시겠습니까?\n    }} {{\n    선택 : }} ")
@@ -167,13 +167,13 @@ namespace Goguma.Game.Object.Inventory
 
           switch (item.ItemM.Type)
           {
-            case HavingType.Equipment:
+            case HavingType.EQUIPMENT:
               resultSsi.Add("{착용}");
               break;
-            case HavingType.Consume:
+            case HavingType.CONSUME:
               resultSsi.Add("{사용}}");
               break;
-            case HavingType.Other:
+            case HavingType.OTHER:
               // TO DO
               break;
           }

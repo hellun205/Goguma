@@ -32,7 +32,7 @@ namespace Goguma.Game.Object.Inventory
         ItemOption io = null;
         switch (invenType)
         {
-          case InvenType.Having:
+          case InvenType.HAVING:
             while (true)
             {
               ss = InvenInfo.Scene.ItemOption(this, select);
@@ -42,7 +42,7 @@ namespace Goguma.Game.Object.Inventory
               if (io.Act()) return true;
             }
             break;
-          case InvenType.Wearing:
+          case InvenType.WEARING:
             while (true)
             {
               var wType = ((EquipmentItem)select.ItemM).EType;
@@ -61,7 +61,7 @@ namespace Goguma.Game.Object.Inventory
 #nullable enable
     public ItemPair? Select(out InvenType invenType)
     {
-      invenType = InvenType.Wearing;
+      invenType = InvenType.WEARING;
       var resultIp = new ItemPair();
       while (true)
       {
@@ -71,7 +71,7 @@ namespace Goguma.Game.Object.Inventory
         invenType = (InvenType)invenTypeSs.getIndex;
         switch (invenType)
         {
-          case InvenType.Wearing:
+          case InvenType.WEARING:
             while (true)
             {
               var wearingTypeSs = InvenInfo.Scene.WearingInven(this); // Select Wearing Item (Type)
@@ -80,7 +80,7 @@ namespace Goguma.Game.Object.Inventory
               return resultIp;
             }
             break;
-          case InvenType.Having:
+          case InvenType.HAVING:
             while (true)
             {
               var havingTypeSs = InvenInfo.Scene.SelHavingInven(); // Select Having Type

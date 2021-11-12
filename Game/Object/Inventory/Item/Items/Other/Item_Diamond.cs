@@ -8,7 +8,7 @@ namespace Goguma.Game.Object.Inventory.Item.Items
   [Serializable]
   public class ItemDiamond : OtherItem
   {
-    public override ItemList Material => ItemList.Diamond;
+    public override ItemList Material => ItemList.DIAMOND;
 
     public static readonly IItem Instance = new ItemDiamond();
 

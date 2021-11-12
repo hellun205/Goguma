@@ -8,25 +8,25 @@ namespace Goguma.Game.Object.Skill.Skills
     {
       switch (skill)
       {
-        case MSkillList.TestmonsterTestPunch: return new Mob.TestMonster.TestPunch();
+        case MSkillList.TESTMONSTER_TEST_PUNCH: return new Mob.TestMonster.TestPunch();
 
-        case MSkillList.TestmonsterTestFireball: return new Mob.TestMonster.Fireball();
+        case MSkillList.TESTMONSTER_TEST_FIREBALL: return new Mob.TestMonster.Fireball();
 
-        case MSkillList.TestmonsterTestAttackSkill: return new Mob.TestMonster.JustAttack();
+        case MSkillList.TESTMONSTER_TEST_ATTACK_SKILL: return new Mob.TestMonster.JustAttack();
 
-        case MSkillList.TestmonsterDefensivePosture: return new Mob.TestMonster.DefensivePosture();
+        case MSkillList.TESTMONSTER_DEFENSIVE_POSTURE: return new Mob.TestMonster.DefensivePosture();
 
-        case MSkillList.SlimeStickyAttack: return new Mob.Slime.StickyAttack();
+        case MSkillList.SLIME_STICKY_ATTACK: return new Mob.Slime.StickyAttack();
 
-        case MSkillList.SlimeSpoutStickyLiquid: return new Mob.Slime.SpoutStickyLiquid();
+        case MSkillList.SLIME_SPOUT_STICKY_LIQUID: return new Mob.Slime.SpoutStickyLiquid();
 
-        case MSkillList.GoldGoblinSwordSwing:
+        case MSkillList.GOLD_GOBLIN_SWORD_SWING:
           return new Mob.GoldGoblin.SwingSword
 ();
 
-        case MSkillList.GoldGoblinSwordSting: return new Mob.GoldGoblin.StingSword();
+        case MSkillList.GOLD_GOBLIN_SWORD_STING: return new Mob.GoldGoblin.StingSword();
 
-        case MSkillList.GoldGoblinAnger: return new Mob.GoldGoblin.Anger();
+        case MSkillList.GOLD_GOBLIN_ANGER: return new Mob.GoldGoblin.Anger();
 
         default: throw new NotImplementedException();
       }
@@ -36,23 +36,23 @@ namespace Goguma.Game.Object.Skill.Skills
     {
       switch (skill)
       {
-        case MSkillList.TestmonsterTestPunch: return TestMonsterTestPunch;
+        case MSkillList.TESTMONSTER_TEST_PUNCH: return TestMonsterTestPunch;
 
-        case MSkillList.TestmonsterTestFireball: return TestMonsterFireball;
+        case MSkillList.TESTMONSTER_TEST_FIREBALL: return TestMonsterFireball;
 
-        case MSkillList.TestmonsterTestAttackSkill: return TestMonsterJustAttack;
+        case MSkillList.TESTMONSTER_TEST_ATTACK_SKILL: return TestMonsterJustAttack;
 
-        case MSkillList.TestmonsterDefensivePosture: return TestMonsterDefensivePosture;
+        case MSkillList.TESTMONSTER_DEFENSIVE_POSTURE: return TestMonsterDefensivePosture;
 
-        case MSkillList.SlimeStickyAttack: return SlimeStickyAttack;
+        case MSkillList.SLIME_STICKY_ATTACK: return SlimeStickyAttack;
 
-        case MSkillList.SlimeSpoutStickyLiquid: return SlimeSpoutStickyLiquid;
+        case MSkillList.SLIME_SPOUT_STICKY_LIQUID: return SlimeSpoutStickyLiquid;
 
-        case MSkillList.GoldGoblinSwordSwing: return GoldGoblinSwingSword;
+        case MSkillList.GOLD_GOBLIN_SWORD_SWING: return GoldGoblinSwingSword;
 
-        case MSkillList.GoldGoblinSwordSting: return GoldGoblinStingSword;
+        case MSkillList.GOLD_GOBLIN_SWORD_STING: return GoldGoblinStingSword;
 
-        case MSkillList.GoldGoblinAnger: return GoldGoblinAnger;
+        case MSkillList.GOLD_GOBLIN_ANGER: return GoldGoblinAnger;
 
         default: throw new NotImplementedException();
       }

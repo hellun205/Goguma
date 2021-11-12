@@ -8,7 +8,7 @@ namespace Goguma.Game.Object.Inventory.Item.Items
   [Serializable]
   public class ItemEmerald : OtherItem
   {
-    public override ItemList Material => ItemList.Emerald;
+    public override ItemList Material => ItemList.EMERALD;
 
     public static readonly IItem Instance = new ItemEmerald();
 

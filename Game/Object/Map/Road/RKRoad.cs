@@ -20,15 +20,15 @@ namespace Goguma.Game.Object.Map.Road
     {
       SummonMonsters = new List<Road.RoadMonster>()
       {
-        new RoadMonster(MonsterList.Slime, 100),
-        new RoadMonster(MonsterList.Goblin, 100),
-        new RoadMonster(MonsterList.GoldGoblin, 10)
+        new RoadMonster(MonsterList.SLIME, 100),
+        new RoadMonster(MonsterList.GOBLIN, 100),
+        new RoadMonster(MonsterList.GOLD_GOBLIN, 10)
       };
 
       Adjacents = new List<MapList>()
       {
-        MapList.KksTown,
-        MapList.HellunTown
+        MapList.KKS_TOWN,
+        MapList.HELLUN_TOWN
       };
     }
   }

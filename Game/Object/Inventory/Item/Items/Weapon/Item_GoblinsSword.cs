@@ -7,7 +7,7 @@ namespace Goguma.Game.Object.Inventory.Item.Items
   [Serializable]
   public class ItemGoblinsSword : EWeapon
   {
-    public override ItemList Material => ItemList.GoblinsSword;
+    public override ItemList Material => ItemList.GOBLINS_SWORD;
 
     public static readonly IItem Instance = new ItemGoblinsSword();
 

@@ -13,17 +13,18 @@ namespace Goguma.Game.Object.Quest
   [Serializable]
   public abstract class Quest : IQuest
   {
-    public abstract string Name { get; }
+    public virtual string Name => GetType().Name;
     public abstract QuestType Type { get; }
-    public abstract Npc.Npc ReceiveNpc { get; }
+    public virtual Npc.Npc ReceiveNpc => null;
     public virtual Npc.Npc CompleteNpc => ReceiveNpc;
     public abstract List<IDialog> Dialogs { get; }
-    public abstract List<IDialog> OnCompleteDialog { get; }
+    public virtual List<IDialog> OnCompleteDialog => null;
     public abstract QuestList Material { get; }
+    public bool IsCancellable => true;
     public abstract DNpcAsk AskDialog { get; }
-    public abstract DNpcSay CancelledDialog { get; }
-    public abstract DNpcSay AcceptDialog { get; }
-    public abstract DNpcSay DeclineDialog { get; }
+    public virtual List<IDialog> CancelledDialog => null;
+    public virtual List<IDialog> AcceptDialog => null;
+    public virtual List<IDialog> DeclineDialog => null;
     public abstract QuestRequirements QRequirements { get; }
     public bool MeetTheRequirements => (QRequirements.Check());
     public abstract bool IsCompleted { get; }
@@ -36,31 +37,31 @@ namespace Goguma.Game.Object.Quest
     public CTexts Information()
     {
       var info = new CTexts()
-      .Append($"{{\n{GetSep(40, $"{Name}")}}}")
-      .Append($"{{\nNPC : }}{{{ReceiveNpc.TypeString} ,{Colors.txtWarning}}}{{{ReceiveNpc.Name},{Colors.txtInfo}}}")
-      .Append($"{{\n필요 레벨 : {QRequirements.MinLv} ~ {(QRequirements.MaxLv == Int32.MaxValue ? "" : $"{QRequirements.MaxLv}")}}}")
-      .Append($"{{\n완료 시 받는 골드 : }}{{{GivingGold} G, {Colors.txtWarning}}}")
-      .Append($"{{\n완료 시 받는 경험치 : }}{{{GivingExp} , {Colors.txtWarning}}}")
-      .Append($"{{\n완료 시 받는 아이템 : }}");
+        .Append($"{{\n{GetSep(40, $"{Name}")}}}")
+        .Append($"{{\nNPC : }}{{{ReceiveNpc.TypeString} ,{Colors.txtWarning}}}{{{ReceiveNpc.Name},{Colors.txtInfo}}}")
+        .Append($"{{\n필요 레벨 : {QRequirements.MinLv} ~ {(QRequirements.MaxLv == Int32.MaxValue ? "" : $"{QRequirements.MaxLv}")}}}")
+        .Append($"{{\n완료 시 받는 골드 : }}{{{GivingGold} G, {Colors.txtWarning}}}")
+        .Append($"{{\n완료 시 받는 경험치 : }}{{{GivingExp} , {Colors.txtWarning}}}")
+        .Append($"{{\n완료 시 받는 아이템 : }}");
       foreach (var item in GivingItems)
       {
         info.Append(item.ItemM.DisplayName).Append($"{{ {item.Count}개， }}");
       }
       info.Append($"{{\n{GetSep(40, "내용")}\n}}")
-      .Append(InfoDetails())
-      .Append($"{{\n{GetSep(40)}\n}}")
-      .Append("{위 내용을 달성 후 }").Append(CompleteNpc.DisplayName).Append("{(을)를 찾아가 퀘스트 완료\n}");
+        .Append(InfoDetails())
+        .Append($"{{\n{GetSep(40)}\n}}")
+        .Append("{위 내용을 달성 후 }").Append(CompleteNpc.DisplayName).Append("{(을)를 찾아가 퀘스트 완료\n}");
 
       return info;
     }
 
     public bool ShowDialog()
     {
-      var ask = Dialog.Dialog.ShowDialogs(Dialogs, AskDialog, CancelledDialog);
+      var ask = Dialog.Dialog.ShowDialogs(Dialogs, AskDialog, IsCancellable, CancelledDialog);
       if (ask)
-        AcceptDialog.Show();
+        Dialog.Dialog.ShowDialogs(AcceptDialog, IsCancellable);
       else
-        DeclineDialog.Show();
+        Dialog.Dialog.ShowDialogs(DeclineDialog, IsCancellable);
 
       return ask;
     }
@@ -68,25 +69,26 @@ namespace Goguma.Game.Object.Quest
     public void Exe(Player player)
     {
       var ask = ShowDialog();
-      if (ask)
+      if (ReceiveNpc == null)
       {
-        player.Quest.Add(Material);
+        OnCompleted();
+      }
+      else
+      {
+        if (ask)
+        {
+          player.Quest.Add(Material);
+        }
       }
     }
 
     public void OnCompleted()
     {
-      // InGame.player.Gold += GivingGold;
-      // InGame.player.Exp += GivingExp;
-
-      // foreach (var item in GivingItems)
-      //   InGame.player.Inventory.GetItem(Itemss.GetNew(item.Item), item.Count);
       Dialog.Dialog.ShowDialogs(OnCompleteDialog);
 
       InGame.player.ReceiveGold(GivingGold);
       InGame.player.ReceiveExp(GivingExp);
       InGame.player.ReceiveItems(GivingItems.ToArray());
-
     }
 
     public void CheckAvailableComplete()

@@ -4,7 +4,7 @@ using Goguma.Game.Object.Npc;
 
 namespace Goguma.Game.Object.Map.Town
 {
-  public class TKks : Town
+  public class Kks : Town
   {
     public override string Name
     {
@@ -15,17 +15,17 @@ namespace Goguma.Game.Object.Map.Town
       get => "제작자 KKS를 기리기 위한 마을";
     }
 
-    internal TKks()
+    internal Kks()
     {
       base.AddFacility(Facility.Facilities.hospital);
       Adjacents = new List<MapList>()
       {
-        MapList.KRoad
+        MapList.K_ROAD
       };
       Npcs = new List<NpcList>()
       {
-        NpcList.TraderK,
-        NpcList.GeneralStudentA
+        NpcList.TRADER_K,
+
       };
     }
   }

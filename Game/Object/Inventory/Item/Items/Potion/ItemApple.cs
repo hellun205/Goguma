@@ -7,7 +7,7 @@ namespace Goguma.Game.Object.Inventory.Item.Items
   [Serializable]
   public class ItemApple : CPotion
   {
-    public override ItemList Material => ItemList.Potion1;
+    public override ItemList Material => ItemList.POTION1;
 
     public override CTexts Name => CTexts.Make("{사과}");
 

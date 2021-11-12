@@ -8,11 +8,11 @@ namespace Goguma.Game.Object.Skill.Skills
     {
       switch (skill)
       {
-        case SkillList.TestSkill1: return new Player.Attack.TestAtSkill1();
+        case SkillList.TEST_SKILL1: return new Player.Attack.TestAtSkill1();
 
-        case SkillList.TestSkill2: return new Player.Attack.TestAtSkill2();
+        case SkillList.TEST_SKILL2: return new Player.Attack.TestAtSkill2();
 
-        case SkillList.TestBuffSkill1: return new Player.Buff.TestBfSkill1();
+        case SkillList.TEST_BUFF_SKILL1: return new Player.Buff.TestBfSkill1();
 
         default: throw new NotImplementedException();
       }
@@ -22,11 +22,11 @@ namespace Goguma.Game.Object.Skill.Skills
     {
       switch (skill)
       {
-        case SkillList.TestSkill1: return TestAtSkill1;
+        case SkillList.TEST_SKILL1: return TestAtSkill1;
 
-        case SkillList.TestSkill2: return TestAtSkill2;
+        case SkillList.TEST_SKILL2: return TestAtSkill2;
 
-        case SkillList.TestBuffSkill1: return TestBfSkill1;
+        case SkillList.TEST_BUFF_SKILL1: return TestBfSkill1;
 
         default: throw new NotImplementedException();
       }

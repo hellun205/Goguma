@@ -8,7 +8,7 @@ namespace Goguma.Game.Object.Inventory.Item.Other
   [Serializable]
   public abstract class OtherItem : Item, IOtherItem
   {
-    public override HavingType Type => HavingType.Other;
+    public override HavingType Type => HavingType.OTHER;
 
     public override int MaxCount => 999;
 

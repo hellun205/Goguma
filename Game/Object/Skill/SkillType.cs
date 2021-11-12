@@ -5,7 +5,7 @@ namespace Goguma.Game.Object.Skill
   [Serializable]
   public enum SkillType
   {
-    AttackSkill,
-    BuffSkill
+    ATTACK_SKILL,
+    BUFF_SKILL
   }
 }

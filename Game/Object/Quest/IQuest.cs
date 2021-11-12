@@ -13,10 +13,11 @@ namespace Goguma.Game.Object.Quest
     QuestType Type { get; }
     QuestList Material { get; }
     DNpcAsk AskDialog { get; }
-    DNpcSay CancelledDialog { get; }
-    DNpcSay AcceptDialog { get; }
-    DNpcSay DeclineDialog { get; }
+    List<IDialog> CancelledDialog { get; }
+    List<IDialog> AcceptDialog { get; }
+    List<IDialog> DeclineDialog { get; }
     string Name { get; }
+    bool IsCancellable { get; }
     Npc.Npc ReceiveNpc { get; }
     Npc.Npc CompleteNpc { get; }
     QuestRequirements QRequirements { get; }

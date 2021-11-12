@@ -14,7 +14,7 @@ namespace Goguma.Game.Object.Quest
 
     public List<ItemPair> ItemsToBring_ { get; set; }
 
-    public override QuestType Type => QuestType.BringItem;
+    public override QuestType Type => QuestType.BRING_ITEM;
 
     protected QBringItem() : base()
     {

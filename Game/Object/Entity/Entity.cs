@@ -6,6 +6,7 @@ using static Goguma.Game.Console.StringFunction;
 using static Goguma.Game.Console.ConsoleFunction;
 using Colorify;
 using Goguma.Game.Object.Entity.Player;
+using Goguma.Game.Object.Npc;
 using Goguma.Game.Object.Skill.Attack;
 using Goguma.Game.Object.Skill.Buff;
 
@@ -15,7 +16,8 @@ namespace Goguma.Game.Object.Entity
   public abstract class Entity : IEntity
   {
     public virtual string Name { get; set; }
-
+    
+    public Prefix Prefix { get; set; }
     public virtual CTexts DisplayName => CTexts.Make($"{{{Name}}}");
 
     public abstract EntityType Type { get; }
@@ -122,6 +124,7 @@ namespace Goguma.Game.Object.Entity
       CriticalPercent = entity.CriticalPercent;
       PhysicalPenetration = entity.PhysicalPenetration;
       MaxHp = entity.MaxHp;
+      Prefix = new Prefix();
     }
 
     public virtual void AddBuff(IBuffSkill skill)

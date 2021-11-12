@@ -39,10 +39,10 @@ namespace Goguma.Game.Object.Entity.Player
           var resultSsi = new SelectSceneItems();
 
           resultSsi.Add("{캐릭터 정보 보기}");
-          if (InGame.player.PartyCount != 0)
-          {
-            resultSsi.Add("{파티원 정보 보기}");
-          }
+          // if (InGame.player.PartyCount != 0)
+          // {
+          //   resultSsi.Add("{파티원 정보 보기}");
+          // }
 
           resultSsi.Add("{인벤토리 열기}");
           resultSsi.Add("{스킬 보기}");
@@ -288,13 +288,13 @@ namespace Goguma.Game.Object.Entity.Player
               player.Exp += player.RequiredForLevelUp();
               break;
             case "Battle with test monster":
-              var testMonster = Monster.Monster.GetNew(MonsterList.TestMonster);
+              var testMonster = Monster.Monster.GetNew(MonsterList.TEST_MONSTER);
               Battle.Battle.PvE(testMonster);
               break;
             case "Add Test Skill":
-              player.Skills.Add(PlayerSkills.GetNew(SkillList.TestSkill1));
-              player.Skills.Add(PlayerSkills.GetNew(SkillList.TestSkill2));
-              player.Skills.Add(PlayerSkills.GetNew(SkillList.TestBuffSkill1));
+              player.Skills.Add(PlayerSkills.GetNew(SkillList.TEST_SKILL1));
+              player.Skills.Add(PlayerSkills.GetNew(SkillList.TEST_SKILL2));
+              player.Skills.Add(PlayerSkills.GetNew(SkillList.TEST_BUFF_SKILL1));
               break;
             case "Add Item":
               var ssi = new SelectSceneItems();

@@ -5,8 +5,8 @@ namespace Goguma.Game.Object.Skill
   [Serializable]
   public enum SkillList
   {
-    TestSkill1,
-    TestSkill2,
-    TestBuffSkill1
+    TEST_SKILL1,
+    TEST_SKILL2,
+    TEST_BUFF_SKILL1
   }
 }

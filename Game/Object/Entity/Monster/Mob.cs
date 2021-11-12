@@ -10,7 +10,7 @@ namespace Goguma.Game.Object.Entity.Monster
 {
   public abstract class Mob : Entity, IMonster
   {
-    public override EntityType Type => EntityType.Monster;
+    public override EntityType Type => EntityType.MONSTER;
     public abstract MonsterList Material { get; }
     public abstract CTexts Descriptions { get; }
     public abstract double GivingGold { get; }

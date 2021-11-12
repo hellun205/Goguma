@@ -16,6 +16,16 @@ namespace Goguma.Game.Object.Quest.Dialog
       Text = new DialogText(text, Npc.DisplayName);
     }
 
+    public Dialog(CTexts text)
+    {
+      Text = new DialogText(text);
+    }
+    
+    public Dialog(CTexts prefix, CTexts text)
+    {
+      Text = new DialogText(text, prefix);
+    }
+
     public abstract DialogType Type { get; }
 
     public abstract string Show(string playerAns = "");
@@ -25,24 +35,27 @@ namespace Goguma.Game.Object.Quest.Dialog
     //   return new CTexts().Append($"{{  {Npc.TypeString} ,{Colors.txtWarning}}}{{{Npc.Name},{Colors.txtInfo}}}{{ : }}").Append(Text[pan]);
     // }
 
-    public static void ShowDialogs(List<IDialog> dialogs, DNpcSay cancelledDialog = null)
+    public static void ShowDialogs(List<IDialog> dialogs, bool isCancellable = true, List<IDialog> cancelledDialog = null)
     {
       string ans = "";
       foreach (var dialog in dialogs)
       {
-        ans = dialog.Show(ans);
-        PrintText("\n\n");
-        if (dialog.IsCancelled)
+        if (dialog != null)
         {
-          if (cancelledDialog != null) cancelledDialog.Show();
-          return;
+          ans = dialog.Show(ans);
+          PrintText("\n\n");
+          if (dialog.IsCancelled && isCancellable)
+          {
+            if (cancelledDialog != null) ShowDialogs(cancelledDialog);
+            return;
+          }
         }
       }
     }
 
-    public static bool ShowDialogs(List<IDialog> dialogs, DNpcAsk askDialog, DNpcSay cancelledDialog = null)
+    public static bool ShowDialogs(List<IDialog> dialogs, DNpcAsk askDialog, bool isCancellable = true, List<IDialog> cancelledDialog = null)
     {
-      ShowDialogs(dialogs, cancelledDialog);
+      ShowDialogs(dialogs, isCancellable, cancelledDialog);
       return askDialog.ShowAsk();
     }
   }

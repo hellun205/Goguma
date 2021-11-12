@@ -7,11 +7,11 @@ namespace Goguma.Game.Object.Inventory.Item.Items
   [Serializable]
   public class ItemTestSkill2Sb : CSkillBook
   {
-    public override ItemList Material => ItemList.SkillbookTestSkill2;
+    public override ItemList Material => ItemList.SKILLBOOK_TEST_SKILL2;
 
     public static readonly IItem Instance = new ItemTestSkill2Sb();
 
-    public override SkillList SkillToReceive => SkillList.TestSkill2;
+    public override SkillList SkillToReceive => SkillList.TEST_SKILL2;
 
     public ItemTestSkill2Sb() : base() { }
   }

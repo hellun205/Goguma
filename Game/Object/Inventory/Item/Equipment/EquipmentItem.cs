@@ -10,7 +10,7 @@ namespace Goguma.Game.Object.Inventory.Item.Equipment
   {
     public override CTexts DisplayName => CTexts.Make($"{{[ {TypeString} ],{Colors.txtWarning}}}{{ }}{{[ {ETypeString} ],{Colors.txtSuccess}}}{{ }}").Combine(Name);
 
-    public override HavingType Type => HavingType.Equipment;
+    public override HavingType Type => HavingType.EQUIPMENT;
 
     public abstract WearingType EType { get; }
 
@@ -66,15 +66,15 @@ namespace Goguma.Game.Object.Inventory.Item.Equipment
     {
       switch (wType)
       {
-        case WearingType.Head:
+        case WearingType.HEAD:
           return "머리";
-        case WearingType.Chestplate:
+        case WearingType.CHESTPLATE:
           return "상체";
-        case WearingType.Leggings:
+        case WearingType.LEGGINGS:
           return "하체";
-        case WearingType.Boots:
+        case WearingType.BOOTS:
           return "신발";
-        case WearingType.Weapon:
+        case WearingType.WEAPON:
           return "무기";
         default:
           return null;

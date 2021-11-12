@@ -4,14 +4,14 @@ namespace Goguma.Game.Object.Skill
 {
   public enum MSkillList
   {
-    TestmonsterTestPunch,
-    TestmonsterTestFireball,
-    TestmonsterTestAttackSkill,
-    TestmonsterDefensivePosture,
-    SlimeStickyAttack,
-    SlimeSpoutStickyLiquid,
-    GoldGoblinSwordSwing,
-    GoldGoblinSwordSting,
-    GoldGoblinAnger,
+    TESTMONSTER_TEST_PUNCH,
+    TESTMONSTER_TEST_FIREBALL,
+    TESTMONSTER_TEST_ATTACK_SKILL,
+    TESTMONSTER_DEFENSIVE_POSTURE,
+    SLIME_STICKY_ATTACK,
+    SLIME_SPOUT_STICKY_LIQUID,
+    GOLD_GOBLIN_SWORD_SWING,
+    GOLD_GOBLIN_SWORD_STING,
+    GOLD_GOBLIN_ANGER,
   }
 }
